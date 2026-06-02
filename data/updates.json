@@ -1,0 +1,20 @@
+[
+  {
+    "date": "2026-06-03",
+    "title": "Pricing & accounts (early access)",
+    "kind": "release",
+    "body": "Flat, node-gated pricing went up — Sovereign (free) through Enterprise — alongside early-access account onboarding with Google, GitHub, Microsoft, and Apple sign-in."
+  },
+  {
+    "date": "2026-06-02",
+    "title": "The Atmosphere — public preview",
+    "kind": "release",
+    "body": "The first public look at sovereign, local-first AI infrastructure: the globe, the dive into a node, the honest status board, and a two-command install."
+  },
+  {
+    "date": "2026-06-02",
+    "title": "Honest status board",
+    "kind": "release",
+    "body": "Every capability labelled Live, Wired, Standalone, or Mock — and it updates here the moment something ships. No vaporware."
+  }
+]

@@ -1,65 +1,112 @@
-import Image from "next/image";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
+import MeshHero3D from "@/components/MeshHero3D";
+import AtmosphereReveal from "@/components/acts/AtmosphereReveal";
+import StratosAgent from "@/components/StratosAgent";
+import Solutions from "@/components/Solutions";
+import Install from "@/components/Install";
+import ContentAddress from "@/components/acts/ContentAddress";
+import HolePunch from "@/components/acts/HolePunch";
+import Capability from "@/components/acts/Capability";
+import SkillSeal from "@/components/acts/SkillSeal";
+import StatusMatrix from "@/components/acts/StatusMatrix";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <main className="relative">
+      <Nav />
+
+      {/* ── CINEMATIC HERO — scroll dives the camera into a node ── */}
+      <MeshHero3D />
+
+      {/* ── THE ATMOSPHERE — extractive cloud dissolves into the sky ── */}
+      <section id="atmosphere">
+        <AtmosphereReveal />
+      </section>
+
+      {/* ── THESIS STRIP ──────────────────────────────────────── */}
+      <section id="architecture" className="relative border-t border-[color:var(--color-line)] py-28 md:py-32">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2 lg:items-center">
+          <div>
+            <p className="kicker">The thesis</p>
+            <h2 className="display mt-5 text-[clamp(1.8rem,3.6vw,3rem)] text-[color:var(--color-ink)]">
+              Automate the <span className="aurora-text">file architecture</span>, not the AI wrapper.
+            </h2>
+            <p className="mt-6 text-[color:var(--color-ink-dim)] leading-relaxed">
+              Agents are expensive, non-reproducible glue. A correctly-designed file and
+              dataflow architecture does the work deterministically, cheaply, and auditably —
+              and the agent earns its place only where genuine ambiguity lives. The sections
+              below don&apos;t describe the architecture. They run it.
+            </p>
+            <ul className="mt-7 grid grid-cols-3 gap-4">
+              {[["Deterministic", "same input, same output"], ["Auditable", "every step inspectable"], ["Cheap", "glue work, not tokens"]].map(([h, d]) => (
+                <li key={h}>
+                  <p className="text-[14px] font-semibold text-[color:var(--color-ink)]">{h}</p>
+                  <p className="mt-0.5 text-[12px] text-[color:var(--color-ink-faint)]">{d}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="lm-card overflow-hidden p-1.5">
+            <video
+              className="w-full rounded-[0.7rem]"
+              src="/video/thesis-architecture.mp4"
+              poster="/img/thesis-architecture.png"
+              autoPlay muted loop playsInline preload="metadata"
+              aria-label="Software file-architecture rendered as luminous living infrastructure — data flowing through glowing directory modules and brushed-chrome conduits"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* ── STRATOSAGENT — the agent, above the cloud ─────────── */}
+      <StratosAgent />
+
+      {/* ── SOLUTIONS & INTEGRATIONS — scale + value ──────────── */}
+      <Solutions />
+
+      {/* ── THE SCROLL ACTS ───────────────────────────────────── */}
+      <div className="mx-auto max-w-7xl px-6">
+        <Act><ContentAddress /></Act>
+        <Act><HolePunch /></Act>
+        <Act><Capability /></Act>
+        <Act><SkillSeal /></Act>
+        <Act id="status"><StatusMatrix /></Act>
+      </div>
+
+      {/* ── INSTALL — run it on your own metal ────────────────── */}
+      <Install />
+
+      {/* ── CLOSING CTA ───────────────────────────────────────── */}
+      <section className="relative overflow-hidden border-t border-[color:var(--color-line)] py-32">
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/2 top-1/2 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.16] blur-[120px]"
+               style={{ background: "radial-gradient(circle, var(--color-signal), transparent 60%)" }} />
+        </div>
+        <div className="relative mx-auto max-w-3xl px-6 text-center">
+          <p className="kicker">Build on infrastructure you own</p>
+          <h2 className="display mt-6 text-[clamp(2rem,5vw,3.6rem)] text-[color:var(--color-ink)]">
+            Sovereignty isn&apos;t a feature.
+            <br />
+            It&apos;s the <span className="aurora-text">foundation</span>.
+          </h2>
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
+            <a href="#install" className="btn-signal">Install now<span aria-hidden>→</span></a>
+            <a href="#status" className="btn-ghost">Read the architecture</a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ────────────────────────────────────────────── */}
+      <Footer />
+    </main>
+  );
+}
+
+function Act({ children, id }: { children: React.ReactNode; id?: string }) {
+  return (
+    <section id={id} className="scroll-mt-24 border-t border-[color:var(--color-line)] py-28 md:py-36">
+      {children}
+    </section>
   );
 }

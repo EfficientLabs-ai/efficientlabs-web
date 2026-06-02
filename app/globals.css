@@ -1,26 +1,199 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================================
+   Efficient Labs — "Chrome & Sky" design system
+   pure black · brushed chrome silver · electric azure blue (matches the wordmark)
+   ========================================================================== */
+
+@theme {
+  --color-void: #010207;          /* pure-black canvas (the wordmark bg) */
+  --color-void-2: #080b12;        /* raised surfaces */
+  --color-ink: #eef2f7;           /* cool silver-white */
+  --color-ink-dim: #9ba7b6;       /* secondary */
+  --color-ink-faint: #5a6576;     /* tertiary */
+  --color-signal: #2e8bff;        /* electric azure blue — primary */
+  --color-signal-deep: #1769db;   /* deeper blue for fills */
+  --color-quantum: #5bc8ff;       /* bright sky-cyan — gradient sheen */
+  --color-edge: #16202e;          /* hairline grid */
+  --color-line: #0e1620;          /* borders */
+
+  --font-display: "Clash Display", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "General Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root { --void: #010207; --signal: #2e8bff; --quantum: #5bc8ff; --ink: #eef2f7; --ink-dim: #9ba7b6;
+  /* brushed-chrome gradient for the wordmark + metallic accents */
+  --chrome: linear-gradient(176deg, #ffffff 0%, #e9eef5 22%, #aab4c2 48%, #ffffff 56%, #8d99a8 72%, #dfe6ef 100%);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* grain overlay — the whole page sits under a faint film, never flat */
+body::after {
+  content: "";
+  position: fixed; inset: 0; pointer-events: none; z-index: 100;
+  opacity: 0.04; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection { background: color-mix(in oklab, var(--signal) 30%, transparent); color: #fff; }
+::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: #1a2330; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #25313f; }
+
+/* ── brushed-chrome wordmark (the Efficient Labs logo) ───────────────────── */
+.wordmark { position: relative; display: inline-flex; flex-direction: column; align-items: center; line-height: 1; }
+.wm-text {
+  font-family: var(--font-wordmark), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  background: var(--chrome);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6));
+}
+/* the electric-blue lens-flare streak beneath the wordmark — lightly animated */
+.wm-flare {
+  position: relative;
+  margin-top: 0.5em; height: 1.5px; width: 78%;
+  background: linear-gradient(90deg, transparent, var(--color-signal) 28%, #dcebff 50%, var(--color-signal) 72%, transparent);
+  background-size: 220% 100%;
+  box-shadow: 0 0 14px 1px color-mix(in oklab, var(--color-signal) 60%, transparent);
+  animation: wm-shimmer 3.4s ease-in-out infinite;
+}
+.wm-flare::after {
+  content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 26%; height: 7px; border-radius: 999px;
+  background: radial-gradient(circle, var(--color-signal), transparent 70%);
+  animation: wm-pulse 3.4s ease-in-out infinite;
+}
+@keyframes wm-shimmer { 0%,100% { opacity: 0.7; background-position: 0% 0; } 50% { opacity: 1; background-position: 100% 0; } }
+@keyframes wm-pulse { 0%,100% { opacity: 0.5; width: 22%; } 50% { opacity: 1; width: 34%; } }
+
+.display { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.03em; line-height: 0.95; }
+.mono { font-family: var(--font-mono); letter-spacing: -0.01em; }
+.kicker { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--signal); }
+
+.aurora-text {
+  background: linear-gradient(100deg, var(--ink) 0%, var(--ink) 38%, var(--signal) 64%, var(--quantum) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+.btn-signal {
+  position: relative; display: inline-flex; align-items: center; gap: 0.55rem;
+  padding: 0.85rem 1.4rem; border-radius: 999px;
+  font-family: var(--font-mono); font-size: 0.86rem; color: #04110d; background: var(--signal);
+  border: 1px solid color-mix(in oklab, var(--signal) 80%, white);
+  box-shadow: 0 8px 40px -8px color-mix(in oklab, var(--signal) 60%, transparent);
+  transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.35s ease;
+}
+.btn-signal:hover { transform: translateY(-2px); box-shadow: 0 0 0 4px color-mix(in oklab, var(--signal) 18%, transparent), 0 14px 50px -8px color-mix(in oklab, var(--signal) 70%, transparent); }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.85rem 1.3rem; border-radius: 999px;
+  font-family: var(--font-mono); font-size: 0.86rem; color: var(--ink);
+  border: 1px solid var(--color-edge);
+  background: color-mix(in oklab, var(--color-void-2) 60%, transparent);
+  backdrop-filter: blur(8px);
+  transition: border-color 0.35s ease, transform 0.35s ease;
+}
+.btn-ghost:hover { border-color: color-mix(in oklab, var(--signal) 40%, var(--color-edge)); transform: translateY(-2px); }
+
+@keyframes pulse-dot { 0%,100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.35); } }
+@keyframes scroll-cue { 0% { transform: translateY(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
+@keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+.rise { opacity: 0; animation: rise 1s cubic-bezier(0.2,0.8,0.2,1) forwards; }
+
+/* integration marquee */
+@keyframes marquee-l { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+.marquee-track { display: inline-flex; width: max-content; animation: marquee-l 46s linear infinite; }
+.marquee-track.rev { animation-direction: reverse; animation-duration: 58s; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+/* ============================================================================
+   Glassmorphism + liquid-metal — the transparent/chrome SaaS surface language
+   (same material story as the agent's glass chair + glass laptop)
+   ========================================================================== */
+/* typewriter caret */
+@keyframes tw-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+.tw-caret { color: var(--signal); font-weight: 300; margin-left: 0.06em; animation: tw-blink 1s step-end infinite; }
+
+@property --lm-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+@keyframes lm-rotate { to { --lm-angle: 360deg; } }
+
+/* translucent frosted surface */
+.glass {
+  background: linear-gradient(157deg, rgba(255,255,255,0.055), rgba(255,255,255,0.012) 60%);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255,255,255,0.075);
+}
+
+/* liquid-metal card: glass fill + a chrome sheen that sweeps the border on hover */
+.lm-card {
+  position: relative; isolation: isolate; overflow: hidden;
+  border-radius: 1rem;
+  background: linear-gradient(157deg, rgba(255,255,255,0.05), rgba(255,255,255,0.011) 62%);
+  backdrop-filter: blur(14px) saturate(135%);
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
+  border: 1px solid rgba(255,255,255,0.07);
+  transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1), border-color 0.55s ease, box-shadow 0.55s ease;
+}
+/* rotating conic chrome ring, masked to a 1px border */
+.lm-card::before {
+  content: ""; position: absolute; inset: -1px; z-index: -1; border-radius: inherit; padding: 1px;
+  background: conic-gradient(from var(--lm-angle),
+    transparent 0deg, rgba(91,200,255,0) 50deg,
+    rgba(255,255,255,0.7) 115deg, rgba(46,139,255,0.95) 150deg, rgba(255,255,255,0.55) 185deg,
+    transparent 250deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0; transition: opacity 0.55s ease; animation: lm-rotate 6s linear infinite;
+}
+/* inner top-glow that warms on hover */
+.lm-card::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  background: radial-gradient(125% 78% at 50% -12%, rgba(46,139,255,0.13), transparent 58%);
+  opacity: 0.45; transition: opacity 0.55s ease;
+}
+.lm-card:hover {
+  transform: translateY(-5px); border-color: rgba(255,255,255,0.02);
+  box-shadow: 0 24px 60px -28px rgba(46,139,255,0.5);
+}
+.lm-card:hover::before { opacity: 1; }
+.lm-card:hover::after  { opacity: 1; }
+
+/* floating marquee logo — no pill, just the brand mark + name, glows in brand color */
+.logo-float {
+  display: inline-flex; align-items: center; gap: 0.6rem; margin: 0 1.7rem; white-space: nowrap;
+  font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.01em; color: var(--ink-faint);
+  transition: color 0.35s ease;
+}
+.logo-float svg {
+  width: 19px; height: 19px; flex: none;
+  filter: grayscale(1) brightness(1.7) opacity(0.55);
+  transition: filter 0.4s ease, transform 0.4s ease, drop-shadow 0.4s ease;
+}
+.marquee:hover .logo-float { color: var(--ink-dim); }
+.logo-float:hover { color: var(--ink); }
+.logo-float:hover svg {
+  filter: none; transform: translateY(-1px) scale(1.08);
+  drop-shadow: 0 0 10px currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
