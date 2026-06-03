@@ -4,6 +4,7 @@ import MeshHero3D from "@/components/MeshHero3D";
 import AtmosphereReveal from "@/components/acts/AtmosphereReveal";
 import StratosAgent from "@/components/StratosAgent";
 import Solutions from "@/components/Solutions";
+import Differentiators from "@/components/Differentiators";
 import Install from "@/components/Install";
 import ContentAddress from "@/components/acts/ContentAddress";
 import HolePunch from "@/components/acts/HolePunch";
@@ -23,6 +24,9 @@ export default function Home() {
       <section id="atmosphere">
         <AtmosphereReveal />
       </section>
+
+      {/* ── WHY IT'S DIFFERENT — mesh / seal / senses ─────────── */}
+      <Differentiators />
 
       {/* ── THESIS STRIP ──────────────────────────────────────── */}
       <section id="architecture" className="relative border-t border-[color:var(--color-line)] py-28 md:py-32">

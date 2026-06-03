@@ -235,10 +235,10 @@ export default function MeshHero3D() {
                 <Typewriter className="aurora-text" words={HERO_AUDIENCES} />
               </h1>
               <p className="mt-7 max-w-xl text-[clamp(1.02rem,1.4vw,1.22rem)] leading-relaxed text-[color:var(--color-ink-dim)]">
-                StratosAgent runs on hardware you own. The Atmosphere meshes it with the
-                world — <span className="text-[color:var(--color-ink)]">content-addressed</span>,{" "}
-                <span className="text-[color:var(--color-ink)]">capability-secured</span>,{" "}
-                <span className="text-[color:var(--color-ink)]">post-quantum</span>.
+                StratosAgent runs on your own metal — meshed peer-to-peer with{" "}
+                <span className="text-[color:var(--color-ink)]">no open ports</span>,{" "}
+                <span className="text-[color:var(--color-ink)]">post-quantum-sealed</span>, and able to{" "}
+                <span className="text-[color:var(--color-ink)]">see, hear, and speak</span>. No cloud. No landlord. No meter.
               </p>
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <a href="#install" className="btn-signal">Install now<span aria-hidden>→</span></a>
