@@ -9,8 +9,9 @@ import type { NextRequest } from "next/server";
 // domain onto this project automatically flips the apex to indexable.
 const APEX = "efficientlabs.ai";
 
+const DASHBOARD_HOST = `dashboard.${APEX}`;
+
 export function proxy(request: NextRequest) {
-  const res = NextResponse.next();
   // Prefer the externally-requested host (X-Forwarded-Host, first value) — behind
   // Vercel/any reverse proxy `Host` can be an internal address while the browser is
   // actually on efficientlabs.ai. Falling back to Host. Normalize: trim, lowercase,
@@ -18,6 +19,16 @@ export function proxy(request: NextRequest) {
   const fwd = request.headers.get("x-forwarded-host");
   const raw = (fwd ? fwd.split(",")[0] : request.headers.get("host")) || "";
   const host = raw.trim().toLowerCase().split(":")[0];
+
+  // Founder dashboard vanity host: dashboard.efficientlabs.ai/ → the gated /ops.
+  // Clone nextUrl so the redirect keeps the public host (not an internal one).
+  if (host === DASHBOARD_HOST && request.nextUrl.pathname === "/") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/ops";
+    return NextResponse.redirect(url);
+  }
+
+  const res = NextResponse.next();
   const isApex = host === APEX || host === `www.${APEX}`;
   if (!isApex) {
     res.headers.set("X-Robots-Tag", "noindex, nofollow");
