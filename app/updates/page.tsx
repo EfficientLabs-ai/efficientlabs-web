@@ -6,6 +6,7 @@ import Updates from "@/components/Updates";
 export const metadata: Metadata = {
   title: "Updates — Efficient Labs",
   description: "What's shipped on The Atmosphere — every capability the moment it goes live.",
+  alternates: { canonical: "/updates" },
 };
 
 export default function UpdatesPage() {

@@ -6,6 +6,7 @@ import Pricing from "@/components/Pricing";
 export const metadata: Metadata = {
   title: "Pricing — Efficient Labs",
   description: "Flat pricing for sovereign, local-first AI infrastructure. No metering, no egress fees, no lock-in.",
+  alternates: { canonical: "/pricing" },
 };
 
 export default function PricingPage() {

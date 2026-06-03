@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# internal launch strategy (lives in Notion)
+docs/launch/
+# heavy launch videos (delivered out-of-band; not referenced by the site yet)
+public/video/launch-hero-vertical.mp4
+public/video/launch-reveal-wide.mp4

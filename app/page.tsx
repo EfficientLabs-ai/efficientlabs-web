@@ -11,6 +11,13 @@ import HolePunch from "@/components/acts/HolePunch";
 import Capability from "@/components/acts/Capability";
 import SkillSeal from "@/components/acts/SkillSeal";
 import StatusMatrix from "@/components/acts/StatusMatrix";
+import type { Metadata } from "next";
+
+// Only override the canonical; inherit the root openGraph (image/title/desc) intact.
+// In App Router a child `openGraph` REPLACES the parent's rather than deep-merging.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (

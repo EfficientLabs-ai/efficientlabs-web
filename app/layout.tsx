@@ -8,17 +8,43 @@ import "./globals.css";
 const jbMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jb-mono", display: "swap" });
 const michroma = Michroma({ subsets: ["latin"], weight: ["400"], variable: "--font-wordmark", display: "swap" });
 
+const TITLE = "Efficient Labs — Sovereign AI infrastructure";
+const DESCRIPTION =
+  "StratosAgent runs on your hardware. The Atmosphere meshes it with the world — content-addressed, capability-secured, post-quantum. No central server can seize, censor, or surveil it.";
+const OG_IMAGE = "/img/launch-reveal-wide.png";
+
 export const metadata: Metadata = {
-  title: "Efficient Labs — Sovereign AI infrastructure",
-  description:
-    "StratosAgent runs on your hardware. The Atmosphere meshes it with the world — content-addressed, capability-secured, post-quantum. No central server can seize, censor, or surveil it.",
+  title: { default: TITLE, template: "%s — Efficient Labs" },
+  description: DESCRIPTION,
   metadataBase: new URL("https://efficientlabs.ai"),
-  // pre-launch: keep the preview out of search indexes until go-live
-  robots: { index: false, follow: false },
+  applicationName: "Efficient Labs",
+  keywords: [
+    "sovereign AI", "local-first AI agent", "StratosAgent", "The Atmosphere",
+    "peer-to-peer compute", "post-quantum", "self-hosted AI", "data sovereignty",
+    "private AI infrastructure", "no cloud AI",
+  ],
+  authors: [{ name: "Efficient Labs" }],
+  creator: "Efficient Labs",
+  // go-live: indexable by default. Each route sets its own canonical + og:url;
+  // private routes (below) set their own noindex. Private routes are also
+  // excluded from crawling via app/robots.ts.
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  },
   openGraph: {
-    title: "Efficient Labs — Sovereign AI infrastructure",
+    title: TITLE,
     description: "The sovereign internet for AI agents. Content-addressed, capability-secured, post-quantum.",
+    siteName: "Efficient Labs",
     type: "website",
+    images: [{ url: OG_IMAGE, width: 1376, height: 768, alt: "Efficient Labs — The Atmosphere sovereign mesh" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: "The sovereign internet for AI agents. Content-addressed, capability-secured, post-quantum.",
+    images: [OG_IMAGE],
   },
 };
 
