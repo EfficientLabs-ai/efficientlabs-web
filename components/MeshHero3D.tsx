@@ -184,8 +184,22 @@ export default function MeshHero3D() {
   const wrap = useRef<HTMLDivElement>(null);
   const progress = useRef(0);
   const [p, setP] = useState(0);
+  const [allow3D, setAllow3D] = useState(false);
+
+  // Only mount the WebGL dive on capable desktops. Mobile/touch Safari crashes
+  // ("a problem repeatedly occurred") under this scene's GPU/memory load, so those
+  // devices get the fast static hero below instead. SSR renders the static hero.
+  useEffect(() => {
+    const capable =
+      typeof window !== "undefined" &&
+      window.innerWidth >= 1024 &&
+      window.matchMedia("(pointer: fine)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setAllow3D(capable);
+  }, []);
 
   useEffect(() => {
+    if (!allow3D) return;
     let raf = 0;
     const onScroll = () => {
       const el = wrap.current;
@@ -201,10 +215,43 @@ export default function MeshHero3D() {
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); cancelAnimationFrame(raf); };
-  }, []);
+  }, [allow3D]);
 
   const heroFade = 1 - smooth(0.14, 0.4, p);
   const layersFade = smooth(0.66, 0.92, p);
+
+  // ── Mobile / touch / reduced-motion: fast static hero, NO WebGL (crash-safe) ──
+  if (!allow3D) {
+    return (
+      <section className="relative flex min-h-screen items-center overflow-hidden">
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute left-[-12%] top-[12%] h-[26rem] w-[26rem] rounded-full opacity-[0.22] blur-[100px]"
+               style={{ background: "radial-gradient(circle, var(--color-signal), transparent 62%)" }} />
+          <div className="absolute right-[-10%] top-[6%] h-[22rem] w-[22rem] rounded-full opacity-[0.18] blur-[110px]"
+               style={{ background: "radial-gradient(circle, var(--color-quantum), transparent 62%)" }} />
+          <div className="absolute inset-x-0 bottom-0 h-1/3"
+               style={{ background: "linear-gradient(to top, var(--color-void), transparent)" }} />
+        </div>
+        <div className="relative mx-auto w-full max-w-7xl px-5 py-24">
+          <p className="kicker">Sovereign&nbsp;AI&nbsp;Infrastructure</p>
+          <h1 className="display mt-5 text-[clamp(2.3rem,10.5vw,3.6rem)] leading-[1.06]">
+            The sovereign<br />internet for<br />
+            <Typewriter className="aurora-text" words={HERO_AUDIENCES} />
+          </h1>
+          <p className="mt-6 max-w-xl text-[1.02rem] leading-relaxed text-[color:var(--color-ink-dim)]">
+            StratosAgent runs on your own metal — meshed peer-to-peer with{" "}
+            <span className="text-[color:var(--color-ink)]">no open ports</span>,{" "}
+            <span className="text-[color:var(--color-ink)]">post-quantum-sealed</span>, and able to{" "}
+            <span className="text-[color:var(--color-ink)]">see, hear, and speak</span>. No cloud. No landlord. No meter.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <a href="#install" className="btn-signal w-full justify-center sm:w-auto">Install now<span aria-hidden>→</span></a>
+            <a href="#atmosphere" className="btn-ghost w-full justify-center sm:w-auto">Enter the Atmosphere</a>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section ref={wrap} className="relative h-[340vh]">
