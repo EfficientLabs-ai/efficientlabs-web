@@ -43,9 +43,9 @@ export default function Solutions() {
         <Reveal delay={0.1}>
           <div className="data-card mt-12 grid grid-cols-2 gap-px overflow-hidden md:grid-cols-4">
             {STATS.map(([n, l]) => (
-              <div key={l} className="px-6 py-7 text-center">
+              <div key={l} className="px-3 py-6 text-center sm:px-6 sm:py-7">
                 <div className="t-stat text-[color:var(--color-signal)]">{n}</div>
-                <div className="mono mt-1 text-[12px] text-[color:var(--color-ink-faint)]">{l}</div>
+                <div className="mono mt-1 text-[11px] leading-snug text-[color:var(--color-ink-faint)] sm:text-[12px]">{l}</div>
               </div>
             ))}
           </div>

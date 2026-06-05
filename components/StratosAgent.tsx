@@ -39,7 +39,7 @@ export default function StratosAgent() {
            style={{ background: "linear-gradient(0deg, var(--color-void), transparent)" }} />
 
       {/* ── MOBILE: the full agent-in-space scene at its own aspect ratio, then the copy below ── */}
-      <div className="relative w-full overflow-hidden lg:hidden" style={{ aspectRatio: "1404 / 768" }}>
+      <div className="relative w-full overflow-hidden lg:hidden aspect-[4/3] max-h-[55vh] sm:aspect-video">
         {media("absolute inset-0 h-full w-full object-cover object-center")}
         {/* feather the edges so the scene melts into the page (no hard letterbox seams) */}
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-32"

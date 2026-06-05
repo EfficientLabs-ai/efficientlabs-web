@@ -4,8 +4,8 @@ import { siGithub, siX } from "simple-icons";
 import { TextHoverEffect, FooterBackgroundGradient } from "@/components/ui/hover-footer";
 
 const COLUMNS = [
-  { title: "Platform", links: [["The Atmosphere", "/#atmosphere"], ["StratosAgent", "/#stratos"], ["Architecture", "/#architecture"], ["Honest status", "/#status"], ["Updates", "/updates"]] },
-  { title: "Company", links: [["Manifesto", "#"], ["Pricing", "/pricing"], ["Sovereignty Audit", "mailto:hello@efficientlabs.ai?subject=Sovereignty%20Audit"], ["Careers", "#"]] },
+  { title: "Platform", links: [["The Atmosphere", "/atmosphere"], ["StratosAgent", "/stratos"], ["Architecture", "/architecture"], ["Honest status", "/status"], ["Updates", "/updates"]] },
+  { title: "Company", links: [["Manifesto", "#"], ["Pricing", "/pricing"], ["Docs", "/docs"], ["Careers", "#"]] },
 ] as const;
 
 const CONTACT: { icon: typeof Mail; text: string; href?: string }[] = [

@@ -255,7 +255,7 @@ export default function MeshHero3D() {
         </div>
         <div className="relative mx-auto w-full max-w-7xl px-5 py-24">
           <p className="kicker">Sovereign&nbsp;AI&nbsp;Infrastructure</p>
-          <h1 className="t-display-sm mt-5">
+          <h1 className="t-display-sm mt-5 [overflow-wrap:anywhere] hyphens-none">
             The sovereign<br />internet for<br />
             <Typewriter className="aurora-text" words={HERO_AUDIENCES} />
           </h1>

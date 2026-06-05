@@ -148,9 +148,21 @@ const SURFACES = [
   "components/acts/HolePunch.tsx",
   "components/acts/Capability.tsx",
   "components/acts/SkillSeal.tsx",
-  // NOTE: components/acts/StatusMatrix.tsx is intentionally NOT scanned — it
-  // renders the honest labels (incl. the literal words Live/Wired/Mock) and
-  // would self-trip. It is the source of truth's renderer, not a claim.
+  // standalone route pages + extracted sections (added 2026-06-06 with nav→pages)
+  "components/Architecture.tsx",
+  "app/atmosphere/page.tsx",
+  "app/stratos/page.tsx",
+  "app/architecture/page.tsx",
+  "app/install/page.tsx",
+  // docs surface — the largest body of claims, now policed
+  "app/docs/page.tsx",
+  "app/docs/[slug]/page.tsx",
+  "data/docs.ts",
+  "components/docs/ArticleBody.tsx",
+  // NOTE: components/acts/StatusMatrix.tsx, app/status/page.tsx, and
+  // components/docs/StatusBadge.tsx are intentionally NOT scanned — they
+  // RENDER the honest labels (the literal words Live/Wired/Mock) sourced from
+  // status.json and would self-trip. They are the truth's renderers, not claims.
 ];
 
 const LEVEL_LABEL = { wired: "Wired", standalone: "Standalone", mock: "Mock" };

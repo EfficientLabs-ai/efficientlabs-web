@@ -267,6 +267,48 @@ body::after {
   drop-shadow: 0 0 10px currentColor;
 }
 
+/* ============================================================================
+   .prose-docs — reading rhythm for /docs article bodies. Constrained to ~72ch
+   by the page wrapper; this only governs vertical rhythm + inline element style.
+   ========================================================================== */
+.prose-docs { color: var(--ink-dim); font-size: var(--fs-body); line-height: 1.7; }
+.prose-docs > * + * { margin-top: 1.1rem; }
+.prose-docs h2 {
+  font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+  line-height: 1.15; font-size: 1.45rem; color: var(--ink);
+  margin-top: 2.4rem; scroll-margin-top: 5rem;
+}
+.prose-docs h3 {
+  font-family: var(--font-display); font-weight: 600; letter-spacing: -0.015em;
+  line-height: 1.2; font-size: 1.12rem; color: var(--ink);
+  margin-top: 1.8rem; scroll-margin-top: 5rem;
+}
+.prose-docs h2 + *, .prose-docs h3 + * { margin-top: 0.85rem; }
+.prose-docs p { color: var(--ink-dim); }
+.prose-docs a {
+  color: var(--color-signal); text-decoration: none;
+  border-bottom: 1px solid transparent; transition: border-color 0.15s ease;
+}
+.prose-docs a:hover { border-bottom-color: color-mix(in oklab, var(--color-signal) 55%, transparent); }
+.prose-docs ul, .prose-docs ol { padding-left: 1.25rem; }
+.prose-docs ul { list-style: disc; }
+.prose-docs ol { list-style: decimal; }
+.prose-docs li { margin-top: 0.4rem; color: var(--ink-dim); }
+.prose-docs li::marker { color: var(--color-ink-faint); }
+.prose-docs code {
+  font-family: var(--font-mono); font-size: 0.86em;
+  background: var(--color-void-2); color: var(--ink);
+  border: 1px solid var(--color-line); border-radius: var(--radius-xs);
+  padding: 0.1em 0.38em;
+}
+/* code inside a <pre> CodeBlock is plain — strip the inline chip styling */
+.prose-docs pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.prose-docs hr { border: 0; border-top: 1px solid var(--color-line); margin: 2rem 0; }
+.prose-docs strong { color: var(--ink); font-weight: 600; }
+/* not-prose escape hatch — used for tables, status rows, code, faq, callouts */
+.prose-docs .not-prose { color: initial; line-height: normal; }
+.prose-docs .not-prose > * + * { margin-top: 0; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {

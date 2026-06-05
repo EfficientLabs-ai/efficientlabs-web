@@ -1,13 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import Wordmark from "@/components/Wordmark";
 
 const NAV = [
-  ["The Atmosphere", "#atmosphere"],
-  ["StratosAgent", "#stratos"],
-  ["Architecture", "#architecture"],
-  ["Status", "#status"],
-  ["Install", "#install"],
+  ["The Atmosphere", "/atmosphere"],
+  ["StratosAgent", "/stratos"],
+  ["Architecture", "/architecture"],
+  ["Pricing", "/pricing"],
+  ["Docs", "/docs"],
+  ["Status", "/status"],
 ];
 
 export default function Nav() {
@@ -42,24 +44,24 @@ export default function Nav() {
         }}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-          <a href="#" onClick={() => setOpen(false)} className="group flex items-center transition-transform hover:scale-[1.02]">
+          <Link href="/" onClick={() => setOpen(false)} className="group flex items-center transition-transform hover:scale-[1.02]">
             <Wordmark size={17} tracking="0.16em" />
-          </a>
+          </Link>
 
           {/* Desktop links */}
           <div className="hidden items-center gap-8 md:flex">
             {NAV.map(([label, href]) => (
-              <a key={label} href={href}
+              <Link key={label} href={href}
                  className="mono text-[13px] text-[color:var(--color-ink-dim)] transition-colors hover:text-[color:var(--color-ink)]">
                 {label}
-              </a>
+              </Link>
             ))}
           </div>
 
           {/* Desktop actions */}
           <div className="hidden items-center gap-3 md:flex">
-            <a href="/login" className="mono text-[13px] text-[color:var(--color-ink-dim)] transition-colors hover:text-[color:var(--color-ink)]">Sign in</a>
-            <a href="#install" className="btn-signal !px-4 !py-2 text-[13px]">Install now<span aria-hidden>→</span></a>
+            <Link href="/login" className="mono text-[13px] text-[color:var(--color-ink-dim)] transition-colors hover:text-[color:var(--color-ink)]">Sign in</Link>
+            <Link href="/install" className="btn-signal !px-4 !py-2 text-[13px]">Install now<span aria-hidden>→</span></Link>
           </div>
 
           {/* Mobile hamburger */}
@@ -96,19 +98,19 @@ export default function Nav() {
       >
         <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 pb-6 pt-2">
           {NAV.map(([label, href]) => (
-            <a key={label} href={href} onClick={() => setOpen(false)}
+            <Link key={label} href={href} onClick={() => setOpen(false)}
                className="mono rounded-lg px-3 py-3 text-[15px] text-[color:var(--color-ink-dim)] transition-colors hover:bg-[color:var(--color-void-2)]/60 hover:text-[color:var(--color-ink)]">
               {label}
-            </a>
+            </Link>
           ))}
           <div className="mt-3 flex flex-col gap-3 border-t border-[color:var(--color-line)] pt-4">
-            <a href="/login" onClick={() => setOpen(false)}
+            <Link href="/login" onClick={() => setOpen(false)}
                className="mono rounded-lg px-3 py-2 text-[14px] text-[color:var(--color-ink-dim)] transition-colors hover:text-[color:var(--color-ink)]">
               Sign in
-            </a>
-            <a href="#install" onClick={() => setOpen(false)} className="btn-signal w-full justify-center !py-3 text-[14px]">
+            </Link>
+            <Link href="/install" onClick={() => setOpen(false)} className="btn-signal w-full justify-center !py-3 text-[14px]">
               Install now<span aria-hidden>→</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

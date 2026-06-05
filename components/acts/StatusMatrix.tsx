@@ -54,11 +54,11 @@ export default function StatusMatrix() {
             ))}
           </div>
           {/* count tiles */}
-          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="mt-6 grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-4 sm:gap-4">
             {COUNTS.map(({ lv, n }) => (
               <div key={lv} className="flex flex-col gap-1">
                 <div className="flex items-baseline gap-2">
-                  <span className="display text-[1.8rem] leading-none" style={{ color: DOT[lv] }}>{n}</span>
+                  <span className="display text-[1.5rem] leading-none sm:text-[1.8rem]" style={{ color: DOT[lv] }}>{n}</span>
                   <span className="h-2 w-2 rounded-full" style={{ background: DOT[lv] }} />
                 </div>
                 <span className="mono text-[11px] text-[color:var(--color-ink)]">{LEVELS[lv].label}</span>

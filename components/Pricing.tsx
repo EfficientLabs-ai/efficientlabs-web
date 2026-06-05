@@ -19,7 +19,7 @@ const TIERS: Tier[] = [
     name: "Sovereign",
     price: "Free",
     tagline: "Run it on your own hardware, forever.",
-    cta: { label: "Install now", href: "/#install" },
+    cta: { label: "Install now", href: "/install" },
     features: [
       "Up to 2 nodes (e.g. your laptop + phone)",
       "The Atmosphere runtime + StratosAgent",
@@ -63,13 +63,13 @@ const TIERS: Tier[] = [
   {
     name: "Enterprise",
     price: "Custom",
-    tagline: "Compliance, air-gap, and an audit.",
-    cta: { label: "Contact sales", href: "mailto:hello@efficientlabs.ai?subject=Enterprise%20%2B%20Sovereignty%20Audit" },
+    tagline: "Compliance, air-gap, and total control.",
+    cta: { label: "Contact sales", href: "mailto:hello@efficientlabs.ai?subject=Enterprise%20early%20access" },
     features: [
       "Everything in Team",
       "HIPAA / SOC2 / data-residency support",
       "On-prem & air-gapped deployment",
-      "AI Sovereignty Audit ($797 / $1,497 / Bespoke)",
+      "Private Atmosphere + internal capability registry",
       "SLAs + dedicated engineering",
       "Security review & red-team",
     ],
@@ -78,7 +78,7 @@ const TIERS: Tier[] = [
 
 export default function Pricing() {
   return (
-    <section className="relative pt-36 pb-28">
+    <section className="relative overflow-hidden pt-36 pb-28">
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-10 h-[30rem] w-[46rem] -translate-x-1/2 rounded-full opacity-[0.12] blur-[130px]"
              style={{ background: "radial-gradient(circle, var(--color-signal), transparent 62%)" }} />
