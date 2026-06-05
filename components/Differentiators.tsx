@@ -22,8 +22,8 @@ const MOATS = [
 
 export default function Differentiators() {
   return (
-    <section className="relative border-t border-[color:var(--color-line)] py-28 md:py-32">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="section section-t relative">
+      <div className="container-x">
         <div className="max-w-2xl">
           <ActHeader index="—" kicker="Why it's different" title={<>Running locally is <span className="aurora-text">table stakes</span>.</>}>
             Plenty of agents now run on your own hardware. The moat isn&apos;t where the model
@@ -34,11 +34,11 @@ export default function Differentiators() {
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {MOATS.map((m, i) => (
               <Reveal key={m.title} delay={0.06 * i}>
-                <div className="lm-card group h-full p-6">
-                  <div className="glass grid h-11 w-11 place-items-center rounded-xl text-[color:var(--color-signal)]">
+                <div className="data-card group h-full p-6">
+                  <div className="glass grid h-11 w-11 place-items-center rounded-[var(--radius-sm)] text-[color:var(--color-signal)]">
                     <m.icon size={19} />
                   </div>
-                  <h3 className="display mt-5 text-[1.2rem] text-[color:var(--color-ink)]">{m.title}</h3>
+                  <h3 className="t-card mt-5">{m.title}</h3>
                   <p className="mt-2.5 text-[13.5px] leading-relaxed text-[color:var(--color-ink-dim)]">{m.body}</p>
                 </div>
               </Reveal>

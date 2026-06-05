@@ -51,7 +51,7 @@ export function ActHeader({
         </div>
       </Reveal>
       <Reveal delay={0.08}>
-        <h2 className="display mt-5 text-[clamp(1.7rem,3.4vw,2.8rem)] text-[color:var(--color-ink)]">
+        <h2 className="t-section mt-5">
           {title}
         </h2>
       </Reveal>

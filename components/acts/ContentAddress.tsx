@@ -59,7 +59,7 @@ export default function ContentAddress() {
         </ActHeader>
 
         <Reveal delay={0.1}>
-          <div className="glass rounded-2xl p-1.5 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)]">
+          <div className="glass rounded-[var(--radius-lg)] p-1.5 shadow-[var(--shadow-hud)]">
             <div className="flex items-center gap-1.5 px-4 py-3">
               <span className="h-2.5 w-2.5 rounded-full bg-[#2a3340]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#2a3340]" />
@@ -80,7 +80,7 @@ export default function ContentAddress() {
                 className="mono flex-1 truncate text-[13px] text-[color:var(--color-signal)]">
                 {addr}
               </motion.code>
-              <span className="mono rounded-md border border-[color:var(--color-signal-deep)]/40 bg-[color:var(--color-signal)]/10 px-2 py-0.5 text-[10px] text-[color:var(--color-signal)]">
+              <span className="mono rounded-[var(--radius-sm)] border border-[color:var(--color-signal-deep)]/40 bg-[color:var(--color-signal)]/10 px-2 py-0.5 text-[10px] text-[color:var(--color-signal)]">
                 immutable
               </span>
             </div>

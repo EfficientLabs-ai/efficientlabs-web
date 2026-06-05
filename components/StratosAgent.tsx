@@ -54,7 +54,7 @@ export default function StratosAgent() {
             <p className="kicker">StratosAgent</p>
           </Reveal>
           <Reveal delay={0.08}>
-            <h2 className="display mt-5 text-[clamp(2.2rem,5vw,4rem)] text-[color:var(--color-ink)]">
+            <h2 className="t-section mt-5">
               An agent that&apos;s <span className="aurora-text">out of this world</span>.
             </h2>
           </Reveal>

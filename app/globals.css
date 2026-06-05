@@ -22,13 +22,38 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
-:root { --void: #010207; --signal: #2e8bff; --quantum: #5bc8ff; --ink: #eef2f7; --ink-dim: #9ba7b6;
+:root {
+  --void: #010207; --signal: #2e8bff; --quantum: #5bc8ff; --ink: #eef2f7; --ink-dim: #9ba7b6;
   /* brushed-chrome gradient for the wordmark + metallic accents */
   --chrome: linear-gradient(176deg, #ffffff 0%, #e9eef5 22%, #aab4c2 48%, #ffffff 56%, #8d99a8 72%, #dfe6ef 100%);
+
+  /* ── BRUTALIST EDGE TOKENS — sharp, HUD-style surfaces ─────────────── */
+  --radius-xs: 4px;    /* chips, code inline */
+  --radius-sm: 6px;    /* badges, small controls, inputs */
+  --radius: 8px;       /* default data surface / card radius */
+  --radius-lg: 10px;   /* large feature cards / media frames */
+  --radius-pill: 999px;/* the ONE pill we keep: status dots + CTAs */
+  --border-hairline: 1px solid rgba(255,255,255,0.08);
+  --border-hairline-strong: 1px solid rgba(255,255,255,0.14);
+  --shadow-hud: 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px -16px rgba(0,0,0,0.8);
+  --shadow-hud-lift: 0 1px 0 rgba(255,255,255,0.05), 0 18px 44px -24px rgba(46,139,255,0.4);
+
+  /* ── TYPE SCALE — clamp()-based, one source of truth ───────────────── */
+  --fs-display:   clamp(2.6rem, 7.2vw, 6.2rem);   /* hero h1 */
+  --fs-display-sm:clamp(2.3rem, 9vw, 3.6rem);     /* mobile/static hero */
+  --fs-section:   clamp(1.8rem, 3.8vw, 3rem);     /* every section h2 */
+  --fs-card:      clamp(1.1rem, 1.6vw, 1.25rem);  /* card h3 */
+  --fs-stat:      clamp(1.8rem, 4vw, 2.6rem);     /* big numerals */
+  --fs-body-lg:   clamp(1.02rem, 1.4vw, 1.18rem); /* lede paragraphs */
+  --fs-body:      1rem;
+  --fs-small:     0.84rem;
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+html {
+  scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  scroll-padding-top: 5rem; /* fixed nav clearance for #anchor jumps */
+}
 body {
   margin: 0;
   background: var(--void);
@@ -84,31 +109,45 @@ body::after {
 .mono { font-family: var(--font-mono); letter-spacing: -0.01em; }
 .kicker { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--signal); }
 
+/* ── TYPE-SCALE UTILITIES — apply across all sections for uniformity ─── */
+.t-display    { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.035em; line-height: 0.94; font-size: var(--fs-display); }
+.t-display-sm { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.03em;  line-height: 1.04; font-size: var(--fs-display-sm); }
+/* canonical section heading — every <h2> on the page lands here */
+.t-section    { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.025em; line-height: 1.02; font-size: var(--fs-section); color: var(--ink); }
+.t-card       { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;  line-height: 1.1;  font-size: var(--fs-card); color: var(--ink); }
+.t-stat       { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;  line-height: 1;    font-size: var(--fs-stat); }
+.t-body-lg    { font-size: var(--fs-body-lg); line-height: 1.6; }
+
+/* ── LAYOUT RHYTHM — one section cadence + one container ───────────────── */
+.section   { padding-top: clamp(6rem, 10vw, 10rem); padding-bottom: clamp(6rem, 10vw, 10rem); }
+.section-t { border-top: 1px solid var(--color-line); }
+.container-x { width: 100%; margin-inline: auto; max-width: 80rem; padding-inline: 1.5rem; }
+
 .aurora-text {
   background: linear-gradient(100deg, var(--ink) 0%, var(--ink) 38%, var(--signal) 64%, var(--quantum) 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 
+/* ── CTA HIERARCHY — one solid primary, one ghost secondary ──────────── */
 .btn-signal {
-  position: relative; display: inline-flex; align-items: center; gap: 0.55rem;
-  padding: 0.85rem 1.4rem; border-radius: 999px;
-  font-family: var(--font-mono); font-size: 0.86rem; color: #04110d; background: var(--signal);
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
+  padding: 0.8rem 1.35rem; border-radius: var(--radius-sm);
+  font-family: var(--font-mono); font-size: 0.84rem; letter-spacing: 0.01em; color: #04110d; background: var(--signal);
   border: 1px solid color-mix(in oklab, var(--signal) 80%, white);
   box-shadow: 0 8px 40px -8px color-mix(in oklab, var(--signal) 60%, transparent);
   transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.35s ease;
 }
-.btn-signal:hover { transform: translateY(-2px); box-shadow: 0 0 0 4px color-mix(in oklab, var(--signal) 18%, transparent), 0 14px 50px -8px color-mix(in oklab, var(--signal) 70%, transparent); }
+.btn-signal:hover { transform: translateY(-2px); box-shadow: 0 0 0 3px color-mix(in oklab, var(--signal) 18%, transparent), 0 14px 50px -8px color-mix(in oklab, var(--signal) 70%, transparent); }
 
 .btn-ghost {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.85rem 1.3rem; border-radius: 999px;
-  font-family: var(--font-mono); font-size: 0.86rem; color: var(--ink);
-  border: 1px solid var(--color-edge);
-  background: color-mix(in oklab, var(--color-void-2) 60%, transparent);
-  backdrop-filter: blur(8px);
-  transition: border-color 0.35s ease, transform 0.35s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.8rem 1.3rem; border-radius: var(--radius-sm);
+  font-family: var(--font-mono); font-size: 0.84rem; letter-spacing: 0.01em; color: var(--ink);
+  border: var(--border-hairline-strong);
+  background: color-mix(in oklab, var(--color-void-2) 55%, transparent);
+  transition: border-color 0.35s ease, transform 0.35s ease, background 0.35s ease;
 }
-.btn-ghost:hover { border-color: color-mix(in oklab, var(--signal) 40%, var(--color-edge)); transform: translateY(-2px); }
+.btn-ghost:hover { border-color: color-mix(in oklab, var(--signal) 45%, transparent); transform: translateY(-2px); background: color-mix(in oklab, var(--color-void-2) 80%, transparent); }
 
 @keyframes pulse-dot { 0%,100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.35); } }
 @keyframes scroll-cue { 0% { transform: translateY(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
@@ -133,22 +172,33 @@ body::after {
 @property --lm-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
 @keyframes lm-rotate { to { --lm-angle: 360deg; } }
 
-/* translucent frosted surface */
+/* translucent frosted surface — kept for icon chips, tightened radius */
 .glass {
-  background: linear-gradient(157deg, rgba(255,255,255,0.055), rgba(255,255,255,0.012) 60%);
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  border: 1px solid rgba(255,255,255,0.075);
+  background: linear-gradient(157deg, rgba(255,255,255,0.05), rgba(255,255,255,0.012) 60%);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: var(--border-hairline);
 }
 
-/* liquid-metal card: glass fill + a chrome sheen that sweeps the border on hover */
+/* flat brutalist data surface — hairline border, crisp HUD elevation, no blur */
+.data-card {
+  position: relative; border-radius: var(--radius);
+  background: linear-gradient(157deg, rgba(255,255,255,0.025), rgba(255,255,255,0.006) 62%);
+  border: var(--border-hairline);
+  box-shadow: var(--shadow-hud);
+  transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.data-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.16); box-shadow: var(--shadow-hud-lift); }
+
+/* liquid-metal card: glass fill + a chrome sheen that sweeps the border on hover.
+   Reserved for feature/hero surfaces — sharper radius keeps it brutalist-adjacent. */
 .lm-card {
   position: relative; isolation: isolate; overflow: hidden;
-  border-radius: 1rem;
-  background: linear-gradient(157deg, rgba(255,255,255,0.05), rgba(255,255,255,0.011) 62%);
-  backdrop-filter: blur(14px) saturate(135%);
-  -webkit-backdrop-filter: blur(14px) saturate(135%);
-  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(157deg, rgba(255,255,255,0.045), rgba(255,255,255,0.01) 62%);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  border: var(--border-hairline);
   transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1), border-color 0.55s ease, box-shadow 0.55s ease;
 }
 /* rotating conic chrome ring, masked to a 1px border */
@@ -169,8 +219,8 @@ body::after {
   opacity: 0.45; transition: opacity 0.55s ease;
 }
 .lm-card:hover {
-  transform: translateY(-5px); border-color: rgba(255,255,255,0.02);
-  box-shadow: 0 24px 60px -28px rgba(46,139,255,0.5);
+  transform: translateY(-4px); border-color: rgba(255,255,255,0.04);
+  box-shadow: var(--shadow-hud-lift);
 }
 .lm-card:hover::before { opacity: 1; }
 .lm-card:hover::after  { opacity: 1; }

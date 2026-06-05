@@ -249,7 +249,7 @@ export default function AtmosphereReveal() {
         <div className="absolute inset-x-0 top-[19%] flex justify-center px-6 text-center" style={{ opacity: cloudCopy }}>
           <div className="max-w-2xl">
             <p className="kicker" style={{ color: "#e0566a" }}>The extractive cloud</p>
-            <h2 className="display mt-5 text-[clamp(1.8rem,4vw,3.2rem)] text-[color:var(--color-ink)]">
+            <h2 className="t-section mt-5">
               Your intelligence runs in <span style={{ color: "#e0566a" }}>someone else&apos;s cloud</span>.
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-[color:var(--color-ink-dim)] leading-relaxed">
@@ -264,7 +264,7 @@ export default function AtmosphereReveal() {
              style={{ opacity: skyCopy, pointerEvents: skyCopy > 0.5 ? "auto" : "none" }}>
           <div className="max-w-2xl">
             <p className="kicker">The Atmosphere</p>
-            <h2 className="display mt-5 text-[clamp(1.8rem,4vw,3.1rem)] text-[color:var(--color-ink)]">
+            <h2 className="t-section mt-5">
               Then the cloud clears — and the <span className="aurora-text">sky was always yours</span>.
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-[color:var(--color-ink-dim)] leading-relaxed">

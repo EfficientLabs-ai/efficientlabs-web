@@ -234,11 +234,11 @@ export default function MeshHero3D() {
         </div>
         <div className="relative mx-auto w-full max-w-7xl px-5 py-24">
           <p className="kicker">Sovereign&nbsp;AI&nbsp;Infrastructure</p>
-          <h1 className="display mt-5 text-[clamp(2.3rem,10.5vw,3.6rem)] leading-[1.06]">
+          <h1 className="t-display-sm mt-5">
             The sovereign<br />internet for<br />
             <Typewriter className="aurora-text" words={HERO_AUDIENCES} />
           </h1>
-          <p className="mt-6 max-w-xl text-[1.02rem] leading-relaxed text-[color:var(--color-ink-dim)]">
+          <p className="t-body-lg mt-6 max-w-xl text-[color:var(--color-ink-dim)]">
             StratosAgent runs on your own metal — meshed peer-to-peer with{" "}
             <span className="text-[color:var(--color-ink)]">no open ports</span>,{" "}
             <span className="text-[color:var(--color-ink)]">post-quantum-sealed</span>, and able to{" "}
@@ -277,11 +277,11 @@ export default function MeshHero3D() {
           <div className="mx-auto w-full max-w-7xl px-6">
             <div className="max-w-3xl">
               <p className="kicker">Sovereign&nbsp;AI&nbsp;Infrastructure</p>
-              <h1 className="display mt-6 text-[clamp(2.6rem,7.2vw,6.2rem)]">
+              <h1 className="t-display mt-6">
                 The sovereign<br />internet for<br />
                 <Typewriter className="aurora-text" words={HERO_AUDIENCES} />
               </h1>
-              <p className="mt-7 max-w-xl text-[clamp(1.02rem,1.4vw,1.22rem)] leading-relaxed text-[color:var(--color-ink-dim)]">
+              <p className="t-body-lg mt-7 max-w-xl text-[color:var(--color-ink-dim)]">
                 StratosAgent runs on your own metal — meshed peer-to-peer with{" "}
                 <span className="text-[color:var(--color-ink)]">no open ports</span>,{" "}
                 <span className="text-[color:var(--color-ink)]">post-quantum-sealed</span>, and able to{" "}
@@ -300,7 +300,7 @@ export default function MeshHero3D() {
           <div className="mx-auto w-full max-w-7xl px-6">
             <div className="max-w-md">
               <p className="kicker">Inside one sovereign node</p>
-              <h2 className="display mt-5 text-[clamp(1.6rem,3.4vw,2.6rem)] text-[color:var(--color-ink)]">
+              <h2 className="t-section mt-5">
                 Six layers, <span className="aurora-text">end to end</span>.
               </h2>
               <ul className="mt-7 space-y-3">

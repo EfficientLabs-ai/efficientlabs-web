@@ -36,11 +36,11 @@ export default function Home() {
       <Differentiators />
 
       {/* ── THESIS STRIP ──────────────────────────────────────── */}
-      <section id="architecture" className="relative border-t border-[color:var(--color-line)] py-28 md:py-32">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2 lg:items-center">
+      <section id="architecture" className="section section-t relative">
+        <div className="container-x grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="kicker">The thesis</p>
-            <h2 className="display mt-5 text-[clamp(1.8rem,3.6vw,3rem)] text-[color:var(--color-ink)]">
+            <h2 className="t-section mt-5">
               Automate the <span className="aurora-text">file architecture</span>, not the AI wrapper.
             </h2>
             <p className="mt-6 text-[color:var(--color-ink-dim)] leading-relaxed">
@@ -52,7 +52,7 @@ export default function Home() {
             <ul className="mt-7 grid grid-cols-3 gap-4">
               {[["Deterministic", "same input, same output"], ["Auditable", "every step inspectable"], ["Cheap", "glue work, not tokens"]].map(([h, d]) => (
                 <li key={h}>
-                  <p className="text-[14px] font-semibold text-[color:var(--color-ink)]">{h}</p>
+                  <p className="mono text-[13px] font-semibold text-[color:var(--color-ink)]">{h}</p>
                   <p className="mt-0.5 text-[12px] text-[color:var(--color-ink-faint)]">{d}</p>
                 </li>
               ))}
@@ -60,7 +60,7 @@ export default function Home() {
           </div>
           <div className="lm-card overflow-hidden p-1.5">
             <video
-              className="w-full rounded-[0.7rem]"
+              className="w-full rounded-[var(--radius)]"
               src="/video/thesis-architecture.mp4"
               poster="/img/thesis-architecture.png"
               autoPlay muted loop playsInline preload="metadata"
@@ -89,14 +89,14 @@ export default function Home() {
       <Install />
 
       {/* ── CLOSING CTA ───────────────────────────────────────── */}
-      <section className="relative overflow-hidden border-t border-[color:var(--color-line)] py-32">
+      <section className="section section-t relative overflow-hidden">
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute left-1/2 top-1/2 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.16] blur-[120px]"
                style={{ background: "radial-gradient(circle, var(--color-signal), transparent 60%)" }} />
         </div>
         <div className="relative mx-auto max-w-3xl px-6 text-center">
           <p className="kicker">Build on infrastructure you own</p>
-          <h2 className="display mt-6 text-[clamp(2rem,5vw,3.6rem)] text-[color:var(--color-ink)]">
+          <h2 className="t-section mt-6">
             Sovereignty isn&apos;t a feature.
             <br />
             It&apos;s the <span className="aurora-text">foundation</span>.
@@ -116,7 +116,7 @@ export default function Home() {
 
 function Act({ children, id }: { children: React.ReactNode; id?: string }) {
   return (
-    <section id={id} className="scroll-mt-24 border-t border-[color:var(--color-line)] py-28 md:py-36">
+    <section id={id} className="section section-t scroll-mt-20">
       {children}
     </section>
   );

@@ -31,8 +31,8 @@ function Logo({ name }: { name: string }) {
 
 export default function Solutions() {
   return (
-    <section className="relative border-t border-[color:var(--color-line)] py-28 md:py-32">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="section section-t relative">
+      <div className="container-x">
         <ActHeader index="—" kicker="Solutions & scale" title={<>Sovereign, <span className="aurora-text">not isolated</span>.</>}>
           Stratos speaks MCP and bridges n8n — so the thousands of tools in those ecosystems are
           wired in from day one. Reach your agent on any channel, point it at any model you bring,
@@ -41,10 +41,10 @@ export default function Solutions() {
 
         {/* stat row — glass */}
         <Reveal delay={0.1}>
-          <div className="glass mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-2xl md:grid-cols-4">
+          <div className="data-card mt-12 grid grid-cols-2 gap-px overflow-hidden md:grid-cols-4">
             {STATS.map(([n, l]) => (
               <div key={l} className="px-6 py-7 text-center">
-                <div className="display text-[clamp(1.8rem,4vw,2.6rem)] text-[color:var(--color-signal)]">{n}</div>
+                <div className="t-stat text-[color:var(--color-signal)]">{n}</div>
                 <div className="mono mt-1 text-[12px] text-[color:var(--color-ink-faint)]">{l}</div>
               </div>
             ))}
@@ -67,15 +67,15 @@ export default function Solutions() {
       </div>
 
       {/* value cards — liquid-metal glass */}
-      <div className="mx-auto mt-16 max-w-7xl px-6">
+      <div className="container-x mt-16">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {VALUE.map((v, i) => (
             <Reveal key={v.title} delay={0.05 * i}>
-              <div className="lm-card group h-full p-6">
-                <div className="glass grid h-11 w-11 place-items-center rounded-xl text-[color:var(--color-signal)]">
+              <div className="data-card group h-full p-6">
+                <div className="glass grid h-11 w-11 place-items-center rounded-[var(--radius-sm)] text-[color:var(--color-signal)]">
                   <v.icon size={19} />
                 </div>
-                <h3 className="display mt-5 text-[1.15rem] text-[color:var(--color-ink)]">{v.title}</h3>
+                <h3 className="t-card mt-5">{v.title}</h3>
                 <p className="mt-2.5 text-[13.5px] leading-relaxed text-[color:var(--color-ink-dim)]">{v.body}</p>
               </div>
             </Reveal>
