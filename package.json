@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/honesty-guard.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "honesty": "node scripts/honesty-guard.mjs",
+    "honesty:self-test": "node scripts/honesty-guard.mjs --self-test"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

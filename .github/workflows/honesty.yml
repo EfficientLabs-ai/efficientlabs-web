@@ -1,0 +1,24 @@
+# Honesty-matrix CI guard.
+# The public L0–L5 status matrix (data/status.json) is the brand's strongest
+# asset. This job blocks any merge/deploy whose marketing copy or README claims
+# a not-yet-Live capability is already live / shipping / in production.
+name: honesty-guard
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  honesty:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # No install needed — the guard is dependency-free (node stdlib only).
+      - name: Self-test the guard (fixtures: clean passes, overclaim caught)
+        run: node scripts/honesty-guard.mjs --self-test
+      - name: Scan marketing surfaces for overclaims
+        run: node scripts/honesty-guard.mjs
