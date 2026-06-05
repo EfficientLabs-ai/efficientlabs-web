@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import MeshHero3D from "@/components/MeshHero3D";
 import AtmosphereReveal from "@/components/acts/AtmosphereReveal";
 import StratosAgent from "@/components/StratosAgent";
+import SovereignPath from "@/components/SovereignPath";
 import Solutions from "@/components/Solutions";
 import Differentiators from "@/components/Differentiators";
 import Install from "@/components/Install";
@@ -36,7 +37,24 @@ export default function Home() {
       <Differentiators />
 
       {/* ── THESIS STRIP ──────────────────────────────────────── */}
-      <section id="architecture" className="section section-t relative">
+      <section id="architecture" className="section section-t relative overflow-hidden">
+        {/* restrained depth: faint grid texture + a soft off-center vignette behind content */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div
+            className="absolute inset-0 opacity-[0.5]"
+            style={{
+              maskImage: "radial-gradient(120% 90% at 30% 40%, #000 0%, transparent 72%)",
+              WebkitMaskImage: "radial-gradient(120% 90% at 30% 40%, #000 0%, transparent 72%)",
+              backgroundImage:
+                "linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px)",
+              backgroundSize: "46px 46px",
+            }}
+          />
+          <div
+            className="absolute left-[18%] top-1/2 h-[34rem] w-[34rem] -translate-y-1/2 rounded-full opacity-[0.1] blur-[120px]"
+            style={{ background: "radial-gradient(circle, var(--color-signal), transparent 62%)" }}
+          />
+        </div>
         <div className="container-x grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="kicker">The thesis</p>
@@ -72,6 +90,13 @@ export default function Home() {
 
       {/* ── STRATOSAGENT — the agent, above the cloud ─────────── */}
       <StratosAgent />
+
+      {/* ── SOVEREIGN PATH — SHOWS the local-first router in action ── */}
+      <section id="routing" className="section section-t scroll-mt-20">
+        <div className="container-x">
+          <SovereignPath />
+        </div>
+      </section>
 
       {/* ── SOLUTIONS & INTEGRATIONS — scale + value ──────────── */}
       <Solutions />
