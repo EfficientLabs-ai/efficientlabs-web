@@ -267,7 +267,7 @@ export default function MeshHero3D() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <a href="#install" className="btn-signal w-full justify-center sm:w-auto">Install now<span aria-hidden>→</span></a>
-            <a href="#atmosphere" className="btn-ghost w-full justify-center sm:w-auto">Enter the Atmosphere</a>
+            <a href="#atmosphere" className="btn-outline w-full justify-center sm:w-auto">Enter the Atmosphere</a>
           </div>
         </div>
       </section>
@@ -311,7 +311,7 @@ export default function MeshHero3D() {
               </p>
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <a href="#install" className="btn-signal">Install now<span aria-hidden>→</span></a>
-                <a href="#atmosphere" className="btn-ghost">Enter the Atmosphere</a>
+                <a href="#atmosphere" className="btn-outline">Enter the Atmosphere</a>
               </div>
             </div>
           </div>

@@ -34,7 +34,7 @@ export default function Dashboard() {
           <div className="flex items-center gap-4">
             <span className="mono text-[12px] text-[color:var(--color-ink-faint)]">{signedIn ? email : "control plane"}</span>
             {signedIn
-              ? <button onClick={() => supabase?.auth.signOut().then(() => location.reload())} className="btn-ghost !px-4 !py-2 text-[12px]">Sign out</button>
+              ? <button onClick={() => supabase?.auth.signOut().then(() => location.reload())} className="btn-outline !px-4 !py-2 text-[12px]">Sign out</button>
               : <Link href="/login" className="btn-signal !px-4 !py-2 text-[12px]">Sign in<span aria-hidden>→</span></Link>}
           </div>
         </div>

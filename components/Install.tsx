@@ -61,7 +61,7 @@ export default function Install() {
             </div>
             <div className="mt-6 flex flex-wrap gap-4">
               <a href="mailto:hello@efficientlabs.ai?subject=Early%20access%20—%20The%20Atmosphere" className="btn-signal">Install now<span aria-hidden>→</span></a>
-              <a href="#status" className="btn-ghost">See what&apos;s live today</a>
+              <a href="#status" className="btn-outline">See what&apos;s live today</a>
             </div>
           </Reveal>
 

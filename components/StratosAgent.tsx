@@ -84,7 +84,7 @@ export default function StratosAgent() {
           <Reveal delay={0.32}>
             <div className="mt-9 flex flex-wrap gap-4">
               <a href="#install" className="btn-signal">Install StratosAgent<span aria-hidden>→</span></a>
-              <a href="#architecture" className="btn-ghost">Meet the architecture</a>
+              <a href="#architecture" className="btn-outline">Meet the architecture</a>
             </div>
           </Reveal>
         </div>

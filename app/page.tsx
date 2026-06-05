@@ -128,7 +128,7 @@ export default function Home() {
           </h2>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <a href="#install" className="btn-signal">Install now<span aria-hidden>→</span></a>
-            <a href="#status" className="btn-ghost">Read the architecture</a>
+            <a href="#status" className="btn-outline">Read the architecture</a>
           </div>
         </div>
       </section>

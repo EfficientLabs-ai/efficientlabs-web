@@ -109,7 +109,7 @@ export default function Pricing() {
                 <p className="mt-2 text-[13px] leading-relaxed text-[color:var(--color-ink-dim)]">{t.tagline}</p>
 
                 <a href={t.cta.href}
-                   className={`mt-6 ${t.featured ? "btn-signal" : "btn-ghost"} justify-center text-center`}>
+                   className={`mt-6 ${t.featured ? "btn-signal" : "btn-outline"} justify-center text-center`}>
                   {t.cta.label}{t.featured && <span aria-hidden>→</span>}
                 </a>
 

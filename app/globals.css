@@ -128,7 +128,7 @@ body::after {
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 
-/* ── CTA HIERARCHY — one solid primary, one ghost secondary ──────────── */
+/* ── CTA HIERARCHY — one solid primary, one outline secondary ────────── */
 .btn-signal {
   position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
   padding: 0.8rem 1.35rem; border-radius: var(--radius-sm);
@@ -140,7 +140,7 @@ body::after {
 .btn-signal:hover { transform: translateY(-1px); filter: brightness(1.06); box-shadow: 0 0 0 3px color-mix(in oklab, var(--signal) 18%, transparent), 0 14px 50px -8px color-mix(in oklab, var(--signal) 72%, transparent); }
 .btn-signal:active { transform: scale(0.98); filter: brightness(1.02); transition-duration: 0.08s; }
 
-.btn-ghost {
+.btn-outline {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
   padding: 0.8rem 1.3rem; border-radius: var(--radius-sm);
   font-family: var(--font-mono); font-size: 0.84rem; letter-spacing: 0.01em; color: var(--ink);
@@ -148,12 +148,12 @@ body::after {
   background: color-mix(in oklab, var(--color-void-2) 55%, transparent);
   transition: border-color 0.16s ease, transform 0.16s ease, background 0.16s ease;
 }
-.btn-ghost:hover { border-color: color-mix(in oklab, var(--signal) 45%, transparent); transform: translateY(-1px); background: color-mix(in oklab, var(--color-void-2) 80%, transparent); }
-.btn-ghost:active { transform: scale(0.98); transition-duration: 0.08s; }
+.btn-outline:hover { border-color: color-mix(in oklab, var(--signal) 45%, transparent); transform: translateY(-1px); background: color-mix(in oklab, var(--color-void-2) 80%, transparent); }
+.btn-outline:active { transform: scale(0.98); transition-duration: 0.08s; }
 
 /* ── kicker arrows / link arrows nudge right on hover ───────────────── */
-.btn-signal [aria-hidden], .btn-ghost [aria-hidden] { transition: transform 0.16s cubic-bezier(0.2,0.8,0.2,1); }
-.btn-signal:hover [aria-hidden], .btn-ghost:hover [aria-hidden] { transform: translateX(3px); }
+.btn-signal [aria-hidden], .btn-outline [aria-hidden] { transition: transform 0.16s cubic-bezier(0.2,0.8,0.2,1); }
+.btn-signal:hover [aria-hidden], .btn-outline:hover [aria-hidden] { transform: translateX(3px); }
 
 /* ── branded focus ring — site-wide keyboard affordance ─────────────── */
 :focus-visible {
@@ -162,7 +162,7 @@ body::after {
   border-radius: var(--radius-xs);
 }
 /* buttons get a soft halo instead of a hard outline */
-.btn-signal:focus-visible, .btn-ghost:focus-visible {
+.btn-signal:focus-visible, .btn-outline:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-signal) 35%, transparent), var(--shadow-hud);
 }
@@ -277,7 +277,7 @@ body::after {
   }
   /* kill all hover/active translate + the cursor-follow hero glow for reduced-motion users */
   .data-card.is-interactive:hover, .lm-card.is-interactive:hover,
-  .btn-signal:hover, .btn-ghost:hover { transform: none !important; }
-  .btn-signal:hover [aria-hidden], .btn-ghost:hover [aria-hidden] { transform: none !important; }
+  .btn-signal:hover, .btn-outline:hover { transform: none !important; }
+  .btn-signal:hover [aria-hidden], .btn-outline:hover [aria-hidden] { transform: none !important; }
   .hero-cursor-glow { opacity: 0 !important; }
 }
