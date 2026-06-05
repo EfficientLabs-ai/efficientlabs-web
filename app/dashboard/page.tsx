@@ -56,7 +56,7 @@ export default function Dashboard() {
         <div className={`mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 ${!signedIn ? "opacity-70" : ""}`}>
           {CARDS.map((c) => {
             const inner = (
-              <div className="lm-card group flex h-full flex-col p-6">
+              <div className={`lm-card group flex h-full flex-col p-6 ${c.href ? "is-interactive" : ""}`}>
                 <div className="flex items-center justify-between">
                   <div className="glass grid h-10 w-10 place-items-center rounded-xl text-[color:var(--color-signal)]"><c.icon size={18} /></div>
                   <span className="display text-[1.4rem] text-[color:var(--color-ink)]">{c.stat}</span>
@@ -64,7 +64,7 @@ export default function Dashboard() {
                 <h3 className="mt-4 text-[15px] font-semibold text-[color:var(--color-ink)]">{c.title}</h3>
                 <p className="mt-1.5 flex-1 text-[13px] leading-relaxed text-[color:var(--color-ink-dim)]">{c.body}</p>
                 <span className="mono mt-4 inline-flex items-center gap-1 text-[11px] text-[color:var(--color-ink-faint)] group-hover:text-[color:var(--color-signal)]">
-                  {c.hint} {c.href && <ArrowRight size={12} />}
+                  {c.hint} {c.href && <ArrowRight size={12} className="transition-transform duration-150 ease-out group-hover:translate-x-[3px]" />}
                 </span>
               </div>
             );

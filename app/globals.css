@@ -135,9 +135,10 @@ body::after {
   font-family: var(--font-mono); font-size: 0.84rem; letter-spacing: 0.01em; color: #04110d; background: var(--signal);
   border: 1px solid color-mix(in oklab, var(--signal) 80%, white);
   box-shadow: 0 8px 40px -8px color-mix(in oklab, var(--signal) 60%, transparent);
-  transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.35s ease;
+  transition: transform 0.16s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.16s ease, filter 0.16s ease;
 }
-.btn-signal:hover { transform: translateY(-2px); box-shadow: 0 0 0 3px color-mix(in oklab, var(--signal) 18%, transparent), 0 14px 50px -8px color-mix(in oklab, var(--signal) 70%, transparent); }
+.btn-signal:hover { transform: translateY(-1px); filter: brightness(1.06); box-shadow: 0 0 0 3px color-mix(in oklab, var(--signal) 18%, transparent), 0 14px 50px -8px color-mix(in oklab, var(--signal) 72%, transparent); }
+.btn-signal:active { transform: scale(0.98); filter: brightness(1.02); transition-duration: 0.08s; }
 
 .btn-ghost {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
@@ -145,9 +146,26 @@ body::after {
   font-family: var(--font-mono); font-size: 0.84rem; letter-spacing: 0.01em; color: var(--ink);
   border: var(--border-hairline-strong);
   background: color-mix(in oklab, var(--color-void-2) 55%, transparent);
-  transition: border-color 0.35s ease, transform 0.35s ease, background 0.35s ease;
+  transition: border-color 0.16s ease, transform 0.16s ease, background 0.16s ease;
 }
-.btn-ghost:hover { border-color: color-mix(in oklab, var(--signal) 45%, transparent); transform: translateY(-2px); background: color-mix(in oklab, var(--color-void-2) 80%, transparent); }
+.btn-ghost:hover { border-color: color-mix(in oklab, var(--signal) 45%, transparent); transform: translateY(-1px); background: color-mix(in oklab, var(--color-void-2) 80%, transparent); }
+.btn-ghost:active { transform: scale(0.98); transition-duration: 0.08s; }
+
+/* ── kicker arrows / link arrows nudge right on hover ───────────────── */
+.btn-signal [aria-hidden], .btn-ghost [aria-hidden] { transition: transform 0.16s cubic-bezier(0.2,0.8,0.2,1); }
+.btn-signal:hover [aria-hidden], .btn-ghost:hover [aria-hidden] { transform: translateX(3px); }
+
+/* ── branded focus ring — site-wide keyboard affordance ─────────────── */
+:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--color-signal) 80%, transparent);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+/* buttons get a soft halo instead of a hard outline */
+.btn-signal:focus-visible, .btn-ghost:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-signal) 35%, transparent), var(--shadow-hud);
+}
 
 @keyframes pulse-dot { 0%,100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.35); } }
 @keyframes scroll-cue { 0% { transform: translateY(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
@@ -180,15 +198,18 @@ body::after {
   border: var(--border-hairline);
 }
 
-/* flat brutalist data surface — hairline border, crisp HUD elevation, no blur */
+/* flat brutalist data surface — hairline border, crisp HUD elevation, no blur.
+   STATIC by default: no hover-lift. Opt into interactivity with `.is-interactive`
+   on cards that are actually links/clickable. */
 .data-card {
   position: relative; border-radius: var(--radius);
   background: linear-gradient(157deg, rgba(255,255,255,0.025), rgba(255,255,255,0.006) 62%);
   border: var(--border-hairline);
   box-shadow: var(--shadow-hud);
-  transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), border-color 0.4s ease, box-shadow 0.4s ease;
+  transition: transform 0.2s cubic-bezier(0.2,0.8,0.2,1), border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.data-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.16); box-shadow: var(--shadow-hud-lift); }
+.data-card.is-interactive:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.16); box-shadow: var(--shadow-hud-lift); }
+.data-card.is-interactive:active { transform: translateY(0); transition-duration: 0.08s; }
 
 /* liquid-metal card: glass fill + a chrome sheen that sweeps the border on hover.
    Reserved for feature/hero surfaces — sharper radius keeps it brutalist-adjacent. */
@@ -199,7 +220,7 @@ body::after {
   backdrop-filter: blur(12px) saturate(130%);
   -webkit-backdrop-filter: blur(12px) saturate(130%);
   border: var(--border-hairline);
-  transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1), border-color 0.55s ease, box-shadow 0.55s ease;
+  transition: transform 0.2s cubic-bezier(0.2,0.8,0.2,1), border-color 0.2s ease, box-shadow 0.2s ease;
 }
 /* rotating conic chrome ring, masked to a 1px border */
 .lm-card::before {
@@ -218,12 +239,15 @@ body::after {
   background: radial-gradient(125% 78% at 50% -12%, rgba(46,139,255,0.13), transparent 58%);
   opacity: 0.45; transition: opacity 0.55s ease;
 }
-.lm-card:hover {
-  transform: translateY(-4px); border-color: rgba(255,255,255,0.04);
-  box-shadow: var(--shadow-hud-lift);
-}
+/* sheen sweep is a surface affordance — kept on all lm-cards. The translateY
+   LIFT + elevation is reserved for genuinely clickable cards (`.is-interactive`). */
 .lm-card:hover::before { opacity: 1; }
 .lm-card:hover::after  { opacity: 1; }
+.lm-card.is-interactive:hover {
+  transform: translateY(-2px); border-color: rgba(255,255,255,0.04);
+  box-shadow: var(--shadow-hud-lift);
+}
+.lm-card.is-interactive:active { transform: translateY(0); transition-duration: 0.08s; }
 
 /* floating marquee logo — no pill, just the brand mark + name, glows in brand color */
 .logo-float {
@@ -245,5 +269,15 @@ body::after {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* kill all hover/active translate + the cursor-follow hero glow for reduced-motion users */
+  .data-card.is-interactive:hover, .lm-card.is-interactive:hover,
+  .btn-signal:hover, .btn-ghost:hover { transform: none !important; }
+  .btn-signal:hover [aria-hidden], .btn-ghost:hover [aria-hidden] { transform: none !important; }
+  .hero-cursor-glow { opacity: 0 !important; }
 }

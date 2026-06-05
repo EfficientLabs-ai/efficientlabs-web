@@ -15,7 +15,7 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -32,11 +32,13 @@ export default function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div
-        className="transition-all duration-500"
+        className="transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 ease-out"
         style={{
-          background: opaque ? "color-mix(in oklab, var(--color-void) 78%, transparent)" : "transparent",
-          backdropFilter: opaque ? "blur(14px)" : "none",
+          background: opaque ? "color-mix(in oklab, var(--color-void) 80%, transparent)" : "transparent",
+          backdropFilter: opaque ? "blur(14px) saturate(140%)" : "blur(0px)",
+          WebkitBackdropFilter: opaque ? "blur(14px) saturate(140%)" : "blur(0px)",
           borderBottom: opaque ? "1px solid var(--color-line)" : "1px solid transparent",
+          boxShadow: opaque ? "0 1px 0 rgba(255,255,255,0.03), 0 12px 30px -24px rgba(0,0,0,0.9)" : "none",
         }}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">

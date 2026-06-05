@@ -182,6 +182,7 @@ function Field({ progress }: { progress: Prog }) {
 
 export default function MeshHero3D() {
   const wrap = useRef<HTMLDivElement>(null);
+  const auroraRef = useRef<HTMLDivElement>(null);
   const progress = useRef(0);
   const [p, setP] = useState(0);
   const [allow3D, setAllow3D] = useState(false);
@@ -215,6 +216,26 @@ export default function MeshHero3D() {
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); cancelAnimationFrame(raf); };
+  }, [allow3D]);
+
+  // Barely-there cursor parallax on the aurora blooms (desktop + fine-pointer +
+  // motion-ok only — gated identically to the WebGL dive). Pure transform, rAF-throttled.
+  useEffect(() => {
+    if (!allow3D) return;
+    const el = auroraRef.current;
+    if (!el) return;
+    let raf = 0;
+    const onMove = (e: PointerEvent) => {
+      const dx = (e.clientX / window.innerWidth - 0.5) * 2;   // -1 … 1
+      const dy = (e.clientY / window.innerHeight - 0.5) * 2;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        // max ~4px drift — calm, lazy, never fights the scroll dive
+        el.style.transform = `translate3d(${dx * 4}px, ${dy * 4}px, 0)`;
+      });
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => { window.removeEventListener("pointermove", onMove); cancelAnimationFrame(raf); };
   }, [allow3D]);
 
   const heroFade = 1 - smooth(0.14, 0.4, p);
@@ -256,8 +277,9 @@ export default function MeshHero3D() {
   return (
     <section ref={wrap} className="relative h-[340vh]">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
-        {/* aurora blooms behind the canvas */}
-        <div aria-hidden className="pointer-events-none absolute inset-0">
+        {/* aurora blooms behind the canvas — lazily parallax toward the cursor */}
+        <div ref={auroraRef} aria-hidden className="hero-cursor-glow pointer-events-none absolute inset-0 will-change-transform"
+             style={{ transition: "transform 0.5s cubic-bezier(0.2,0.8,0.2,1)" }}>
           <div className="absolute left-[6%] top-[26%] h-[40rem] w-[40rem] rounded-full opacity-[0.20] blur-[130px]"
                style={{ background: "radial-gradient(circle, var(--color-signal), transparent 62%)" }} />
           <div className="absolute right-[4%] top-[12%] h-[36rem] w-[36rem] rounded-full opacity-[0.18] blur-[140px]"

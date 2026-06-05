@@ -95,7 +95,7 @@ export default function Pricing() {
         <div className="mt-14 grid gap-5 lg:grid-cols-4">
           {TIERS.map((t, i) => (
             <Reveal key={t.name} delay={0.05 * i}>
-              <div className={`lm-card relative flex h-full flex-col p-6 ${t.featured ? "ring-1 ring-[color:var(--color-signal)]/40" : ""}`}>
+              <div className={`lm-card is-interactive relative flex h-full flex-col p-6 ${t.featured ? "ring-1 ring-[color:var(--color-signal)]/40" : ""}`}>
                 {t.featured && (
                   <span className="mono absolute -top-2.5 left-6 rounded-full border border-[color:var(--color-signal)]/40 bg-[color:var(--color-signal)]/15 px-2.5 py-0.5 text-[10px] tracking-wider text-[color:var(--color-signal)]">
                     MOST POPULAR

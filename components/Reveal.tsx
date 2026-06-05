@@ -1,14 +1,15 @@
 "use client";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
-/** Scroll-triggered reveal. Motion as evidence, not decoration. */
+/** Scroll-triggered reveal. Motion as evidence, not decoration.
+ *  Crisp fade-up (~520ms). Honors prefers-reduced-motion → renders final state instantly. */
 export function Reveal({
   children,
   delay = 0,
-  y = 26,
+  y = 16,
   className,
 }: {
   children: ReactNode;
@@ -16,13 +17,19 @@ export function Reveal({
   y?: number;
   className?: string;
 }) {
+  const reduced = useReducedMotion();
+
+  if (reduced) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-12% 0px" }}
-      transition={{ duration: 0.9, ease: EASE, delay }}
+      viewport={{ once: true, margin: "-10% 0px" }}
+      transition={{ duration: 0.52, ease: EASE, delay }}
     >
       {children}
     </motion.div>
