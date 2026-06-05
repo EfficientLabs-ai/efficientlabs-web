@@ -60,6 +60,7 @@ export default function Nav() {
 
           {/* Desktop actions */}
           <div className="hidden items-center gap-3 md:flex">
+            <Link href="/app" className="mono text-[13px] text-[color:var(--color-ink-dim)] transition-colors hover:text-[color:var(--color-ink)]">Open OS</Link>
             <Link href="/login" className="mono text-[13px] text-[color:var(--color-ink-dim)] transition-colors hover:text-[color:var(--color-ink)]">Sign in</Link>
             <Link href="/install" className="btn-signal !px-4 !py-2 text-[13px]">Install now<span aria-hidden>→</span></Link>
           </div>
@@ -104,6 +105,10 @@ export default function Nav() {
             </Link>
           ))}
           <div className="mt-3 flex flex-col gap-3 border-t border-[color:var(--color-line)] pt-4">
+            <Link href="/app" onClick={() => setOpen(false)}
+               className="mono rounded-lg px-3 py-2 text-[14px] text-[color:var(--color-ink-dim)] transition-colors hover:text-[color:var(--color-ink)]">
+              Open OS
+            </Link>
             <Link href="/login" onClick={() => setOpen(false)}
                className="mono rounded-lg px-3 py-2 text-[14px] text-[color:var(--color-ink-dim)] transition-colors hover:text-[color:var(--color-ink)]">
               Sign in

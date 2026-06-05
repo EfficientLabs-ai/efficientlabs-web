@@ -124,8 +124,16 @@ body::after {
 .container-x { width: 100%; margin-inline: auto; max-width: 80rem; padding-inline: 1.5rem; }
 
 .aurora-text {
-  background: linear-gradient(100deg, var(--ink) 0%, var(--ink) 38%, var(--signal) 64%, var(--quantum) 100%);
+  background: linear-gradient(100deg, var(--ink) 0%, var(--ink) 26%, var(--signal) 50%, var(--quantum) 74%, var(--ink) 100%);
+  background-size: 220% auto;
   -webkit-background-clip: text; background-clip: text; color: transparent;
+  /* subtle, slow aurora drift across gradient headings — disabled under
+     prefers-reduced-motion by the global rule below. */
+  animation: aurora-drift 14s ease-in-out infinite;
+}
+@keyframes aurora-drift {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
 }
 
 /* ── CTA HIERARCHY — one solid primary, one outline secondary ────────── */

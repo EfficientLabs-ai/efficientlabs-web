@@ -159,10 +159,38 @@ const SURFACES = [
   "app/docs/[slug]/page.tsx",
   "data/docs.ts",
   "components/docs/ArticleBody.tsx",
+  // Atmosphere OS surface (/app) — the customer control plane. Every module page
+  // and the OS chrome carries copy describing capabilities, so it is policed too
+  // (added 2026-06-06 with the OS integration / nav→/app reachability).
+  "app/app/page.tsx",
+  "app/app/agents/page.tsx",
+  "app/app/workflows/page.tsx",
+  "app/app/projects/page.tsx",
+  "app/app/skills/page.tsx",
+  "app/app/integrations/page.tsx",
+  "app/app/memory/page.tsx",
+  "app/app/atmosphere/page.tsx",
+  "app/app/wallet/page.tsx",
+  "app/app/rewards/page.tsx",
+  "app/app/settings/page.tsx",
+  // OS components that carry copy but do NOT render status labels.
+  "components/os/ConnectRow.tsx",
+  "components/os/EmptyState.tsx",
+  "components/os/OsMobileDrawer.tsx",
+  "components/os/OsShell.tsx",
+  "components/os/OsSidebar.tsx",
+  "components/os/OsTopBar.tsx",
+  "components/os/StatPill.tsx",
+  "components/os/modules.ts",
+  "components/os/useOsSession.ts",
   // NOTE: components/acts/StatusMatrix.tsx, app/status/page.tsx, and
   // components/docs/StatusBadge.tsx are intentionally NOT scanned — they
   // RENDER the honest labels (the literal words Live/Wired/Mock) sourced from
   // status.json and would self-trip. They are the truth's renderers, not claims.
+  // For the same reason the OS status-label renderers are excluded:
+  // components/os/StatusChip.tsx, components/os/OsCard.tsx,
+  // components/os/ComingSoon.tsx, components/os/ModuleHeader.tsx — each wraps
+  // StatusBadge to print Live/Wired/Standalone/Mock and would self-trip.
 ];
 
 const LEVEL_LABEL = { wired: "Wired", standalone: "Standalone", mock: "Mock" };
