@@ -40,16 +40,16 @@ export default function Terminal({
   return (
     <div className="lm-card overflow-hidden text-left">
       {/* window chrome */}
-      <div className="flex items-center justify-between border-b border-[color:rgba(255,255,255,0.06)] px-4 py-3">
-        <div className="flex items-center gap-3">
-          <span className="flex gap-1.5">
+      <div className="flex items-center justify-between gap-2 border-b border-[color:rgba(255,255,255,0.06)] px-4 py-3">
+        <div className="flex min-w-0 items-center gap-3">
+          <span className="flex shrink-0 gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/70" />
           </span>
-          <span className="mono text-[12px] text-[color:var(--color-ink-faint)]">{title}</span>
+          <span className="mono truncate text-[12px] text-[color:var(--color-ink-faint)]">{title}</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-3">
           {tabs && (
             <div className="flex items-center gap-1 rounded-lg border border-[color:rgba(255,255,255,0.07)] p-0.5">
               {tabs.map((os) => (
@@ -77,9 +77,9 @@ export default function Terminal({
       {/* body */}
       <div className="mono space-y-1.5 px-5 py-5 text-[13px] leading-relaxed">
         {lines.map((l, i) => (
-          <div key={i} className="flex gap-2 whitespace-pre-wrap break-words">
-            {l.p && <span className="select-none text-[color:var(--color-signal)]">{l.p}</span>}
-            <span style={{ color: color(l.c) }}>{l.t}</span>
+          <div key={i} className="flex gap-2">
+            {l.p && <span className="shrink-0 select-none text-[color:var(--color-signal)]">{l.p}</span>}
+            <span className="min-w-0 whitespace-pre-wrap break-all" style={{ color: color(l.c) }}>{l.t}</span>
           </div>
         ))}
       </div>

@@ -22,7 +22,7 @@ export default function Capability() {
         more. The broker can hand a child a key to one door without giving it the building.
       </ActHeader>
 
-      <div className="mt-12 grid gap-5 md:grid-cols-2">
+      <div className="mt-12 grid gap-5 [&>*]:min-w-0 md:grid-cols-2">
         <Reveal delay={0.05}>
           <div className="h-full rounded-2xl border border-[#3a2030] bg-[#140c10]/60 p-6">
             <div className="flex items-center justify-between">

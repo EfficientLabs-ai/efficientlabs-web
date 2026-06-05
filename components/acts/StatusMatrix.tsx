@@ -80,12 +80,12 @@ export default function StatusMatrix() {
             transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1], delay: li * 0.05 }}
             className="lm-card overflow-hidden"
           >
-            <div className="grid gap-px md:grid-cols-[200px_1fr]">
+            <div className="grid gap-px md:grid-cols-[200px_minmax(0,1fr)]">
               <div className="flex items-center gap-3 px-5 py-4">
                 <span className="mono rounded-md border border-[color:var(--color-signal)]/30 bg-[color:var(--color-signal)]/[0.06] px-2 py-0.5 text-[12px] text-[color:var(--color-signal)]">{layer.id}</span>
                 <span className="text-[13px] font-medium text-[color:var(--color-ink)]">{layer.name}</span>
               </div>
-              <ul className="divide-y divide-[color:rgba(255,255,255,0.05)] border-t border-[color:rgba(255,255,255,0.05)] md:border-l md:border-t-0">
+              <ul className="min-w-0 divide-y divide-[color:rgba(255,255,255,0.05)] border-t border-[color:rgba(255,255,255,0.05)] md:border-l md:border-t-0">
                 {layer.caps.map((c) => (
                   <li key={c.name} className="flex items-center justify-between gap-4 px-5 py-3 transition-colors hover:bg-[color:rgba(255,255,255,0.02)]">
                     <div className="flex min-w-0 items-center gap-3">

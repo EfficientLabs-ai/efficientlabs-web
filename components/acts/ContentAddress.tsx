@@ -51,7 +51,7 @@ export default function ContentAddress() {
 
   return (
     <div className="space-y-12">
-      <div className="grid items-center gap-14 lg:grid-cols-2">
+      <div className="grid items-center gap-14 [&>*]:min-w-0 lg:grid-cols-2">
         <ActHeader index="01" kicker="Content addressing" title={<>Verify anything <span className="aurora-text">yourself</span>.</>}>
           Every skill, artifact and message is named by the SHA-256 of its bytes — so a name can
           never point to something it didn&apos;t mean. Edit the block; the address re-derives live in

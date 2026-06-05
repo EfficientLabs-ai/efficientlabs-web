@@ -48,7 +48,7 @@ export default function Install() {
           cloud. No VPS. Ever.</span>
         </ActHeader>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+        <div className="mt-12 grid gap-10 [&>*]:min-w-0 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           {/* terminal */}
           <Reveal>
             <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-signal)]/30 bg-[color:var(--color-signal)]/[0.07] px-3 py-1.5">
