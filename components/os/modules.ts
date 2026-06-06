@@ -30,6 +30,33 @@ export const OS_MODULES: OsModule[] = [
   { label: "Settings", href: "/app/settings", icon: Settings },
 ];
 
+/**
+ * Grouped sidebar layout (Attio pattern): uppercase mono section labels over
+ * dense 32px items. Same modules as OS_MODULES, partitioned by domain. Home sits
+ * ungrouped at the top (group: null), everything else slots under a section.
+ */
+export type OsNavGroup = { label: string | null; items: OsModule[] };
+
+export const OS_NAV_GROUPS: OsNavGroup[] = [
+  { label: null, items: [OS_MODULES[0]] }, // Home
+  {
+    label: "Workspace",
+    items: [OS_MODULES[1], OS_MODULES[2], OS_MODULES[3]], // Agents, Workflows, Projects
+  },
+  {
+    label: "Mesh",
+    items: [OS_MODULES[7], OS_MODULES[6]], // Atmosphere, Memory
+  },
+  {
+    label: "Skills",
+    items: [OS_MODULES[4], OS_MODULES[5]], // Skills, Integrations
+  },
+  {
+    label: "Account",
+    items: [OS_MODULES[8], OS_MODULES[9], OS_MODULES[10]], // Wallet, Rewards, Settings
+  },
+];
+
 /** Active-route test: exact for /app (Home), prefix for the rest. */
 export function isActiveModule(pathname: string | null, href: string): boolean {
   if (!pathname) return false;

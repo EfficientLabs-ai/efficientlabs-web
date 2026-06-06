@@ -14,10 +14,12 @@ import OsSidebar from "./OsSidebar";
 export default function OsMobileDrawer({
   open,
   email,
+  signedIn,
   onClose,
 }: {
   open: boolean;
   email: string | null;
+  signedIn?: boolean;
   onClose: () => void;
 }) {
   // Escape to close + scroll-lock while open.
@@ -60,7 +62,7 @@ export default function OsMobileDrawer({
             >
               <X size={18} />
             </button>
-            <OsSidebar email={email} onNavigate={onClose} />
+            <OsSidebar email={email} signedIn={signedIn} onNavigate={onClose} />
           </motion.aside>
         </div>
       )}

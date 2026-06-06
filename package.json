@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/honesty-guard.mjs",
+    "activity": "node scripts/build-activity-feed.mjs --check",
+    "prebuild": "node scripts/build-activity-feed.mjs && node scripts/honesty-guard.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

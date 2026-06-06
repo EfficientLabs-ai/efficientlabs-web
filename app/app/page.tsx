@@ -16,21 +16,25 @@ import {
   Download,
   Bell,
   Award,
+  ArrowRight,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useOs } from "@/components/os/useOsSession";
 import ModuleHeader from "@/components/os/ModuleHeader";
-import OsCard from "@/components/os/OsCard";
-import StatPill from "@/components/os/StatPill";
+import StatCard from "@/components/os/StatCard";
 import StatusChip from "@/components/os/StatusChip";
+import type { StatusLevel } from "@/data/docs";
 
 /**
- * Home — the OS command center. Honest overview: tiles backed by a live/wired
- * cap or static info read normally; everything that would need real account
- * data shows a Preview / empty / zero state — never a fabricated number.
+ * Home — the OS command center. Honest overview with a clean three-band
+ * hierarchy: (1) a dense StatCard row of account metrics — every figure that
+ * would need real account data shows "—"/"0" + an honest chip, never a
+ * fabricated number or delta; (2) a "System" board of what's actually live now;
+ * (3) a compact module grid. Surfaces are token-driven, so the page reads
+ * intentionally in both OS light and dark themes.
  */
 export default function AppHome() {
   const { email, signedIn } = useOs();
-  const locked = !signedIn;
 
   return (
     <div className="space-y-8">
@@ -53,110 +57,122 @@ export default function AppHome() {
         }
       />
 
-      {/* Honest overview metrics — no fabricated live data */}
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        <StatPill
-          icon={Cpu}
-          label="Active agents"
-          value={signedIn ? "Offline" : "—"}
-          sub={signedIn ? "no agent connected" : "preview"}
-          muted
-        />
-        <StatPill
-          icon={Workflow}
-          label="Running workflows"
-          value="0"
-          sub="none active"
-          muted
-        />
-        <StatPill
-          icon={Sparkles}
-          label="Skills learned"
-          value="—"
-          sub="self-evolution · narrow class"
-          muted
-        />
-        <StatPill
-          icon={Boxes}
-          label="Node status"
-          value="0 / 2"
-          sub="free tier · no nodes paired"
-          muted
-        />
-        <StatPill
-          icon={Bell}
-          label="Pending actions"
-          value="0"
-          sub="approval queue empty"
-          muted
-        />
-        <StatPill
-          icon={Award}
-          label="Contribution credits"
-          value="—"
-          sub="payouts not live"
-          muted
-        />
-      </div>
-
-      {/* Real-now informational chips */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <OsCard
-          icon={MessageSquare}
-          title="Channels"
-          stat="5"
-          statusLevel="live"
-          variant="data"
-          footer={
-            <span className="mono text-[11px] text-[color:var(--color-ink-faint)]">
-              Telegram · Discord · Slack · Matrix · Signal
-            </span>
-          }
-        >
-          One agent, every inbox. Five channel adapters started by the daemon.
-        </OsCard>
-        <OsCard
-          icon={Radio}
-          title="Inference routing"
-          statusLevel="live"
-          variant="data"
-          footer={
-            <span className="mono text-[11px] text-[color:var(--color-ink-faint)]">
-              Local for code · cloud for complex work
-            </span>
-          }
-        >
-          Local ⇄ cloud language routing through the BYOK cost gate.
-        </OsCard>
-        <OsCard
-          icon={Wallet}
-          title="Contribution"
-          variant="data"
-          footer={
-            <StatusChip level="mock" label="Payouts not live" />
-          }
-        >
-          Contribution tracking active · payouts not live. No figures shown.
-        </OsCard>
-      </div>
-
-      {/* Module shortcuts */}
-      <section>
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-[14px] font-semibold text-[color:var(--color-ink)]">Modules</h2>
-          {locked && <StatusChip tone="preview" />}
+      {/* ── Band 1 — account metrics (honest; no fabricated figures/deltas) ── */}
+      <section className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="mono text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-ink-faint)]">
+            Overview
+          </h2>
+          <StatusChip tone={signedIn ? "coming" : "preview"} label={signedIn ? "Live data when connected" : "Preview"} size="sm" />
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-3 grid-cols-2 lg:grid-cols-4">
+          <StatCard
+            icon={Cpu}
+            label="Active agents"
+            value={signedIn ? "Offline" : "—"}
+            statusLabel="no agent connected"
+            muted
+          />
+          <StatCard
+            icon={Workflow}
+            label="Running workflows"
+            value="0"
+            statusLabel="none active"
+            muted
+          />
+          <StatCard
+            icon={Boxes}
+            label="Nodes paired"
+            value="0 / 2"
+            statusLabel="free tier"
+            muted
+          />
+          <StatCard
+            icon={Bell}
+            label="Pending actions"
+            value="0"
+            statusLabel="queue empty"
+            muted
+          />
+          <StatCard
+            icon={Sparkles}
+            label="Skills learned"
+            value="—"
+            statusLabel="not measured"
+            muted
+          />
+          <StatCard
+            icon={Award}
+            label="Contribution credits"
+            value="—"
+            statusLevel="mock"
+            statusLabel="Payouts not live"
+            muted
+          />
+        </div>
+      </section>
+
+      {/* ── Band 2 — System: what's actually live now ── */}
+      <section className="space-y-3">
+        <h2 className="mono text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-ink-faint)]">
+          System
+        </h2>
+        <div className="overflow-hidden rounded-[var(--radius)] border border-[color:var(--color-line)] bg-[color:var(--color-void-2)]">
+          {SYSTEM_ROWS.map((row, i) => (
+            <div
+              key={row.title}
+              className={
+                "flex items-center gap-3 px-4 py-3" +
+                (i > 0 ? " border-t border-[color:var(--color-line)]" : "")
+              }
+            >
+              <div className="glass grid h-8 w-8 shrink-0 place-items-center rounded-lg text-[color:var(--color-signal)]">
+                <row.icon size={15} />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-[13px] font-medium text-[color:var(--color-ink)]">{row.title}</p>
+                <p className="mono truncate text-[11px] text-[color:var(--color-ink-faint)]">
+                  {row.detail}
+                </p>
+              </div>
+              {row.level ? (
+                <StatusChip level={row.level} label={row.chipLabel} size="sm" />
+              ) : (
+                <StatusChip tone="coming" label={row.chipLabel} size="sm" />
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Band 3 — modules ── */}
+      <section className="space-y-3">
+        <h2 className="mono text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-ink-faint)]">
+          Modules
+        </h2>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {MODULES.map((m) => (
-            <OsCard
+            <Link
               key={m.href}
               href={m.href}
-              icon={m.icon}
-              title={m.title}
-              variant="lm"
+              className="group flex items-start gap-3 rounded-[var(--radius)] border border-[color:var(--color-line)] bg-[color:var(--color-void-2)] p-4 transition-colors hover:border-[color:var(--color-signal)]/30"
             >
-              {m.body}
-            </OsCard>
+              <div className="glass grid h-9 w-9 shrink-0 place-items-center rounded-lg text-[color:var(--color-signal)]">
+                <m.icon size={16} />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="flex items-center gap-1 text-[13.5px] font-semibold text-[color:var(--color-ink)]">
+                  {m.title}
+                  <ArrowRight
+                    size={13}
+                    className="text-[color:var(--color-ink-faint)] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                  />
+                </p>
+                <p className="mt-0.5 text-[12.5px] leading-relaxed text-[color:var(--color-ink-dim)]">
+                  {m.body}
+                </p>
+              </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -170,15 +186,53 @@ export default function AppHome() {
   );
 }
 
+/** Live-now system rows — every entry is backed by a real status.json level. */
+type SystemRow = {
+  icon: LucideIcon;
+  title: string;
+  detail: string;
+  level: StatusLevel;
+  chipLabel?: string;
+};
+const SYSTEM_ROWS: SystemRow[] = [
+  {
+    icon: MessageSquare,
+    title: "Channels",
+    detail: "Telegram · Discord · Slack · Matrix · Signal",
+    level: "live" as const,
+    chipLabel: undefined,
+  },
+  {
+    icon: Radio,
+    title: "Inference routing",
+    detail: "Local for code · cloud for complex work · BYOK cost gate",
+    level: "live" as const,
+    chipLabel: undefined,
+  },
+  {
+    icon: Boxes,
+    title: "Atmosphere mesh",
+    detail: "Hyperswarm DHT + hole-punch · no open ports",
+    level: "wired" as const,
+    chipLabel: undefined,
+  },
+  {
+    icon: Award,
+    title: "Contribution",
+    detail: "Tracking active · payouts not live · no figures shown",
+    level: "mock" as const,
+    chipLabel: "Payouts not live",
+  },
+];
+
 const MODULES = [
-  { href: "/app/agents", icon: Cpu, title: "Agents", body: "Manage StratosAgent — identity, channels, routing." },
-  { href: "/app/workflows", icon: Workflow, title: "Workflows", body: "Capability isolation + the write-approval pipeline." },
+  { href: "/app/agents", icon: Cpu, title: "Agents", body: "StratosAgent — identity, channels, routing." },
+  { href: "/app/workflows", icon: Workflow, title: "Workflows", body: "Capability isolation + write-approval pipeline." },
   { href: "/app/projects", icon: FolderKanban, title: "Projects", body: "Group agents, skills, and runs into workspaces." },
   { href: "/app/skills", icon: Sparkles, title: "Skills", body: "Sealed, P2P-synced, self-evolving skills." },
   { href: "/app/integrations", icon: Plug, title: "Integrations", body: "Connect Gmail, GitHub, Notion, Slack, Drive…" },
   { href: "/app/memory", icon: Brain, title: "Memory", body: "Sealed agent memory — AES-GCM, keys zeroed." },
   { href: "/app/atmosphere", icon: Boxes, title: "Atmosphere", body: "Your private P2P mesh of paired devices." },
   { href: "/app/wallet", icon: Wallet, title: "Wallet", body: "Reserve contributor identity before rewards." },
-  { href: "/app/rewards", icon: Gift, title: "Rewards", body: "Contribution tracking · payouts not live." },
   { href: "/app/settings", icon: Settings, title: "Settings", body: "Account, BYOK keys, owner-gating, vault." },
 ];

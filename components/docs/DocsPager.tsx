@@ -14,6 +14,7 @@ export default function DocsPager({ slug }: { slug: string }) {
             <ArrowLeft size={13} aria-hidden /> Previous
           </span>
           <span className="text-[15px] font-semibold text-[color:var(--color-ink)]">{prev.title}</span>
+          <span className="mono text-[11px] text-[color:var(--color-ink-faint)]">{prev.group}</span>
         </a>
       ) : <span aria-hidden />}
 
@@ -23,6 +24,7 @@ export default function DocsPager({ slug }: { slug: string }) {
             Next <ArrowRight size={13} aria-hidden />
           </span>
           <span className="text-[15px] font-semibold text-[color:var(--color-ink)]">{next.title}</span>
+          <span className="mono text-[11px] text-[color:var(--color-ink-faint)]">{next.group}</span>
         </a>
       ) : <span aria-hidden />}
     </nav>

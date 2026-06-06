@@ -388,6 +388,34 @@ export const ARTICLES: Article[] = [
     ],
   },
 
+  // ── ECONOMY ──────────────────────────────────────────────────────────────
+  {
+    slug: "wallet-contribution",
+    title: "Wallet & contribution",
+    group: "Economy",
+    description:
+      "Connect a wallet to reserve a contributor identity and track Contribution Credits before rewards go live. Tracking is active; payouts are not.",
+    keywords: ["wallet", "contribution", "credits", "rewards", "payout", "economy", "tier", "pricing"],
+    updated: "2026-06-06",
+    blocks: [
+      { kind: "callout", variant: "planned", title: "Tracking active · payouts not live", text: "You can connect a wallet to reserve your contributor identity and track Contribution Credits today. Rewards and payouts are NOT live — the payout layer is counsel-gated and ships last. Nothing here is a promised financial return." },
+      { kind: "p", text: "Connecting a wallet is always optional and never required to use the product. We store a public address only — never a private key, never custody, never a deposit. Its only purpose is to attribute the contribution you make to the mesh so that, if and when a reward layer activates, your record already exists." },
+      { kind: "h2", id: "what-is-a-credit", text: "What a Contribution Credit is" },
+      { kind: "p", text: "A Contribution Credit is a transparent, receipt-backed record of contribution — compute you supplied to the mesh, and referrals that convert to paying subscribers. Credits are explicitly not money, not equity, and not a promised return. They are an accounting record governed by published program terms." },
+      { kind: "ul", items: [
+        "Compute supplied — measured by the capability-receipt rail (CPU / RAM / VRAM·time).",
+        "Referrals — single-level, credited only when the referred user becomes a paying subscriber.",
+        "Every credit is backed by a signed receipt you can audit — not a marketing number.",
+      ] },
+      { kind: "h2", id: "across-all-tiers", text: "Across every tier" },
+      { kind: "p", text: "Wallet connect and contribution tracking are available on all tiers — Free, Pro, Builder, Team, and Enterprise. Higher tiers scale node limits, skill publishing, and business controls; the contribution-accounting layer is the same everywhere." },
+      { kind: "h2", id: "settlement-status", text: "Settlement status" },
+      { kind: "p", text: "The economic / settlement layer is a scaffold today. Settlement records are designed to be offline-signed and never broadcast; there is no production payout path and no chain is touched. We will not describe payouts as anything other than not-live until the capability matrix says otherwise." },
+      { kind: "status", caps: ["Economic / on-chain settlement"] },
+      { kind: "callout", variant: "warning", title: "No return is promised", text: "We never say \"earn SOL today,\" \"guaranteed passive income,\" or \"invest in the Atmosphere.\" Contribution Credits are a record of contribution under published terms — not an investment, and not a guarantee of any payment." },
+    ],
+  },
+
   // ── FAQ ─────────────────────────────────────────────────────────────────
   {
     slug: "faq",
@@ -403,6 +431,7 @@ export const ARTICLES: Article[] = [
         { q: "Do you broadcast anything on-chain?", a: "No. Economic settlement is designed to be offline-signed and never broadcast, and today it is an explicit scaffold (Mock). Nothing is published to any chain." },
         { q: "What is real today?", a: "Check the published capability matrix at /#status. Anything not marked Live there is shown in these docs with a Wired, Standalone, or Mock badge — we do not call scaffolds shipped." },
         { q: "How do I report security issues?", a: "Email hello@efficientlabs.ai with details. Secrets are sealed in the Vault and outbound text is scrubbed of secret-shaped strings, but responsible disclosure is always welcome." },
+        { q: "Do I earn money or payouts by connecting a wallet?", a: "No — not today. You can connect a wallet to reserve a contributor identity and track Contribution Credits, but the reward / payout layer is not live (it is counsel-gated and ships last). Credits are a receipt-backed record of contribution under published terms, not money and not a promised return. See Wallet & contribution." },
       ] },
     ],
   },
@@ -417,6 +446,7 @@ export const NAV: NavGroup[] = [
   { label: "The Atmosphere", slugs: ["mesh-overview", "gossip-skill-sync", "economic-settlement"] },
   { label: "Integrations", slugs: ["channel-adapters", "inference-routing", "speech-vision", "acp"] },
   { label: "CLI reference", slugs: ["cli-overview", "cli-commands"] },
+  { label: "Economy", slugs: ["wallet-contribution"] },
   { label: "FAQ", slugs: ["faq"] },
 ];
 
@@ -438,15 +468,38 @@ export function getPager(slug: string): { prev?: Article; next?: Article } {
   };
 }
 
-/** Flat search index for the ⌘K palette. */
-export type SearchEntry = { slug: string; title: string; group: string; description: string; keywords: string[] };
-export const SEARCH_INDEX: SearchEntry[] = ARTICLES.map((a) => ({
-  slug: a.slug,
-  title: a.title,
-  group: a.group,
-  description: a.description,
-  keywords: a.keywords ?? [],
-}));
+/** Flat search index for the ⌘K palette. Page-level entries plus section-level
+ *  (h2/h3) entries so search can deep-link to an anchor within a page. */
+export type SearchEntry = {
+  slug: string;
+  title: string;
+  group: string;
+  description: string;
+  keywords: string[];
+  anchor?: string;   // present on section-level entries → /docs/{slug}#{anchor}
+  section?: string;  // the parent article title, shown as context
+};
+export const SEARCH_INDEX: SearchEntry[] = ARTICLES.flatMap((a) => {
+  const page: SearchEntry = {
+    slug: a.slug,
+    title: a.title,
+    group: a.group,
+    description: a.description,
+    keywords: a.keywords ?? [],
+  };
+  const sections: SearchEntry[] = a.blocks
+    .filter((b): b is Extract<Block, { kind: "h2" | "h3" }> => b.kind === "h2" || b.kind === "h3")
+    .map((h) => ({
+      slug: a.slug,
+      title: h.text,
+      group: a.group,
+      description: a.description,
+      keywords: a.keywords ?? [],
+      anchor: h.id,
+      section: a.title,
+    }));
+  return [page, ...sections];
+});
 
 /** Headings (h2/h3) for an article — drives the on-this-page TOC. */
 export type Heading = { id: string; text: string; level: 2 | 3 };

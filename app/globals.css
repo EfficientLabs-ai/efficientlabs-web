@@ -49,6 +49,103 @@
   --fs-small:     0.84rem;
 }
 
+/* ============================================================================
+   ATMOSPHERE OS — LIGHT THEME (additive, scoped)
+   The OS (/app only) is LIGHT-FIRST. OsShell sets data-theme="light" on its root
+   (#os-root) by default and "dark" when the user toggles. This block ONLY takes
+   effect inside that opted-in subtree, so the dark defaults above are untouched
+   and the marketing site (which never sets data-theme) stays dark.
+
+   It re-points BOTH the Tailwind @theme tokens (--color-*) AND the un-prefixed
+   aliases (--void/--ink/--signal/--quantum/--ink-dim) that some base CSS reads
+   directly, so every components/os/* surface — all of which read var(--color-*)
+   — flips cleanly with no hardcoded near-black left behind.
+   --signal / --quantum keep their hues for brand continuity.
+   ========================================================================== */
+[data-theme="light"] {
+  /* surfaces */
+  --color-void: #f7f9fc;          /* app canvas */
+  --color-void-2: #ffffff;        /* raised surfaces / cards */
+  /* ink */
+  --color-ink: #0e1726;           /* primary text */
+  --color-ink-dim: #55617a;       /* secondary */
+  --color-ink-faint: #8b97ad;     /* tertiary */
+  /* brand stays */
+  --color-signal: #2e8bff;
+  --color-signal-deep: #1769db;
+  --color-quantum: #2a9bd4;       /* slightly deepened so cyan reads on white */
+  /* lines */
+  --color-edge: #eef2f7;          /* hairline grid */
+  --color-line: #e6eaf1;          /* borders */
+
+  /* un-prefixed aliases used directly by base CSS (.kicker, body, buttons, …) */
+  --void: #f7f9fc;
+  --ink: #0e1726;
+  --ink-dim: #55617a;
+  --ink-faint: #8b97ad;
+  --signal: #2e8bff;
+  --quantum: #2a9bd4;
+
+  /* elevation: in light, soft shadows do the lifting that borders do in dark */
+  --border-hairline: 1px solid #e6eaf1;
+  --border-hairline-strong: 1px solid #d7deea;
+  --shadow-hud: 0 1px 2px rgba(16,23,38,0.04), 0 8px 24px -18px rgba(16,23,38,0.18);
+  --shadow-hud-lift: 0 1px 2px rgba(16,23,38,0.06), 0 18px 40px -22px rgba(46,139,255,0.28);
+}
+
+/* The OS root paints the light canvas itself (the marketing <body> stays dark). */
+.os-root[data-theme="light"] { background: var(--color-void); }
+
+/* Surface material re-skins for light — the dark versions use white-alpha fills
+   and white-alpha borders that vanish on a light canvas; restate them in solids. */
+[data-theme="light"] .glass {
+  background: linear-gradient(157deg, rgba(46,139,255,0.05), rgba(46,139,255,0.015) 60%);
+  border: 1px solid #e6eaf1;
+}
+[data-theme="light"] .data-card {
+  background: var(--color-void-2);
+  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-hud);
+}
+[data-theme="light"] .data-card.is-interactive:hover {
+  border-color: #cfd9e8;
+  box-shadow: var(--shadow-hud-lift);
+}
+[data-theme="light"] .lm-card {
+  background: var(--color-void-2);
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-hud);
+}
+/* the rotating chrome ring + dark top-glow read as grime on white — drop them */
+[data-theme="light"] .lm-card::before { display: none; }
+[data-theme="light"] .lm-card::after {
+  background: radial-gradient(125% 78% at 50% -12%, rgba(46,139,255,0.08), transparent 58%);
+  opacity: 1;
+}
+[data-theme="light"] .lm-card.is-interactive:hover {
+  border-color: #cfd9e8;
+  box-shadow: var(--shadow-hud-lift);
+}
+/* outline buttons: solid white fill + visible border on light */
+[data-theme="light"] .btn-outline {
+  background: var(--color-void-2);
+  border: 1px solid #d7deea;
+}
+[data-theme="light"] .btn-outline:hover {
+  background: #f1f5fb;
+  border-color: color-mix(in oklab, var(--signal) 45%, transparent);
+}
+/* primary CTA: blue stays, but text must be white on light (was near-black) */
+[data-theme="light"] .btn-signal { color: #ffffff; }
+/* sidebar nav hover used bg-white/5 — give it a token-aware tint instead */
+.os-nav-hover:hover { background: rgba(255,255,255,0.05); }
+[data-theme="light"] .os-nav-hover:hover { background: rgba(46,139,255,0.06); }
+/* scrollbar + selection inside the OS */
+[data-theme="light"] ::-webkit-scrollbar-track { background: var(--color-void); }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: #d7deea; }
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #c3cedd; }
+
 * { box-sizing: border-box; }
 html {
   scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;

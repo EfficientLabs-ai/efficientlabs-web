@@ -1,0 +1,358 @@
+{
+  "generatedAt": "2026-06-06T00:20:39.875Z",
+  "repos": [
+    {
+      "key": "web",
+      "label": "efficientlabs-web",
+      "present": true,
+      "commits": 20,
+      "newestAt": "2026-06-05T23:12:45.000Z"
+    },
+    {
+      "key": "core",
+      "label": "atmosphere-core",
+      "present": true,
+      "commits": 231,
+      "newestAt": "2026-06-06T00:05:51.000Z"
+    }
+  ],
+  "rollups": {
+    "totalCommits": 251,
+    "last7Days": 237,
+    "last30Days": 251,
+    "featuresShipped": 114,
+    "byType": {
+      "fix": 44,
+      "feat": 114,
+      "chore": 6,
+      "docs": 18,
+      "other": 60,
+      "test": 3,
+      "perf": 1,
+      "ci": 2,
+      "refactor": 3
+    }
+  },
+  "feed": [
+    {
+      "iso": "2026-06-06T08:05:51+08:00",
+      "date": "2026-06-06",
+      "subject": "fix(api-shim): shutdown handler — rename param shadowing the SignalAdapter (signal.stop TypeError)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix"
+    },
+    {
+      "iso": "2026-06-06T07:47:38+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(stratos): operating-core live tap — flag-gated, default-off, fail-open (deep phase increment 5)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T07:42:07+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(stratos): model-agnostic routing — policies + unified adapter (deep phase increment 4)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T07:35:13+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(stratos): self-improvement compression engine (deep phase increment 3)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T07:27:06+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(stratos): eval-engine (deep phase increment 2)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T07:16:00+08:00",
+      "date": "2026-06-06",
+      "subject": "feat: sovereign Composio adapter + operating-architecture layer (docs + files-first core)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T07:12:45+08:00",
+      "date": "2026-06-06",
+      "subject": "chore: deploy author verification [redacted]",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "chore"
+    },
+    {
+      "iso": "2026-06-06T07:11:38+08:00",
+      "date": "2026-06-06",
+      "subject": "docs: architecture + context-routing (operating architecture layer)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "docs"
+    },
+    {
+      "iso": "2026-06-06T06:22:44+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(web): Atmosphere OS at /app (11 honest modules) + mobile & motion polish",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T05:42:48+08:00",
+      "date": "2026-06-06",
+      "subject": "chore(web): add marketing ad images + commercial videos (own-your-ai, stop-paying-rent, efl-commercial 16x9/9x16)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "chore"
+    },
+    {
+      "iso": "2026-06-06T05:37:51+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(web): nav→standalone pages, ChatGPT-style /docs, mobile fixes",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T03:53:47+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(mesh): wallet attribution — every node's compute attributed to its owner Solana wallet",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T03:22:34+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(telegram): gemma4:e4b chat agent + persistent typing + token-streaming",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T03:15:39+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(mesh): origin records a signed capability receipt per verified job",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T02:32:38+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(content): sovereign content engine — infinite personal-brand + EL pipeline",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-05T13:43:29-04:00",
+      "date": "2026-06-05",
+      "subject": "Merge pull request #57 from EfficientLabs-ai/feat/phone-voice",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "other"
+    },
+    {
+      "iso": "2026-06-06T01:41:45+08:00",
+      "date": "2026-06-06",
+      "subject": "chore: rename btn-ghost utility to btn-outline (scrub 'ghost' from the surface)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "chore"
+    },
+    {
+      "iso": "2026-06-06T01:41:30+08:00",
+      "date": "2026-06-06",
+      "subject": "chore(secrecy): scrub private node tooling from the repo + drop stale audit framing",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "chore"
+    },
+    {
+      "iso": "2026-06-06T01:04:14+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(memory): dialectic user-modeling — the agent that grows with you (differentiator)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T00:54:46+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(security): policy-as-code egress firewall on the sandbox (top-3 #3, anti-exfiltration)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T00:44:18+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(automation): daily finance-digest to Telegram (council business-automation #1)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T00:38:21+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(ci): honesty-matrix guard — block deploy on any overclaim vs the status enum (council #3)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T00:32:53+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(demo): stratos demo — the wired '$0 bill' vertical-slice proof (council wedge)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T00:16:18+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(moat): Signed Capability Receipt — the cross-machine proof rail (council keystone)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-06T00:05:45+08:00",
+      "date": "2026-06-06",
+      "subject": "docs: master program-status ledger + council moat/automation roadmap",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs"
+    },
+    {
+      "iso": "2026-06-06T00:03:36+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(skills): SKILL.md / agentskills.io portability (top-3 #2, ecosystem moat)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-05T23:39:43+08:00",
+      "date": "2026-06-05",
+      "subject": "feat(voice): native open-source talk/hear/see — local, zero-cost, out-of-the-box",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-05T23:04:30+08:00",
+      "date": "2026-06-05",
+      "subject": "feat(memory): FTS5 cross-session memory search (top-3 feature #1, native)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-05T22:54:48+08:00",
+      "date": "2026-06-05",
+      "subject": "feat(model): consolidate to Gemma 4 — gemma2:2b fast default + gemma4:e4b multimodal; drop qwen",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-05T20:06:46+08:00",
+      "date": "2026-06-05",
+      "subject": "feat(voice): call StratosAgent over the phone via ElevenLabs Agents (Hermes pattern)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-05T19:52:57+08:00",
+      "date": "2026-06-05",
+      "subject": "feat(ui): T3 — Sovereign Path section + thesis depth",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-05T18:15:59+08:00",
+      "date": "2026-06-05",
+      "subject": "feat(ui): premium micro-interaction layer — subtle, GPU-cheap, reduced-motion-safe",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-05T18:09:09+08:00",
+      "date": "2026-06-05",
+      "subject": "feat(ui): T2 design-system consistency — Hybrid (aurora heroes + brutalist edges)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat"
+    },
+    {
+      "iso": "2026-06-05T15:20:40+08:00",
+      "date": "2026-06-05",
+      "subject": "fix(mobile): T1 parity — stop overflow in StatusMatrix, Terminal + grid sections",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "fix"
+    },
+    {
+      "iso": "2026-06-05T14:41:39+08:00",
+      "date": "2026-06-05",
+      "subject": "fix(mobile): show the full StratosAgent-in-space scene on mobile (responsive split)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "fix"
+    },
+    {
+      "iso": "2026-06-05T01:34:25-04:00",
+      "date": "2026-06-05",
+      "subject": "Merge pull request #56 from EfficientLabs-ai/feat/mesh-signal",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "other"
+    },
+    {
+      "iso": "2026-06-05T13:32:23+08:00",
+      "date": "2026-06-05",
+      "subject": "Merge remote-tracking branch 'origin/main' into feat/mesh-signal",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "other"
+    },
+    {
+      "iso": "2026-06-05T01:30:06-04:00",
+      "date": "2026-06-05",
+      "subject": "docs: North Star + reverse-engineered roadmap + CS/methodology research (file-architecture-first) (#51)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs"
+    },
+    {
+      "iso": "2026-06-05T02:15:47+08:00",
+      "date": "2026-06-05",
+      "subject": "fix(mesh): read fleet.json totals + add a mtime liveness gate (review finding #3)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix"
+    },
+    {
+      "iso": "2026-06-05T02:15:47+08:00",
+      "date": "2026-06-05",
+      "subject": "fix(routing): forward-port #55 (fast gemma2:2b local default) into the consolidated router",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix"
+    }
+  ]
+}

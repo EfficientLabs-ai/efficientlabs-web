@@ -141,6 +141,7 @@ const SURFACES = [
   "components/Solutions.tsx",
   "components/Differentiators.tsx",
   "components/Install.tsx",
+  "components/Pricing.tsx",
   "components/SovereignPath.tsx",
   "components/Footer.tsx",
   "components/acts/AtmosphereReveal.tsx",
@@ -154,6 +155,23 @@ const SURFACES = [
   "app/stratos/page.tsx",
   "app/architecture/page.tsx",
   "app/install/page.tsx",
+  // shared sub-page building blocks that carry marketing copy (added 2026-06-06
+  // with the full nav→sub-page wiring). The route pages above pass copy as props
+  // to these; we also scan the components themselves for any inline claim text.
+  // EXCLUDED: components/pages/StatusBadge.tsx + components/pages/StatusLegend.tsx
+  // — they RENDER the honest Live/Wired/Standalone/Mock labels (sourced from
+  // status.json via lib/status) and would self-trip, exactly like StatusMatrix.
+  "components/pages/SubPageHero.tsx",
+  "components/pages/SubPageCTA.tsx",
+  "components/pages/DeepSection.tsx",
+  "components/pages/DeepCard.tsx",
+  "components/pages/StepFlow.tsx",
+  "components/pages/InstallTerminal.tsx",
+  // NOTE: app/status/page.tsx and components/status/* (ActivityHeadline,
+  // LaunchProgress, ActivityFeed, activity.ts) are intentionally NOT scanned —
+  // they render the status matrix / status-derived progress + the generated
+  // activity feed, not free-form marketing claims, and would self-trip on the
+  // honest status labels. data/activity.json is generated data, never a claim.
   // docs surface — the largest body of claims, now policed
   "app/docs/page.tsx",
   "app/docs/[slug]/page.tsx",

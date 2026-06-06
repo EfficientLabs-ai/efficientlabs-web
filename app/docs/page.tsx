@@ -5,6 +5,7 @@ import {
   Network,
   Plug,
   SquareTerminal,
+  Wallet,
   HelpCircle,
   ArrowRight,
 } from "lucide-react";
@@ -24,6 +25,7 @@ const GROUP_META: Record<string, { icon: typeof Rocket; blurb: string }> = {
   "The Atmosphere": { icon: Network, blurb: "The peer-to-peer mesh: transport, skill-sync, and settlement." },
   "Integrations": { icon: Plug, blurb: "Channels, inference routing, and what is still a scaffold." },
   "CLI reference": { icon: SquareTerminal, blurb: "Command groups, flags, and per-command usage." },
+  "Economy": { icon: Wallet, blurb: "Wallet connect + Contribution Credits. Tracking is active; payouts are not live." },
   "FAQ": { icon: HelpCircle, blurb: "Straight answers about what is real today." },
 };
 

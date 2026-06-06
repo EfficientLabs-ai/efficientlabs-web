@@ -3,17 +3,21 @@
 // Keyboard: ⌘K/Ctrl-K open, Esc close, ↑↓ navigate, Enter go. No search dep.
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Search, CornerDownLeft } from "lucide-react";
+import { Search, CornerDownLeft, Hash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { SEARCH_INDEX, type SearchEntry } from "@/data/docs";
 
 function score(entry: SearchEntry, q: string): number {
+  const titleHit = entry.title.toLowerCase().includes(q);
   const hay = `${entry.title} ${entry.group} ${entry.description} ${entry.keywords.join(" ")}`.toLowerCase();
   if (!hay.includes(q)) return 0;
   let s = 1;
-  if (entry.title.toLowerCase().includes(q)) s += 5;
+  if (titleHit) s += 5;
   if (entry.title.toLowerCase().startsWith(q)) s += 3;
   if (entry.group.toLowerCase().includes(q)) s += 1;
+  // Section (anchored) entries only earn their keep on a title match; otherwise
+  // they'd flood results sharing the parent page's description/keywords.
+  if (entry.anchor && !titleHit) s -= 0.9;
   return s;
 }
 
@@ -31,7 +35,8 @@ export default function DocsSearch({
 
   const results = useMemo(() => {
     const query = q.trim().toLowerCase();
-    if (!query) return SEARCH_INDEX.slice(0, 6);
+    // empty query → page-level entries only (no section anchors), as a clean menu
+    if (!query) return SEARCH_INDEX.filter((e) => !e.anchor).slice(0, 6);
     return SEARCH_INDEX
       .map((e) => ({ e, s: score(e, query) }))
       .filter((x) => x.s > 0)
@@ -62,9 +67,9 @@ export default function DocsSearch({
   }, [reset, onClose]);
 
   const go = useCallback(
-    (slug: string) => {
+    (entry: SearchEntry) => {
       close();
-      router.push(`/docs/${slug}`);
+      router.push(entry.anchor ? `/docs/${entry.slug}#${entry.anchor}` : `/docs/${entry.slug}`);
     },
     [close, router]
   );
@@ -79,7 +84,7 @@ export default function DocsSearch({
     if (e.key === "Escape") { e.preventDefault(); close(); }
     else if (e.key === "ArrowDown") { e.preventDefault(); setSel((s) => Math.min(s + 1, results.length - 1)); }
     else if (e.key === "ArrowUp") { e.preventDefault(); setSel((s) => Math.max(s - 1, 0)); }
-    else if (e.key === "Enter") { e.preventDefault(); if (results[sel]) go(results[sel].slug); }
+    else if (e.key === "Enter") { e.preventDefault(); if (results[sel]) go(results[sel]); }
   };
 
   return (
@@ -129,19 +134,24 @@ export default function DocsSearch({
                 </li>
               )}
               {results.map((r, i) => (
-                <li key={r.slug} role="option" aria-selected={i === sel}>
+                <li key={`${r.slug}${r.anchor ? `#${r.anchor}` : ""}`} role="option" aria-selected={i === sel}>
                   <button
                     type="button"
                     onMouseEnter={() => setSel(i)}
-                    onClick={() => go(r.slug)}
+                    onClick={() => go(r)}
                     className="flex w-full items-center justify-between gap-3 rounded-[var(--radius-sm)] px-3 py-2.5 text-left transition-colors"
                     style={{
                       background: i === sel ? "color-mix(in oklab, var(--color-signal) 10%, transparent)" : "transparent",
                     }}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-[14px] text-[color:var(--color-ink)]">{r.title}</span>
-                      <span className="mono block truncate text-[11px] text-[color:var(--color-ink-faint)]">{r.group}</span>
+                      <span className="flex items-center gap-1.5 truncate text-[14px] text-[color:var(--color-ink)]">
+                        {r.anchor && <Hash size={12} aria-hidden className="shrink-0 text-[color:var(--color-ink-faint)]" />}
+                        {r.title}
+                      </span>
+                      <span className="mono block truncate text-[11px] text-[color:var(--color-ink-faint)]">
+                        {r.section ? `${r.section} · ${r.group}` : r.group}
+                      </span>
                     </span>
                     {i === sel && <CornerDownLeft size={14} aria-hidden className="shrink-0 text-[color:var(--color-signal)]" />}
                   </button>

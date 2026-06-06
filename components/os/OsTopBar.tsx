@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import Wordmark from "@/components/Wordmark";
+import ThemeToggle from "./ThemeToggle";
 
 /**
  * OsTopBar — sticky top bar. Mirrors the /dashboard header.
@@ -24,7 +25,7 @@ export default function OsTopBar({
   onOpenDrawer: () => void;
 }) {
   return (
-    <header className="sticky top-0 z-40 border-b border-[color:var(--color-line)] bg-[color:var(--color-void)]/80 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-[color:var(--color-line)] bg-[color:var(--color-void)]/85 backdrop-blur">
       <div className="flex items-center justify-between gap-2 px-4 py-3 sm:gap-3 sm:px-6">
         <div className="flex min-w-0 items-center gap-3">
           <button
@@ -40,6 +41,7 @@ export default function OsTopBar({
         </div>
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <ThemeToggle />
           <Link
             href="/app/wallet"
             title={
@@ -47,7 +49,7 @@ export default function OsTopBar({
                 ? "Contribution tracking active · Payouts not live"
                 : "Preview — sign in to track contribution"
             }
-            className="mono hidden items-center gap-1.5 rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-void-2)]/60 px-3 py-1.5 text-[11px] text-[color:var(--color-ink-dim)] hover:border-[color:var(--color-signal)]/30 hover:text-[color:var(--color-ink)] sm:inline-flex"
+            className="mono hidden items-center gap-1.5 rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-void-2)] px-3 py-1.5 text-[11px] text-[color:var(--color-ink-dim)] hover:border-[color:var(--color-signal)]/30 hover:text-[color:var(--color-ink)] sm:inline-flex"
           >
             <span
               aria-hidden
