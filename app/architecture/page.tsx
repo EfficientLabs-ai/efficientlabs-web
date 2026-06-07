@@ -57,6 +57,11 @@ export default function ArchitecturePage() {
           { k: "Transport", v: "P2P mesh" },
           { k: "Status", v: "From status.json" },
         ]}
+        media={{
+          video: "/video/thesis-architecture.mp4",
+          poster: "/img/thesis-architecture.png",
+          alt: "Software file-architecture rendered as luminous living infrastructure — data flowing through glowing directory modules and brushed-chrome conduits",
+        }}
       />
 
       {/* 01 — the layer model */}

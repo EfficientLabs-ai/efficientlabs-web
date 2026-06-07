@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { ChevronRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import MediaFrame, { type Media } from "@/components/pages/MediaFrame";
 
 /**
  * Standalone deep-page hero. Unlike the homepage acts, every nav sub-page opens
@@ -17,6 +18,7 @@ export default function SubPageHero({
   title,
   lede,
   facts,
+  media,
   children,
 }: {
   eyebrow: string;
@@ -24,6 +26,8 @@ export default function SubPageHero({
   title: ReactNode;
   lede: ReactNode;
   facts?: { k: string; v: string }[];
+  /** Optional cinematic media banner shown beneath the lede/facts. Additive. */
+  media?: Media;
   children?: ReactNode;
 }) {
   return (
@@ -80,6 +84,18 @@ export default function SubPageHero({
                 </div>
               ))}
             </dl>
+          </Reveal>
+        )}
+
+        {media && (
+          <Reveal delay={0.28}>
+            <div className="lm-card mt-12 overflow-hidden p-1.5">
+              <MediaFrame
+                {...media}
+                aspect={media.aspect ?? "aspect-[16/7]"}
+                className={`rounded-[var(--radius)] ${media.className ?? ""}`}
+              />
+            </div>
           </Reveal>
         )}
 

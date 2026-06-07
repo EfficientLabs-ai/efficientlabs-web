@@ -57,7 +57,7 @@ export default function Install() {
             </div>
             <div className="mt-4">
               <Terminal title="stratos — quickstart" tabs={["mac", "linux", "win"]} active={os}
-                onTab={(o) => setOs(o as typeof os)} lines={lines} />
+                onTab={(o) => setOs(o as typeof os)} lines={lines} perCommandCopy />
             </div>
             <div className="mt-6 flex flex-wrap gap-4">
               <a href="mailto:hello@efficientlabs.ai?subject=Early%20access%20—%20The%20Atmosphere" className="btn-signal">Install now<span aria-hidden>→</span></a>

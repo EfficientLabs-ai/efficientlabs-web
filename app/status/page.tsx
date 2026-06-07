@@ -3,6 +3,7 @@ import PageShell from "@/components/PageShell";
 import StatusMatrix from "@/components/acts/StatusMatrix";
 import ActivityHeadline from "@/components/status/ActivityHeadline";
 import LaunchProgress from "@/components/status/LaunchProgress";
+import CompletedCapabilities from "@/components/status/CompletedCapabilities";
 import ActivityFeed from "@/components/status/ActivityFeed";
 
 export const metadata: Metadata = {
@@ -25,12 +26,17 @@ export default function StatusPage() {
         <LaunchProgress />
       </section>
 
-      {/* ── 3 · the commit feed: what we shipped, most-recent first ── */}
+      {/* ── 3 · COMPLETED — what's live (Live + Wired caps, straight from data) ── */}
+      <section className="section scroll-mt-20 pt-0">
+        <CompletedCapabilities />
+      </section>
+
+      {/* ── 4 · the commit feed: the real, dated build log, most-recent first ── */}
       <section className="section scroll-mt-20 pt-0">
         <ActivityFeed />
       </section>
 
-      {/* ── 4 · the honest L0–L5 capability matrix (the original source of truth) ── */}
+      {/* ── 5 · the honest L0–L5 capability matrix (the original source of truth) ── */}
       <section className="section scroll-mt-20 pt-0">
         <StatusMatrix />
       </section>

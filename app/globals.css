@@ -8,9 +8,9 @@
 @theme {
   --color-void: #010207;          /* pure-black canvas (the wordmark bg) */
   --color-void-2: #080b12;        /* raised surfaces */
-  --color-ink: #eef2f7;           /* cool silver-white */
-  --color-ink-dim: #9ba7b6;       /* secondary */
-  --color-ink-faint: #5a6576;     /* tertiary */
+  --color-ink: #eef2f7;           /* cool silver-white — crisp primary/headings */
+  --color-ink-dim: #cdd7e4;       /* secondary — bright, ~12:1 on void, comfortably AA */
+  --color-ink-faint: #9aa7bc;     /* tertiary — lifted ~6:1 on void, passes AA body */
   --color-signal: #2e8bff;        /* electric azure blue — primary */
   --color-signal-deep: #1769db;   /* deeper blue for fills */
   --color-quantum: #5bc8ff;       /* bright sky-cyan — gradient sheen */
@@ -23,9 +23,25 @@
 }
 
 :root {
-  --void: #010207; --signal: #2e8bff; --quantum: #5bc8ff; --ink: #eef2f7; --ink-dim: #9ba7b6;
+  --void: #010207; --signal: #2e8bff; --quantum: #5bc8ff; --ink: #eef2f7;
+  --ink-dim: #cdd7e4; --ink-faint: #9aa7bc;
   /* brushed-chrome gradient for the wordmark + metallic accents */
   --chrome: linear-gradient(176deg, #ffffff 0%, #e9eef5 22%, #aab4c2 48%, #ffffff 56%, #8d99a8 72%, #dfe6ef 100%);
+
+  /* ── GLASS MATERIAL TOKENS (dark defaults) ───────────────────────────
+     The translucent fill is white-alpha on dark; the 1px inset top-highlight
+     gives the "lit glass edge"; saturate() keeps content behind glass vivid. */
+  --glass-blur: 18px;
+  --glass-sat: 175%;
+  --glass-fill: linear-gradient(157deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03) 62%);
+  --glass-border: 1px solid rgba(255,255,255,0.12);
+  /* layered: soft outer depth shadow + a clearly-visible 1px inset top highlight
+     (the "lit glass edge") + a faint inset hairline that defines the panel. */
+  --glass-shadow:
+    0 12px 40px -12px rgba(0,0,0,0.72),
+    0 2px 10px -6px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.14),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
 
   /* ── BRUTALIST EDGE TOKENS — sharp, HUD-style surfaces ─────────────── */
   --radius-xs: 4px;    /* chips, code inline */
@@ -68,8 +84,8 @@
   --color-void-2: #ffffff;        /* raised surfaces / cards */
   /* ink */
   --color-ink: #0e1726;           /* primary text */
-  --color-ink-dim: #55617a;       /* secondary */
-  --color-ink-faint: #8b97ad;     /* tertiary */
+  --color-ink-dim: #55617a;       /* secondary — ~6.9:1 */
+  --color-ink-faint: #5f6b80;     /* tertiary — nudged to pass AA body (~4.6:1) */
   /* brand stays */
   --color-signal: #2e8bff;
   --color-signal-deep: #1769db;
@@ -82,7 +98,7 @@
   --void: #f7f9fc;
   --ink: #0e1726;
   --ink-dim: #55617a;
-  --ink-faint: #8b97ad;
+  --ink-faint: #5f6b80;
   --signal: #2e8bff;
   --quantum: #2a9bd4;
 
@@ -91,38 +107,33 @@
   --border-hairline-strong: 1px solid #d7deea;
   --shadow-hud: 0 1px 2px rgba(16,23,38,0.04), 0 8px 24px -18px rgba(16,23,38,0.18);
   --shadow-hud-lift: 0 1px 2px rgba(16,23,38,0.06), 0 18px 40px -22px rgba(46,139,255,0.28);
+
+  /* ── GLASS MATERIAL TOKENS (light overrides) ─────────────────────────
+     On white you tint with the brand-ish neutral, not white-on-white which
+     vanishes; the inset highlight goes near-opaque white for a frosted lip. */
+  --glass-blur: 18px;
+  --glass-sat: 150%;
+  --glass-fill: linear-gradient(157deg, rgba(255,255,255,0.72), rgba(247,249,252,0.55) 62%);
+  --glass-border: 1px solid rgba(16,23,38,0.08);
+  --glass-shadow:
+    0 8px 28px -14px rgba(16,23,38,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.85),
+    inset 0 0 0 1px rgba(255,255,255,0.4);
 }
 
 /* The OS root paints the light canvas itself (the marketing <body> stays dark). */
 .os-root[data-theme="light"] { background: var(--color-void); }
 
-/* Surface material re-skins for light — the dark versions use white-alpha fills
-   and white-alpha borders that vanish on a light canvas; restate them in solids. */
-[data-theme="light"] .glass {
-  background: linear-gradient(157deg, rgba(46,139,255,0.05), rgba(46,139,255,0.015) 60%);
-  border: 1px solid #e6eaf1;
-}
-[data-theme="light"] .data-card {
-  background: var(--color-void-2);
-  border: 1px solid var(--color-line);
-  box-shadow: var(--shadow-hud);
-}
-[data-theme="light"] .data-card.is-interactive:hover {
-  border-color: #cfd9e8;
-  box-shadow: var(--shadow-hud-lift);
-}
-[data-theme="light"] .lm-card {
-  background: var(--color-void-2);
-  backdrop-filter: none; -webkit-backdrop-filter: none;
-  border: 1px solid var(--color-line);
-  box-shadow: var(--shadow-hud);
-}
-/* the rotating chrome ring + dark top-glow read as grime on white — drop them */
+/* Surface materials (.glass / .data-card / .lm-card) are now token-driven via
+   --glass-* and flip cleanly with the theme — no per-class light re-skin needed.
+   Only the liquid-metal chrome ring + dark top-glow read as grime on white, so
+   those decorative pseudo-elements are still toned down for light. */
 [data-theme="light"] .lm-card::before { display: none; }
 [data-theme="light"] .lm-card::after {
   background: radial-gradient(125% 78% at 50% -12%, rgba(46,139,255,0.08), transparent 58%);
   opacity: 1;
 }
+[data-theme="light"] .data-card.is-interactive:hover,
 [data-theme="light"] .lm-card.is-interactive:hover {
   border-color: #cfd9e8;
   box-shadow: var(--shadow-hud-lift);
@@ -136,8 +147,10 @@
   background: #f1f5fb;
   border-color: color-mix(in oklab, var(--signal) 45%, transparent);
 }
-/* primary CTA: blue stays, but text must be white on light (was near-black) */
-[data-theme="light"] .btn-signal { color: #ffffff; }
+/* primary CTA on light: white text needs the DEEPER blue to pass WCAG AA
+   (#fff on #2e8bff was ~3.4:1; on #1769db it's ~5:1). */
+[data-theme="light"] .btn-signal { background: var(--color-signal-deep); color: #ffffff; }
+[data-theme="light"] .btn-signal:hover { filter: brightness(1.08); }
 /* sidebar nav hover used bg-white/5 — give it a token-aware tint instead */
 .os-nav-hover:hover { background: rgba(255,255,255,0.05); }
 [data-theme="light"] .os-nav-hover:hover { background: rgba(46,139,255,0.06); }
@@ -145,6 +158,45 @@
 [data-theme="light"] ::-webkit-scrollbar-track { background: var(--color-void); }
 [data-theme="light"] ::-webkit-scrollbar-thumb { background: #d7deea; }
 [data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #c3cedd; }
+
+/* ============================================================================
+   .cinematic — escape hatch for sections that must stay DARK + dramatic even
+   when the site is in light mode (the WebGL hero + theatrical "act" sections).
+   Pure CSS scoping: re-points the tokens to their dark values locally so the
+   r3f canvas keeps its black backdrop and the surrounding copy reads on dark,
+   regardless of the <html> theme. No JS branching in the 3D code.
+   ========================================================================== */
+.cinematic,
+[data-theme="light"] .cinematic {
+  --void: #010207; --ink: #eef2f7; --ink-dim: #cdd7e4; --ink-faint: #9aa7bc;
+  --signal: #2e8bff; --quantum: #5bc8ff;
+  --color-void: #010207; --color-void-2: #080b12;
+  --color-ink: #eef2f7; --color-ink-dim: #cdd7e4; --color-ink-faint: #9aa7bc;
+  --color-edge: #16202e; --color-line: #0e1620;
+  --color-quantum: #5bc8ff;
+  --border-hairline: 1px solid rgba(255,255,255,0.08);
+  --border-hairline-strong: 1px solid rgba(255,255,255,0.14);
+  --shadow-hud: 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px -16px rgba(0,0,0,0.8);
+  --shadow-hud-lift: 0 1px 0 rgba(255,255,255,0.05), 0 18px 44px -24px rgba(46,139,255,0.4);
+  /* restore the (strengthened) dark glass recipe locally */
+  --glass-blur: 18px;
+  --glass-sat: 175%;
+  --glass-fill: linear-gradient(157deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03) 62%);
+  --glass-border: 1px solid rgba(255,255,255,0.12);
+  --glass-shadow:
+    0 12px 40px -12px rgba(0,0,0,0.72),
+    0 2px 10px -6px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.14),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+  background: var(--void); color: var(--ink);
+}
+/* re-enable the liquid-metal chrome ring inside cinematic sections even under
+   light mode (the light patch above hides it globally). */
+[data-theme="light"] .cinematic .lm-card::before { display: block; }
+[data-theme="light"] .cinematic .lm-card::after {
+  background: radial-gradient(125% 78% at 50% -12%, rgba(46,139,255,0.13), transparent 58%);
+  opacity: 0.45;
+}
 
 * { box-sizing: border-box; }
 html {
@@ -285,6 +337,36 @@ body::after {
 .marquee:hover .marquee-track { animation-play-state: paused; }
 
 /* ============================================================================
+   AURORA GLOWS — soft, blurred radial light pools placed BEHIND card grids so
+   the glass material has vivid content to frost (on flat near-black, glass is
+   invisible). Layers are pointer-events-none and sit at the back of a
+   position:relative section. Cyan + violet/azure, low opacity, large blur.
+   ========================================================================== */
+.aurora-field {
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none; overflow: hidden;
+}
+.aurora-field > .glow {
+  position: absolute; border-radius: 9999px;
+  filter: blur(120px);
+  will-change: transform;
+}
+.aurora-field > .glow-cyan {
+  background: radial-gradient(circle, var(--color-quantum), transparent 64%);
+  opacity: 0.16;
+}
+.aurora-field > .glow-azure {
+  background: radial-gradient(circle, var(--color-signal), transparent 64%);
+  opacity: 0.14;
+}
+.aurora-field > .glow-violet {
+  background: radial-gradient(circle, #7c5cff, transparent 64%);
+  opacity: 0.12;
+}
+/* light mode: aurora pools would muddy the white canvas — fade them right down */
+[data-theme="light"] .aurora-field > .glow { opacity: 0.05; }
+
+/* ============================================================================
    Glassmorphism + liquid-metal — the transparent/chrome SaaS surface language
    (same material story as the agent's glass chair + glass laptop)
    ========================================================================== */
@@ -295,22 +377,45 @@ body::after {
 @property --lm-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
 @keyframes lm-rotate { to { --lm-angle: 360deg; } }
 
-/* translucent frosted surface — kept for icon chips, tightened radius */
-.glass {
-  background: linear-gradient(157deg, rgba(255,255,255,0.05), rgba(255,255,255,0.012) 60%);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
-  border: var(--border-hairline);
+/* ── Token-driven frosted-glass materials — legible on BOTH light & dark ──
+   All three share the real-glass recipe: theme-aware translucent fill,
+   backdrop blur + saturate (saturate is non-negotiable or content goes muddy),
+   a 1px theme-aware border, and a layered shadow whose inset top-highlight is
+   the "lit glass edge". Light/dark values come from the --glass-* tokens. */
+.glass,
+.data-card,
+.lm-card {
+  background: var(--glass-fill);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
 }
 
-/* flat brutalist data surface — hairline border, crisp HUD elevation, no blur.
-   STATIC by default: no hover-lift. Opt into interactivity with `.is-interactive`
-   on cards that are actually links/clickable. */
+/* graceful fallback where backdrop-filter is unsupported — go opaque so text
+   never sits on a see-through panel (glass MUST degrade to solid). */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass, .data-card, .lm-card { background: var(--color-void-2); }
+  [data-theme="light"] .glass,
+  [data-theme="light"] .data-card,
+  [data-theme="light"] .lm-card { background: #ffffff; }
+}
+
+/* frosted nav material — a slightly stronger lip + heavier blur for the fixed
+   top chrome, sharing the same theme-aware tokens so it flips with the site. */
+.glass-nav {
+  background: var(--glass-fill);
+  backdrop-filter: blur(calc(var(--glass-blur) - 2px)) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) - 2px)) saturate(var(--glass-sat));
+  border-bottom: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* flat brutalist data surface — STATIC by default: no hover-lift. Opt into
+   interactivity with `.is-interactive` on cards that are actually clickable.
+   (fill/border/shadow inherited from the shared .glass material above.) */
 .data-card {
   position: relative; border-radius: var(--radius);
-  background: linear-gradient(157deg, rgba(255,255,255,0.025), rgba(255,255,255,0.006) 62%);
-  border: var(--border-hairline);
-  box-shadow: var(--shadow-hud);
   transition: transform 0.2s cubic-bezier(0.2,0.8,0.2,1), border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .data-card.is-interactive:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.16); box-shadow: var(--shadow-hud-lift); }
@@ -321,10 +426,7 @@ body::after {
 .lm-card {
   position: relative; isolation: isolate; overflow: hidden;
   border-radius: var(--radius-lg);
-  background: linear-gradient(157deg, rgba(255,255,255,0.045), rgba(255,255,255,0.01) 62%);
-  backdrop-filter: blur(12px) saturate(130%);
-  -webkit-backdrop-filter: blur(12px) saturate(130%);
-  border: var(--border-hairline);
+  /* fill/blur/border/shadow inherited from the shared .glass material above */
   transition: transform 0.2s cubic-bezier(0.2,0.8,0.2,1), border-color 0.2s ease, box-shadow 0.2s ease;
 }
 /* rotating conic chrome ring, masked to a 1px border */

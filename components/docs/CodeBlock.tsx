@@ -2,29 +2,9 @@
 // CodeBlock — language label + copy button. Optional tabbed variant. No syntax
 // highlighting dependency; plain monospace on a darker-than-page fill.
 import { useState } from "react";
-import { Copy, Check } from "lucide-react";
+import CopyButton from "@/components/CopyButton";
 
 type Tab = { label: string; lang: string; code: string };
-
-function CopyButton({ code }: { code: string }) {
-  const [copied, setCopied] = useState(false);
-  return (
-    <button
-      type="button"
-      onClick={() => {
-        navigator.clipboard?.writeText(code).then(() => {
-          setCopied(true);
-          setTimeout(() => setCopied(false), 1500);
-        });
-      }}
-      aria-label={copied ? "Copied" : "Copy code"}
-      className="mono inline-flex items-center gap-1.5 rounded-[var(--radius-xs)] border border-[color:var(--color-line)] px-2 py-1 text-[11px] text-[color:var(--color-ink-faint)] transition-colors hover:border-[color:var(--color-edge)] hover:text-[color:var(--color-ink-dim)]"
-    >
-      {copied ? <Check size={13} aria-hidden style={{ color: "var(--color-signal)" }} /> : <Copy size={13} aria-hidden />}
-      {copied ? "Copied" : "Copy"}
-    </button>
-  );
-}
 
 function Pre({ code }: { code: string }) {
   return (
@@ -74,7 +54,7 @@ export default function CodeBlock({
               </button>
             ))}
           </div>
-          <CopyButton code={cur.code} />
+          <CopyButton text={cur.code} ariaLabel="Copy code" />
         </div>
         <Pre code={cur.code} />
       </div>
@@ -90,7 +70,7 @@ export default function CodeBlock({
         <span className="mono text-[11px] uppercase tracking-wider text-[color:var(--color-ink-faint)]">
           {lang ?? "text"}
         </span>
-        <CopyButton code={code ?? ""} />
+        <CopyButton text={code ?? ""} ariaLabel="Copy code" />
       </div>
       <Pre code={code ?? ""} />
     </div>

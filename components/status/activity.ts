@@ -15,6 +15,8 @@ export type ActivityEntry = {
   repo: string;       // "web" | "core"
   repoLabel: string;  // human label, e.g. "atmosphere-core"
   type: CommitType;
+  hash: string;       // short sha (%h) for display — no PII, no secret
+  commitUrl: string;  // GitHub commit URL (may be "" if repoUrl/sha absent)
 };
 
 export type RepoMeta = {
@@ -23,6 +25,7 @@ export type RepoMeta = {
   present: boolean;
   commits: number;
   newestAt: string | null;
+  repoUrl: string;    // where this repo lives on GitHub (public at launch)
 };
 
 export type Rollups = {
@@ -30,7 +33,17 @@ export type Rollups = {
   last7Days: number;
   last30Days: number;
   featuresShipped: number;
+  activeDays: number;
   byType: Partial<Record<CommitType, number>>;
+};
+
+// A single calendar date's worth of commits from the rendered slice. Same data
+// as FEED, reorganised by the build script — never invented here.
+export type FeedDay = {
+  date: string;       // YYYY-MM-DD
+  count: number;      // commits landed that day (within the rendered slice)
+  byType: Partial<Record<CommitType, number>>;
+  commits: ActivityEntry[];
 };
 
 export type Activity = {
@@ -38,6 +51,7 @@ export type Activity = {
   repos: RepoMeta[];
   rollups: Rollups;
   feed: ActivityEntry[];
+  feedByDate: FeedDay[];
 };
 
 const activity = data as Activity;
@@ -46,6 +60,9 @@ export const GENERATED_AT = activity.generatedAt;
 export const REPOS = activity.repos;
 export const ROLLUPS = activity.rollups;
 export const FEED = activity.feed;
+// The same commits as FEED, grouped by date (newest date first). Falls back to
+// an empty array if an older activity.json (pre-grouping) is loaded.
+export const FEED_BY_DATE: FeedDay[] = activity.feedByDate ?? [];
 
 // Human-friendly labels + accent colors per conventional-commit type. Kept here
 // (presentation) rather than in the build script (data) so the artifact stays
@@ -68,3 +85,34 @@ export const TYPE_META: Record<CommitType, { label: string; color: string }> = {
 export function typeMeta(t: string) {
   return TYPE_META[(t as CommitType)] ?? TYPE_META.other;
 }
+
+// ── Public product repos (the "View on GitHub" buttons) ──────────────────────
+// These are the repos we point the public at. They are intentionally listed by
+// hand (not derived from the activity feed) because the feed is built from the
+// LOCAL working copies (efficientlabs-web + atmosphere-core), whereas these are
+// the product-facing GitHub repos we want visitors to be able to open.
+//
+// HONESTY: every one of these 404s until we flip the repo public at launch. We
+// say so on the page rather than hiding the buttons — a dead link that we label
+// "public at launch" is more honest than pretending the code isn't there.
+export const GITHUB_ORG = "EfficientLabs-ai";
+
+export type PublicRepo = { name: string; url: string; blurb: string };
+
+export const PUBLIC_REPOS: PublicRepo[] = [
+  {
+    name: "TheAtmosphere",
+    url: `https://github.com/${GITHUB_ORG}/TheAtmosphere`,
+    blurb: "The sovereign P2P mesh + agent runtime.",
+  },
+  {
+    name: "StratosAgent",
+    url: `https://github.com/${GITHUB_ORG}/StratosAgent`,
+    blurb: "The local-first, model-agnostic agent.",
+  },
+  {
+    name: "atmosphere-core",
+    url: `https://github.com/${GITHUB_ORG}/atmosphere-core`,
+    blurb: "Core libraries — the engine room.",
+  },
+];

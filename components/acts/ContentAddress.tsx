@@ -99,6 +99,7 @@ export default function ContentAddress() {
           active={os}
           onTab={(o) => setOs(o as typeof os)}
           lines={osLines(os, hash)}
+          perCommandCopy
           copyText={
             os === "win" ? "Get-FileHash skill.json -Algorithm SHA256"
             : os === "linux" ? "sha256sum skill.json"

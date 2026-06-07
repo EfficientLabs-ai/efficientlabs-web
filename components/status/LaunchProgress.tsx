@@ -1,32 +1,79 @@
 "use client";
 import { motion, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/Reveal";
-import { LAYERS } from "@/lib/status";
+import { LAYERS, type Level } from "@/lib/status";
 
 /**
- * Launch progress — an HONEST progress bar toward "everything Live".
+ * Launch progress — an HONEST production-readiness number, derived entirely from
+ * the capability matrix in data/status.json. There is NO hardcoded percentage.
  *
- * The denominator is every capability the status matrix tracks. The numerator
- * is what is actually running: Live capabilities count as fully done (1.0),
- * Wired as partial (0.5, since they're built + connected but still hardening).
- * Standalone/Mock count as 0 toward "live in production". This is derived purely
- * from data/status.json (via lib/status) — the same source the matrix renders,
- * so the bar can never claim more than the matrix admits.
+ * METHODOLOGY (auditable on the page itself)
+ * ------------------------------------------
+ * Every capability the matrix tracks contributes to the denominator. Each tier
+ * earns partial credit toward "live in production", reflecting how close it
+ * actually is to being real for a user:
  *
- * We label the methodology inline so the number is auditable, not magic.
+ *   Live       → 1.00  running in production, exercised by tests
+ *   Wired      → 0.50  built + connected, still hardening
+ *   Standalone → 0.25  proven in isolation, live wiring supervised
+ *   Mock       → 0.00  scaffold / placeholder — explicitly not real
+ *
+ * The percentage is round(Σ weight ÷ count). Because it is computed from the
+ * same enum the matrix renders, the bar can never claim more than the matrix
+ * admits — and if a capability slips from "live" to "wired", the number drops
+ * automatically on the next build. No fabrication, in either direction.
  */
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
+// Per-tier weight toward "live in production". Standalone earns a quarter: the
+// capability is proven but its production wiring is still supervised, so it is
+// honestly partway — not zero, not half.
+const WEIGHTS: Record<Level, number> = {
+  live: 1,
+  wired: 0.5,
+  standalone: 0.25,
+  mock: 0,
+};
+
 const ALL = LAYERS.flatMap((l) => l.caps);
 const TOTAL = ALL.length;
-const LIVE = ALL.filter((c) => c.level === "live").length;
-const WIRED = ALL.filter((c) => c.level === "wired").length;
 
-// Weighted "in production" progress: live = 1, wired = 0.5, rest = 0.
-const WEIGHTED = LIVE * 1 + WIRED * 0.5;
+const COUNTS: Record<Level, number> = {
+  live: ALL.filter((c) => c.level === "live").length,
+  wired: ALL.filter((c) => c.level === "wired").length,
+  standalone: ALL.filter((c) => c.level === "standalone").length,
+  mock: ALL.filter((c) => c.level === "mock").length,
+};
+
+// Weighted readiness — the single honest number, computed not hardcoded.
+const WEIGHTED =
+  COUNTS.live * WEIGHTS.live +
+  COUNTS.wired * WEIGHTS.wired +
+  COUNTS.standalone * WEIGHTS.standalone +
+  COUNTS.mock * WEIGHTS.mock;
 const PCT = TOTAL > 0 ? Math.round((WEIGHTED / TOTAL) * 100) : 0;
-const LIVE_PCT = TOTAL > 0 ? Math.round((LIVE / TOTAL) * 100) : 0;
+
+// Each tier's share of the bar width, so the stacked track mirrors the math.
+const PCT_BY: Record<Level, number> = {
+  live: TOTAL > 0 ? (COUNTS.live * WEIGHTS.live) / TOTAL * 100 : 0,
+  wired: TOTAL > 0 ? (COUNTS.wired * WEIGHTS.wired) / TOTAL * 100 : 0,
+  standalone: TOTAL > 0 ? (COUNTS.standalone * WEIGHTS.standalone) / TOTAL * 100 : 0,
+  mock: 0,
+};
+
+// Cumulative left-offsets for the stacked segments.
+const OFFSET_WIRED = PCT_BY.live;
+const OFFSET_STANDALONE = PCT_BY.live + PCT_BY.wired;
+
+type TierVisual = { level: Level; label: string; color: string; weightLabel: string };
+
+const TIERS: TierVisual[] = [
+  { level: "live", label: "Live", color: "var(--color-signal)", weightLabel: "×1.0" },
+  { level: "wired", label: "Wired", color: "#86c5ff", weightLabel: "×0.5" },
+  { level: "standalone", label: "Standalone", color: "#c9a24b", weightLabel: "×0.25" },
+  { level: "mock", label: "Mock", color: "#5b6675", weightLabel: "×0" },
+];
 
 export default function LaunchProgress() {
   const reduced = useReducedMotion();
@@ -46,48 +93,63 @@ export default function LaunchProgress() {
               {PCT}%
             </span>
             <p className="mono mt-1 text-[11px] text-[color:var(--color-ink-faint)]">
-              {LIVE}/{TOTAL} live · {WIRED} wired
+              {COUNTS.live}/{TOTAL} live · {COUNTS.wired} wired · {COUNTS.standalone} standalone
             </p>
           </div>
         </div>
 
-        {/* track: a base "live" fill + a lighter "wired" extension, honest about
-            the two-tier weighting. */}
+        {/* Stacked track: one segment per partially-credited tier, widths exactly
+            equal to each tier's weighted contribution. The bar literally is the
+            arithmetic — nothing is decorative. */}
         <div className="relative mt-5 h-3 w-full overflow-hidden rounded-full bg-[color:rgba(255,255,255,0.05)]">
-          {/* live portion (solid signal) */}
           <motion.div
             className="absolute inset-y-0 left-0 rounded-full"
             style={{ background: "var(--color-signal)" }}
             initial={reduced ? false : { width: 0 }}
-            whileInView={reduced ? undefined : { width: `${LIVE_PCT}%` }}
+            whileInView={reduced ? undefined : { width: `${PCT_BY.live}%` }}
             viewport={{ once: true }}
             transition={{ duration: 0.9, ease: EASE, delay: 0.15 }}
           />
-          {/* wired half-weight extension (lighter, layered on top from the live edge) */}
           <motion.div
-            className="absolute inset-y-0 rounded-full opacity-60"
-            style={{ left: `${LIVE_PCT}%`, background: "#86c5ff" }}
+            className="absolute inset-y-0 rounded-full opacity-70"
+            style={{ left: `${OFFSET_WIRED}%`, background: "#86c5ff" }}
             initial={reduced ? false : { width: 0 }}
-            whileInView={reduced ? undefined : { width: `${PCT - LIVE_PCT}%` }}
+            whileInView={reduced ? undefined : { width: `${PCT_BY.wired}%` }}
             viewport={{ once: true }}
-            transition={{ duration: 0.9, ease: EASE, delay: 0.35 }}
+            transition={{ duration: 0.9, ease: EASE, delay: 0.3 }}
+          />
+          <motion.div
+            className="absolute inset-y-0 rounded-full opacity-70"
+            style={{ left: `${OFFSET_STANDALONE}%`, background: "#c9a24b" }}
+            initial={reduced ? false : { width: 0 }}
+            whileInView={reduced ? undefined : { width: `${PCT_BY.standalone}%` }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, ease: EASE, delay: 0.45 }}
           />
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
-          <span className="mono inline-flex items-center gap-1.5 text-[11px] text-[color:var(--color-ink-faint)]">
-            <span className="h-2 w-2 rounded-full" style={{ background: "var(--color-signal)" }} />
-            Live counts full
-          </span>
-          <span className="mono inline-flex items-center gap-1.5 text-[11px] text-[color:var(--color-ink-faint)]">
-            <span className="h-2 w-2 rounded-full opacity-60" style={{ background: "#86c5ff" }} />
-            Wired counts half (still hardening)
-          </span>
+        {/* Per-tier breakdown — the full arithmetic, on the page, no magic. */}
+        <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-2.5 sm:grid-cols-4">
+          {TIERS.map((t) => (
+            <div key={t.level} className="flex items-center gap-2">
+              <span
+                className="h-2 w-2 shrink-0 rounded-full"
+                style={{ background: t.color }}
+              />
+              <span className="mono text-[11px] text-[color:var(--color-ink-dim)]">
+                {COUNTS[t.level]} {t.label}
+                <span className="ml-1 text-[color:var(--color-ink-faint)]">{t.weightLabel}</span>
+              </span>
+            </div>
+          ))}
         </div>
 
         <p className="mt-4 text-[12px] leading-relaxed text-[color:var(--color-ink-faint)]">
-          Derived from the matrix below — Live capabilities weigh 1.0, Wired 0.5,
-          Standalone and Mock 0. The bar can never claim more than the matrix admits.
+          Computed from the matrix below, not hand-set: each capability is weighted
+          by tier — Live 1.0, Wired 0.5, Standalone 0.25, Mock 0 — and the score is
+          the weighted sum over all {TOTAL} capabilities ({WEIGHTED} ÷ {TOTAL}). If a
+          capability changes tier, this number moves on the next build. It can never
+          claim more than the matrix admits.
         </p>
       </div>
     </Reveal>

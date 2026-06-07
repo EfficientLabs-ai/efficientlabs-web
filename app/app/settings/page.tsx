@@ -12,10 +12,13 @@ import {
 import { CapStatus } from "@/components/docs/StatusBadge";
 import { supabase } from "@/lib/supabase";
 import { useOs } from "@/components/os/useOsSession";
+import { useOsPrefs } from "@/components/os/useOsPrefs";
 import ModuleHeader from "@/components/os/ModuleHeader";
 import OsCard from "@/components/os/OsCard";
 import ConnectRow from "@/components/os/ConnectRow";
 import ComingSoon from "@/components/os/ComingSoon";
+import CustomizePanel from "@/components/os/CustomizePanel";
+import AdvancedControls from "@/components/os/AdvancedControls";
 
 // BYOK model sources — keys are sealed locally and never leave the machine.
 const KEY_PROVIDERS = [
@@ -36,6 +39,7 @@ const CHANNELS = [
 
 export default function SettingsPage() {
   const { email, signedIn } = useOs();
+  const { prefs } = useOsPrefs();
 
   return (
     <div className="space-y-8">
@@ -43,11 +47,33 @@ export default function SettingsPage() {
         kicker="Settings"
         title={
           <>
-            Account &amp; <span className="aurora-text">keys</span>
+            Customize &amp; <span className="aurora-text">account</span>
           </>
         }
-        description="Your account, BYOK model sources, channels, and owner controls. Keys are sealed locally, command authority fails closed, and nothing is shown as connected until it really is."
+        description="Tune the OS to your liking — theme, accent, density, and your Home layout — then manage account, BYOK keys, channels, and owner controls. Customization is client-side and persisted to your browser; nothing is shown as connected until it really is."
       />
+
+      {/* Customize — the customization hub. All client-side + persisted. */}
+      <section id="customize" className="scroll-mt-20 space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-[14px] font-semibold text-[color:var(--color-ink)]">Customize</h2>
+          <span className="mono text-[11px] text-[color:var(--color-ink-faint)]">
+            Saved to this browser
+          </span>
+        </div>
+        <OsCard variant="data">
+          <CustomizePanel />
+        </OsCard>
+      </section>
+
+      {/* Advanced controls — only when Advanced mode is on (set above). */}
+      {prefs.advanced && (
+        <section className="space-y-4">
+          <OsCard variant="data">
+            <AdvancedControls signedIn={signedIn} />
+          </OsCard>
+        </section>
+      )}
 
       {/* Account */}
       <section className="space-y-3">

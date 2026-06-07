@@ -103,9 +103,11 @@ const TIERS: Tier[] = [
 export default function Pricing() {
   return (
     <section className="relative overflow-hidden pt-36 pb-28">
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-10 h-[30rem] w-[46rem] -translate-x-1/2 rounded-full opacity-[0.12] blur-[130px]"
-             style={{ background: "radial-gradient(circle, var(--color-signal), transparent 62%)" }} />
+      {/* aurora glows — give the tier cards' glass vivid light to frost */}
+      <div aria-hidden className="aurora-field">
+        <div className="glow glow-azure left-1/2 top-4 h-[30rem] w-[46rem] -translate-x-1/2" />
+        <div className="glow glow-cyan -left-20 top-[26rem] h-[26rem] w-[34rem]" />
+        <div className="glow glow-violet -right-16 top-[20rem] h-[28rem] w-[34rem]" />
       </div>
 
       <div className="relative mx-auto max-w-[84rem] px-6">

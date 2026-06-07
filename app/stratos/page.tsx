@@ -45,6 +45,11 @@ export default function StratosPage() {
           { k: "Authority", v: "Owner-gated" },
           { k: "Channels", v: "5 adapters" },
         ]}
+        media={{
+          video: "/video/stratos-wave.mp4",
+          poster: "/img/stratos-b.png",
+          alt: "StratosAgent rendered as a luminous waveform over hardware, signalling an agent running on metal you own",
+        }}
       />
 
       {/* 01 — what it does */}

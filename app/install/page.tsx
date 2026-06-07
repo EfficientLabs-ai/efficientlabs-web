@@ -12,6 +12,7 @@ import StatusLegend from "@/components/pages/StatusLegend";
 import SubPageCTA from "@/components/pages/SubPageCTA";
 import InstallTerminal from "@/components/pages/InstallTerminal";
 import StatusBadge from "@/components/pages/StatusBadge";
+import CopyButton from "@/components/CopyButton";
 import { Reveal } from "@/components/Reveal";
 
 export const metadata: Metadata = {
@@ -46,6 +47,11 @@ export default function InstallPage() {
           { k: "Keys", v: "Local · sealed" },
           { k: "Account", v: "None required" },
         ]}
+        media={{
+          video: "/video/mkt-datacenter.mp4",
+          poster: "/img/ops-backdrop.jpg",
+          alt: "A calm, slow pan through racks of owned hardware coming online — the metal a sovereign node runs on",
+        }}
       />
 
       {/* 01 — quickstart terminal */}
@@ -89,8 +95,8 @@ export default function InstallPage() {
           <StepFlow
             steps={[
               { title: "Fetch & verify the runtime", body: "The installer downloads the Atmosphere runtime and verifies it before anything runs. No background service is exposed to the network." },
-              { title: "Mint local keys", body: <>On <code className="rounded bg-[color:var(--color-void-2)] px-1 py-0.5 text-[12px]">stratos init</code> the node generates its keypair on-device and seals private keys in the vault (AES-GCM, memory-wiped). Keys never leave the machine.</> },
-              { title: "Join the mesh", body: <>On <code className="rounded bg-[color:var(--color-void-2)] px-1 py-0.5 text-[12px]">stratos up</code> the node announces on the public DHT and hole-punches to peers — all outbound. No inbound port is ever opened.</> },
+              { title: "Mint local keys", body: <>On <span className="inline-flex items-center gap-1 align-middle"><code className="rounded bg-[color:var(--color-void-2)] px-1 py-0.5 text-[12px]">stratos init</code><CopyButton text="stratos init" variant="icon" ariaLabel="Copy command: stratos init" /></span> the node generates its keypair on-device and seals private keys in the vault (AES-GCM, memory-wiped). Keys never leave the machine.</> },
+              { title: "Join the mesh", body: <>On <span className="inline-flex items-center gap-1 align-middle"><code className="rounded bg-[color:var(--color-void-2)] px-1 py-0.5 text-[12px]">stratos up</code><CopyButton text="stratos up" variant="icon" ariaLabel="Copy command: stratos up" /></span> the node announces on the public DHT and hole-punches to peers — all outbound. No inbound port is ever opened.</> },
               { title: "Come online across channels", body: "Once meshed, the agent is reachable on the channels you configure — the same StratosAgent behind every front door." },
             ]}
           />

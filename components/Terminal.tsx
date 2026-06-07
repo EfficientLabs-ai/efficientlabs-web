@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
+import CopyButton from "@/components/CopyButton";
 
 export type TermLine = { p?: string; t: string; c?: "cmd" | "out" | "ok" | "dim" | "hash" };
 
@@ -13,6 +14,7 @@ export default function Terminal({
   onTab,
   lines,
   copyText,
+  perCommandCopy = false,
 }: {
   title?: string;
   tabs?: string[];
@@ -20,6 +22,8 @@ export default function Terminal({
   onTab?: (os: string) => void;
   lines: TermLine[];
   copyText?: string;
+  /** When true, every `cmd` line gets its OWN one-click copy button that copies exactly that line. */
+  perCommandCopy?: boolean;
 }) {
   const [copied, setCopied] = useState(false);
   const copy = async () => {
@@ -76,12 +80,23 @@ export default function Terminal({
 
       {/* body */}
       <div className="mono space-y-1.5 px-5 py-5 text-[13px] leading-relaxed">
-        {lines.map((l, i) => (
-          <div key={i} className="flex gap-2">
-            {l.p && <span className="shrink-0 select-none text-[color:var(--color-signal)]">{l.p}</span>}
-            <span className="min-w-0 whitespace-pre-wrap break-all" style={{ color: color(l.c) }}>{l.t}</span>
-          </div>
-        ))}
+        {lines.map((l, i) => {
+          const isCmd = l.c === "cmd";
+          return (
+            <div key={i} className="group flex items-start gap-2">
+              {l.p && <span className="shrink-0 select-none text-[color:var(--color-signal)]">{l.p}</span>}
+              <span className="min-w-0 flex-1 whitespace-pre-wrap break-all" style={{ color: color(l.c) }}>{l.t}</span>
+              {perCommandCopy && isCmd && (
+                <CopyButton
+                  text={l.t}
+                  variant="icon"
+                  ariaLabel={`Copy command: ${l.t}`}
+                  className="mt-px opacity-60 transition-opacity hover:opacity-100 group-hover:opacity-100 focus-visible:opacity-100"
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

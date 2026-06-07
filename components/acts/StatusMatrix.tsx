@@ -27,7 +27,14 @@ function Badge({ level }: { level: Level }) {
 
 export default function StatusMatrix() {
   return (
-    <div>
+    <div className="relative">
+      {/* aurora glows behind the status cards so their glass reads as frosted */}
+      <div aria-hidden className="aurora-field">
+        <div className="glow glow-azure left-1/2 top-20 h-[28rem] w-[44rem] -translate-x-1/2" />
+        <div className="glow glow-cyan -left-24 top-[34rem] h-[26rem] w-[32rem]" />
+        <div className="glow glow-violet -right-20 top-[40rem] h-[26rem] w-[32rem]" />
+      </div>
+      <div className="relative z-10">
       <ActHeader index="05" kicker="The honest status" title={<>What&apos;s real. What&apos;s <span className="aurora-text">not yet</span>.</>}>
         Most infrastructure pages show you a roadmap and call it a product. This one shows you the
         running system — every capability labelled <em>Live</em>, <em>Wired</em>, <em>Standalone</em>,
@@ -102,6 +109,7 @@ export default function StatusMatrix() {
             </div>
           </motion.div>
         ))}
+      </div>
       </div>
     </div>
   );

@@ -60,6 +60,7 @@ export default function InstallTerminal() {
           onTab={(o) => setOs(o as typeof os)}
           lines={lines}
           copyText={COPY[os]}
+          perCommandCopy
         />
       </div>
       <p className="mono mt-3 text-[11px] leading-relaxed text-[color:var(--color-ink-faint)]">

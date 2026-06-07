@@ -106,6 +106,9 @@ export default function ActivityHeadline() {
         <Reveal delay={0.2}>
           <p className="mono mt-4 text-[11px] text-[color:var(--color-ink-faint)]">
             {newest && <>last commit {newest.slice(0, 10)} · </>}
+            {ROLLUPS.activeDays > 0 && (
+              <>{ROLLUPS.activeDays} active day{ROLLUPS.activeDays === 1 ? "" : "s"} in the log · </>
+            )}
             feed generated {GENERATED_AT.slice(0, 10)}
           </p>
         </Reveal>

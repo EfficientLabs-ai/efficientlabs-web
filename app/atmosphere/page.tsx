@@ -47,6 +47,11 @@ export default function AtmospherePage() {
           { k: "Discovery", v: "Public DHT" },
           { k: "Trust", v: "Post-quantum" },
         ]}
+        media={{
+          video: "/video/mkt-mesh.mp4",
+          poster: "/img/launch-reveal-wide.png",
+          alt: "Nodes lighting up across a dark peer-to-peer mesh, links forming directly between machines with no central hub",
+        }}
       />
 
       {/* 01 — what it is */}
@@ -93,6 +98,11 @@ export default function AtmospherePage() {
             without exposure.
           </>
         }
+        media={{
+          video: "/video/mkt-skyreveal.mp4",
+          poster: "/img/launch-reveal-wide.png",
+          alt: "A wide reveal across the open sky above a distributed network, evoking discovery across a borderless mesh",
+        }}
       >
         <div className="grid gap-5 lg:grid-cols-2">
           <DeepCard icon={RadioTower} title="Public DHT discovery" level={hyperswarmLevel()}>

@@ -39,9 +39,14 @@ export default function Solutions() {
           and automate anything — without ever handing your data to a platform.
         </ActHeader>
 
-        {/* stat row — glass */}
-        <Reveal delay={0.1}>
-          <div className="data-card mt-12 grid grid-cols-2 gap-px overflow-hidden md:grid-cols-4">
+        {/* stat row — glass, lifted over an aurora glow so the frost reads */}
+        <div className="relative mt-12">
+          <div aria-hidden className="aurora-field">
+            <div className="glow glow-azure left-1/2 top-1/2 h-[22rem] w-[40rem] -translate-x-1/2 -translate-y-1/2" />
+            <div className="glow glow-cyan right-0 top-0 h-[18rem] w-[24rem]" />
+          </div>
+          <Reveal delay={0.1}>
+          <div className="data-card relative z-10 grid grid-cols-2 gap-px overflow-hidden md:grid-cols-4">
             {STATS.map(([n, l]) => (
               <div key={l} className="px-3 py-6 text-center sm:px-6 sm:py-7">
                 <div className="t-stat text-[color:var(--color-signal)]">{n}</div>
@@ -49,7 +54,8 @@ export default function Solutions() {
               </div>
             ))}
           </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </div>
 
       {/* integration marquee — real logos, floating, full bleed */}

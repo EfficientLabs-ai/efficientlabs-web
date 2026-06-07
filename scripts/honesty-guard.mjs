@@ -201,6 +201,22 @@ const SURFACES = [
   "components/os/StatPill.tsx",
   "components/os/modules.ts",
   "components/os/useOsSession.ts",
+  // OS customization surface (added 2026-06-07 with the Customize hub / Advanced
+  // mode). CustomizePanel carries the copy describing what Advanced mode reveals
+  // (agent config, mesh detail, skill management, model routing); useOsPrefs holds
+  // the canonical Dashboard-section labels/descriptions ("what is actually live
+  // now", …). Neither RENDERS Live/Wired/Standalone/Mock status labels, so they
+  // are policed for overclaims. EXCLUDED: components/os/AdvancedControls.tsx — it
+  // wraps StatusChip to print the honest status label (via capLevel from
+  // status.json) for each control row and would self-trip, exactly like the other
+  // OS status-label renderers (StatusChip / OsCard / ComingSoon / ModuleHeader).
+  "components/os/CustomizePanel.tsx",
+  "components/os/useOsPrefs.ts",
+  // NOTE: components/status/CompletedCapabilities.tsx is intentionally NOT scanned
+  // — like ActivityFeed / LaunchProgress / StatusMatrix it is a status-DERIVED
+  // renderer (it reads data/status.json via lib/status and prints the honest
+  // Live/Wired badge labels, including the phrase "running in production" beside a
+  // Live badge) and would self-trip. It is a renderer of the truth, not a claim.
   // NOTE: components/acts/StatusMatrix.tsx, app/status/page.tsx, and
   // components/docs/StatusBadge.tsx are intentionally NOT scanned — they
   // RENDER the honest labels (the literal words Live/Wired/Mock) sourced from

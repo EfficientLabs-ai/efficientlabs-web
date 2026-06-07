@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Michroma } from "next/font/google";
 import "./globals.css";
+import { ThemeRoot } from "@/components/useSiteTheme";
 
 // Distinctive type: Clash Display (headlines) + General Sans (body) from Fontshare,
 // JetBrains Mono (the content-addressing / hash motif) + Chakra Petch (the squared,
@@ -49,20 +50,39 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#06070a",
+  // Site default is DARK (cinematic brand). Light is an opt-in toggle, not the
+  // default — so the unconditional chrome colour is the dark canvas. We still
+  // expose the light value behind the light media query for users who toggle.
+  themeColor: [
+    { color: "#010207" },
+    { media: "(prefers-color-scheme: light)", color: "#f7f9fc" },
+    { media: "(prefers-color-scheme: dark)", color: "#010207" },
+  ],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${jbMono.variable} ${michroma.variable}`}>
+    <html lang="en" className={`${jbMono.variable} ${michroma.variable}`} data-theme="dark" suppressHydrationWarning>
       <head>
+        {/* Pre-paint: honour the stored site theme on <html> BEFORE first paint so
+            there is no dark↔light flash on load. Default DARK when unset (the
+            cinematic brand). Shares no key with the OS (#os-root uses 'os-theme');
+            the site uses 'efl-theme'. Light is an opt-in toggle, not the default. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('efl-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();",
+          }}
+        />
         {/* Clash Display + General Sans — distinctive, premium, not the generic stack */}
         <link
           href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500,400&f[]=general-sans@400,500,600&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <ThemeRoot>{children}</ThemeRoot>
+      </body>
     </html>
   );
 }

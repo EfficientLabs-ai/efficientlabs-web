@@ -26,11 +26,15 @@ export default function Home() {
     <main className="relative">
       <Nav />
 
-      {/* ── CINEMATIC HERO — scroll dives the camera into a node ── */}
-      <MeshHero3D />
+      {/* ── CINEMATIC HERO — scroll dives the camera into a node ──
+          .cinematic forces the dark dramatic palette locally so the WebGL hero
+          stays theatrical even when the site is in light mode (pure CSS scope). */}
+      <section className="cinematic">
+        <MeshHero3D />
+      </section>
 
       {/* ── THE ATMOSPHERE — extractive cloud dissolves into the sky ── */}
-      <section id="atmosphere">
+      <section id="atmosphere" className="cinematic">
         <AtmosphereReveal />
       </section>
 
@@ -56,7 +60,7 @@ export default function Home() {
       {/* ── THE SCROLL ACTS ───────────────────────────────────── */}
       <div className="mx-auto max-w-7xl px-6">
         <Act><ContentAddress /></Act>
-        <Act><HolePunch /></Act>
+        <Act cinematic><HolePunch /></Act>
         <Act><Capability /></Act>
         <Act><SkillSeal /></Act>
         <Act id="status"><StatusMatrix /></Act>
@@ -91,9 +95,22 @@ export default function Home() {
   );
 }
 
-function Act({ children, id }: { children: React.ReactNode; id?: string }) {
+function Act({
+  children,
+  id,
+  cinematic,
+}: {
+  children: React.ReactNode;
+  id?: string;
+  cinematic?: boolean;
+}) {
   return (
-    <section id={id} className="section section-t scroll-mt-20">
+    <section
+      id={id}
+      className={
+        "section section-t scroll-mt-20" + (cinematic ? " cinematic" : "")
+      }
+    >
       {children}
     </section>
   );

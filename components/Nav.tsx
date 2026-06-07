@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Wordmark from "@/components/Wordmark";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const NAV = [
   ["The Atmosphere", "/atmosphere"],
@@ -34,14 +35,10 @@ export default function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div
-        className="transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 ease-out"
-        style={{
-          background: opaque ? "color-mix(in oklab, var(--color-void) 80%, transparent)" : "transparent",
-          backdropFilter: opaque ? "blur(14px) saturate(140%)" : "blur(0px)",
-          WebkitBackdropFilter: opaque ? "blur(14px) saturate(140%)" : "blur(0px)",
-          borderBottom: opaque ? "1px solid var(--color-line)" : "1px solid transparent",
-          boxShadow: opaque ? "0 1px 0 rgba(255,255,255,0.03), 0 12px 30px -24px rgba(0,0,0,0.9)" : "none",
-        }}
+        className={
+          "transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 ease-out " +
+          (opaque ? "glass-nav" : "")
+        }
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
           <Link href="/" onClick={() => setOpen(false)} className="group flex items-center transition-transform hover:scale-[1.02]">
@@ -60,29 +57,33 @@ export default function Nav() {
 
           {/* Desktop actions */}
           <div className="hidden items-center gap-3 md:flex">
+            <ThemeToggle />
             <Link href="/app" className="mono text-[13px] text-[color:var(--color-ink-dim)] transition-colors hover:text-[color:var(--color-ink)]">Open OS</Link>
             <Link href="/login" className="mono text-[13px] text-[color:var(--color-ink-dim)] transition-colors hover:text-[color:var(--color-ink)]">Sign in</Link>
             <Link href="/install" className="btn-signal !px-4 !py-2 text-[13px]">Install now<span aria-hidden>→</span></Link>
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            type="button"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-            className="relative flex h-10 w-10 items-center justify-center rounded-lg border border-[color:var(--color-line)] bg-[color:var(--color-void-2)]/50 text-[color:var(--color-ink)] transition-colors hover:bg-[color:var(--color-void-2)] md:hidden"
-          >
-            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-            <span aria-hidden className="relative block h-[14px] w-[18px]">
-              <span className="absolute left-0 block h-[1.5px] w-full rounded-full bg-current transition-all duration-300"
-                    style={{ top: open ? "6px" : "0px", transform: open ? "rotate(45deg)" : "none" }} />
-              <span className="absolute left-0 top-[6px] block h-[1.5px] w-full rounded-full bg-current transition-all duration-200"
-                    style={{ opacity: open ? 0 : 1 }} />
-              <span className="absolute left-0 block h-[1.5px] w-full rounded-full bg-current transition-all duration-300"
-                    style={{ top: open ? "6px" : "12px", transform: open ? "rotate(-45deg)" : "none" }} />
-            </span>
-          </button>
+          {/* Mobile: theme toggle right next to the hamburger */}
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle />
+            <button
+              type="button"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
+              className="relative flex h-10 w-10 items-center justify-center rounded-lg border border-[color:var(--color-line)] bg-[color:var(--color-void-2)]/50 text-[color:var(--color-ink)] transition-colors hover:bg-[color:var(--color-void-2)]"
+            >
+              <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+              <span aria-hidden className="relative block h-[14px] w-[18px]">
+                <span className="absolute left-0 block h-[1.5px] w-full rounded-full bg-current transition-all duration-300"
+                      style={{ top: open ? "6px" : "0px", transform: open ? "rotate(45deg)" : "none" }} />
+                <span className="absolute left-0 top-[6px] block h-[1.5px] w-full rounded-full bg-current transition-all duration-200"
+                      style={{ opacity: open ? 0 : 1 }} />
+                <span className="absolute left-0 block h-[1.5px] w-full rounded-full bg-current transition-all duration-300"
+                      style={{ top: open ? "6px" : "12px", transform: open ? "rotate(-45deg)" : "none" }} />
+              </span>
+            </button>
+          </div>
         </nav>
       </div>
 
