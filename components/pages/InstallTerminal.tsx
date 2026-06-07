@@ -7,39 +7,36 @@ import Terminal, { type TermLine } from "@/components/Terminal";
 // terminal, but this is the standalone deep-page version with its own per-OS copy
 // payloads and a third macOS/Linux split made explicit.
 const MAC: TermLine[] = [
-  { t: "# 1 · install the Atmosphere runtime", c: "dim" },
-  { p: "$", t: "curl -fsSL https://get.efficientlabs.ai | sh", c: "cmd" },
-  { t: "✓ Atmosphere runtime ready · no open ports", c: "ok" },
-  { t: "# 2 · bring StratosAgent online on hardware you own", c: "dim" },
-  { p: "$", t: "stratos init && stratos up", c: "cmd" },
-  { t: "✓ node live · meshed P2P · post-quantum keys sealed", c: "ok" },
-  { t: "→ reachable on Telegram, Discord, Slack, Matrix, Signal", c: "out" },
+  { t: "# 1 · install the StratosAgent CLI (user-space, no sudo)", c: "dim" },
+  { p: "$", t: "curl -fsSL https://efficientlabs.ai/install.sh | sh", c: "cmd" },
+  { t: "✓ @efficientlabs/stratos installed · nothing auto-started", c: "ok" },
+  { t: "# 2 · run the publicly-auditable operating core (no network)", c: "dim" },
+  { p: "$", t: "stratos workspace create demo && stratos trace demo/proj/wf/task1", c: "cmd" },
+  { t: "✓ trace written · PQC-signed receipt verified (public key only)", c: "ok" },
 ];
 
 const LINUX: TermLine[] = [
-  { t: "# 1 · install the Atmosphere runtime", c: "dim" },
-  { p: "$", t: "curl -fsSL https://get.efficientlabs.ai | sh", c: "cmd" },
-  { t: "✓ Atmosphere runtime ready · no open ports", c: "ok" },
-  { t: "# 2 · bring StratosAgent online (systemd user service)", c: "dim" },
-  { p: "$", t: "stratos init && stratos up", c: "cmd" },
-  { t: "✓ node live · meshed P2P · post-quantum keys sealed", c: "ok" },
-  { t: "→ reachable on Telegram, Discord, Slack, Matrix, Signal", c: "out" },
+  { t: "# 1 · install the StratosAgent CLI (user-space, no sudo)", c: "dim" },
+  { p: "$", t: "curl -fsSL https://efficientlabs.ai/install.sh | sh", c: "cmd" },
+  { t: "✓ @efficientlabs/stratos installed · nothing auto-started", c: "ok" },
+  { t: "# 2 · run the publicly-auditable operating core (no network)", c: "dim" },
+  { p: "$", t: "stratos workspace create demo && stratos trace demo/proj/wf/task1", c: "cmd" },
+  { t: "✓ trace written · PQC-signed receipt verified (public key only)", c: "ok" },
 ];
 
 const WIN: TermLine[] = [
-  { t: "# 1 · install the Atmosphere runtime", c: "dim" },
-  { p: ">", t: "irm https://get.efficientlabs.ai/win | iex", c: "cmd" },
-  { t: "✓ Atmosphere runtime ready · no open ports", c: "ok" },
-  { t: "# 2 · bring StratosAgent online on hardware you own", c: "dim" },
-  { p: ">", t: "stratos init; stratos up", c: "cmd" },
-  { t: "✓ node live · meshed P2P · post-quantum keys sealed", c: "ok" },
-  { t: "→ reachable on Telegram, Discord, Slack, Matrix, Signal", c: "out" },
+  { t: "# 1 · install the StratosAgent CLI via npm (needs Node 18+)", c: "dim" },
+  { p: ">", t: "npm i -g @efficientlabs/stratos", c: "cmd" },
+  { t: "✓ @efficientlabs/stratos installed · nothing auto-started", c: "ok" },
+  { t: "# 2 · run the publicly-auditable operating core (no network)", c: "dim" },
+  { p: ">", t: "stratos workspace create demo; stratos trace demo/proj/wf/task1", c: "cmd" },
+  { t: "✓ trace written · PQC-signed receipt verified (public key only)", c: "ok" },
 ];
 
 const COPY: Record<string, string> = {
-  mac: "curl -fsSL https://get.efficientlabs.ai | sh\nstratos init && stratos up",
-  linux: "curl -fsSL https://get.efficientlabs.ai | sh\nstratos init && stratos up",
-  win: "irm https://get.efficientlabs.ai/win | iex\nstratos init; stratos up",
+  mac: "curl -fsSL https://efficientlabs.ai/install.sh | sh\nstratos workspace create demo && stratos trace demo/proj/wf/task1",
+  linux: "curl -fsSL https://efficientlabs.ai/install.sh | sh\nstratos workspace create demo && stratos trace demo/proj/wf/task1",
+  win: "npm i -g @efficientlabs/stratos\nstratos workspace create demo; stratos trace demo/proj/wf/task1",
 };
 
 export default function InstallTerminal() {

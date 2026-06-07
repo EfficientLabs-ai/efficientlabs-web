@@ -95,8 +95,8 @@ export default function InstallPage() {
           <StepFlow
             steps={[
               { title: "Fetch & verify the runtime", body: "The installer downloads the Atmosphere runtime and verifies it before anything runs. No background service is exposed to the network." },
-              { title: "Mint local keys", body: <>On <span className="inline-flex items-center gap-1 align-middle"><code className="rounded bg-[color:var(--color-void-2)] px-1 py-0.5 text-[12px]">stratos init</code><CopyButton text="stratos init" variant="icon" ariaLabel="Copy command: stratos init" /></span> the node generates its keypair on-device and seals private keys in the vault (AES-GCM, memory-wiped). Keys never leave the machine.</> },
-              { title: "Join the mesh", body: <>On <span className="inline-flex items-center gap-1 align-middle"><code className="rounded bg-[color:var(--color-void-2)] px-1 py-0.5 text-[12px]">stratos up</code><CopyButton text="stratos up" variant="icon" ariaLabel="Copy command: stratos up" /></span> the node announces on the public DHT and hole-punches to peers — all outbound. No inbound port is ever opened.</> },
+              { title: "Mint local keys", body: <>The public operating core generates a per-node keypair on-device when it mints a receipt — try it with <span className="inline-flex items-center gap-1 align-middle"><code className="rounded bg-[color:var(--color-void-2)] px-1 py-0.5 text-[12px]">stratos trace demo/proj/wf/task1</code><CopyButton text="stratos trace demo/proj/wf/task1" variant="icon" ariaLabel="Copy command: stratos trace demo/proj/wf/task1" /></span>. Keys never leave the machine, and the receipt verifies with the public key alone.</> },
+              { title: "Join the mesh", body: <>The mesh transport announces on the public DHT and hole-punches to peers — all outbound, no inbound port ever opened. Broad multi-device meshing is still wiring (see the honest status split below).</> },
               { title: "Come online across channels", body: "Once meshed, the agent is reachable on the channels you configure — the same StratosAgent behind every front door." },
             ]}
           />

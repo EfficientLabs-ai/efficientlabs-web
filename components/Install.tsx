@@ -4,23 +4,21 @@ import { Reveal, ActHeader } from "@/components/Reveal";
 import Terminal, { type TermLine } from "@/components/Terminal";
 
 const UNIX: TermLine[] = [
-  { t: "# 1 · install the Atmosphere runtime", c: "dim" },
-  { p: "$", t: "curl -fsSL https://get.efficientlabs.ai | sh", c: "cmd" },
-  { t: "✓ Atmosphere runtime ready · no open ports", c: "ok" },
-  { t: "# 2 · bring StratosAgent online on hardware you own", c: "dim" },
-  { p: "$", t: "stratos init && stratos up", c: "cmd" },
-  { t: "✓ node live · meshed P2P · post-quantum keys sealed", c: "ok" },
-  { t: "→ reachable on Telegram, Discord, Slack, Matrix, Signal", c: "out" },
+  { t: "# 1 · install the StratosAgent CLI (user-space, no sudo)", c: "dim" },
+  { p: "$", t: "curl -fsSL https://efficientlabs.ai/install.sh | sh", c: "cmd" },
+  { t: "✓ @efficientlabs/stratos installed · nothing auto-started", c: "ok" },
+  { t: "# 2 · run the publicly-auditable operating core (no network)", c: "dim" },
+  { p: "$", t: "stratos workspace create demo && stratos trace demo/proj/wf/task1", c: "cmd" },
+  { t: "✓ trace written · PQC-signed receipt verified (public key only)", c: "ok" },
 ];
 
 const WIN: TermLine[] = [
-  { t: "# 1 · install the Atmosphere runtime", c: "dim" },
-  { p: ">", t: "irm https://get.efficientlabs.ai/win | iex", c: "cmd" },
-  { t: "✓ Atmosphere runtime ready · no open ports", c: "ok" },
-  { t: "# 2 · bring StratosAgent online on hardware you own", c: "dim" },
-  { p: ">", t: "stratos init; stratos up", c: "cmd" },
-  { t: "✓ node live · meshed P2P · post-quantum keys sealed", c: "ok" },
-  { t: "→ reachable on Telegram, Discord, Slack, Matrix, Signal", c: "out" },
+  { t: "# 1 · install the StratosAgent CLI via npm (needs Node 18+)", c: "dim" },
+  { p: ">", t: "npm i -g @efficientlabs/stratos", c: "cmd" },
+  { t: "✓ @efficientlabs/stratos installed · nothing auto-started", c: "ok" },
+  { t: "# 2 · run the publicly-auditable operating core (no network)", c: "dim" },
+  { p: ">", t: "stratos workspace create demo; stratos trace demo/proj/wf/task1", c: "cmd" },
+  { t: "✓ trace written · PQC-signed receipt verified (public key only)", c: "ok" },
 ];
 
 const STEPS = [
