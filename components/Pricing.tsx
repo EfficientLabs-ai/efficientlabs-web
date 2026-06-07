@@ -1,33 +1,35 @@
 "use client";
+import { useState } from "react";
 import { Check, Minus, Wallet } from "lucide-react";
 import { Reveal, ActHeader } from "@/components/Reveal";
 
+type Billing = "monthly" | "annual";
+
 type Tier = {
   name: string;
-  layer: string;           // atmospheric-layer name (brand metaphor)
-  price: string;
-  cadence?: string;
+  layer: string;            // atmospheric-layer name (brand metaphor)
   tagline: string;
-  cta: { label: string; href: string };
+  monthly?: number;         // $/mo (paid tiers)
+  annual?: number;          // $/yr (paid tiers — 2 months free vs monthly)
+  perSeat?: boolean;        // Team is per-seat
+  fixedPrice?: string;      // Free / Enterprise (no toggle)
+  fixedCadence?: string;
+  links?: { monthly: string; annual: string };  // live Stripe checkout
+  cta: { label: string; href?: string };        // href used only when no links
   featured?: boolean;
   features: string[];
 };
 
-// DRAFT pricing — flat, NEVER metered. Gated on meshed-node count, not usage.
-// Numbers benchmarked to 2026 competitor structure ($0 / $20 / $100 / seat / custom)
-// and themed to the atmospheric-layer brand metaphor. Pending operator approval.
-//
-// FULL tier set per ATMOSPHERE_ECONOMY.md §11: Free / Pro / Builder(Max) / Team / Enterprise.
-// CLAIM DISCIPLINE (§11, hard): wallet + Contribution Credits track across ALL tiers,
-// but rewards are NOT live. Every wallet line reads "Contribution tracking · payouts not live".
-// Banned: any "earn SOL", "passive income", "DePIN rewards live", "invest" language.
+// LIVE pricing. Monthly default; annual = 2 months free (≈17% off). Stripe live
+// payment links (founder-approved 2026-06-07). Wallet + Contribution Credits track
+// on every tier; rewards/payouts NOT live (counsel-gated). Free = install, no card.
 const TIERS: Tier[] = [
   {
     name: "Free",
     layer: "Troposphere",
-    price: "$0",
-    cadence: "forever",
     tagline: "Ground level. Run it on your own hardware, sovereign and DIY.",
+    fixedPrice: "$0",
+    fixedCadence: "forever",
     cta: { label: "Install now", href: "/install" },
     features: [
       "Up to 2 nodes (e.g. your laptop + phone)",
@@ -40,10 +42,14 @@ const TIERS: Tier[] = [
   {
     name: "Pro",
     layer: "Stratosphere",
-    price: "$20",
-    cadence: "/mo",
     tagline: "Above the clouds — where StratosAgent flies.",
-    cta: { label: "Start Pro", href: "mailto:hello@efficientlabs.ai?subject=Pro%20early%20access" },
+    monthly: 20,
+    annual: 200,
+    links: {
+      monthly: "https://buy.stripe.com/eVq9AS5d13Bw56wbNg3AY0r",
+      annual: "https://buy.stripe.com/14AdR8dJxb3Y2YobNg3AY0u",
+    },
+    cta: { label: "Start Pro" },
     featured: true,
     features: [
       "Up to 5 meshed nodes — pool compute & RAM",
@@ -57,10 +63,14 @@ const TIERS: Tier[] = [
   {
     name: "Builder",
     layer: "Mesosphere",
-    price: "$100",
-    cadence: "/mo",
     tagline: "Power tier (Max) — the biggest models, the full skill library.",
-    cta: { label: "Start Builder", href: "mailto:hello@efficientlabs.ai?subject=Builder%20(Max)%20early%20access" },
+    monthly: 100,
+    annual: 1000,
+    links: {
+      monthly: "https://buy.stripe.com/00w4gy6h51to42s04y3AY0s",
+      annual: "https://buy.stripe.com/eVq5kC48X0pk9mM9F83AY0v",
+    },
+    cta: { label: "Start Builder" },
     features: [
       "Higher node limits — build a real personal mesh",
       "Priority scheduling for the largest local models",
@@ -72,10 +82,15 @@ const TIERS: Tier[] = [
   {
     name: "Team",
     layer: "Thermosphere",
-    price: "$30",
-    cadence: "/seat·mo",
     tagline: "One mesh across the whole team's hardware.",
-    cta: { label: "Start Team", href: "mailto:hello@efficientlabs.ai?subject=Team%20early%20access" },
+    monthly: 30,
+    annual: 300,
+    perSeat: true,
+    links: {
+      monthly: "https://buy.stripe.com/00w4gy8pddc656wbNg3AY0t",
+      annual: "https://buy.stripe.com/8x26oG6h50pk42s5oS3AY0w",
+    },
+    cta: { label: "Start Team" },
     features: [
       "Everything in Builder",
       "Multi-user mesh orchestration (min. 5 seats)",
@@ -87,8 +102,8 @@ const TIERS: Tier[] = [
   {
     name: "Enterprise",
     layer: "Exosphere",
-    price: "Custom",
     tagline: "The edge of space — compliance, air-gap, total control.",
+    fixedPrice: "Custom",
     cta: { label: "Contact sales", href: "mailto:hello@efficientlabs.ai?subject=Enterprise%20early%20access" },
     features: [
       "Everything in Team",
@@ -101,6 +116,9 @@ const TIERS: Tier[] = [
 ];
 
 export default function Pricing() {
+  const [billing, setBilling] = useState<Billing>("monthly");
+  const annual = billing === "annual";
+
   return (
     <section className="relative overflow-hidden pt-36 pb-28">
       {/* aurora glows — give the tier cards' glass vivid light to frost */}
@@ -119,66 +137,131 @@ export default function Pricing() {
           </ActHeader>
         </div>
 
-        {/* Responsive: 1 col (mobile) → 2 (sm) → 3 (lg) → 5 (2xl). The featured
-            tier spans full-width visually via ring; all cards equal-height. */}
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
-          {TIERS.map((t, i) => (
-            <Reveal key={t.name} delay={0.04 * i}>
-              <div className={`lm-card is-interactive relative flex h-full flex-col p-5 ${t.featured ? "ring-1 ring-[color:var(--color-signal)]/40" : ""}`}>
-                {t.featured && (
-                  <span className="mono absolute -top-2.5 left-5 rounded-full border border-[color:var(--color-signal)]/40 bg-[color:var(--color-signal)]/15 px-2.5 py-0.5 text-[10px] tracking-wider text-[color:var(--color-signal)]">
-                    MOST POPULAR
-                  </span>
-                )}
-
-                <span className="mono text-[10px] uppercase tracking-[0.18em] text-[color:var(--color-ink-faint)]">
-                  {t.layer}
+        {/* ── Monthly / Annual toggle (annual = 2 months free) ─────────────── */}
+        <Reveal>
+          <div className="mt-10 flex items-center justify-center">
+            <div
+              role="group"
+              aria-label="Billing period"
+              className="glass inline-flex items-center gap-1 rounded-[var(--radius-pill)] p-1"
+            >
+              <button
+                type="button"
+                onClick={() => setBilling("monthly")}
+                aria-pressed={!annual}
+                className={`mono rounded-[var(--radius-pill)] px-4 py-1.5 text-[12px] transition-colors ${
+                  !annual
+                    ? "bg-[color:var(--color-signal)] text-white"
+                    : "text-[color:var(--color-ink-dim)] hover:text-[color:var(--color-ink)]"
+                }`}
+              >
+                Monthly
+              </button>
+              <button
+                type="button"
+                onClick={() => setBilling("annual")}
+                aria-pressed={annual}
+                className={`mono inline-flex items-center gap-2 rounded-[var(--radius-pill)] px-4 py-1.5 text-[12px] transition-colors ${
+                  annual
+                    ? "bg-[color:var(--color-signal)] text-white"
+                    : "text-[color:var(--color-ink-dim)] hover:text-[color:var(--color-ink)]"
+                }`}
+              >
+                Annual
+                <span
+                  className={`rounded-full px-1.5 py-0.5 text-[9px] tracking-wider ${
+                    annual ? "bg-white/20 text-white" : "bg-[color:var(--color-quantum)]/15 text-[color:var(--color-quantum)]"
+                  }`}
+                >
+                  2 MONTHS FREE
                 </span>
-                <h3 className="display mt-1 text-[1.25rem] text-[color:var(--color-ink)]">{t.name}</h3>
+              </button>
+            </div>
+          </div>
+        </Reveal>
 
-                <div className="mt-3 flex items-baseline gap-1">
-                  <span className="display text-[2.1rem] text-[color:var(--color-ink)]">{t.price}</span>
-                  {t.cadence && <span className="mono text-[12px] text-[color:var(--color-ink-faint)]">{t.cadence}</span>}
-                </div>
-                <p className="mt-2 min-h-[2.4rem] text-[12.5px] leading-relaxed text-[color:var(--color-ink-dim)]">{t.tagline}</p>
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
+          {TIERS.map((t, i) => {
+            const paid = t.monthly != null && t.annual != null && t.links;
+            const price = paid ? (annual ? t.annual! : t.monthly!) : null;
+            const cadence = paid ? (annual ? "/yr" : "/mo") : t.fixedCadence;
+            const perMonthAnnual = paid && annual ? (t.annual! / 12) : null;
+            const href = paid ? (annual ? t.links!.annual : t.links!.monthly) : t.cta.href;
+            const external = href?.startsWith("http");
 
-                <a href={t.cta.href}
-                   className={`mt-5 ${t.featured ? "btn-signal" : "btn-outline"} justify-center text-center text-[13px]`}>
-                  {t.cta.label}{t.featured && <span aria-hidden> →</span>}
-                </a>
-
-                <ul className="mt-6 space-y-2.5">
-                  {t.features.map((f, fi) => (
-                    <li key={f} className="flex items-start gap-2.5 text-[12.5px] leading-snug text-[color:var(--color-ink-dim)]">
-                      {fi === 0 && i > 0
-                        ? <Minus size={14} className="mt-0.5 shrink-0 text-[color:var(--color-ink-faint)]" />
-                        : <Check size={14} className="mt-0.5 shrink-0 text-[color:var(--color-signal)]" />}
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Wallet + contribution tracking — present on EVERY tier (§11),
-                    payouts explicitly NOT live. No crypto/SOL/payout claims. */}
-                <div className="mt-auto pt-5">
-                  <div className="flex items-start gap-2 border-t border-[color:var(--color-line)] pt-3 text-[11.5px] leading-snug text-[color:var(--color-ink-faint)]">
-                    <Wallet size={13} className="mt-0.5 shrink-0 text-[color:var(--color-ink-faint)]" aria-hidden />
-                    <span>
-                      Wallet + Contribution Credits tracked.{" "}
-                      <span className="mono text-[color:var(--color-ink-faint)]">Payouts not live.</span>
+            return (
+              <Reveal key={t.name} delay={0.04 * i}>
+                <div className={`lm-card is-interactive relative flex h-full flex-col p-5 ${t.featured ? "ring-1 ring-[color:var(--color-signal)]/40" : ""}`}>
+                  {t.featured && (
+                    <span className="mono absolute -top-2.5 left-5 rounded-full border border-[color:var(--color-signal)]/40 bg-[color:var(--color-signal)]/15 px-2.5 py-0.5 text-[10px] tracking-wider text-[color:var(--color-signal)]">
+                      MOST POPULAR
                     </span>
+                  )}
+
+                  <span className="mono text-[10px] uppercase tracking-[0.18em] text-[color:var(--color-ink-faint)]">
+                    {t.layer}
+                  </span>
+                  <h3 className="display mt-1 text-[1.25rem] text-[color:var(--color-ink)]">{t.name}</h3>
+
+                  <div className="mt-3 flex items-baseline gap-1">
+                    <span className="display text-[2.1rem] text-[color:var(--color-ink)]">
+                      {paid ? `$${price}` : t.fixedPrice}
+                    </span>
+                    {cadence && (
+                      <span className="mono text-[12px] text-[color:var(--color-ink-faint)]">
+                        {cadence}{t.perSeat ? " · seat" : ""}
+                      </span>
+                    )}
+                  </div>
+                  {/* annual sub-line: effective monthly + savings */}
+                  <p className="mono mt-1 h-4 text-[10.5px] text-[color:var(--color-quantum)]">
+                    {perMonthAnnual != null
+                      ? `≈ $${perMonthAnnual.toFixed(perMonthAnnual % 1 === 0 ? 0 : 2)}/mo billed annually · 2 months free`
+                      : ""}
+                  </p>
+
+                  <p className="mt-2 min-h-[2.4rem] text-[12.5px] leading-relaxed text-[color:var(--color-ink-dim)]">{t.tagline}</p>
+
+                  <a
+                    href={href}
+                    {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className={`mt-4 ${t.featured ? "btn-signal" : "btn-outline"} justify-center text-center text-[13px]`}
+                  >
+                    {t.cta.label}{t.featured && <span aria-hidden> →</span>}
+                  </a>
+
+                  <ul className="mt-6 space-y-2.5">
+                    {t.features.map((f, fi) => (
+                      <li key={f} className="flex items-start gap-2.5 text-[12.5px] leading-snug text-[color:var(--color-ink-dim)]">
+                        {fi === 0 && i > 0
+                          ? <Minus size={14} className="mt-0.5 shrink-0 text-[color:var(--color-ink-faint)]" />
+                          : <Check size={14} className="mt-0.5 shrink-0 text-[color:var(--color-signal)]" />}
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Wallet + contribution tracking — present on EVERY tier; payouts NOT live. */}
+                  <div className="mt-auto pt-5">
+                    <div className="flex items-start gap-2 border-t border-[color:var(--color-line)] pt-3 text-[11.5px] leading-snug text-[color:var(--color-ink-faint)]">
+                      <Wallet size={13} className="mt-0.5 shrink-0 text-[color:var(--color-ink-faint)]" aria-hidden />
+                      <span>
+                        Wallet + Contribution Credits tracked.{" "}
+                        <span className="mono text-[color:var(--color-ink-faint)]">Payouts not live.</span>
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Reveal>
-          ))}
+              </Reveal>
+            );
+          })}
         </div>
 
         <p className="mono mt-10 text-center text-[12px] text-[color:var(--color-ink-faint)]">
-          No per-token billing · no egress fees · no lock-in · cancel by deleting a folder.
+          Annual saves 2 months · no per-token billing · no egress fees · no lock-in · cancel anytime.
           <br />
-          Draft pricing in USD — tiers open at launch. Contribution tracking is active across all
-          tiers; the rewards / payout layer is not live (counsel-gated, no return promised).
+          Early access — features open as they land. Contribution tracking is active across all tiers;
+          the rewards / payout layer is not live (counsel-gated, no return promised).
         </p>
       </div>
     </section>
