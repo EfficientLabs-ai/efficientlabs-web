@@ -31,9 +31,11 @@ export default function Typewriter({
     }
     // finished deleting → advance to next phrase
     if (deleting && sub === 0) {
-      setDeleting(false);
-      setI((v) => (v + 1) % words.length);
-      return;
+      const t = setTimeout(() => {
+        setDeleting(false);
+        setI((v) => (v + 1) % words.length);
+      }, 0);
+      return () => clearTimeout(t);
     }
     const t = setTimeout(() => setSub((v) => v + (deleting ? -1 : 1)), deleting ? deleteMs : typeMs);
     return () => clearTimeout(t);

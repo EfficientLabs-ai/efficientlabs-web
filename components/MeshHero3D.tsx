@@ -18,6 +18,15 @@ const smooth = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
   return t * t * (3 - 2 * t);
 };
+const seededRandom = (seed: number) => {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+};
+const canUse3D = () =>
+  typeof window !== "undefined" &&
+  window.innerWidth >= 1024 &&
+  window.matchMedia("(pointer: fine)").matches &&
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // L0 (core) → L5 (surface), each with a one-line "what you get"
 const LAYER_LABELS: [string, string, string][] = [
@@ -53,7 +62,7 @@ function Field({ progress }: { progress: Prog }) {
     const golden = Math.PI * (3 - Math.sqrt(5));
     for (let i = 0; i < N; i++) {
       const inner = i % 5 === 0;                 // ~20% form a faint inner shell for depth
-      const rr = (inner ? 3.05 : R) + (Math.random() - 0.5) * 0.18;
+      const rr = (inner ? 3.05 : R) + (seededRandom(i + 1) - 0.5) * 0.18;
       const y = 1 - (i / (N - 1)) * 2;
       const rad = Math.sqrt(Math.max(0, 1 - y * y));
       const th = i * golden;
@@ -191,12 +200,8 @@ export default function MeshHero3D() {
   // ("a problem repeatedly occurred") under this scene's GPU/memory load, so those
   // devices get the fast static hero below instead. SSR renders the static hero.
   useEffect(() => {
-    const capable =
-      typeof window !== "undefined" &&
-      window.innerWidth >= 1024 &&
-      window.matchMedia("(pointer: fine)").matches &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setAllow3D(capable);
+    const timer = window.setTimeout(() => setAllow3D(canUse3D()), 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {

@@ -6,37 +6,36 @@ import Terminal, { type TermLine } from "@/components/Terminal";
 // The quickstart command sets — kept identical in spirit to the homepage Install
 // terminal, but this is the standalone deep-page version with its own per-OS copy
 // payloads and a third macOS/Linux split made explicit.
-const MAC: TermLine[] = [
+const NIX: TermLine[] = [
   { t: "# 1 · install the StratosAgent CLI (user-space, no sudo)", c: "dim" },
   { p: "$", t: "curl -fsSL https://efficientlabs.ai/install.sh | sh", c: "cmd" },
-  { t: "✓ @efficientlabs/stratos installed · nothing auto-started", c: "ok" },
-  { t: "# 2 · run the publicly-auditable operating core (no network)", c: "dim" },
-  { p: "$", t: "stratos workspace create demo && stratos trace demo/proj/wf/task1", c: "cmd" },
-  { t: "✓ trace written · PQC-signed receipt verified (public key only)", c: "ok" },
+  { t: "✓ @efficientlabs/stratos@1.1.0 installed · nothing auto-started", c: "ok" },
+  { t: "# 2 · set up your node, then a real local completion *", c: "dim" },
+  { p: "$", t: "stratos init", c: "cmd" },
+  { p: "$", t: "stratos task create local/demo/flow/t1", c: "cmd" },
+  { p: "$", t: "stratos complete local/demo/flow/t1 \"what is sovereign AI?\"", c: "cmd" },
+  { t: "✓ completion · local · $0 · PQC-signed receipt verified (public key only)", c: "ok" },
+  { t: "* needs a local OpenAI-compatible endpoint (e.g. Ollama) via STRATOS_GATEWAY_URL", c: "dim" },
 ];
-
-const LINUX: TermLine[] = [
-  { t: "# 1 · install the StratosAgent CLI (user-space, no sudo)", c: "dim" },
-  { p: "$", t: "curl -fsSL https://efficientlabs.ai/install.sh | sh", c: "cmd" },
-  { t: "✓ @efficientlabs/stratos installed · nothing auto-started", c: "ok" },
-  { t: "# 2 · run the publicly-auditable operating core (no network)", c: "dim" },
-  { p: "$", t: "stratos workspace create demo && stratos trace demo/proj/wf/task1", c: "cmd" },
-  { t: "✓ trace written · PQC-signed receipt verified (public key only)", c: "ok" },
-];
+const MAC = NIX;
+const LINUX = NIX;
 
 const WIN: TermLine[] = [
-  { t: "# 1 · install the StratosAgent CLI via npm (needs Node 18+)", c: "dim" },
-  { p: ">", t: "npm i -g @efficientlabs/stratos", c: "cmd" },
-  { t: "✓ @efficientlabs/stratos installed · nothing auto-started", c: "ok" },
-  { t: "# 2 · run the publicly-auditable operating core (no network)", c: "dim" },
-  { p: ">", t: "stratos workspace create demo; stratos trace demo/proj/wf/task1", c: "cmd" },
-  { t: "✓ trace written · PQC-signed receipt verified (public key only)", c: "ok" },
+  { t: "# 1 · install the StratosAgent CLI (PowerShell, no admin)", c: "dim" },
+  { p: ">", t: "irm https://efficientlabs.ai/install.ps1 | iex", c: "cmd" },
+  { t: "✓ @efficientlabs/stratos@1.1.0 installed · nothing auto-started", c: "ok" },
+  { t: "# 2 · set up your node, then a real local completion *", c: "dim" },
+  { p: ">", t: "stratos init", c: "cmd" },
+  { p: ">", t: "stratos task create local/demo/flow/t1", c: "cmd" },
+  { p: ">", t: "stratos complete local/demo/flow/t1 \"what is sovereign AI?\"", c: "cmd" },
+  { t: "✓ completion · local · $0 · PQC-signed receipt verified (public key only)", c: "ok" },
+  { t: "* needs a local OpenAI-compatible endpoint (e.g. Ollama) via $env:STRATOS_GATEWAY_URL", c: "dim" },
 ];
 
 const COPY: Record<string, string> = {
-  mac: "curl -fsSL https://efficientlabs.ai/install.sh | sh\nstratos workspace create demo && stratos trace demo/proj/wf/task1",
-  linux: "curl -fsSL https://efficientlabs.ai/install.sh | sh\nstratos workspace create demo && stratos trace demo/proj/wf/task1",
-  win: "npm i -g @efficientlabs/stratos\nstratos workspace create demo; stratos trace demo/proj/wf/task1",
+  mac: "curl -fsSL https://efficientlabs.ai/install.sh | sh\nstratos init\nstratos task create local/demo/flow/t1\nstratos complete local/demo/flow/t1 \"what is sovereign AI?\"",
+  linux: "curl -fsSL https://efficientlabs.ai/install.sh | sh\nstratos init\nstratos task create local/demo/flow/t1\nstratos complete local/demo/flow/t1 \"what is sovereign AI?\"",
+  win: "irm https://efficientlabs.ai/install.ps1 | iex\nstratos init\nstratos task create local/demo/flow/t1\nstratos complete local/demo/flow/t1 \"what is sovereign AI?\"",
 };
 
 export default function InstallTerminal() {

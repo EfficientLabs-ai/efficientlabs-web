@@ -6,7 +6,7 @@ const smooth = (a: number, b: number, x: number) => {
   return t * t * (3 - 2 * t);
 };
 const R = (s: number) => { // tiny seeded rng for stable layout
-  let x = Math.sin(s) * 10000; return x - Math.floor(x);
+  const x = Math.sin(s) * 10000; return x - Math.floor(x);
 };
 
 export default function AtmosphereReveal() {

@@ -1,4 +1,5 @@
 import updates from "@/data/updates.json";
+import Link from "next/link";
 import { LEVELS, type Level } from "@/lib/status";
 
 const DOT: Record<Level, string> = {
@@ -22,7 +23,7 @@ export default function Updates() {
         </h1>
         <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[color:var(--color-ink-dim)]">
           The moment a capability goes live, it lands here — and our list subscribers hear about it.
-          Same honest standard as the <a href="/#status" className="text-[color:var(--color-signal)]">status board</a>:
+          Same honest standard as the <Link href="/#status" className="text-[color:var(--color-signal)]">status board</Link>:
           nothing here is aspirational.
         </p>
 

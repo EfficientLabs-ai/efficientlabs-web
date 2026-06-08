@@ -12,7 +12,7 @@
 set -eu
 
 PKG="@efficientlabs/stratos"
-VERSION="${STRATOS_VERSION:-1.0.0}"          # pinned; override deliberately via STRATOS_VERSION
+VERSION="${STRATOS_VERSION:-1.1.0}"          # pinned; override deliberately via STRATOS_VERSION
 EXPECTED_SHA256="${STRATOS_SHA256:-}"        # optional: verify the published tarball checksum
 
 say() { printf '%s\n' "$*"; }
@@ -25,17 +25,19 @@ say ""
 
 # 1. Prerequisites — instruct, never auto-install ------------------------------------------------
 if ! command -v node >/dev/null 2>&1; then
-  err "Node.js >= 18 is required and was not found."
-  say "  Install Node 18+ from https://nodejs.org (or your package manager), then re-run."
+  err "Node.js >= 20.19.0 is required and was not found."
+  say "  Install Node 20.19+ from https://nodejs.org (or your package manager), then re-run."
   exit 1
 fi
-NODE_MAJOR="$(node -p 'process.versions.node.split(".")[0]' 2>/dev/null || echo 0)"
-if [ "${NODE_MAJOR}" -lt 18 ] 2>/dev/null; then
-  err "Node.js >= 18 required (found $(node -v 2>/dev/null))."
+# Require Node >= 20.19.0 (matches the package engines + locked dependency floor).
+NODE_OK="$(node -p 'const [a,b]=process.versions.node.split(".").map(Number); (a>20||(a===20&&b>=19))?"ok":"no"' 2>/dev/null || echo no)"
+if [ "${NODE_OK}" != "ok" ]; then
+  err "Node.js >= 20.19.0 required (found $(node -v 2>/dev/null))."
+  say "  Install Node 20.19+ from https://nodejs.org, then re-run."
   exit 1
 fi
 if ! command -v npm >/dev/null 2>&1; then
-  err "npm is required (it ships with Node.js). Install Node 18+ and re-run."
+  err "npm is required (it ships with Node.js). Install Node 20.19+ and re-run."
   exit 1
 fi
 
@@ -83,10 +85,14 @@ fi
 
 # 6. Next steps — nothing privileged, nothing started automatically ------------------------------
 say ""
-say "Done. Try the publicly-auditable operating core (deterministic, no network):"
-say "  stratos --help                              the full command surface"
-say "  stratos workspace create demo               the files-first operational unit"
-say "  stratos task create demo/proj/wf/task1      scaffold a task"
-say "  stratos trace demo/proj/wf/task1            start→steps→end with a PQC-signed receipt"
-say "  stratos eval demo/proj/wf/task1             score the trace against the rubric"
-say "  stratos route \"summarize this file\" --privacy   the local-default routing decision"
+say "Done. First run — set up your node and prove the loop:"
+say "  stratos init                                persistent node identity + a workspace"
+say "  stratos task create local/demo/flow/t1      scaffold a task"
+say "  stratos complete local/demo/flow/t1 \"...\"    a REAL local completion + a signed receipt"
+say "  stratos eval local/demo/flow/t1             re-verify the receipt (trace-integrity)"
+say ""
+say "Note: 'complete' needs a local OpenAI-compatible endpoint (e.g. Ollama: 'ollama serve' +"
+say "  'ollama pull gemma2:2b'), pointed at via --gateway or STRATOS_GATEWAY_URL"
+say "  (e.g. http://127.0.0.1:11434/v1/chat/completions). No model is bundled; your data stays local."
+say ""
+say "Deterministic, no-network commands (no endpoint needed): workspace · task · capture · trace · eval · route · receipt."

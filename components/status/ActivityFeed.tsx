@@ -143,18 +143,32 @@ function DayGroup({ day, base }: { day: FeedDay; base: number }) {
   );
 }
 
-export default function ActivityFeed() {
-  // Grouped-by-date build log (newest day first). Falls back to a single
-  // synthetic group built from the flat FEED if an older activity.json (without
-  // feedByDate) is ever loaded — same commits, never invented.
+export default function ActivityFeed({
+  days: daysProp,
+  totalCommits: totalProp,
+  repoPublic = {},
+  live = false,
+}: {
+  days?: FeedDay[];
+  totalCommits?: number;
+  repoPublic?: Record<string, boolean>;
+  live?: boolean;
+} = {}) {
+  // Prefer the live, GitHub-fetched feed passed from the /status server page;
+  // fall back to the committed baseline (data/activity.json) so the page still
+  // renders if GitHub is unreachable. Either way: real commits, never invented.
   const days: FeedDay[] =
-    FEED_BY_DATE.length > 0
-      ? FEED_BY_DATE
-      : FEED.length > 0
-        ? [{ date: FEED[0].date, count: FEED.length, byType: {}, commits: FEED }]
-        : [];
+    daysProp && daysProp.length > 0
+      ? daysProp
+      : FEED_BY_DATE.length > 0
+        ? FEED_BY_DATE
+        : FEED.length > 0
+          ? [{ date: FEED[0].date, count: FEED.length, byType: {}, commits: FEED }]
+          : [];
 
-  const totalCommits = days.reduce((n, d) => n + d.count, 0);
+  const totalCommits = totalProp ?? days.reduce((n, d) => n + d.count, 0);
+  const anyPublic = Object.values(repoPublic).some(Boolean);
+  const allListedPublic = PUBLIC_REPOS.every((r) => repoPublic[r.name]);
   const [showAll, setShowAll] = useState(false);
 
   const hasMore = days.length > INITIAL_VISIBLE_DAYS;
@@ -175,11 +189,17 @@ export default function ActivityFeed() {
     <div>
       <Reveal>
         <div className="flex flex-wrap items-end justify-between gap-3">
-          <h3 className="display text-[1.25rem] text-[color:var(--color-ink)]">
+          <h3 className="display flex items-center gap-2.5 text-[1.25rem] text-[color:var(--color-ink)]">
             Recent commits
+            {live && (
+              <span className="mono inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-signal)]/40 px-2 py-0.5 text-[9px] tracking-wider text-[color:var(--color-signal)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--color-signal)]" style={{ boxShadow: "0 0 7px var(--color-signal)" }} />
+                LIVE
+              </span>
+            )}
           </h3>
           <span className="mono text-[11px] text-[color:var(--color-ink-faint)]">
-            most recent {totalCommits} commits · {days.length} day{days.length === 1 ? "" : "s"} · newest first
+            most recent {totalCommits} commits · {days.length} day{days.length === 1 ? "" : "s"} · {live ? "from GitHub · " : ""}newest first
           </span>
         </div>
       </Reveal>
@@ -197,27 +217,55 @@ export default function ActivityFeed() {
           </div>
 
           <div className="mt-4 flex flex-wrap gap-2.5">
-            {PUBLIC_REPOS.map((r) => (
-              <a
-                key={r.name}
-                href={r.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={r.blurb}
-                className="btn-outline !py-2 text-[12px]"
-              >
-                <GithubMark size={14} />
-                <span className="mono">{r.name}</span>
-                <span aria-hidden className="text-[color:var(--color-ink-faint)]">↗</span>
-              </a>
-            ))}
+            {PUBLIC_REPOS.map((r) => {
+              const open = Boolean(repoPublic[r.name]);
+              return (
+                <a
+                  key={r.name}
+                  href={r.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={open ? `${r.blurb} — open on GitHub` : `${r.blurb} — public at launch`}
+                  className="btn-outline !py-2 text-[12px]"
+                >
+                  <GithubMark size={14} />
+                  <span className="mono">{r.name}</span>
+                  {/* live public-state dot — flips on its own the moment the repo opens */}
+                  <span
+                    aria-hidden
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{
+                      background: open ? "var(--color-signal)" : "var(--color-ink-faint)",
+                      boxShadow: open ? "0 0 7px var(--color-signal)" : "none",
+                    }}
+                    title={open ? "public" : "private until launch"}
+                  />
+                  <span aria-hidden className="text-[color:var(--color-ink-faint)]">↗</span>
+                </a>
+              );
+            })}
           </div>
 
-          {/* honest note — the repos are private until launch, so the buttons 404 */}
+          {/* honest note — reflects the LIVE public/private state, no manual edits */}
           <p className="mt-3 text-[11px] leading-relaxed text-[color:var(--color-ink-faint)]">
-            These repositories go <span className="text-[color:var(--color-ink-dim)]">public at launch</span> — the
-            links above will 404 until then. The per-commit links below point at the
-            same repos and will resolve the moment they open.
+            {allListedPublic ? (
+              <>
+                These repositories are <span className="text-[color:var(--color-ink-dim)]">open</span> — browse the
+                full source, and every per-commit link below resolves on GitHub.
+              </>
+            ) : anyPublic ? (
+              <>
+                Repositories with a lit dot are <span className="text-[color:var(--color-ink-dim)]">open now</span>;
+                the rest go public as they&apos;re ready. This page reflects each repo&apos;s real
+                state live — no manual updates.
+              </>
+            ) : (
+              <>
+                These repositories go <span className="text-[color:var(--color-ink-dim)]">public at launch</span> —
+                the links above 404 until then, and flip live the moment they open. The
+                per-commit links below point at the same repos.
+              </>
+            )}
           </p>
         </div>
       </Reveal>

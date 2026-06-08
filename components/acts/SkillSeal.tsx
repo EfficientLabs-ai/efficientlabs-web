@@ -34,7 +34,8 @@ export default function SkillSeal() {
     if (!ctx) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    let W = 0, H = 0, dpr = Math.min(2, window.devicePixelRatio || 1);
+    let W = 0, H = 0;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
     const resize = () => {
       const r = canvas.getBoundingClientRect();
       W = r.width; H = r.height;

@@ -16,11 +16,19 @@ const CARDS = [
 
 export default function Dashboard() {
   const [email, setEmail] = useState<string | null>(null);
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(() => !supabase);
 
   useEffect(() => {
-    if (!supabase) { setReady(true); return; }
-    supabase.auth.getUser().then(({ data }) => { setEmail(data.user?.email ?? null); setReady(true); });
+    if (!supabase) return;
+    let cancelled = false;
+    supabase.auth.getUser().then(({ data }) => {
+      if (cancelled) return;
+      setEmail(data.user?.email ?? null);
+      setReady(true);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const signedIn = Boolean(email);

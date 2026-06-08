@@ -43,6 +43,7 @@ export default function InstallPage() {
         }
         facts={[
           { k: "Commands", v: "Two" },
+          { k: "Node.js", v: "20.19+" },
           { k: "Inbound ports", v: "Zero" },
           { k: "Keys", v: "Local · sealed" },
           { k: "Account", v: "None required" },
@@ -59,7 +60,7 @@ export default function InstallPage() {
         index="01"
         kicker="Quickstart"
         title={<>Lives in your <span className="aurora-text">terminal</span></>}
-        lede="Pick your OS, copy the two commands, and you have a sovereign node. The same flow on macOS, Linux, and Windows — only the shell syntax differs."
+        lede="Pick your OS, copy the two commands, and you have a sovereign node. The installer requires Node.js 20.19+ and npm; the same flow works on macOS, Linux, and Windows — only the shell syntax differs."
       >
         <div className="grid gap-10 [&>*]:min-w-0 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
           <InstallTerminal />
@@ -127,9 +128,9 @@ export default function InstallPage() {
         lede="Modest. A node is meant to run on the hardware you already own — a laptop is enough to get started. The frontier cloud is optional and bring-your-own-key."
       >
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          <DeepCard icon={Server} title="Operating system">
-            macOS, Linux, or Windows. The quickstart above covers all three; only the shell syntax
-            differs.
+          <DeepCard icon={Server} title="OS + Node.js">
+            macOS, Linux, or Windows with Node.js 20.19+ and npm. The quickstart above covers all three;
+            only the shell syntax differs.
           </DeepCard>
           <DeepCard icon={HardDrive} title="Disk">
             Room for the runtime plus the content-addressed blocks your node holds and serves. Grows with

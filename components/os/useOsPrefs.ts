@@ -151,8 +151,11 @@ export function useOsPrefsState(): OsPrefsCtx {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setPrefs(readStoredPrefs());
-    setReady(true);
+    const timer = window.setTimeout(() => {
+      setPrefs(readStoredPrefs());
+      setReady(true);
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const persist = useCallback((next: OsPrefs) => {

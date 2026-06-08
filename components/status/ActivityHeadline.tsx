@@ -1,12 +1,19 @@
 "use client";
 import { motion, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/Reveal";
-import { ROLLUPS, REPOS, GENERATED_AT } from "@/components/status/activity";
+import {
+  ROLLUPS,
+  REPOS,
+  GENERATED_AT,
+  type Rollups,
+  type RepoMeta,
+} from "@/components/status/activity";
 
 /**
- * Headline counts — the at-a-glance proof of active work. Every number is read
- * straight from data/activity.json (real git history). If a count is 0 it shows
- * 0; there is no padding, no minimum, no "coming soon".
+ * Headline counts — the at-a-glance proof of active work. Numbers come from the
+ * /status page's live GitHub fetch (props), and fall back to the committed
+ * baseline (data/activity.json) when rendered without props. If a count is 0 it
+ * shows 0; there is no padding, no minimum, no "coming soon".
  */
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
@@ -41,8 +48,18 @@ function Stat({
   );
 }
 
-export default function ActivityHeadline() {
-  const presentRepos = REPOS.filter((r) => r.present);
+export default function ActivityHeadline({
+  rollups = ROLLUPS,
+  repos = REPOS,
+  generatedAt = GENERATED_AT,
+  live = false,
+}: {
+  rollups?: Rollups;
+  repos?: RepoMeta[];
+  generatedAt?: string;
+  live?: boolean;
+} = {}) {
+  const presentRepos = repos.filter((r) => r.present);
   const repoNames = presentRepos.map((r) => r.label).join(" + ") || "the repos";
   // Newest commit across all present repos → "last shipped" honesty signal.
   const newest = presentRepos
@@ -62,39 +79,49 @@ export default function ActivityHeadline() {
             </h3>
           </div>
           <p className="mono text-[11px] text-[color:var(--color-ink-faint)]">
-            from git history · {repoNames}
+            {live ? "live from GitHub" : "from git history"} · {repoNames}
           </p>
         </div>
       </Reveal>
 
       <Reveal delay={0.08}>
         <p className="mt-4 max-w-2xl text-[1.02rem] leading-relaxed text-[color:var(--color-ink-dim)]">
-          These counts are generated at build time from the actual commit history of
-          our repositories — not a marketing tally. Every deploy regenerates them,
-          so what you see is the work as it lands.
+          {live ? (
+            <>
+              These counts are pulled <span className="text-[color:var(--color-ink)]">live from the GitHub API</span> —
+              the real commit history of our repositories, not a marketing tally. As we push,
+              this page updates on its own; what you see is the work as it lands.
+            </>
+          ) : (
+            <>
+              These counts come from the actual commit history of our repositories — not a
+              marketing tally. They refresh from GitHub automatically, so what you see is the
+              work as it lands.
+            </>
+          )}
         </p>
       </Reveal>
 
       <Reveal delay={0.14}>
         <div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <Stat
-            value={ROLLUPS.totalCommits}
+            value={rollups.totalCommits}
             label="commits"
             sub="across all tracked repos"
           />
           <Stat
-            value={ROLLUPS.last7Days}
+            value={rollups.last7Days}
             label="last 7 days"
             sub="recent build velocity"
             accent
           />
           <Stat
-            value={ROLLUPS.last30Days}
+            value={rollups.last30Days}
             label="last 30 days"
             sub="sustained progress"
           />
           <Stat
-            value={ROLLUPS.featuresShipped}
+            value={rollups.featuresShipped}
             label="features"
             sub="conventional feat: commits"
             accent
@@ -102,14 +129,14 @@ export default function ActivityHeadline() {
         </div>
       </Reveal>
 
-      {(newest || GENERATED_AT) && (
+      {(newest || generatedAt) && (
         <Reveal delay={0.2}>
           <p className="mono mt-4 text-[11px] text-[color:var(--color-ink-faint)]">
             {newest && <>last commit {newest.slice(0, 10)} · </>}
-            {ROLLUPS.activeDays > 0 && (
-              <>{ROLLUPS.activeDays} active day{ROLLUPS.activeDays === 1 ? "" : "s"} in the log · </>
+            {rollups.activeDays > 0 && (
+              <>{rollups.activeDays} active day{rollups.activeDays === 1 ? "" : "s"} in the log · </>
             )}
-            feed generated {GENERATED_AT.slice(0, 10)}
+            {live ? "refreshed" : "generated"} {generatedAt.slice(0, 10)}
           </p>
         </Reveal>
       )}

@@ -1,35 +1,35 @@
 {
-  "generatedAt": "2026-06-07T01:34:59.333Z",
+  "generatedAt": "2026-06-08T16:35:56.035Z",
   "repos": [
     {
       "key": "web",
       "label": "efficientlabs-web",
       "present": true,
-      "commits": 21,
-      "newestAt": "2026-06-06T00:24:40.000Z",
+      "commits": 24,
+      "newestAt": "2026-06-07T16:07:08.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web"
     },
     {
       "key": "core",
       "label": "atmosphere-core",
       "present": true,
-      "commits": 231,
-      "newestAt": "2026-06-06T00:05:51.000Z",
+      "commits": 239,
+      "newestAt": "2026-06-08T10:34:28.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/atmosphere-core"
     }
   ],
   "rollups": {
-    "totalCommits": 252,
-    "last7Days": 225,
-    "last30Days": 252,
-    "featuresShipped": 115,
-    "activeDays": 5,
+    "totalCommits": 263,
+    "last7Days": 134,
+    "last30Days": 263,
+    "featuresShipped": 118,
+    "activeDays": 7,
     "byType": {
-      "feat": 115,
-      "fix": 44,
-      "chore": 6,
-      "docs": 18,
-      "other": 60,
+      "chore": 7,
+      "fix": 47,
+      "docs": 20,
+      "other": 62,
+      "feat": 118,
       "test": 3,
       "perf": 1,
       "ci": 2,
@@ -37,6 +37,96 @@
     }
   },
   "feed": [
+    {
+      "iso": "2026-06-08T18:34:28+08:00",
+      "date": "2026-06-08",
+      "subject": "chore(test): make 'npm test' the honest hermetic suite, not the mock harness",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "chore",
+      "hash": "05c190c",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/05c190c620cd60de50b5e35935d10f49c1ab943d"
+    },
+    {
+      "iso": "2026-06-08T18:32:37+08:00",
+      "date": "2026-06-08",
+      "subject": "fix(api-shim): harden shutdown so optional channel adapters can't throw during PM2 reload",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "0b677fc",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/0b677fcdc486d159330d0893643ee7434b0cf207"
+    },
+    {
+      "iso": "2026-06-08T18:32:37+08:00",
+      "date": "2026-06-08",
+      "subject": "fix(local-inference): report the actual local model; stop silently forcing gemma2:2b",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "8966f41",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/8966f4160127a1e3648f78c248cf0318973f15a4"
+    },
+    {
+      "iso": "2026-06-08T00:19:39+08:00",
+      "date": "2026-06-08",
+      "subject": "docs(truth): reconcile stale mocks — peer-compute/mesh is REAL (node bundle); on-chain rewards intentionally not-live (not a stub)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs",
+      "hash": "acb079e",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/acb079e70519dced5ca91369300dcd58b8fb1a0e"
+    },
+    {
+      "iso": "2026-06-08T00:18:08+08:00",
+      "date": "2026-06-08",
+      "subject": "docs(truth): correct stale 'Cloud tier unimplemented' — it's built + tested (BYOK + OpenRouter, 47 checks)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs",
+      "hash": "2459827",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/2459827bdb57ad91536cc6b6e2a9671fa7282763"
+    },
+    {
+      "iso": "2026-06-08T00:12:25+08:00",
+      "date": "2026-06-08",
+      "subject": "merge(security): exec job-policy gate + symlink-traversal hardening (trust substrate → live)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "other",
+      "hash": "1c8ef6e",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/1c8ef6ece7fef3be776a296f1d7a8dfcaba806ae"
+    },
+    {
+      "iso": "2026-06-08T00:07:08+08:00",
+      "date": "2026-06-08",
+      "subject": "fix(web): real working install — efficientlabs.ai/install.sh + @efficientlabs/stratos",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "fix",
+      "hash": "89e9a81",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/89e9a81d7079051272a56c626adaebb1cafa21c4"
+    },
+    {
+      "iso": "2026-06-07T20:19:18+08:00",
+      "date": "2026-06-07",
+      "subject": "feat(web): live Stripe checkout — monthly default + annual toggle (2 months free)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "c9faa83",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/c9faa8340d9e61525fe333b2e0e6234cd63be608"
+    },
+    {
+      "iso": "2026-06-07T09:36:49+08:00",
+      "date": "2026-06-07",
+      "subject": "feat(web): dark default + glassmorphism + per-command copy + real status + customizable OS",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "27a7bc1",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/27a7bc142c9e1f2b4ab4f68ffb6ec110645e091c"
+    },
     {
       "iso": "2026-06-06T08:24:40+08:00",
       "date": "2026-06-06",
@@ -746,99 +836,120 @@
       "type": "other",
       "hash": "eb5bcaf",
       "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/eb5bcaf9810c31733aa4e8fe6c1b7410911104d0"
-    },
-    {
-      "iso": "2026-06-02T11:51:51+08:00",
-      "date": "2026-06-02",
-      "subject": "Merge pull request #50 from EfficientLabs-ai/fix/gap35-broker-env",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "other",
-      "hash": "3d12077",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/3d120772b37e3bff42a4edaa8c228cbbe000183a"
-    },
-    {
-      "iso": "2026-06-02T11:50:36+08:00",
-      "date": "2026-06-02",
-      "subject": "fix(connectors): pin absolute cwd + document the security boundary (Codex review of #35)",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "fix",
-      "hash": "6e1f6c0",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/6e1f6c02db3abd5caf5cd348dea81767b3d953f0"
-    },
-    {
-      "iso": "2026-06-02T11:44:23+08:00",
-      "date": "2026-06-02",
-      "subject": "fix(connectors): ENFORCE absolute sidecar command + cover scheme-less proxy creds (Codex review of #35)",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "fix",
-      "hash": "378e4b3",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/378e4b3ece28af63dd26db0470e4d8316e1d9f25"
-    },
-    {
-      "iso": "2026-06-02T11:39:23+08:00",
-      "date": "2026-06-02",
-      "subject": "fix(connectors): strip proxy-URL credentials; document PATH (Codex review of #35)",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "fix",
-      "hash": "b48d177",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/b48d1777d1c32be4b9e1b04fb5382d41312b0c5b"
-    },
-    {
-      "iso": "2026-06-02T11:34:09+08:00",
-      "date": "2026-06-02",
-      "subject": "fix(connectors): strip NODE_PATH too (Codex review of #35)",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "fix",
-      "hash": "0c982d9",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/0c982d9ae4696d368d98c648b9ff2c8ff7bd32dc"
-    },
-    {
-      "iso": "2026-06-02T11:30:08+08:00",
-      "date": "2026-06-02",
-      "subject": "fix(connectors): strip NODE_OPTIONS from child env (Codex review of #35)",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "fix",
-      "hash": "b9e28ce",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/b9e28ceac803bab242d08e931e0404877c4c626c"
-    },
-    {
-      "iso": "2026-06-02T11:28:32+08:00",
-      "date": "2026-06-02",
-      "subject": "Merge pull request #48 from EfficientLabs-ai/feat/gap36-402-loop",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "other",
-      "hash": "7e5a944",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/7e5a944c61e3e37eab1116d03744409c5f92fd5a"
-    },
-    {
-      "iso": "2026-06-02T11:28:04+08:00",
-      "date": "2026-06-02",
-      "subject": "Merge pull request #49 from EfficientLabs-ai/fix/gap33-doc-honesty",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "other",
-      "hash": "7db04f8",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/7db04f83ba0962147d0fb50d81128422de0ee1a3"
-    },
-    {
-      "iso": "2026-06-02T11:24:44+08:00",
-      "date": "2026-06-02",
-      "subject": "fix(omni): Signal group-scoped approvals (Codex review of #36)",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "fix",
-      "hash": "c2a62e4",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/c2a62e4eb2378f36e60bd6e202878c1596f05298"
     }
   ],
   "feedByDate": [
+    {
+      "date": "2026-06-08",
+      "count": 7,
+      "byType": {
+        "chore": 1,
+        "fix": 3,
+        "docs": 2,
+        "other": 1
+      },
+      "commits": [
+        {
+          "iso": "2026-06-08T18:34:28+08:00",
+          "date": "2026-06-08",
+          "subject": "chore(test): make 'npm test' the honest hermetic suite, not the mock harness",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "chore",
+          "hash": "05c190c",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/05c190c620cd60de50b5e35935d10f49c1ab943d"
+        },
+        {
+          "iso": "2026-06-08T18:32:37+08:00",
+          "date": "2026-06-08",
+          "subject": "fix(api-shim): harden shutdown so optional channel adapters can't throw during PM2 reload",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "0b677fc",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/0b677fcdc486d159330d0893643ee7434b0cf207"
+        },
+        {
+          "iso": "2026-06-08T18:32:37+08:00",
+          "date": "2026-06-08",
+          "subject": "fix(local-inference): report the actual local model; stop silently forcing gemma2:2b",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "8966f41",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/8966f4160127a1e3648f78c248cf0318973f15a4"
+        },
+        {
+          "iso": "2026-06-08T00:19:39+08:00",
+          "date": "2026-06-08",
+          "subject": "docs(truth): reconcile stale mocks — peer-compute/mesh is REAL (node bundle); on-chain rewards intentionally not-live (not a stub)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "acb079e",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/acb079e70519dced5ca91369300dcd58b8fb1a0e"
+        },
+        {
+          "iso": "2026-06-08T00:18:08+08:00",
+          "date": "2026-06-08",
+          "subject": "docs(truth): correct stale 'Cloud tier unimplemented' — it's built + tested (BYOK + OpenRouter, 47 checks)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "2459827",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/2459827bdb57ad91536cc6b6e2a9671fa7282763"
+        },
+        {
+          "iso": "2026-06-08T00:12:25+08:00",
+          "date": "2026-06-08",
+          "subject": "merge(security): exec job-policy gate + symlink-traversal hardening (trust substrate → live)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "other",
+          "hash": "1c8ef6e",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/1c8ef6ece7fef3be776a296f1d7a8dfcaba806ae"
+        },
+        {
+          "iso": "2026-06-08T00:07:08+08:00",
+          "date": "2026-06-08",
+          "subject": "fix(web): real working install — efficientlabs.ai/install.sh + @efficientlabs/stratos",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "fix",
+          "hash": "89e9a81",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/89e9a81d7079051272a56c626adaebb1cafa21c4"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-07",
+      "count": 2,
+      "byType": {
+        "feat": 2
+      },
+      "commits": [
+        {
+          "iso": "2026-06-07T20:19:18+08:00",
+          "date": "2026-06-07",
+          "subject": "feat(web): live Stripe checkout — monthly default + annual toggle (2 months free)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "c9faa83",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/c9faa8340d9e61525fe333b2e0e6234cd63be608"
+        },
+        {
+          "iso": "2026-06-07T09:36:49+08:00",
+          "date": "2026-06-07",
+          "subject": "feat(web): dark default + glassmorphism + per-command copy + real status + customizable OS",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "27a7bc1",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/27a7bc142c9e1f2b4ab4f68ffb6ec110645e091c"
+        }
+      ]
+    },
     {
       "date": "2026-06-06",
       "count": 26,
@@ -1546,11 +1657,10 @@
     },
     {
       "date": "2026-06-02",
-      "count": 14,
+      "count": 5,
       "byType": {
         "perf": 1,
-        "other": 7,
-        "fix": 6
+        "other": 4
       },
       "commits": [
         {
@@ -1602,96 +1712,6 @@
           "type": "other",
           "hash": "eb5bcaf",
           "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/eb5bcaf9810c31733aa4e8fe6c1b7410911104d0"
-        },
-        {
-          "iso": "2026-06-02T11:51:51+08:00",
-          "date": "2026-06-02",
-          "subject": "Merge pull request #50 from EfficientLabs-ai/fix/gap35-broker-env",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "other",
-          "hash": "3d12077",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/3d120772b37e3bff42a4edaa8c228cbbe000183a"
-        },
-        {
-          "iso": "2026-06-02T11:50:36+08:00",
-          "date": "2026-06-02",
-          "subject": "fix(connectors): pin absolute cwd + document the security boundary (Codex review of #35)",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "fix",
-          "hash": "6e1f6c0",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/6e1f6c02db3abd5caf5cd348dea81767b3d953f0"
-        },
-        {
-          "iso": "2026-06-02T11:44:23+08:00",
-          "date": "2026-06-02",
-          "subject": "fix(connectors): ENFORCE absolute sidecar command + cover scheme-less proxy creds (Codex review of #35)",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "fix",
-          "hash": "378e4b3",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/378e4b3ece28af63dd26db0470e4d8316e1d9f25"
-        },
-        {
-          "iso": "2026-06-02T11:39:23+08:00",
-          "date": "2026-06-02",
-          "subject": "fix(connectors): strip proxy-URL credentials; document PATH (Codex review of #35)",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "fix",
-          "hash": "b48d177",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/b48d1777d1c32be4b9e1b04fb5382d41312b0c5b"
-        },
-        {
-          "iso": "2026-06-02T11:34:09+08:00",
-          "date": "2026-06-02",
-          "subject": "fix(connectors): strip NODE_PATH too (Codex review of #35)",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "fix",
-          "hash": "0c982d9",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/0c982d9ae4696d368d98c648b9ff2c8ff7bd32dc"
-        },
-        {
-          "iso": "2026-06-02T11:30:08+08:00",
-          "date": "2026-06-02",
-          "subject": "fix(connectors): strip NODE_OPTIONS from child env (Codex review of #35)",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "fix",
-          "hash": "b9e28ce",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/b9e28ceac803bab242d08e931e0404877c4c626c"
-        },
-        {
-          "iso": "2026-06-02T11:28:32+08:00",
-          "date": "2026-06-02",
-          "subject": "Merge pull request #48 from EfficientLabs-ai/feat/gap36-402-loop",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "other",
-          "hash": "7e5a944",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/7e5a944c61e3e37eab1116d03744409c5f92fd5a"
-        },
-        {
-          "iso": "2026-06-02T11:28:04+08:00",
-          "date": "2026-06-02",
-          "subject": "Merge pull request #49 from EfficientLabs-ai/fix/gap33-doc-honesty",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "other",
-          "hash": "7db04f8",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/7db04f83ba0962147d0fb50d81128422de0ee1a3"
-        },
-        {
-          "iso": "2026-06-02T11:24:44+08:00",
-          "date": "2026-06-02",
-          "subject": "fix(omni): Signal group-scoped approvals (Codex review of #36)",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "fix",
-          "hash": "c2a62e4",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/c2a62e4eb2378f36e60bd6e202878c1596f05298"
         }
       ]
     }

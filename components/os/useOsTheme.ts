@@ -31,7 +31,8 @@ export function useOsThemeState(): ThemeCtx {
   const [theme, setThemeState] = useState<OsTheme>("dark");
 
   useEffect(() => {
-    setThemeState(readStoredTheme());
+    const timer = window.setTimeout(() => setThemeState(readStoredTheme()), 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const setTheme = useCallback((t: OsTheme) => {

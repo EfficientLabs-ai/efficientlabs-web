@@ -26,7 +26,7 @@ export default function MeshCanvas() {
     type Node = { x: number; y: number; vx: number; vy: number; r: number; sov?: boolean };
     let nodes: Node[] = [];
     type Packet = { a: number; b: number; t: number; speed: number };
-    let packets: Packet[] = [];
+    const packets: Packet[] = [];
 
     const lerp = (a: number, b: number, t: number) => Math.round(a + (b - a) * t);
 

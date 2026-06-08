@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { siGoogle, siApple, siGithub } from "simple-icons";
 import { supabase, authReady } from "@/lib/supabase";
@@ -30,7 +30,26 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  // Only show the social buttons for providers Supabase actually has enabled —
+  // fetched live from GoTrue's /settings, so a provider appears the instant it's
+  // configured in the dashboard (and we never show a button that would error).
+  const [enabled, setEnabled] = useState<Provider[]>([]);
   const isSignup = mode === "signup";
+
+  useEffect(() => {
+    if (!authReady) return;
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+    fetch(`${url}/auth/v1/settings`, { headers: { apikey: key } })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!d?.external) return;
+        setEnabled(SOCIALS.filter((s) => d.external[s.id]).map((s) => s.id));
+      })
+      .catch(() => {});
+  }, []);
+
+  const socials = SOCIALS.filter((s) => enabled.includes(s.id));
 
   const oauth = async (provider: Provider) => {
     if (!supabase) return;
@@ -78,24 +97,28 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
           </div>
         )}
 
-        {/* social */}
-        <div className="mt-7 grid grid-cols-2 gap-3">
-          {SOCIALS.map((s) => (
-            <button key={s.id} onClick={() => oauth(s.id)} disabled={!authReady || busy}
-              className="lm-card flex items-center justify-center gap-2.5 px-4 py-3 text-[13px] text-[color:var(--color-ink)] transition-opacity disabled:opacity-50">
-              {s.brand
-                ? <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden><path d={s.brand.path} /></svg>
-                : <MicrosoftMark />}
-              {s.label}
-            </button>
-          ))}
-        </div>
+        {/* social — only the providers Supabase has enabled (no broken buttons) */}
+        {socials.length > 0 && (
+          <>
+            <div className="mt-7 grid grid-cols-2 gap-3">
+              {socials.map((s) => (
+                <button key={s.id} onClick={() => oauth(s.id)} disabled={!authReady || busy}
+                  className="lm-card flex items-center justify-center gap-2.5 px-4 py-3 text-[13px] text-[color:var(--color-ink)] transition-opacity disabled:opacity-50">
+                  {s.brand
+                    ? <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden><path d={s.brand.path} /></svg>
+                    : <MicrosoftMark />}
+                  {s.label}
+                </button>
+              ))}
+            </div>
 
-        <div className="my-6 flex items-center gap-3">
-          <span className="h-px flex-1 bg-[color:var(--color-line)]" />
-          <span className="mono text-[11px] text-[color:var(--color-ink-faint)]">or email</span>
-          <span className="h-px flex-1 bg-[color:var(--color-line)]" />
-        </div>
+            <div className="my-6 flex items-center gap-3">
+              <span className="h-px flex-1 bg-[color:var(--color-line)]" />
+              <span className="mono text-[11px] text-[color:var(--color-ink-faint)]">or email</span>
+              <span className="h-px flex-1 bg-[color:var(--color-line)]" />
+            </div>
+          </>
+        )}
 
         {/* email */}
         <form onSubmit={submit} className="space-y-3">

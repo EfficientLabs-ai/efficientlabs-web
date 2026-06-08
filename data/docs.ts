@@ -109,15 +109,16 @@ export const ARTICLES: Article[] = [
     updated: "2026-06-03",
     blocks: [
       { kind: "p", text: "This is the shortest path from nothing to the publicly-auditable StratosAgent operating core running on your own machine. One command installs the CLI; the operating-core commands are deterministic and make no network calls." },
-      { kind: "callout", variant: "note", text: "The installer is user-space and fail-closed: no sudo, nothing auto-started. It installs the pinned @efficientlabs/stratos package after checking for Node 18+." },
+      { kind: "callout", variant: "note", text: "The installer is user-space and fail-closed: no sudo, nothing auto-started. It installs the pinned @efficientlabs/stratos package after checking for Node 20.19+." },
       { kind: "h2", id: "install-runtime", text: "1 · Install the CLI" },
       { kind: "tabs", tabs: [
         { label: "macOS / Linux", lang: "bash", code: "# install the StratosAgent CLI — user-space, no sudo\ncurl -fsSL https://efficientlabs.ai/install.sh | sh" },
-        { label: "Windows", lang: "powershell", code: "# install the StratosAgent CLI via npm (needs Node 18+)\nnpm i -g @efficientlabs/stratos" },
+        { label: "Windows", lang: "powershell", code: "# install the StratosAgent CLI — PowerShell, no admin\nirm https://efficientlabs.ai/install.ps1 | iex\n# or with npm (any OS): npm i -g @efficientlabs/stratos" },
       ] },
-      { kind: "h2", id: "bring-online", text: "2 · Run the operating core" },
-      { kind: "code", lang: "bash", code: "stratos workspace create demo            # the files-first operational unit\nstratos task create demo/proj/wf/task1   # scaffold a task\nstratos trace demo/proj/wf/task1         # start→steps→end + PQC-signed receipt\nstratos eval demo/proj/wf/task1          # score the trace against the rubric" },
-      { kind: "p", text: "capture / trace / eval are deterministic — no LLM, no network. The trace mints a PQC-signed, hash-chained capability-receipt you can verify with the public key alone." },
+      { kind: "h2", id: "bring-online", text: "2 · First run — a real local completion" },
+      { kind: "code", lang: "bash", code: "stratos init                              # persistent node identity + a workspace\nstratos task create local/demo/flow/t1    # scaffold a task\nstratos complete local/demo/flow/t1 \"what is sovereign AI?\"   # REAL local completion\nstratos eval local/demo/flow/t1           # re-verify the run's signed receipt" },
+      { kind: "callout", variant: "note", text: "complete needs a local OpenAI-compatible endpoint — e.g. Ollama (ollama serve + ollama pull gemma2:2b) — pointed at via --gateway or STRATOS_GATEWAY_URL (e.g. http://127.0.0.1:11434/v1/chat/completions). No model is bundled; your data stays on your machine." },
+      { kind: "p", text: "complete routes local-default ($0), writes a trace, and seals it in a PQC-signed capability-receipt verifiable with the public key alone. The deterministic, no-network commands — workspace / task / capture / trace / eval / route / receipt — need no endpoint at all." },
       { kind: "h2", id: "next", text: "Where to next" },
       { kind: "ul", items: [
         "Requirements — confirm your Node version and OS.",
@@ -184,7 +185,7 @@ export const ARTICLES: Article[] = [
     keywords: ["install", "setup", "bundle", "mesh bundle"],
     updated: "2026-06-03",
     blocks: [
-      { kind: "p", text: "A single, fail-closed installer puts the StratosAgent CLI on your machine — user-space, no sudo, nothing auto-started. It checks for Node 18+ and installs the pinned @efficientlabs/stratos package." },
+      { kind: "p", text: "A single, fail-closed installer puts the StratosAgent CLI on your machine — user-space, no sudo, nothing auto-started. It checks for Node 20.19+ and installs the pinned @efficientlabs/stratos package." },
       { kind: "h2", id: "one-command", text: "One command" },
       { kind: "tabs", tabs: [
         { label: "macOS / Linux", lang: "bash", code: "curl -fsSL https://efficientlabs.ai/install.sh | sh" },
