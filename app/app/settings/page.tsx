@@ -27,7 +27,7 @@ const KEY_PROVIDERS = [
   { icon: Server, name: "Local model", detail: "Runs on hardware you own — no key needed" },
 ];
 
-// Five channel adapters are daemon-started (Live per status.json). The UI shows
+// Channel adapters are daemon-started but config-needed per status.json. The UI shows
 // them as honest connect targets; nothing is shown as connected until it is.
 const CHANNELS = [
   { name: "Telegram", detail: "Bot adapter, daemon-started" },
@@ -139,8 +139,8 @@ export default function SettingsPage() {
           <MessageSquare size={15} className="text-[color:var(--color-signal)]" />
         </div>
         <p className="text-[13px] text-[color:var(--color-ink-dim)]">
-          One agent, every inbox. Five channel adapters are started by the daemon. Connect
-          the ones you use — nothing is shown as connected until you link it.
+          One agent, every inbox. Channel adapters are started by the daemon, but they need owner
+          tokens and send/receive verification before they count as live.
         </p>
         <div className="space-y-2.5">
           {CHANNELS.map((c) => (
@@ -155,7 +155,7 @@ export default function SettingsPage() {
           ))}
         </div>
         <div className="space-y-2.5">
-          <CapStatus name="Five channel adapters" />
+          <CapStatus name="Channel adapters" />
         </div>
       </section>
 

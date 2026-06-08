@@ -9,6 +9,7 @@ import { LEVELS, LAYERS, type Level } from "@/lib/status";
 export const LEVEL_DOT: Record<Level, string> = {
   live: "var(--color-signal)",
   wired: "#86c5ff",
+  config: "#ff9f6e",
   standalone: "#c9a24b",
   mock: "#5b6675",
 };

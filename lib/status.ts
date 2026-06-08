@@ -3,7 +3,7 @@
 // moat means this page never claims more than the running system actually does.
 import data from "@/data/status.json";
 
-export type Level = "live" | "wired" | "standalone" | "mock";
+export type Level = "live" | "wired" | "config" | "standalone" | "mock";
 export type Capability = { name: string; detail: string; level: Level };
 export type Layer = { id: string; name: string; caps: Capability[] };
 

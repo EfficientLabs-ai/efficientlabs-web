@@ -3,7 +3,7 @@ import Link from "next/link";
 import { LEVELS, type Level } from "@/lib/status";
 
 const DOT: Record<Level, string> = {
-  live: "var(--color-signal)", wired: "#86c5ff", standalone: "#c9a24b", mock: "#5b6675",
+  live: "var(--color-signal)", wired: "#86c5ff", config: "#ff9f6e", standalone: "#c9a24b", mock: "#5b6675",
 };
 
 type Entry = { date: string; title: string; kind?: string; level?: Level; layer?: string; body?: string };

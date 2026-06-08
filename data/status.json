@@ -1,66 +1,171 @@
 {
   "levels": {
-    "live": { "label": "Live", "blurb": "Running in production, exercised by tests." },
-    "wired": { "label": "Wired", "blurb": "Built and connected into the daemon; hardening in progress." },
-    "standalone": { "label": "Standalone", "blurb": "Built and tested in isolation; live wiring is supervised." },
-    "mock": { "label": "Mock", "blurb": "Scaffold / placeholder — explicitly NOT real yet." }
+    "live": {
+      "label": "Live",
+      "blurb": "Running in production, exercised by tests."
+    },
+    "wired": {
+      "label": "Wired",
+      "blurb": "Built and connected into the daemon; hardening in progress."
+    },
+    "config": {
+      "label": "Config needed",
+      "blurb": "Real code exists, but owner keys/tokens or production verification are still missing."
+    },
+    "standalone": {
+      "label": "Standalone",
+      "blurb": "Built and tested in isolation; live wiring is supervised."
+    },
+    "mock": {
+      "label": "Mock",
+      "blurb": "Scaffold / placeholder — explicitly NOT real yet."
+    }
   },
   "layers": [
     {
       "id": "L0",
       "name": "Substrate · cryptography",
       "caps": [
-        { "name": "Vault (AES-GCM, memory-wiped)", "detail": "Secrets sealed at rest, derived keys zeroed.", "level": "live" },
-        { "name": "Post-quantum receipts & seals", "detail": "ML-DSA-65 signatures on skills and receipts.", "level": "live" },
-        { "name": "Secret-guard on every adapter", "detail": "Outbound text scrubbed of secret-shaped strings.", "level": "live" }
+        {
+          "name": "Vault (AES-GCM, memory-wiped)",
+          "detail": "Secrets sealed at rest, derived keys zeroed.",
+          "level": "live"
+        },
+        {
+          "name": "Post-quantum receipts & seals",
+          "detail": "ML-DSA-65 signatures on skills and receipts.",
+          "level": "live"
+        },
+        {
+          "name": "Secret-guard on every adapter",
+          "detail": "Outbound text scrubbed of secret-shaped strings.",
+          "level": "live"
+        }
       ]
     },
     {
       "id": "L1",
       "name": "Content & freshness",
       "caps": [
-        { "name": "Content-addressed pipeline", "detail": "SHA-256 freshness model in the engine.", "level": "live" },
-        { "name": "Hermetic CI", "detail": "~40 allow-listed tests on Node 20 + 22.", "level": "live" },
-        { "name": "Skill-seal verification on ingest", "detail": "verifySkillBlock applied in p2p sync.", "level": "wired" }
+        {
+          "name": "Content-addressed pipeline",
+          "detail": "SHA-256 freshness model in the engine.",
+          "level": "live"
+        },
+        {
+          "name": "Hermetic CI",
+          "detail": "~40 allow-listed tests on Node 20 + 22.",
+          "level": "live"
+        },
+        {
+          "name": "Skill-seal verification on ingest",
+          "detail": "verifySkillBlock applied in p2p sync.",
+          "level": "wired"
+        }
       ]
     },
     {
       "id": "L2",
       "name": "Transport · P2P mesh",
       "caps": [
-        { "name": "Hyperswarm DHT + hole-punch", "detail": "Per-platform bundles built; broad multi-device runs still early.", "level": "wired" },
-        { "name": "Gossip skill-sync", "detail": "Peer-to-peer skill propagation with provenance.", "level": "wired" },
-        { "name": "Economic / on-chain settlement", "detail": "Offline-signed, never broadcast.", "level": "mock" }
+        {
+          "name": "Hyperswarm DHT + hole-punch",
+          "detail": "Per-platform bundles built; broad multi-device runs still early.",
+          "level": "wired"
+        },
+        {
+          "name": "Gossip skill-sync",
+          "detail": "Peer-to-peer skill propagation with provenance.",
+          "level": "wired"
+        },
+        {
+          "name": "Economic / on-chain settlement",
+          "detail": "Offline-signed, never broadcast.",
+          "level": "mock"
+        }
       ]
     },
     {
       "id": "L3",
       "name": "Capability · isolation",
       "caps": [
-        { "name": "Broker env-scoping", "detail": "Child + sidecars stripped of secrets, NODE_OPTIONS, proxy creds.", "level": "wired" },
-        { "name": "Exec + WASI sandbox", "detail": "Sanitized-only, empty preopens, no shell exec.", "level": "wired" },
-        { "name": "Write-approval (402 loop)", "detail": "Cost handshake wired into all five channels.", "level": "wired" },
-        { "name": "Broker → live gateway path", "detail": "Isolation proven; live wiring done supervised.", "level": "standalone" }
+        {
+          "name": "Broker env-scoping",
+          "detail": "Child + sidecars stripped of secrets, NODE_OPTIONS, proxy creds.",
+          "level": "wired"
+        },
+        {
+          "name": "Exec + WASI sandbox",
+          "detail": "Sanitized-only, empty preopens, no shell exec.",
+          "level": "wired"
+        },
+        {
+          "name": "Write-approval (402 loop)",
+          "detail": "Cost handshake wired into all five channels.",
+          "level": "wired"
+        },
+        {
+          "name": "Broker → local gateway path",
+          "detail": "Loopback path verified; authenticated network mode waits for owner-set ATMOS_GATEWAY_SECRET.",
+          "level": "config"
+        }
       ]
     },
     {
       "id": "L4",
       "name": "Routing · inference",
       "caps": [
-        { "name": "BYOK cost gate", "detail": "On /v1/chat/completions — the only spend route.", "level": "live" },
-        { "name": "Local ⇄ cloud language routing", "detail": "Coding → local; complex → proxy.", "level": "live" },
-        { "name": "Owner-gating (fail-closed)", "detail": "No owner set ⇒ no command authority.", "level": "live" },
-        { "name": "Self-evolution (narrow class)", "detail": "Integer-transform skills only, sealed + observed.", "level": "live" }
+        {
+          "name": "BYOK cost gate",
+          "detail": "On /v1/chat/completions — the only spend route.",
+          "level": "live"
+        },
+        {
+          "name": "Local ⇄ cloud language routing",
+          "detail": "Coding → local; complex → proxy.",
+          "level": "live"
+        },
+        {
+          "name": "Owner-gating (fail-closed)",
+          "detail": "No owner set ⇒ no command authority.",
+          "level": "live"
+        },
+        {
+          "name": "Self-evolution (narrow class)",
+          "detail": "Integer-transform skills only, sealed + observed.",
+          "level": "live"
+        },
+        {
+          "name": "Public Stratos routing honesty",
+          "detail": "Published CLI honors explicit local model and privacy; multi-provider adapter regression still pending.",
+          "level": "wired"
+        }
       ]
     },
     {
       "id": "L5",
       "name": "Agent surface · channels",
       "caps": [
-        { "name": "Five channel adapters", "detail": "Telegram, Discord, Slack, Matrix, Signal — daemon-started.", "level": "live" },
-        { "name": "Browser/exec RCE removed", "detail": "Unauthenticated new Function() path deleted.", "level": "wired" },
-        { "name": "Speech & vision (STT/TTS)", "detail": "Adapters return placeholders.", "level": "mock" },
-        { "name": "ACP agent-to-agent proxy", "detail": "Returns scaffolded responses.", "level": "mock" }
+        {
+          "name": "Channel adapters",
+          "detail": "Telegram, Discord, Slack, Matrix, Signal adapters exist; external tokens and real send/receive verification still required.",
+          "level": "config"
+        },
+        {
+          "name": "Browser/exec RCE removed",
+          "detail": "Unauthenticated new Function() path deleted.",
+          "level": "wired"
+        },
+        {
+          "name": "Speech & vision (STT/TTS)",
+          "detail": "STT/TTS placeholders; Active Vision capture path remains mock.",
+          "level": "mock"
+        },
+        {
+          "name": "ACP agent-to-agent proxy",
+          "detail": "Returns scaffolded responses.",
+          "level": "mock"
+        }
       ]
     }
   ]

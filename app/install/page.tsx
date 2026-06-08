@@ -152,7 +152,7 @@ export default function InstallPage() {
         index="04"
         kicker="The honest install"
         title="What's live the moment you install"
-        lede="The install flow is in early access, opening at launch. Here's the honest split of what comes up live versus what's still wiring — straight from the status matrix."
+        lede="The install flow is in early access, opening at launch. Here's the honest split of what comes up live, what needs configuration, and what's still wiring — straight from the status matrix."
       >
         <div className="grid gap-5 md:grid-cols-3">
           <DeepCard icon={Lock} title="Vault & post-quantum keys" level="live"
@@ -165,10 +165,10 @@ export default function InstallPage() {
             DHT discovery and hole-punch transport are wired and bundled per platform; wide multi-device
             meshing is still maturing — and we say so.
           </DeepCard>
-          <DeepCard icon={MessageSquare} title="Agent channels" level="live"
+          <DeepCard icon={MessageSquare} title="Agent channels" level="config"
             points={["Telegram, Discord, Slack, Matrix, Signal", "Daemon-started adapters", "Owner-gated authority"]}>
-            The five channel adapters are live and daemon-started. The agent answers across all of them,
-            with fail-closed owner-gating.
+            The channel adapters are built and daemon-started, but external tokens and real send/receive
+            verification are still required before they count as live.
           </DeepCard>
         </div>
 

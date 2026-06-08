@@ -6,7 +6,7 @@
  * WHY THIS EXISTS
  * ---------------
  * The public L0–L5 status matrix (data/status.json, rendered by StatusMatrix)
- * labels every capability Live / Wired / Standalone / Mock. That honesty IS the
+ * labels every capability Live / Wired / Config needed / Standalone / Mock. That honesty IS the
  * brand. A single line of marketing copy that says a Mock capability is "live"
  * or "shipping" detonates the whole moat. This script makes that tamper-evident:
  * it fails the build (exit 1) if marketing copy claims a not-yet-Live capability
@@ -20,7 +20,7 @@
  *
  *   1. From data/status.json we take the SOURCE OF TRUTH: every capability and
  *      its real level. We only police capabilities whose level is NOT "live"
- *      (i.e. wired / standalone / mock) — Live caps may be described as live.
+ *      (i.e. wired / config-needed / standalone / mock) — Live caps may be described as live.
  *
  *   2. CONCEPT MAP (curated, below): each policed capability is given a small set
  *      of "subject" regexes — the words marketing actually uses for it. These are
@@ -126,6 +126,15 @@ const CONCEPT = {
   "Browser/exec RCE removed": [
     /\bRCE\b/, /\bremote-?code\b/i,
   ],
+  "Broker → local gateway path": [
+    /\blocal gateway\b/i, /\bgateway path\b/i, /\bATMOS_GATEWAY_SECRET\b/,
+  ],
+  "Channel adapters": [
+    /\bchannel adapters?\b/i,
+  ],
+  "Public Stratos routing honesty": [
+    /\bStratos routing\b/i, /\bmodel routing\b/i, /\bmodel adapter\b/i,
+  ],
 };
 
 // ── marketing surfaces to scan (relative to ROOT). Status source files are
@@ -227,7 +236,7 @@ const SURFACES = [
   // StatusBadge to print Live/Wired/Standalone/Mock and would self-trip.
 ];
 
-const LEVEL_LABEL = { wired: "Wired", standalone: "Standalone", mock: "Mock" };
+const LEVEL_LABEL = { wired: "Wired", config: "Config needed", standalone: "Standalone", mock: "Mock" };
 
 // Sentence/clause boundary characters. Used to clamp the proximity window so a
 // live-verb in a DIFFERENT sentence can't pair with a subject in this one.

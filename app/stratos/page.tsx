@@ -205,12 +205,12 @@ export default function StratosPage() {
         index="05"
         kicker="Reach & evolution"
         title="Many front doors, one sovereign agent"
-        lede="StratosAgent meets people where they already are, and it can extend its own narrow set of skills under strict, sealed observation. Here's what's live — and what's honestly still a placeholder."
+        lede="StratosAgent meets people where they already are, and it can extend its own narrow set of skills under strict, sealed observation. Here's what's live, what needs configuration, and what's honestly still a placeholder."
       >
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          <DeepCard icon={MessageSquare} title="Five channel adapters" level="live">
-            Telegram, Discord, Slack, Matrix, and Signal — all daemon-started, all the same agent behind
-            them.
+          <DeepCard icon={MessageSquare} title="Channel adapters" level="config">
+            Telegram, Discord, Slack, Matrix, and Signal adapters exist, but external tokens and real
+            send/receive verification are still required before they count as live.
           </DeepCard>
           <DeepCard icon={Zap} title="Self-evolution (narrow)" level="live">
             A tightly-scoped class of integer-transform skills can be self-authored — sealed, observed, and

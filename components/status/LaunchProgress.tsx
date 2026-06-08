@@ -15,6 +15,7 @@ import { LAYERS, type Level } from "@/lib/status";
  *
  *   Live       → 1.00  running in production, exercised by tests
  *   Wired      → 0.50  built + connected, still hardening
+ *   Config     → 0.25  real code exists, owner config / external verification missing
  *   Standalone → 0.25  proven in isolation, live wiring supervised
  *   Mock       → 0.00  scaffold / placeholder — explicitly not real
  *
@@ -32,6 +33,7 @@ const EASE = [0.2, 0.8, 0.2, 1] as const;
 const WEIGHTS: Record<Level, number> = {
   live: 1,
   wired: 0.5,
+  config: 0.25,
   standalone: 0.25,
   mock: 0,
 };
@@ -42,6 +44,7 @@ const TOTAL = ALL.length;
 const COUNTS: Record<Level, number> = {
   live: ALL.filter((c) => c.level === "live").length,
   wired: ALL.filter((c) => c.level === "wired").length,
+  config: ALL.filter((c) => c.level === "config").length,
   standalone: ALL.filter((c) => c.level === "standalone").length,
   mock: ALL.filter((c) => c.level === "mock").length,
 };
@@ -50,6 +53,7 @@ const COUNTS: Record<Level, number> = {
 const WEIGHTED =
   COUNTS.live * WEIGHTS.live +
   COUNTS.wired * WEIGHTS.wired +
+  COUNTS.config * WEIGHTS.config +
   COUNTS.standalone * WEIGHTS.standalone +
   COUNTS.mock * WEIGHTS.mock;
 const PCT = TOTAL > 0 ? Math.round((WEIGHTED / TOTAL) * 100) : 0;
@@ -58,6 +62,7 @@ const PCT = TOTAL > 0 ? Math.round((WEIGHTED / TOTAL) * 100) : 0;
 const PCT_BY: Record<Level, number> = {
   live: TOTAL > 0 ? (COUNTS.live * WEIGHTS.live) / TOTAL * 100 : 0,
   wired: TOTAL > 0 ? (COUNTS.wired * WEIGHTS.wired) / TOTAL * 100 : 0,
+  config: TOTAL > 0 ? (COUNTS.config * WEIGHTS.config) / TOTAL * 100 : 0,
   standalone: TOTAL > 0 ? (COUNTS.standalone * WEIGHTS.standalone) / TOTAL * 100 : 0,
   mock: 0,
 };
@@ -65,18 +70,21 @@ const PCT_BY: Record<Level, number> = {
 // Cumulative left-offsets for the stacked segments.
 const OFFSET_WIRED = PCT_BY.live;
 const OFFSET_STANDALONE = PCT_BY.live + PCT_BY.wired;
+const OFFSET_CONFIG = PCT_BY.live + PCT_BY.wired + PCT_BY.standalone;
 
 type TierVisual = { level: Level; label: string; color: string; weightLabel: string };
 
 const TIERS: TierVisual[] = [
   { level: "live", label: "Live", color: "var(--color-signal)", weightLabel: "×1.0" },
   { level: "wired", label: "Wired", color: "#86c5ff", weightLabel: "×0.5" },
+  { level: "config", label: "Config", color: "#ff9f6e", weightLabel: "×0.25" },
   { level: "standalone", label: "Standalone", color: "#c9a24b", weightLabel: "×0.25" },
   { level: "mock", label: "Mock", color: "#5b6675", weightLabel: "×0" },
 ];
 
 export default function LaunchProgress() {
   const reduced = useReducedMotion();
+  const weightedLabel = Number.isInteger(WEIGHTED) ? WEIGHTED : WEIGHTED.toFixed(2);
 
   return (
     <Reveal>
@@ -93,7 +101,7 @@ export default function LaunchProgress() {
               {PCT}%
             </span>
             <p className="mono mt-1 text-[11px] text-[color:var(--color-ink-faint)]">
-              {COUNTS.live}/{TOTAL} live · {COUNTS.wired} wired · {COUNTS.standalone} standalone
+              {COUNTS.live}/{TOTAL} live · {COUNTS.wired} wired · {COUNTS.config} config-needed
             </p>
           </div>
         </div>
@@ -126,6 +134,14 @@ export default function LaunchProgress() {
             viewport={{ once: true }}
             transition={{ duration: 0.9, ease: EASE, delay: 0.45 }}
           />
+          <motion.div
+            className="absolute inset-y-0 rounded-full opacity-70"
+            style={{ left: `${OFFSET_CONFIG}%`, background: "#ff9f6e" }}
+            initial={reduced ? false : { width: 0 }}
+            whileInView={reduced ? undefined : { width: `${PCT_BY.config}%` }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, ease: EASE, delay: 0.6 }}
+          />
         </div>
 
         {/* Per-tier breakdown — the full arithmetic, on the page, no magic. */}
@@ -146,10 +162,10 @@ export default function LaunchProgress() {
 
         <p className="mt-4 text-[12px] leading-relaxed text-[color:var(--color-ink-faint)]">
           Computed from the matrix below, not hand-set: each capability is weighted
-          by tier — Live 1.0, Wired 0.5, Standalone 0.25, Mock 0 — and the score is
-          the weighted sum over all {TOTAL} capabilities ({WEIGHTED} ÷ {TOTAL}). If a
-          capability changes tier, this number moves on the next build. It can never
-          claim more than the matrix admits.
+          by tier — Live 1.0, Wired 0.5, Config-needed 0.25, Standalone 0.25, Mock
+          0 — and the score is the weighted sum over all {TOTAL} capabilities
+          ({weightedLabel} ÷ {TOTAL}). If a capability changes tier, this number
+          moves on the next build. It can never claim more than the matrix admits.
         </p>
       </div>
     </Reveal>

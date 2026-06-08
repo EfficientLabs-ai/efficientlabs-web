@@ -6,12 +6,13 @@ import { LAYERS, LEVELS, type Level } from "@/lib/status";
 const DOT: Record<Level, string> = {
   live: "var(--color-signal)",
   wired: "#86c5ff",
+  config: "#ff9f6e",
   standalone: "#c9a24b",
   mock: "#5b6675",
 };
 
 const ALL_CAPS = LAYERS.flatMap((l) => l.caps);
-const ORDER: Level[] = ["live", "wired", "standalone", "mock"];
+const ORDER: Level[] = ["live", "wired", "config", "standalone", "mock"];
 const COUNTS = ORDER.map((lv) => ({ lv, n: ALL_CAPS.filter((c) => c.level === lv).length }));
 const TOTAL = ALL_CAPS.length;
 
@@ -37,8 +38,8 @@ export default function StatusMatrix() {
       <div className="relative z-10">
       <ActHeader index="05" kicker="The honest status" title={<>What&apos;s real. What&apos;s <span className="aurora-text">not yet</span>.</>}>
         Most infrastructure pages show you a roadmap and call it a product. This one shows you the
-        running system — every capability labelled <em>Live</em>, <em>Wired</em>, <em>Standalone</em>,
-        or <em>Mock</em>. If it isn&apos;t real yet, it says so. Honesty is the only durable moat.
+        running system — every capability labelled <em>Live</em>, <em>Wired</em>, <em>Config needed</em>,
+        <em>Standalone</em>, or <em>Mock</em>. If it isn&apos;t real yet, it says so. Honesty is the only durable moat.
       </ActHeader>
 
       {/* ── honesty scorecard ── */}

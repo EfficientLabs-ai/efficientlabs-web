@@ -9,7 +9,7 @@ import { LAYERS, LEVELS, type Capability, type Level } from "@/lib/status";
  *
  * We surface only the capabilities that are real today — tier Live (running in
  * production, exercised by tests) and tier Wired (built + connected into the
- * daemon, hardening in progress). Standalone and Mock are deliberately excluded:
+ * daemon, hardening in progress). Config-needed, Standalone, and Mock are deliberately excluded:
  * they are not "done", and this section is the no-spin answer to "what have you
  * actually finished?". Each item keeps its real tier badge, its source layer
  * (L0–L5), and its one-line detail straight from the matrix — nothing is
@@ -22,6 +22,7 @@ const EASE = [0.2, 0.8, 0.2, 1] as const;
 const DOT: Record<Level, string> = {
   live: "var(--color-signal)",
   wired: "#86c5ff",
+  config: "#ff9f6e",
   standalone: "#c9a24b",
   mock: "#5b6675",
 };
@@ -113,8 +114,8 @@ export default function CompletedCapabilities() {
           (running in production, exercised by tests) or{" "}
           <span style={{ color: DOT.wired }}>Wired</span> (built and connected into
           the daemon, hardening in progress), read straight from the same matrix you
-          can audit at the bottom of this page. Standalone and Mock are not shown
-          here — they are not done yet.
+          can audit at the bottom of this page. Config-needed, Standalone, and Mock
+          are not shown here — they are not done yet.
         </p>
       </Reveal>
 

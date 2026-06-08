@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-08T16:35:56.035Z",
+  "generatedAt": "2026-06-08T20:26:03.367Z",
   "repos": [
     {
       "key": "web",
       "label": "efficientlabs-web",
       "present": true,
-      "commits": 24,
-      "newestAt": "2026-06-07T16:07:08.000Z",
+      "commits": 25,
+      "newestAt": "2026-06-08T16:36:35.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web"
     },
     {
@@ -19,17 +19,17 @@
     }
   ],
   "rollups": {
-    "totalCommits": 263,
-    "last7Days": 134,
-    "last30Days": 263,
-    "featuresShipped": 118,
-    "activeDays": 7,
+    "totalCommits": 264,
+    "last7Days": 98,
+    "last30Days": 264,
+    "featuresShipped": 119,
+    "activeDays": 8,
     "byType": {
+      "feat": 119,
       "chore": 7,
       "fix": 47,
       "docs": 20,
       "other": 62,
-      "feat": 118,
       "test": 3,
       "perf": 1,
       "ci": 2,
@@ -37,6 +37,16 @@
     }
   },
   "feed": [
+    {
+      "iso": "2026-06-09T00:36:35+08:00",
+      "date": "2026-06-09",
+      "subject": "feat: ship public Stratos install flow",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "0ca4896",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/0ca48968e9a2c9f0b9e1a2e1d99286ecf48a49d3"
+    },
     {
       "iso": "2026-06-08T18:34:28+08:00",
       "date": "2026-06-08",
@@ -826,19 +836,28 @@
       "type": "other",
       "hash": "a538125",
       "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/a5381251596aef1c17a6975fce386af85890f2f9"
-    },
-    {
-      "iso": "2026-06-02T18:01:58+08:00",
-      "date": "2026-06-02",
-      "subject": "Initial commit from Create Next App",
-      "repo": "web",
-      "repoLabel": "efficientlabs-web",
-      "type": "other",
-      "hash": "eb5bcaf",
-      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/eb5bcaf9810c31733aa4e8fe6c1b7410911104d0"
     }
   ],
   "feedByDate": [
+    {
+      "date": "2026-06-09",
+      "count": 1,
+      "byType": {
+        "feat": 1
+      },
+      "commits": [
+        {
+          "iso": "2026-06-09T00:36:35+08:00",
+          "date": "2026-06-09",
+          "subject": "feat: ship public Stratos install flow",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "0ca4896",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/0ca48968e9a2c9f0b9e1a2e1d99286ecf48a49d3"
+        }
+      ]
+    },
     {
       "date": "2026-06-08",
       "count": 7,
@@ -1657,10 +1676,10 @@
     },
     {
       "date": "2026-06-02",
-      "count": 5,
+      "count": 4,
       "byType": {
         "perf": 1,
-        "other": 4
+        "other": 3
       },
       "commits": [
         {
@@ -1702,16 +1721,6 @@
           "type": "other",
           "hash": "5838f4d",
           "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/5838f4d3d1f1190539be32631e6340942fd6ff16"
-        },
-        {
-          "iso": "2026-06-02T18:01:58+08:00",
-          "date": "2026-06-02",
-          "subject": "Initial commit from Create Next App",
-          "repo": "web",
-          "repoLabel": "efficientlabs-web",
-          "type": "other",
-          "hash": "eb5bcaf",
-          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/eb5bcaf9810c31733aa4e8fe6c1b7410911104d0"
         }
       ]
     }

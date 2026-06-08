@@ -131,7 +131,7 @@ const GROUPS: Group[] = [
       {
         name: "Channel routing",
         detail: "Per-channel adapter enable/priority across five inboxes.",
-        capName: "Five channel adapters",
+        capName: "Channel adapters",
       },
     ],
   },

@@ -5,6 +5,7 @@ import { capLevel, levelLabel, levelBlurb, type StatusLevel } from "@/data/docs"
 const STYLE: Record<StatusLevel, { fg: string; bg: string; border: string; dot: boolean }> = {
   live: { fg: "var(--color-signal)", bg: "color-mix(in oklab, var(--color-signal) 14%, transparent)", border: "color-mix(in oklab, var(--color-signal) 38%, transparent)", dot: true },
   wired: { fg: "var(--color-quantum)", bg: "color-mix(in oklab, var(--color-quantum) 12%, transparent)", border: "color-mix(in oklab, var(--color-quantum) 34%, transparent)", dot: false },
+  config: { fg: "#ff9f6e", bg: "color-mix(in oklab, #ff9f6e 12%, transparent)", border: "color-mix(in oklab, #ff9f6e 34%, transparent)", dot: false },
   standalone: { fg: "var(--color-ink-dim)", bg: "transparent", border: "var(--border-hairline-strong)", dot: false },
   mock: { fg: "var(--color-ink-faint)", bg: "transparent", border: "var(--color-line)", dot: false },
 };

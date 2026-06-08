@@ -182,9 +182,9 @@ export default function AgentsPage() {
 
       {/* Honest capability surface */}
       <section className="space-y-3">
-        <h2 className="text-[14px] font-semibold text-[color:var(--color-ink)]">Live capabilities</h2>
+        <h2 className="text-[14px] font-semibold text-[color:var(--color-ink)]">Capability status</h2>
         <div className="space-y-2.5">
-          <CapStatus name="Five channel adapters" />
+          <CapStatus name="Channel adapters" />
           <CapStatus name="Local ⇄ cloud language routing" />
           <CapStatus name="BYOK cost gate" />
           <CapStatus name="Owner-gating (fail-closed)" />

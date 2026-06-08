@@ -6,13 +6,13 @@
 // (no MDX dependency) rendered by app/docs/[slug]/page.tsx.
 //
 // HONESTY: capability status words come from data/status.json. Never write the
-// word "live" for a capability the matrix marks wired/standalone/mock — use a
+// word "live" for a capability the matrix marks wired/config-needed/standalone/mock — use a
 // <StatusBadge> or a `planned` callout instead. The helpers below read the level
 // straight out of status.json so the docs can't drift from the truth.
 // ============================================================================
 import statusData from "@/data/status.json";
 
-export type StatusLevel = "live" | "wired" | "standalone" | "mock";
+export type StatusLevel = "live" | "wired" | "config" | "standalone" | "mock";
 
 type StatusJson = {
   levels: Record<StatusLevel, { label: string; blurb: string }>;
@@ -224,16 +224,16 @@ export const ARTICLES: Article[] = [
     slug: "verify",
     title: "Verify your install",
     group: "Install StratosAgent",
-    description: "What a healthy, running StratosAgent looks like, and how to confirm channel adapters are up.",
+    description: "What a healthy, running StratosAgent looks like, and how to confirm channel adapters are configured.",
     keywords: ["verify", "health", "status", "running", "channels"],
     updated: "2026-06-03",
     blocks: [
       { kind: "h2", id: "check-status", text: "Check status" },
-      { kind: "code", lang: "bash", code: "stratos status\n\n# ✓ node live · meshed P2P · post-quantum keys sealed\n# → reachable on Telegram, Discord, Slack, Matrix, Signal" },
-      { kind: "p", text: "A healthy node reports a sealed vault, a meshed transport, and the set of channel adapters the daemon started." },
+      { kind: "code", lang: "bash", code: "stratos status\n\n# ✓ node active · meshed P2P · post-quantum keys sealed\n# → channel adapters: config needed until tokens are set" },
+      { kind: "p", text: "A healthy node reports a sealed vault, a meshed transport, and the channel adapters that are configured for that node." },
       { kind: "h2", id: "channels", text: "Channel adapters" },
-      { kind: "p", text: "Five channel adapters are started by the daemon and run in production: Telegram, Discord, Slack, Matrix, and Signal." },
-      { kind: "status", caps: ["Five channel adapters"] },
+      { kind: "p", text: "Five channel adapters are built and daemon-started, but external tokens and real send/receive verification are still required before they count as live." },
+      { kind: "status", caps: ["Channel adapters"] },
     ],
   },
 
@@ -282,12 +282,12 @@ export const ARTICLES: Article[] = [
     slug: "channel-adapters",
     title: "Channel adapters",
     group: "Integrations",
-    description: "Telegram, Discord, Slack, Matrix, and Signal — started by the daemon.",
+    description: "Telegram, Discord, Slack, Matrix, and Signal adapters, with owner tokens required before they are live.",
     keywords: ["channels", "telegram", "discord", "slack", "matrix", "signal", "adapters"],
     updated: "2026-06-03",
     blocks: [
-      { kind: "p", text: "StratosAgent reaches you over five channel adapters, all started by the daemon and running in production." },
-      { kind: "status", caps: ["Five channel adapters"] },
+      { kind: "p", text: "StratosAgent can reach users over five channel adapters once owner tokens are configured and send/receive verification passes." },
+      { kind: "status", caps: ["Channel adapters"] },
       { kind: "h2", id: "telegram", text: "Telegram" },
       { kind: "p", text: "Pair a bot token in the Vault; the daemon starts the adapter on boot. Direct messages and groups are both supported, with owner-gating applied to commands." },
       { kind: "h2", id: "discord", text: "Discord" },
