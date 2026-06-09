@@ -351,7 +351,7 @@ function selfTest() {
   const clean = [
     "Speech and vision are on the roadmap; STT/TTS will arrive soon.",
     "Eyes, ears, and a voice — processed on your own machine.", // no live-verb nearby
-    "Five channel adapters are live. Speech & vision are still mock.", // subject far from 'live'? proximity check
+    "Channel adapters are configured per host; speech & vision are still mock.", // config-level capability with a non-live verb must not trip
     "On-chain settlement is offline-signed and never broadcast — coming later.",
   ];
   for (const t of clean) {
