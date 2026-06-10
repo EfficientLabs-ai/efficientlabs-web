@@ -10,7 +10,7 @@ import { getActivity } from "@/lib/live-activity";
 export const metadata: Metadata = {
   title: "Status",
   description:
-    "Live, commit-driven proof of work. Headline counts and a recent-commit feed pulled in real time from GitHub, an honest launch-progress bar, and the full L0–L5 capability matrix labelled Live, Wired, Standalone, or Mock. If it isn't real yet, it says so.",
+    "Commit-driven proof of work: headline counts and a recent-commit feed (refreshed from GitHub when reachable, otherwise the latest committed snapshot), an honest launch-progress bar, and the full L0–L5 capability matrix labelled Live, Wired, Standalone, or Mock. If it isn't real yet, it says so.",
   alternates: { canonical: "/status" },
 };
 
