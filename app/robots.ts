@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/ops", "/api/", "/dashboard", "/login", "/signup"],
+      disallow: ["/ops", "/api/", "/dashboard", "/app", "/login", "/signup"],
     },
     sitemap: "https://efficientlabs.ai/sitemap.xml",
     host: "https://efficientlabs.ai",

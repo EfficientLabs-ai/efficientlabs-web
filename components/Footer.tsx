@@ -5,7 +5,7 @@ import { TextHoverEffect, FooterBackgroundGradient } from "@/components/ui/hover
 
 const COLUMNS = [
   { title: "Platform", links: [["The Atmosphere", "/atmosphere"], ["StratosAgent", "/stratos"], ["Architecture", "/architecture"], ["Honest status", "/status"], ["Updates", "/updates"]] },
-  { title: "Company", links: [["Manifesto", "#"], ["Pricing", "/pricing"], ["Docs", "/docs"], ["Careers", "#"]] },
+  { title: "Company", links: [["Pricing", "/pricing"], ["Docs", "/docs"]] },
 ] as const;
 
 const CONTACT: { icon: typeof Mail; text: string; href?: string }[] = [
