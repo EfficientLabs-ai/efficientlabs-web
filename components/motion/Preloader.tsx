@@ -93,6 +93,12 @@ export default function Preloader() {
       return () => {
         cancelled = true;
         drift.kill();
+        // Unmount before the wipe finished (client nav away mid-count):
+        // release the attribute or the CSS scroll lock stays on app-wide.
+        if (document.documentElement.getAttribute("data-intro") === "pending") {
+          document.documentElement.setAttribute("data-intro", "done");
+          window.dispatchEvent(new CustomEvent(INTRO_PLAY_EVENT));
+        }
         getLenis()?.start();
       };
     },
