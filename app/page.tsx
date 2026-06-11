@@ -13,6 +13,7 @@ import HolePunch from "@/components/acts/HolePunch";
 import Capability from "@/components/acts/Capability";
 import SkillSeal from "@/components/acts/SkillSeal";
 import StatusMatrix from "@/components/acts/StatusMatrix";
+import ProofStrip from "@/components/ProofStrip";
 import type { Metadata } from "next";
 
 // Only override the canonical; inherit the root openGraph (image/title/desc) intact.
@@ -37,6 +38,9 @@ export default function Home() {
       <section id="atmosphere" className="cinematic">
         <AtmosphereReveal />
       </section>
+
+      {/* ── PROOF — measured operating-layer telemetry, links /status ── */}
+      <ProofStrip />
 
       {/* ── WHY IT'S DIFFERENT — mesh / seal / senses ─────────── */}
       <Differentiators />

@@ -147,6 +147,13 @@ const SURFACES = [
   "app/pricing/page.tsx",
   "app/updates/page.tsx",
   "components/StratosAgent.tsx",
+  // landing Proof strip (added 2026-06-11 with the operating-layer proof
+  // section). It carries thesis copy + measured numbers from
+  // data/public-status.json, so it is policed like any marketing surface.
+  // EXCLUDED: components/proof/* — they render the public-status artifact's
+  // honest labels (MEASURED / not measured / lifecycle states) verbatim and
+  // would self-trip, exactly like the other truth renderers noted below.
+  "components/ProofStrip.tsx",
   "components/Solutions.tsx",
   "components/Differentiators.tsx",
   "components/Install.tsx",
