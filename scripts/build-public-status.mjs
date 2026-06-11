@@ -127,12 +127,17 @@ function canonical(v) {
   return "{" + Object.keys(v).sort().map((k) => JSON.stringify(k) + ":" + canonical(v[k])).join(",") + "}";
 }
 const sha256hex = (s) => createHash("sha256").update(s).digest("hex");
-const receiptBody = (r) => ({
-  receipt_id: r.receipt_id, ts: r.ts, actor_id: r.actor_id, action: r.action,
-  ref: r.ref, node_id: r.node_id, owner_wallet: r.owner_wallet ?? null,
-  input_hash: r.input_hash, output_hash: r.output_hash, cost_units: r.cost_units,
-  caller_id: r.caller_id ?? null, prev_hash: r.prev_hash,
-});
+const receiptBody = (r) => {
+  // Legacy v0 (mirrors the node): owner_wallet only when the key is PRESENT on the stored receipt.
+  const body = {
+    receipt_id: r.receipt_id, ts: r.ts, actor_id: r.actor_id, action: r.action,
+    ref: r.ref, node_id: r.node_id,
+    input_hash: r.input_hash, output_hash: r.output_hash, cost_units: r.cost_units,
+    caller_id: r.caller_id ?? null, prev_hash: r.prev_hash,
+  };
+  if (Object.hasOwn(r, "owner_wallet")) body.owner_wallet = r.owner_wallet ?? null;
+  return body;
+};
 function replayChain(bundle) {
   if (!bundle || !Array.isArray(bundle.receipts)) return { ok: false, reason: "malformed bundle" };
   if (!bundle.public_key?.ed25519Der || !bundle.public_key?.mldsaDer) {
