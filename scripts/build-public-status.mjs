@@ -168,7 +168,15 @@ function replayChain(bundle) {
 
 // The published bundle is REBUILT from an explicit field whitelist — an extra
 // field added upstream (CLI version drift, a pre-exported file) can never ship
-// silently. Only what the third-party verifier needs survives.
+// silently. Only what the third-party verifier needs survives. Fail-closed on
+// the OUTPUT schema too: a missing required field throws (caller publishes
+// nothing), never a stringified "undefined".
+const requireB64 = (v, name) => {
+  if (typeof v !== "string" || !v || !/^[A-Za-z0-9+/=]+$/.test(v)) {
+    throw new Error(`bundle public_key.${name} missing/invalid — refusing to publish`);
+  }
+  return v;
+};
 function whitelistBundle(bundle) {
   return {
     format: String(bundle.format),
@@ -177,10 +185,10 @@ function whitelistBundle(bundle) {
     public_key: {
       // all four are PUBLIC keys by construction; the CLI verifier requires
       // the full bundle shape (importPublicKeyBundle reads every entry).
-      x25519Der: String(bundle.public_key.x25519Der),
-      ed25519Der: String(bundle.public_key.ed25519Der),
-      mlkemDer: String(bundle.public_key.mlkemDer),
-      mldsaDer: String(bundle.public_key.mldsaDer),
+      x25519Der: requireB64(bundle.public_key.x25519Der, "x25519Der"),
+      ed25519Der: requireB64(bundle.public_key.ed25519Der, "ed25519Der"),
+      mlkemDer: requireB64(bundle.public_key.mlkemDer, "mlkemDer"),
+      mldsaDer: requireB64(bundle.public_key.mldsaDer, "mldsaDer"),
     },
     receipts: bundle.receipts.map((r) => ({
       ...receiptBody(r),
@@ -200,7 +208,11 @@ function readReceipts() {
   if (!bundle) return { tile: notMeasured("no receipt source configured on build machine"), bundle: null };
   const v = replayChain(bundle);
   if (!v.ok) return { tile: notMeasured("exported bundle did not verify (" + v.reason + ") — not published"), bundle: null };
-  bundle = whitelistBundle(bundle);
+  try {
+    bundle = whitelistBundle(bundle);
+  } catch (e) {
+    return { tile: notMeasured(e.message), bundle: null };
+  }
   return {
     tile: {
       label: "MEASURED",
