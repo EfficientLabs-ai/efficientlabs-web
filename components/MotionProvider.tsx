@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,6 +11,16 @@ import { registerMotion } from "@/lib/motion";
 // dashboard and docs are working surfaces with native scroll regions —
 // nothing initializes on those route trees.
 const EXCLUDED_PREFIXES = ["/app", "/ops", "/docs", "/dashboard"];
+
+const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
+function subscribeReduced(cb: () => void) {
+  const mq = window.matchMedia(REDUCED_QUERY);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+function reducedSnapshot() {
+  return window.matchMedia(REDUCED_QUERY).matches;
+}
 
 /**
  * The single RAF loop for the whole motion system (mounted once in the root
@@ -26,11 +36,12 @@ export default function MotionProvider() {
   const excluded = EXCLUDED_PREFIXES.some(
     (p) => pathname === p || pathname.startsWith(`${p}/`),
   );
+  // Live preference: flipping reduced-motion ON tears the system down (below);
+  // flipping it back OFF re-runs the effect and re-initializes.
+  const reduced = useSyncExternalStore(subscribeReduced, reducedSnapshot, () => true);
 
   useEffect(() => {
-    if (excluded) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reduced.matches) return;
+    if (excluded || reduced) return;
 
     registerMotion();
     const lenis = new Lenis({ autoRaf: false, anchors: true, duration: 1.1 });
@@ -50,19 +61,22 @@ export default function MotionProvider() {
     });
     ro.observe(document.body);
 
-    const teardown = () => {
+    return () => {
+      // Kill every trigger and force its animation to the END state so
+      // from-tweens never strand content hidden (reduced-motion flip or
+      // route-exclusion crossing mid-session).
+      ScrollTrigger.getAll().forEach((st) => {
+        const anim = st.animation;
+        st.kill();
+        if (anim) anim.progress(1).kill();
+      });
       clearTimeout(t);
       ro.disconnect();
       gsap.ticker.remove(tick);
       setLenis(null);
       lenis.destroy();
     };
-    reduced.addEventListener("change", teardown, { once: true });
-    return () => {
-      reduced.removeEventListener("change", teardown);
-      teardown();
-    };
-  }, [excluded]);
+  }, [excluded, reduced]);
 
   return null;
 }
