@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Michroma, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeRoot } from "@/components/useSiteTheme";
-import SmoothScroll from "@/components/SmoothScroll";
+import MotionProvider from "@/components/MotionProvider";
 
 // Brand kit type system (EFFICIENT_LABS_BRAND_KIT.md): Space Grotesk (headings) +
 // Inter (body) + JetBrains Mono (terminal/code/data) — all self-hosted via
@@ -84,7 +84,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
       </head>
       <body>
-        <SmoothScroll />
+        <MotionProvider />
         <ThemeRoot>{children}</ThemeRoot>
       </body>
     </html>

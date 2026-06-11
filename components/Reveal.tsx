@@ -1,11 +1,13 @@
 "use client";
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
+import { EASE_CSS, DUR } from "@/lib/motion";
+import SplitHeading from "@/components/motion/SplitHeading";
+import KickerLabel from "@/components/motion/KickerLabel";
 
-const EASE = [0.2, 0.8, 0.2, 1] as const;
-
-/** Scroll-triggered reveal. Motion as evidence, not decoration.
- *  Crisp fade-up (~520ms). Honors prefers-reduced-motion → renders final state instantly. */
+/** Scroll-triggered reveal — the workhorse for card/body staggers. Ease and
+ *  duration come from the written motion system (lib/motion.ts), so all 71
+ *  call sites share the house curve. Honors prefers-reduced-motion. */
 export function Reveal({
   children,
   delay = 0,
@@ -29,7 +31,7 @@ export function Reveal({
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10% 0px" }}
-      transition={{ duration: 0.52, ease: EASE, delay }}
+      transition={{ duration: DUR.secondary, ease: EASE_CSS, delay }}
     >
       {children}
     </motion.div>
@@ -50,18 +52,10 @@ export function ActHeader({
 }) {
   return (
     <div className="max-w-xl">
-      <Reveal>
-        <div className="flex items-center gap-3">
-          <span className="mono text-[12px] text-[color:var(--color-signal)]">{index}</span>
-          <span className="h-px w-8 bg-[color:var(--color-edge)]" />
-          <span className="kicker">{kicker}</span>
-        </div>
-      </Reveal>
-      <Reveal delay={0.08}>
-        <h2 className="t-section mt-5">
-          {title}
-        </h2>
-      </Reveal>
+      <KickerLabel index={index} text={kicker} />
+      <SplitHeading as="h2" className="t-section mt-5">
+        {title}
+      </SplitHeading>
       {children && (
         <Reveal delay={0.16}>
           <div className="mt-5 text-[1.02rem] leading-relaxed text-[color:var(--color-ink-dim)]">

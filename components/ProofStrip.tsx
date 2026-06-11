@@ -7,6 +7,7 @@ import Link from "next/link";
 import { PUBLIC_STATUS } from "@/lib/public-status";
 import { VERDICT } from "@/components/proof/palette";
 import { LabelChip, UpdatedAt } from "@/components/proof/bits";
+import CountUp from "@/components/motion/CountUp";
 
 export default function ProofStrip() {
   const { heartbeat, receipts, routing, activation } = PUBLIC_STATUS.tiles;
@@ -58,7 +59,9 @@ export default function ProofStrip() {
           <Link href="/status" className="lm-card is-interactive flex flex-col gap-1 p-5">
             {receipts.label === "MEASURED" ? (
               <>
-                <span className="display leading-none text-[1.8rem]">{receipts.count}</span>
+                <span className="display leading-none text-[1.8rem]">
+                  <CountUp value={receipts.count ?? 0} />
+                </span>
                 <span className="mono text-[12px] text-[color:var(--color-ink)]">
                   signed receipt{receipts.count === 1 ? "" : "s"} · chain intact
                 </span>
@@ -83,7 +86,7 @@ export default function ProofStrip() {
             {routing.label === "MEASURED" ? (
               <>
                 <span className="display leading-none text-[1.8rem]" style={{ color: "var(--color-signal)" }}>
-                  {routing.rung1_pct}%
+                  <CountUp value={routing.rung1_pct ?? 0} suffix="%" />
                 </span>
                 <span className="mono text-[12px] text-[color:var(--color-ink)]">of logged work ran as scripts</span>
                 <span className="text-[11px] text-[color:var(--color-ink-faint)]">
@@ -107,7 +110,8 @@ export default function ProofStrip() {
             {activation.label === "MEASURED" ? (
               <>
                 <span className="display leading-none text-[1.8rem]">
-                  {activation.production}<span className="text-[0.6em] text-[color:var(--color-ink-faint)]"> of {activation.total}</span>
+                  <CountUp value={activation.production ?? 0} />
+                  <span className="text-[0.6em] text-[color:var(--color-ink-faint)]"> of {activation.total}</span>
                 </span>
                 <span className="mono text-[12px] text-[color:var(--color-ink)]">components at PRODUCTION</span>
                 <span className="text-[11px] text-[color:var(--color-ink-faint)]">

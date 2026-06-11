@@ -3,6 +3,7 @@ import { useRef, useEffect, useState, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import Typewriter from "@/components/Typewriter";
+import { HERO_READY_EVENT } from "@/lib/motion";
 
 const SIGNAL = new THREE.Color("#0a84ff");
 const QUANTUM = new THREE.Color("#3db1ff");
@@ -200,7 +201,14 @@ export default function MeshHero3D() {
   // ("a problem repeatedly occurred") under this scene's GPU/memory load, so those
   // devices get the fast static hero below instead. SSR renders the static hero.
   useEffect(() => {
-    const timer = window.setTimeout(() => setAllow3D(canUse3D()), 0);
+    const timer = window.setTimeout(() => {
+      const ok = canUse3D();
+      setAllow3D(ok);
+      // Static hero is ready the moment the decision lands; the WebGL path
+      // signals from Canvas onCreated instead. The preloader races this
+      // against its hard cap.
+      if (!ok) window.dispatchEvent(new CustomEvent(HERO_READY_EVENT));
+    }, 0);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -291,7 +299,12 @@ export default function MeshHero3D() {
                style={{ background: "radial-gradient(circle, var(--color-quantum), transparent 62%)" }} />
         </div>
 
-        <Canvas camera={{ position: [0, 0, 12], fov: 55 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
+        <Canvas
+          camera={{ position: [0, 0, 12], fov: 55 }}
+          dpr={[1, 2]}
+          gl={{ antialias: true, alpha: true }}
+          onCreated={() => window.dispatchEvent(new CustomEvent(HERO_READY_EVENT))}
+        >
           <Field progress={progress} />
         </Canvas>
 
