@@ -1,11 +1,11 @@
 {
   "format": "efl.public-status.v1",
-  "generated_at": "2026-06-11T03:58:40.007Z",
+  "generated_at": "2026-06-11T13:18:27.184Z",
   "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
   "tiles": {
     "heartbeat": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T03:06Z",
+      "updated_at": "2026-06-11T13:14Z",
       "color": "YELLOW",
       "fail": 0,
       "warn": 2,
@@ -41,7 +41,7 @@
         },
         {
           "name": "idea edges updated",
-          "status": "warn"
+          "status": "ok"
         },
         {
           "name": "trajectory not stale",
@@ -113,14 +113,14 @@
         },
         {
           "name": "session economics",
-          "status": "ok"
+          "status": "warn"
         }
       ],
       "verify": "published artifact — counts and per-check states are emitted verbatim by the operating layer's heartbeat run"
     },
     "receipts": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T03:58:40.077Z",
+      "updated_at": "2026-06-11T13:18:27.271Z",
       "count": 1,
       "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
       "bundle_path": "/proof/receipts-bundle.json",
@@ -128,25 +128,25 @@
     },
     "routing": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T10:30:00Z",
-      "total": 31,
+      "updated_at": "2026-06-11T13:40Z",
+      "total": 45,
       "rungs": {
-        "1": 15,
+        "1": 21,
         "3": 1,
         "5": 2,
-        "7": 2,
-        "8": 11
+        "7": 5,
+        "8": 16
       },
-      "rung1_pct": 48.4,
-      "flagship_used": 11,
-      "flagship_avoided": 20,
+      "rung1_pct": 46.7,
+      "flagship_used": 16,
+      "flagship_avoided": 29,
       "flagship_on_deterministic": 0,
       "method": "self-attested routing log, script-counted — counted units, not an independent audit",
       "verify": "published artifact — histogram recomputable from the counts shown"
     },
     "intelligence": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T00:47Z",
+      "updated_at": "2026-06-11T12:46Z",
       "counters": {
         "context_nodes": {
           "value": 512,
@@ -157,11 +157,11 @@
           "label": "MEASURED"
         },
         "ideas": {
-          "value": 6,
+          "value": 7,
           "label": "MEASURED"
         },
         "idea_edges": {
-          "value": 108,
+          "value": 131,
           "label": "MEASURED"
         },
         "decisions_adrs": {
@@ -193,23 +193,23 @@
           "label": "MEASURED"
         },
         "archive_items": {
-          "value": 43,
+          "value": 45,
           "label": "MEASURED"
         },
         "archive_retrievals": {
-          "value": 14,
+          "value": 19,
           "label": "MEASURED"
         },
         "archive_retrievals_logged": {
-          "value": 14,
+          "value": 19,
           "label": "MEASURED"
         },
         "idea_edge_density": {
-          "value": 18,
+          "value": "18.71",
           "label": "MEASURED"
         },
         "orphan_ideas": {
-          "value": 1,
+          "value": 0,
           "label": "MEASURED"
         },
         "edge_reuse_queries": {
@@ -217,7 +217,7 @@
           "label": null
         },
         "skill_reuse_events": {
-          "value": 4,
+          "value": 5,
           "label": "MEASURED"
         },
         "workflow_reuse_events": {
@@ -225,7 +225,7 @@
           "label": null
         },
         "script_tasks_rung1": {
-          "value": 14,
+          "value": 20,
           "label": "MEASURED"
         },
         "cheap_worker_tasks": {
@@ -233,15 +233,15 @@
           "label": "MEASURED"
         },
         "codex_verifications": {
-          "value": 2,
+          "value": 5,
           "label": "MEASURED"
         },
         "fable_calls_used": {
-          "value": 10,
+          "value": 14,
           "label": "MEASURED"
         },
         "fable_calls_avoided": {
-          "value": 19,
+          "value": 28,
           "label": "MEASURED"
         },
         "fable_on_deterministic_work": {
@@ -290,8 +290,8 @@
     },
     "activation": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T02:05Z",
-      "production": 10,
+      "updated_at": "2026-06-11T12:45Z",
+      "production": 13,
       "total": 13,
       "components": [
         {
@@ -326,8 +326,8 @@
         },
         {
           "name": "intelligence-score",
-          "verdict": "PARTIAL",
-          "status": "PARTIAL"
+          "verdict": "PASS",
+          "status": "PRODUCTION"
         },
         {
           "name": "token-telemetry",
@@ -341,8 +341,8 @@
         },
         {
           "name": "context-load-controller",
-          "verdict": "PARTIAL",
-          "status": "ENFORCED"
+          "verdict": "PASS",
+          "status": "PRODUCTION"
         },
         {
           "name": "manifest-hygiene-auditor",
@@ -356,8 +356,8 @@
         },
         {
           "name": "harness-generator",
-          "verdict": "PARTIAL",
-          "status": "ENFORCED"
+          "verdict": "PASS",
+          "status": "PRODUCTION"
         }
       ],
       "verify": "published artifact — non-PRODUCTION components are listed with their honest state"
