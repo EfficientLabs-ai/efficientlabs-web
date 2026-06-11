@@ -1,33 +1,33 @@
 {
-  "generatedAt": "2026-06-11T03:53:35.656Z",
+  "generatedAt": "2026-06-11T10:41:45.491Z",
   "repos": [
     {
       "key": "web",
       "label": "efficientlabs-web",
       "present": true,
-      "commits": 32,
-      "newestAt": "2026-06-11T03:40:59.000Z",
+      "commits": 31,
+      "newestAt": "2026-06-11T04:10:30.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web"
     },
     {
       "key": "core",
       "label": "atmosphere-core",
       "present": true,
-      "commits": 261,
-      "newestAt": "2026-06-10T20:36:56.000Z",
+      "commits": 266,
+      "newestAt": "2026-06-11T09:17:28.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/atmosphere-core"
     }
   ],
   "rollups": {
-    "totalCommits": 293,
-    "last7Days": 99,
-    "last30Days": 293,
+    "totalCommits": 297,
+    "last7Days": 102,
+    "last30Days": 297,
     "featuresShipped": 126,
     "activeDays": 7,
     "byType": {
+      "fix": 63,
       "feat": 126,
       "docs": 29,
-      "fix": 59,
       "chore": 8,
       "other": 62,
       "test": 3,
@@ -38,34 +38,74 @@
   },
   "feed": [
     {
-      "iso": "2026-06-11T11:40:59+08:00",
+      "iso": "2026-06-11T05:17:28-04:00",
       "date": "2026-06-11",
-      "subject": "feat(status): operating-layer proof UI — verdict bar, in-browser receipt verify hero, runtime intelligence, activation matrix + landing Proof strip",
+      "subject": "fix(receipts+tap): P1 residue — live-receipts test into CI, receipt-log rotation, fail-visible telemetry (#104)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "cf75c27",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/cf75c2761a32ad9ab1fe227ad35b2e3bb6152be0"
+    },
+    {
+      "iso": "2026-06-11T05:11:03-04:00",
+      "date": "2026-06-11",
+      "subject": "fix(receipts): body-version legacy v0 receipts — pre-owner_wallet chains verify again (#103)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "a36c2d0",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/a36c2d05f4d721e35de06de0de84798fd84b05c5"
+    },
+    {
+      "iso": "2026-06-11T13:46:14+08:00",
+      "date": "2026-06-11",
+      "subject": "fix(gate2): pin integrity — a pinned re-accept can never rewrite the stored owner key (Codex note)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "bd4a3dd",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/bd4a3ddb4ca5fe34b3cb46efff665bad297d6851"
+    },
+    {
+      "iso": "2026-06-11T13:42:02+08:00",
+      "date": "2026-06-11",
+      "subject": "fix(gate2): symmetric ceremony — owner fingerprint on first accept, node-bound grants, separate pin slot (Codex review)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "6977b38",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/6977b38ef285b38f364c63c291fc21ea2a125101"
+    },
+    {
+      "iso": "2026-06-11T13:31:27+08:00",
+      "date": "2026-06-11",
+      "subject": "feat(gate2): cryptographic owner identity + explicit node-pairing ceremony",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "83c0a29",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/83c0a29aae24f72427b8492becd38dc512d4edb1"
+    },
+    {
+      "iso": "2026-06-11T00:10:30-04:00",
+      "date": "2026-06-11",
+      "subject": "feat(status): operating-layer proof layer — verdict bar, in-browser hybrid-PQC receipt verify, runtime intelligence, landing Proof strip (#13)",
       "repo": "web",
       "repoLabel": "efficientlabs-web",
       "type": "feat",
-      "hash": "e8ac077",
-      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/e8ac0770b46fd747014b557afdbae08dc35ccc23"
+      "hash": "fef3e92",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/fef3e92de112e8f2e5e2a8dd172d15462e955eaa"
     },
     {
-      "iso": "2026-06-11T11:20:50+08:00",
-      "date": "2026-06-11",
-      "subject": "feat(proof): operating-layer publisher + in-browser hybrid-PQC receipt verifier (data layer)",
-      "repo": "web",
-      "repoLabel": "efficientlabs-web",
-      "type": "feat",
-      "hash": "14c8bd5",
-      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/14c8bd577dfcfb6b8bb8473a05175447fbc29bcc"
-    },
-    {
-      "iso": "2026-06-11T04:36:56+08:00",
-      "date": "2026-06-11",
-      "subject": "docs(activation): gateway secret SET + enforced live (#58 closed)",
+      "iso": "2026-06-10T16:39:54-04:00",
+      "date": "2026-06-10",
+      "subject": "docs(activation): gateway secret SET + enforced live (#58 closed) (#102)",
       "repo": "core",
       "repoLabel": "atmosphere-core",
       "type": "docs",
-      "hash": "708d279",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/708d279d8e90d3281e85b0e81e671e3f4898ec69"
+      "hash": "1761ea3",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/1761ea3bf193a67f24435160837ebd7e5715183e"
     },
     {
       "iso": "2026-06-10T16:17:27-04:00",
@@ -796,98 +836,98 @@
       "type": "other",
       "hash": "be10d82",
       "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/be10d82e462f74320925c0ba295255363fbfb79a"
-    },
-    {
-      "iso": "2026-06-05T13:32:23+08:00",
-      "date": "2026-06-05",
-      "subject": "Merge remote-tracking branch 'origin/main' into feat/mesh-signal",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "other",
-      "hash": "85a93ab",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/85a93ab38117bb515d62427360d086de838603f9"
-    },
-    {
-      "iso": "2026-06-05T01:30:06-04:00",
-      "date": "2026-06-05",
-      "subject": "docs: North Star + reverse-engineered roadmap + CS/methodology research (file-architecture-first) (#51)",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "docs",
-      "hash": "f36b3bb",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/f36b3bb1c243b9214ab730d2e3e1b9622fb0ef30"
-    },
-    {
-      "iso": "2026-06-05T02:15:47+08:00",
-      "date": "2026-06-05",
-      "subject": "fix(mesh): read fleet.json totals + add a mtime liveness gate (review finding #3)",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "fix",
-      "hash": "56fa904",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/56fa904609bd1857939ae4193516c379547d1c72"
-    },
-    {
-      "iso": "2026-06-05T02:15:47+08:00",
-      "date": "2026-06-05",
-      "subject": "fix(routing): forward-port #55 (fast gemma2:2b local default) into the consolidated router",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "fix",
-      "hash": "3d39769",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/3d39769d6e848f43893a5697ac843cd425379242"
     }
   ],
   "feedByDate": [
     {
       "date": "2026-06-11",
-      "count": 3,
+      "count": 6,
       "byType": {
-        "feat": 2,
-        "docs": 1
+        "fix": 4,
+        "feat": 2
       },
       "commits": [
         {
-          "iso": "2026-06-11T11:40:59+08:00",
+          "iso": "2026-06-11T05:17:28-04:00",
           "date": "2026-06-11",
-          "subject": "feat(status): operating-layer proof UI — verdict bar, in-browser receipt verify hero, runtime intelligence, activation matrix + landing Proof strip",
-          "repo": "web",
-          "repoLabel": "efficientlabs-web",
-          "type": "feat",
-          "hash": "e8ac077",
-          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/e8ac0770b46fd747014b557afdbae08dc35ccc23"
-        },
-        {
-          "iso": "2026-06-11T11:20:50+08:00",
-          "date": "2026-06-11",
-          "subject": "feat(proof): operating-layer publisher + in-browser hybrid-PQC receipt verifier (data layer)",
-          "repo": "web",
-          "repoLabel": "efficientlabs-web",
-          "type": "feat",
-          "hash": "14c8bd5",
-          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/14c8bd577dfcfb6b8bb8473a05175447fbc29bcc"
-        },
-        {
-          "iso": "2026-06-11T04:36:56+08:00",
-          "date": "2026-06-11",
-          "subject": "docs(activation): gateway secret SET + enforced live (#58 closed)",
+          "subject": "fix(receipts+tap): P1 residue — live-receipts test into CI, receipt-log rotation, fail-visible telemetry (#104)",
           "repo": "core",
           "repoLabel": "atmosphere-core",
-          "type": "docs",
-          "hash": "708d279",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/708d279d8e90d3281e85b0e81e671e3f4898ec69"
+          "type": "fix",
+          "hash": "cf75c27",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/cf75c2761a32ad9ab1fe227ad35b2e3bb6152be0"
+        },
+        {
+          "iso": "2026-06-11T05:11:03-04:00",
+          "date": "2026-06-11",
+          "subject": "fix(receipts): body-version legacy v0 receipts — pre-owner_wallet chains verify again (#103)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "a36c2d0",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/a36c2d05f4d721e35de06de0de84798fd84b05c5"
+        },
+        {
+          "iso": "2026-06-11T13:46:14+08:00",
+          "date": "2026-06-11",
+          "subject": "fix(gate2): pin integrity — a pinned re-accept can never rewrite the stored owner key (Codex note)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "bd4a3dd",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/bd4a3ddb4ca5fe34b3cb46efff665bad297d6851"
+        },
+        {
+          "iso": "2026-06-11T13:42:02+08:00",
+          "date": "2026-06-11",
+          "subject": "fix(gate2): symmetric ceremony — owner fingerprint on first accept, node-bound grants, separate pin slot (Codex review)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "6977b38",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/6977b38ef285b38f364c63c291fc21ea2a125101"
+        },
+        {
+          "iso": "2026-06-11T13:31:27+08:00",
+          "date": "2026-06-11",
+          "subject": "feat(gate2): cryptographic owner identity + explicit node-pairing ceremony",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "83c0a29",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/83c0a29aae24f72427b8492becd38dc512d4edb1"
+        },
+        {
+          "iso": "2026-06-11T00:10:30-04:00",
+          "date": "2026-06-11",
+          "subject": "feat(status): operating-layer proof layer — verdict bar, in-browser hybrid-PQC receipt verify, runtime intelligence, landing Proof strip (#13)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "fef3e92",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/fef3e92de112e8f2e5e2a8dd172d15462e955eaa"
         }
       ]
     },
     {
       "date": "2026-06-10",
-      "count": 23,
+      "count": 24,
       "byType": {
+        "docs": 8,
         "feat": 5,
-        "fix": 11,
-        "docs": 7
+        "fix": 11
       },
       "commits": [
+        {
+          "iso": "2026-06-10T16:39:54-04:00",
+          "date": "2026-06-10",
+          "subject": "docs(activation): gateway secret SET + enforced live (#58 closed) (#102)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "1761ea3",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/1761ea3bf193a67f24435160837ebd7e5715183e"
+        },
         {
           "iso": "2026-06-10T16:17:27-04:00",
           "date": "2026-06-10",
@@ -1557,12 +1597,11 @@
     },
     {
       "date": "2026-06-05",
-      "count": 15,
+      "count": 11,
       "byType": {
-        "other": 3,
+        "other": 2,
         "feat": 7,
-        "fix": 4,
-        "docs": 1
+        "fix": 2
       },
       "commits": [
         {
@@ -1674,46 +1713,6 @@
           "type": "other",
           "hash": "be10d82",
           "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/be10d82e462f74320925c0ba295255363fbfb79a"
-        },
-        {
-          "iso": "2026-06-05T13:32:23+08:00",
-          "date": "2026-06-05",
-          "subject": "Merge remote-tracking branch 'origin/main' into feat/mesh-signal",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "other",
-          "hash": "85a93ab",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/85a93ab38117bb515d62427360d086de838603f9"
-        },
-        {
-          "iso": "2026-06-05T01:30:06-04:00",
-          "date": "2026-06-05",
-          "subject": "docs: North Star + reverse-engineered roadmap + CS/methodology research (file-architecture-first) (#51)",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "docs",
-          "hash": "f36b3bb",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/f36b3bb1c243b9214ab730d2e3e1b9622fb0ef30"
-        },
-        {
-          "iso": "2026-06-05T02:15:47+08:00",
-          "date": "2026-06-05",
-          "subject": "fix(mesh): read fleet.json totals + add a mtime liveness gate (review finding #3)",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "fix",
-          "hash": "56fa904",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/56fa904609bd1857939ae4193516c379547d1c72"
-        },
-        {
-          "iso": "2026-06-05T02:15:47+08:00",
-          "date": "2026-06-05",
-          "subject": "fix(routing): forward-port #55 (fast gemma2:2b local default) into the consolidated router",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "fix",
-          "hash": "3d39769",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/3d39769d6e848f43893a5697ac843cd425379242"
         }
       ]
     }
