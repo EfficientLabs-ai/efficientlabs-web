@@ -1,6 +1,6 @@
 {
   "format": "efl.public-status.v1",
-  "generated_at": "2026-06-11T10:40:46.650Z",
+  "generated_at": "2026-06-11T10:48:33.527Z",
   "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
   "tiles": {
     "heartbeat": {
@@ -120,7 +120,7 @@
     },
     "receipts": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T10:40:46.733Z",
+      "updated_at": "2026-06-11T10:48:33.601Z",
       "count": 1,
       "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
       "bundle_path": "/proof/receipts-bundle.json",
@@ -385,7 +385,7 @@
       "gates": [
         {
           "id": "gate1-trust-substrate",
-          "label": "Gate 1 — trust substrate live on the daemon (capability gate · attribution ledger · identity broker)",
+          "label": "Trust substrate live on the node (capability gate · attribution ledger · identity broker)",
           "done": true
         },
         {
@@ -395,52 +395,52 @@
         },
         {
           "id": "hermetic-ci",
-          "label": "Hermetic CI green (84 suites, 3 repos)",
+          "label": "Hermetic CI green across all repos",
           "done": true
         },
         {
           "id": "gate2-pairing",
-          "label": "Gate 2 — cryptographic owner identity + pairing ceremony",
+          "label": "Owner identity + device pairing ceremony (no blind trust in either direction)",
           "done": true
         },
         {
           "id": "gate2b-enforcement",
-          "label": "Gate 2b — mesh-side pairing enforcement + revocation",
+          "label": "Mesh-side pairing enforcement + revocation",
           "done": false
         },
         {
           "id": "website-proof-layer",
-          "label": "Website proof layer merged (in-browser receipt verify, MEASURED-only tiles)",
+          "label": "Status proof layer live on the site (verify our receipts in your browser)",
           "done": true
         },
         {
           "id": "apex-domain-current",
-          "label": "efficientlabs.ai apex serves the CURRENT production build",
+          "label": "Primary domain serves the current production build",
           "done": false
         },
         {
           "id": "status-publisher-automated",
-          "label": "public-status.json publisher runs on a schedule (heartbeat/session-end cadence)",
+          "label": "Status telemetry publishes on an automated schedule",
           "done": false
         },
         {
           "id": "public-proof-publish",
-          "label": "07_public_proof publish set approved (founder + anonymization + counsel)",
+          "label": "Public proof pack reviewed and published",
           "done": false
         },
         {
           "id": "pricing-approved",
-          "label": "Pricing page approved (founder + counsel) and built",
+          "label": "Pricing published",
           "done": false
         },
         {
           "id": "npm-provenance",
-          "label": "npm publish provenance (#82)",
+          "label": "Package publish provenance",
           "done": false
         },
         {
           "id": "billing-telemetry",
-          "label": "Billing telemetry (token-savings claims upgradeable from ESTIMATED)",
+          "label": "Billing-grade savings telemetry",
           "done": false
         }
       ],

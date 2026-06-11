@@ -352,6 +352,9 @@ function readReadiness(activation) {
   let gates;
   try { gates = JSON.parse(readFileSync(gatesFile, 'utf8')); } catch { return notMeasured('launch-gates file unparseable'); }
   if (!Array.isArray(gates.gates) || !gates.gates.length) return notMeasured('launch-gates file empty');
+  if (gates.gates.some((g) => typeof g.public_label !== 'string' || !g.public_label)) {
+    return notMeasured('a launch gate lacks public_label — refusing to publish internal gate text (fail-closed)');
+  }
   const done = gates.gates.filter((g) => g.done === true);
   const pillarGates = done.length / gates.gates.length;
 
@@ -375,7 +378,9 @@ function readReadiness(activation) {
       operating_components: { pct: pct(pillarOps), production: activation.production, total: activation.total },
       product_capabilities: { pct: pct(pillarCaps), counted: capCount },
     },
-    gates: gates.gates.map((g) => ({ id: g.id, label: g.label, done: !!g.done })),
+    // PUBLIC labels only (Codex finding): the internal label/evidence fields carry roadmap/process
+    // language that must not ship. Fail closed: a gate without a public_label blocks the tile.
+    gates: gates.gates.map((g) => ({ id: g.id, label: g.public_label, done: !!g.done })),
     method: 'mean of three published pillars: launch gates done/total · operating components at PRODUCTION/total · capability matrix weighted live=1/wired=.75/config=.5/standalone=.4/mock=0',
     verify: 'published artifact — recompute from the gate list below + the activation matrix + the L0–L5 capability matrix on this page',
   };
