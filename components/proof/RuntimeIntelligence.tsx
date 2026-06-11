@@ -3,7 +3,8 @@
 // routing-rung histogram. Numbers come ONLY from data/public-status.json; the
 // method lines and honesty notes render verbatim — they ARE the brand voice.
 import type { RoutingTile, EconomicsTile, IntelligenceTile } from "@/lib/public-status";
-import { LabelChip, UpdatedAt, VerifyLine, NotMeasuredCard, VERDICT } from "@/components/proof/bits";
+import { VERDICT } from "@/components/proof/palette";
+import { LabelChip, UpdatedAt, VerifyLine, NotMeasuredCard } from "@/components/proof/bits";
 
 function MetricCard({
   value, unit, label, sub, updatedAt, accent,

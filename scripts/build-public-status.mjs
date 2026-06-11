@@ -48,9 +48,10 @@
  */
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { execFileSync } from "node:child_process";
-import { createHash } from "node:crypto";
+import { createHash, createPublicKey, verify as edVerify } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { ml_dsa65 } from "@noble/post-quantum/ml-dsa.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT_STATUS = join(ROOT, "data/public-status.json");
@@ -114,10 +115,12 @@ function exportBundle() {
   return JSON.parse(out);
 }
 
-// Minimal server-side replay of the chain + envelope hash (the full hybrid
-// signature check happens in the CLI's own verify and again in every visitor's
-// browser; here we gate on chain integrity + structure so a broken export can
-// never ship). canonical() mirrors capability-receipt.js exactly.
+// FULL server-side verification before anything is published — the same
+// fail-closed replay every visitor's browser runs (lib/verify-receipts.ts):
+// hash chain + BOTH halves of the hybrid signature (Ed25519 via node:crypto,
+// ML-DSA-65 via the same audited @noble suite the node itself uses). A bundle
+// that does not fully verify here is NOT published. canonical() mirrors
+// capability-receipt.js exactly.
 function canonical(v) {
   if (v === null || typeof v !== "object") return JSON.stringify(v);
   if (Array.isArray(v)) return "[" + v.map(canonical).join(",") + "]";
@@ -132,20 +135,59 @@ const receiptBody = (r) => ({
 });
 function replayChain(bundle) {
   if (!bundle || !Array.isArray(bundle.receipts)) return { ok: false, reason: "malformed bundle" };
-  if (!bundle.public_key) return { ok: false, reason: "no public key (fail-closed)" };
+  if (!bundle.public_key?.ed25519Der || !bundle.public_key?.mldsaDer) {
+    return { ok: false, reason: "no public key (fail-closed)" };
+  }
+  let edKey, mldsaPub;
+  try {
+    edKey = createPublicKey({ key: Buffer.from(bundle.public_key.ed25519Der, "base64"), format: "der", type: "spki" });
+    mldsaPub = new Uint8Array(Buffer.from(bundle.public_key.mldsaDer, "base64"));
+  } catch (e) {
+    return { ok: false, reason: "unusable public key: " + e.message };
+  }
   let prev = null;
   for (let i = 0; i < bundle.receipts.length; i++) {
     const r = bundle.receipts[i];
     if (!r || typeof r !== "object") return { ok: false, reason: `malformed receipt ${i}` };
     if (prev === null) prev = r.prev_hash;
     if (r.prev_hash !== prev) return { ok: false, reason: `broken chain link at ${i}` };
-    if (r.hash !== sha256hex(canonical(receiptBody(r)))) return { ok: false, reason: `receipt ${i} tampered` };
+    const body = canonical(receiptBody(r));
+    if (r.hash !== sha256hex(body)) return { ok: false, reason: `receipt ${i} tampered` };
     if (!r.sig || typeof r.sig.ed25519Sig !== "string" || typeof r.sig.mldsaSig !== "string") {
       return { ok: false, reason: `receipt ${i} missing hybrid signature` };
     }
+    let edOk = false, pqOk = false;
+    try { edOk = edVerify(null, Buffer.from(body), edKey, Buffer.from(r.sig.ed25519Sig, "base64")); } catch { edOk = false; }
+    if (!edOk) return { ok: false, reason: `receipt ${i} Ed25519 signature failed` };
+    try { pqOk = ml_dsa65.verify(new Uint8Array(Buffer.from(r.sig.mldsaSig, "base64")), new Uint8Array(Buffer.from(body)), mldsaPub); } catch { pqOk = false; }
+    if (!pqOk) return { ok: false, reason: `receipt ${i} ML-DSA-65 signature failed` };
     prev = r.hash;
   }
   return { ok: true };
+}
+
+// The published bundle is REBUILT from an explicit field whitelist — an extra
+// field added upstream (CLI version drift, a pre-exported file) can never ship
+// silently. Only what the third-party verifier needs survives.
+function whitelistBundle(bundle) {
+  return {
+    format: String(bundle.format),
+    exported_at: Number(bundle.exported_at),
+    ...(bundle.node_id ? { node_id: String(bundle.node_id) } : {}),
+    public_key: {
+      // all four are PUBLIC keys by construction; the CLI verifier requires
+      // the full bundle shape (importPublicKeyBundle reads every entry).
+      x25519Der: String(bundle.public_key.x25519Der),
+      ed25519Der: String(bundle.public_key.ed25519Der),
+      mlkemDer: String(bundle.public_key.mlkemDer),
+      mldsaDer: String(bundle.public_key.mldsaDer),
+    },
+    receipts: bundle.receipts.map((r) => ({
+      ...receiptBody(r),
+      hash: String(r.hash),
+      sig: { ed25519Sig: String(r.sig.ed25519Sig), mldsaSig: String(r.sig.mldsaSig) },
+    })),
+  };
 }
 
 function readReceipts() {
@@ -158,6 +200,7 @@ function readReceipts() {
   if (!bundle) return { tile: notMeasured("no receipt source configured on build machine"), bundle: null };
   const v = replayChain(bundle);
   if (!v.ok) return { tile: notMeasured("exported bundle did not verify (" + v.reason + ") — not published"), bundle: null };
+  bundle = whitelistBundle(bundle);
   return {
     tile: {
       label: "MEASURED",

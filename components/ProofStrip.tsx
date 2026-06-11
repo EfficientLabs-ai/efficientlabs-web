@@ -5,7 +5,8 @@
 // are MEASURED or they do not render.
 import Link from "next/link";
 import { PUBLIC_STATUS } from "@/lib/public-status";
-import { VERDICT, LabelChip, UpdatedAt } from "@/components/proof/bits";
+import { VERDICT } from "@/components/proof/palette";
+import { LabelChip, UpdatedAt } from "@/components/proof/bits";
 
 export default function ProofStrip() {
   const { heartbeat, receipts, routing, activation } = PUBLIC_STATUS.tiles;
@@ -40,7 +41,10 @@ export default function ProofStrip() {
                 <span className="text-[11px] text-[color:var(--color-ink-faint)]">
                   {heartbeat.fail} fail · {heartbeat.warn} warn · {heartbeat.ok} ok — warns published, not hidden
                 </span>
-                <UpdatedAt updatedAt={heartbeat.updated_at} />
+                <span className="mt-1 flex items-center gap-2">
+                  <LabelChip label={heartbeat.label} />
+                  <UpdatedAt updatedAt={heartbeat.updated_at} />
+                </span>
               </>
             ) : (
               <>
@@ -61,7 +65,10 @@ export default function ProofStrip() {
                 <span className="text-[11px] text-[color:var(--color-ink-faint)]">
                   hybrid post-quantum signatures — verify them in your own browser →
                 </span>
-                <UpdatedAt updatedAt={receipts.updated_at} />
+                <span className="mt-1 flex items-center gap-2">
+                  <LabelChip label={receipts.label} />
+                  <UpdatedAt updatedAt={receipts.updated_at} />
+                </span>
               </>
             ) : (
               <>
@@ -82,7 +89,10 @@ export default function ProofStrip() {
                 <span className="text-[11px] text-[color:var(--color-ink-faint)]">
                   not the flagship model — {routing.total} routing decisions, self-attested log
                 </span>
-                <UpdatedAt updatedAt={routing.updated_at} />
+                <span className="mt-1 flex items-center gap-2">
+                  <LabelChip label={routing.label} />
+                  <UpdatedAt updatedAt={routing.updated_at} />
+                </span>
               </>
             ) : (
               <>
@@ -103,7 +113,10 @@ export default function ProofStrip() {
                 <span className="text-[11px] text-[color:var(--color-ink-faint)]">
                   {activation.total! - activation.production!} gaps shown — the gaps are the credibility
                 </span>
-                <UpdatedAt updatedAt={activation.updated_at} />
+                <span className="mt-1 flex items-center gap-2">
+                  <LabelChip label={activation.label} />
+                  <UpdatedAt updatedAt={activation.updated_at} />
+                </span>
               </>
             ) : (
               <>

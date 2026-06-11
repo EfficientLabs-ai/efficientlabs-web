@@ -6,18 +6,9 @@
 import { useSyncExternalStore } from "react";
 import { ageHours, STALE_AFTER_HOURS, type TileLabel } from "@/lib/public-status";
 
-/** Heartbeat verdict palette — GREEN/YELLOW/RED must all look DESIGNED;
- *  yellow is an expected steady state, not an alarm. */
-export const VERDICT: Record<string, string> = {
-  GREEN: "#3fd68f",
-  YELLOW: "#e8b34b",
-  RED: "#ff6e6e",
-};
-export const CHECK_DOT: Record<string, string> = {
-  ok: "#3fd68f",
-  warn: "#e8b34b",
-  fail: "#ff6e6e",
-};
+// Verdict colors live in ./palette (server-safe module) — re-exported here for
+// client-side consumers like ReceiptVerifyCard.
+export { VERDICT, CHECK_DOT } from "@/components/proof/palette";
 
 /** The truth label chip every tile carries. null = "not measured" (grey). */
 export function LabelChip({ label }: { label: TileLabel }) {
@@ -51,6 +42,9 @@ export function UpdatedAt({ updatedAt }: { updatedAt: string | null | undefined 
   const h = now === null ? null : ageHours(updatedAt, now);
   let text: string;
   if (h === null) text = `updated ${date}`;
+  // A source stamp ahead of the page clock is clock skew, not freshness — say
+  // the absolute date and claim nothing live.
+  else if (h < -0.25) text = `source stamp ${date} (ahead of page clock)`;
   else if (h > STALE_AFTER_HOURS) text = `last verified ${date}`;
   else if (h < 1) text = "updated <1h ago";
   else if (h < 24) text = `updated ${Math.round(h)}h ago`;

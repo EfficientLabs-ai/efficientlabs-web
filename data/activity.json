@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-11T03:35:17.931Z",
+  "generatedAt": "2026-06-11T03:53:35.656Z",
   "repos": [
     {
       "key": "web",
       "label": "efficientlabs-web",
       "present": true,
-      "commits": 31,
-      "newestAt": "2026-06-11T03:20:50.000Z",
+      "commits": 32,
+      "newestAt": "2026-06-11T03:40:59.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web"
     },
     {
@@ -19,13 +19,13 @@
     }
   ],
   "rollups": {
-    "totalCommits": 292,
-    "last7Days": 98,
-    "last30Days": 292,
-    "featuresShipped": 125,
+    "totalCommits": 293,
+    "last7Days": 99,
+    "last30Days": 293,
+    "featuresShipped": 126,
     "activeDays": 7,
     "byType": {
-      "feat": 125,
+      "feat": 126,
       "docs": 29,
       "fix": 59,
       "chore": 8,
@@ -37,6 +37,16 @@
     }
   },
   "feed": [
+    {
+      "iso": "2026-06-11T11:40:59+08:00",
+      "date": "2026-06-11",
+      "subject": "feat(status): operating-layer proof UI — verdict bar, in-browser receipt verify hero, runtime intelligence, activation matrix + landing Proof strip",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "e8ac077",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/e8ac0770b46fd747014b557afdbae08dc35ccc23"
+    },
     {
       "iso": "2026-06-11T11:20:50+08:00",
       "date": "2026-06-11",
@@ -826,27 +836,27 @@
       "type": "fix",
       "hash": "3d39769",
       "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/3d39769d6e848f43893a5697ac843cd425379242"
-    },
-    {
-      "iso": "2026-06-05T01:48:18+08:00",
-      "date": "2026-06-05",
-      "subject": "feat(routing): STRATOS_CLOUD_AUTO_ESCALATE flag — secure-by-default (review finding #2)",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "feat",
-      "hash": "5f86409",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/5f8640987c10928d13062e471bf0efd10952de07"
     }
   ],
   "feedByDate": [
     {
       "date": "2026-06-11",
-      "count": 2,
+      "count": 3,
       "byType": {
-        "feat": 1,
+        "feat": 2,
         "docs": 1
       },
       "commits": [
+        {
+          "iso": "2026-06-11T11:40:59+08:00",
+          "date": "2026-06-11",
+          "subject": "feat(status): operating-layer proof UI — verdict bar, in-browser receipt verify hero, runtime intelligence, activation matrix + landing Proof strip",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "e8ac077",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/e8ac0770b46fd747014b557afdbae08dc35ccc23"
+        },
         {
           "iso": "2026-06-11T11:20:50+08:00",
           "date": "2026-06-11",
@@ -1547,10 +1557,10 @@
     },
     {
       "date": "2026-06-05",
-      "count": 16,
+      "count": 15,
       "byType": {
         "other": 3,
-        "feat": 8,
+        "feat": 7,
         "fix": 4,
         "docs": 1
       },
@@ -1704,16 +1714,6 @@
           "type": "fix",
           "hash": "3d39769",
           "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/3d39769d6e848f43893a5697ac843cd425379242"
-        },
-        {
-          "iso": "2026-06-05T01:48:18+08:00",
-          "date": "2026-06-05",
-          "subject": "feat(routing): STRATOS_CLOUD_AUTO_ESCALATE flag — secure-by-default (review finding #2)",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "feat",
-          "hash": "5f86409",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/5f8640987c10928d13062e471bf0efd10952de07"
         }
       ]
     }

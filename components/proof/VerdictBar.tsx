@@ -3,7 +3,8 @@
 // a native <details> expansion. The color is whatever the heartbeat said —
 // YELLOW renders YELLOW; a status page that is always green is an ad.
 import type { HeartbeatTile } from "@/lib/public-status";
-import { VERDICT, CHECK_DOT, LabelChip, UpdatedAt, VerifyLine, NotMeasuredCard } from "@/components/proof/bits";
+import { VERDICT, CHECK_DOT } from "@/components/proof/palette";
+import { LabelChip, UpdatedAt, VerifyLine, NotMeasuredCard } from "@/components/proof/bits";
 
 export default function VerdictBar({ tile }: { tile: HeartbeatTile }) {
   if (tile.label === null || !tile.color) {
