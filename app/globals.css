@@ -211,6 +211,25 @@ html {
   scroll-padding-top: 5rem; /* fixed nav clearance for #anchor jumps */
 }
 
+/* ── PRELOADER (act zero) — hidden unless the pre-paint script marked this
+   visit pending, so no-JS / reduced-motion / repeat visitors never paint it. ── */
+#efl-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  background: var(--color-void);
+  will-change: transform;
+}
+html[data-intro="pending"] #efl-preloader { display: flex; }
+/* Hard scroll lock while the intro is pending — CSS so it holds regardless of
+   when (or whether) Lenis initializes. Released when the wipe flips the attr. */
+html[data-intro="pending"],
+html[data-intro="pending"] body { overflow: hidden; }
+
 /* ── LENIS smooth scroll (recommended base styles) — when Lenis is driving,
    native CSS smooth-behavior must yield or the two fight over anchors. ── */
 html.lenis, html.lenis body { height: auto; }

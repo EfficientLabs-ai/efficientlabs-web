@@ -15,7 +15,19 @@ import SkillSeal from "@/components/acts/SkillSeal";
 import StatusMatrix from "@/components/acts/StatusMatrix";
 import ProofStrip from "@/components/ProofStrip";
 import SectionCTA from "@/components/SectionCTA";
+import Preloader from "@/components/motion/Preloader";
+import SplitHeading from "@/components/motion/SplitHeading";
+import SectionEntrance from "@/components/motion/SectionEntrance";
 import type { Metadata } from "next";
+
+// Pre-paint gate for the preloader: mark the visit "pending" ONLY when this
+// session hasn't seen the intro, motion is allowed, and JS is running. CSS
+// shows the overlay solely under [data-intro="pending"], so no-JS and
+// reduced-motion visitors never see it. Mirrors the theme pre-paint script.
+const INTRO_GATE =
+  "(function(){try{if(sessionStorage.getItem('efl-intro-seen'))return;" +
+  "if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;" +
+  "document.documentElement.setAttribute('data-intro','pending');}catch(e){}})();";
 
 // Only override the canonical; inherit the root openGraph (image/title/desc) intact.
 // In App Router a child `openGraph` REPLACES the parent's rather than deep-merging.
@@ -26,6 +38,8 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="relative">
+      <script dangerouslySetInnerHTML={{ __html: INTRO_GATE }} />
+      <Preloader />
       <Nav />
 
       {/* ── CINEMATIC HERO — scroll dives the camera into a node ──
@@ -95,18 +109,18 @@ export default function Home() {
           <div className="absolute left-1/2 top-1/2 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.16] blur-[120px]"
                style={{ background: "radial-gradient(circle, var(--color-signal), transparent 60%)" }} />
         </div>
-        <div className="relative mx-auto max-w-3xl px-6 text-center">
-          <p className="kicker">Build on infrastructure you own</p>
-          <h2 className="t-section mt-6">
+        <SectionEntrance variant="statement" className="relative mx-auto max-w-3xl px-6 text-center">
+          <p data-motion="body" className="kicker">Build on infrastructure you own</p>
+          <SplitHeading as="h2" className="t-section mt-6">
             Sovereignty isn&apos;t a feature.
             <br />
             It&apos;s the <span className="aurora-text">foundation</span>.
-          </h2>
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
+          </SplitHeading>
+          <div data-motion="cta" className="mt-10 flex flex-wrap justify-center gap-4">
             <a href="#install" className="btn-signal">Install now<span aria-hidden>→</span></a>
             <a href="#status" className="btn-outline">Read the architecture</a>
           </div>
-        </div>
+        </SectionEntrance>
       </section>
 
       {/* ── FOOTER ────────────────────────────────────────────── */}

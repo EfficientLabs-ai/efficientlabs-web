@@ -47,9 +47,12 @@ export default function SplitHeading({
 
       // autoSplit reverts and recreates the tween on font-load/resize, so the
       // intro listener tracks the CURRENT tween — never a stale closure. If
-      // the intro already fired, re-split tweens start unpaused.
+      // the intro already fired, re-split tweens start unpaused. When no
+      // preloader is running this visit (data-intro never "pending"), intro
+      // headings simply play on mount.
       let current: gsap.core.Tween | null = null;
-      let introFired = false;
+      let introFired =
+        document.documentElement.getAttribute("data-intro") !== "pending";
       const onIntro = () => {
         introFired = true;
         current?.play();
