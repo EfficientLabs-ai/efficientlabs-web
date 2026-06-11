@@ -78,20 +78,26 @@ function canonical(v: unknown): string {
 const sha256hex = (s: string) => bytesToHex(sha256(utf8.encode(s)));
 
 /** The SIGNED body — same explicit field set as the node (envelope excluded). */
-const receiptBody = (r: Receipt) => ({
-  receipt_id: r.receipt_id,
-  ts: r.ts,
-  actor_id: r.actor_id,
-  action: r.action,
-  ref: r.ref,
-  node_id: r.node_id,
-  owner_wallet: r.owner_wallet ?? null,
-  input_hash: r.input_hash,
-  output_hash: r.output_hash,
-  cost_units: r.cost_units,
-  caller_id: r.caller_id ?? null,
-  prev_hash: r.prev_hash,
-});
+// BODY VERSIONING (legacy v0, mirrors the node): receipts persisted before owner_wallet entered
+// the schema carry NO owner_wallet key — their hash and signatures cover the body WITHOUT it.
+// Keyed on own-property presence; tampering presence either way breaks hash AND signature.
+const receiptBody = (r: Receipt) => {
+  const body: Record<string, unknown> = {
+    receipt_id: r.receipt_id,
+    ts: r.ts,
+    actor_id: r.actor_id,
+    action: r.action,
+    ref: r.ref,
+    node_id: r.node_id,
+    input_hash: r.input_hash,
+    output_hash: r.output_hash,
+    cost_units: r.cost_units,
+    caller_id: r.caller_id ?? null,
+    prev_hash: r.prev_hash,
+  };
+  if (Object.hasOwn(r, "owner_wallet")) body.owner_wallet = r.owner_wallet ?? null; // absent = legacy v0
+  return body;
+};
 const canonicalBody = (r: Receipt) => canonical(receiptBody(r));
 const hashReceipt = (r: Receipt) => sha256hex(canonicalBody(r));
 
