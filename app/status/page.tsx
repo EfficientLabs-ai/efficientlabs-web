@@ -5,28 +5,68 @@ import ActivityHeadline from "@/components/status/ActivityHeadline";
 import LaunchProgress from "@/components/status/LaunchProgress";
 import CompletedCapabilities from "@/components/status/CompletedCapabilities";
 import ActivityFeed from "@/components/status/ActivityFeed";
+import VerdictBar from "@/components/proof/VerdictBar";
+import ReceiptVerifyCard from "@/components/proof/ReceiptVerifyCard";
+import RuntimeIntelligence from "@/components/proof/RuntimeIntelligence";
+import ActivationRoadmap from "@/components/proof/ActivationRoadmap";
 import { getActivity } from "@/lib/live-activity";
+import { PUBLIC_STATUS } from "@/lib/public-status";
 
 export const metadata: Metadata = {
   title: "Status",
   description:
-    "Commit-driven proof of work: headline counts and a recent-commit feed (refreshed from GitHub when reachable, otherwise the latest committed snapshot), an honest launch-progress bar, and the full L0–L5 capability matrix labelled Live, Wired, Standalone, or Mock. If it isn't real yet, it says so.",
+    "Proof, not marketing: the operating layer's heartbeat verdict, signed capability receipts verified in your own browser, measured routing and cache telemetry, the activation matrix with its gaps shown, the commit feed, and the full L0–L5 capability matrix. Where something is not measured, it says 'not measured'.",
   alternates: { canonical: "/status" },
 };
 
 // ISR — re-render at most every 5 min so the page tracks new commits with zero
-// manual work, while staying well inside GitHub's rate limits.
+// manual work, while staying well inside GitHub's rate limits. The operating-
+// layer tiles render from the committed public-status artifact (event-driven,
+// staleness shown per tile).
 export const revalidate = 300;
 
 export default async function StatusPage() {
   // Pulled live from the GitHub API (ISR-cached), merged with the committed
   // history baseline. Falls back to the baseline if GitHub is unreachable.
   const activity = await getActivity();
+  const tiles = PUBLIC_STATUS.tiles;
 
   return (
     <PageShell>
-      {/* ── 1 · live headline counts (real commit history, fetched live) ── */}
+      {/* ── A · the verdict: is the system healthy? (answered in one glance,
+             warns included — a status page that is always green is an ad) ── */}
       <section className="section scroll-mt-20">
+        <p className="kicker">System health</p>
+        <h3 className="t-section mt-3">
+          The operating layer, <span className="aurora-text">as it is</span>.
+        </h3>
+        <div className="mt-7">
+          <VerdictBar tile={tiles.heartbeat} />
+        </div>
+      </section>
+
+      {/* ── B · the proof hero: verification runs in YOUR browser ── */}
+      <section className="section scroll-mt-20 pt-0">
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+          <ReceiptVerifyCard tile={tiles.receipts} />
+          <div className="lm-card p-6">
+            <p className="kicker">What just ran in your browser</p>
+            <ul className="mt-4 space-y-2 text-[13px] leading-relaxed text-[color:var(--color-ink-dim)]">
+              <li>· The published receipt bundle was fetched and its hash chain replayed receipt-by-receipt.</li>
+              <li>· Both halves of every hybrid signature were checked — Ed25519 and ML-DSA-65, both must pass.</li>
+              <li>· The node identity was derived from the public key here, not trusted from the file.</li>
+              <li>· The result shown is this run&apos;s result. Altering, removing, or reordering any receipt breaks it.</li>
+            </ul>
+            <p className="mono mt-4 text-[11px] text-[color:var(--color-ink-faint)]">
+              One chain, counted honestly — early and small, and verifiable by anyone holding only the public
+              key. Receipts record hashes, identity, and measured cost units. Never content, never a price.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── C · live headline counts (real commit history, fetched live) ── */}
+      <section className="section scroll-mt-20 pt-0">
         <ActivityHeadline
           rollups={activity.rollups}
           repos={activity.repos}
@@ -35,17 +75,37 @@ export default async function StatusPage() {
         />
       </section>
 
-      {/* ── 2 · honest launch-progress bar (driven by status.json levels) ── */}
+      {/* ── D · runtime intelligence — measured telemetry from the layer itself ── */}
+      <section className="section scroll-mt-20 pt-0">
+        <p className="kicker">Runtime intelligence</p>
+        <h3 className="t-section mt-3">
+          Measured, or it <span className="aurora-text">doesn&apos;t render</span>.
+        </h3>
+        <div className="mt-7">
+          <RuntimeIntelligence
+            routing={tiles.routing}
+            economics={tiles.economics}
+            intelligence={tiles.intelligence}
+          />
+        </div>
+      </section>
+
+      {/* ── E · activation matrix — the denominator, gaps shown ── */}
+      <section className="section scroll-mt-20 pt-0">
+        <ActivationRoadmap tile={tiles.activation} />
+      </section>
+
+      {/* ── honest launch-progress bar (driven by status.json levels) ── */}
       <section className="section scroll-mt-20 pt-0">
         <LaunchProgress />
       </section>
 
-      {/* ── 3 · COMPLETED — what's live (Live + Wired caps, straight from data) ── */}
+      {/* ── COMPLETED — what's live (Live + Wired caps, straight from data) ── */}
       <section className="section scroll-mt-20 pt-0">
         <CompletedCapabilities />
       </section>
 
-      {/* ── 4 · the commit feed: the real, dated build log, most-recent first ── */}
+      {/* ── the commit feed: the real, dated build log, most-recent first ── */}
       <section className="section scroll-mt-20 pt-0">
         <ActivityFeed
           days={activity.feedByDate}
@@ -55,7 +115,7 @@ export default async function StatusPage() {
         />
       </section>
 
-      {/* ── 5 · the honest L0–L5 capability matrix (the original source of truth) ── */}
+      {/* ── the honest L0–L5 capability matrix (the original source of truth) ── */}
       <section className="section scroll-mt-20 pt-0">
         <StatusMatrix />
       </section>
