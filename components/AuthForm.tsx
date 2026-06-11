@@ -29,6 +29,7 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
+  const [ok, setOk] = useState(false);
   const [busy, setBusy] = useState(false);
   // Only show the social buttons for providers Supabase actually has enabled —
   // fetched live from GoTrue's /settings, so a provider appears the instant it's
@@ -63,18 +64,22 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!supabase) return;
-    setBusy(true); setMsg(null);
+    setBusy(true); setMsg(null); setOk(false);
     const fn = isSignup
       ? supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/dashboard` } })
       : supabase.auth.signInWithPassword({ email, password });
     const { error } = await fn;
     setBusy(false);
-    setMsg(error ? error.message : isSignup ? "Check your inbox to confirm your account." : "Signed in.");
+    if (error) { setOk(false); setMsg(error.message); return; }
+    setOk(true);
+    setMsg(isSignup ? "Check your inbox to confirm your account." : "Signed in — taking you to your control plane…");
+    // A successful sign-in lands the user in the app; signup waits for email confirmation.
+    if (!isSignup) setTimeout(() => { window.location.href = "/dashboard"; }, 600);
   };
 
   return (
-    <div className="relative mx-auto flex min-h-screen max-w-md flex-col justify-center px-6 py-24">
-      <div aria-hidden className="pointer-events-none absolute inset-0">
+    <div className="relative mx-auto flex min-h-screen w-full max-w-md flex-col justify-center overflow-x-hidden px-6 py-24">
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/2 top-20 h-[26rem] w-[26rem] -translate-x-1/2 rounded-full opacity-[0.14] blur-[120px]"
              style={{ background: "radial-gradient(circle, var(--color-signal), transparent 62%)" }} />
       </div>
@@ -131,7 +136,15 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
           </button>
         </form>
 
-        {msg && <p className="mt-4 text-[13px] text-[color:var(--color-ink-dim)]">{msg}</p>}
+        {msg && (
+          <div role="status" aria-live="polite"
+            className="mt-4 rounded-xl border px-4 py-3 text-[13px]"
+            style={ok
+              ? { borderColor: "color-mix(in oklab, #3fd68f 40%, transparent)", color: "#3fd68f", background: "color-mix(in oklab, #3fd68f 8%, transparent)" }
+              : { borderColor: "color-mix(in oklab, #ff6e6e 40%, transparent)", color: "#ff8a8a", background: "color-mix(in oklab, #ff6e6e 8%, transparent)" }}>
+            {ok ? "✓ " : "✗ "}{msg}
+          </div>
+        )}
 
         <p className="mt-7 text-center text-[13px] text-[color:var(--color-ink-faint)]">
           {isSignup
