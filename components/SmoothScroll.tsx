@@ -1,6 +1,13 @@
 "use client";
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
+
+// Lenis is a MARKETING-surface affordance. The OS (/app), ops, dashboard and
+// docs are working surfaces with their own native scroll regions (sidebars,
+// search palettes, panes) — root smoothing would hijack them, so those route
+// trees never initialize Lenis at all.
+const EXCLUDED_PREFIXES = ["/app", "/ops", "/docs", "/dashboard"];
 
 /**
  * Site-wide Lenis smooth scroll. Mounted once in the root layout.
@@ -11,7 +18,13 @@ import Lenis from "lenis";
  *   if a scrubbed set-piece lands later).
  */
 export default function SmoothScroll() {
+  const pathname = usePathname();
+  const excluded = EXCLUDED_PREFIXES.some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`),
+  );
+
   useEffect(() => {
+    if (excluded) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (reduced.matches) return;
 
@@ -27,7 +40,7 @@ export default function SmoothScroll() {
       reduced.removeEventListener("change", stop);
       lenis.destroy();
     };
-  }, []);
+  }, [excluded]);
 
   return null;
 }

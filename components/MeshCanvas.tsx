@@ -87,18 +87,18 @@ export default function MeshCanvas() {
         const a = nodes[p.a], b = nodes[p.b];
         if (!a || !b) continue;
         const x = a.x + (b.x - a.x) * p.t + px, y = a.y + (b.y - a.y) * p.t + py;
-        ctx!.fillStyle = "rgba(46,139,255,0.16)";
+        ctx!.fillStyle = "rgba(10,132,255,0.16)";
         ctx!.beginPath(); ctx!.arc(x, y, 5, 0, Math.PI * 2); ctx!.fill();
-        ctx!.fillStyle = "rgba(46,139,255,0.95)";
+        ctx!.fillStyle = "rgba(10,132,255,0.95)";
         ctx!.beginPath(); ctx!.arc(x, y, 1.6, 0, Math.PI * 2); ctx!.fill();
       }
 
       for (const n of nodes) {
         if (n.sov) {
           const pulse = 1 + Math.sin(frame * 0.05) * 0.22;
-          ctx!.fillStyle = "rgba(46,139,255,0.10)";
+          ctx!.fillStyle = "rgba(10,132,255,0.10)";
           ctx!.beginPath(); ctx!.arc(n.x + px, n.y + py, 20 * pulse, 0, Math.PI * 2); ctx!.fill();
-          ctx!.strokeStyle = "rgba(46,139,255,0.55)"; ctx!.lineWidth = 1;
+          ctx!.strokeStyle = "rgba(10,132,255,0.55)"; ctx!.lineWidth = 1;
           ctx!.beginPath(); ctx!.arc(n.x + px, n.y + py, 9, 0, Math.PI * 2); ctx!.stroke();
           ctx!.fillStyle = "#0a84ff";
           ctx!.beginPath(); ctx!.arc(n.x + px, n.y + py, 3.2, 0, Math.PI * 2); ctx!.fill();

@@ -20,8 +20,8 @@ const ADJ: number[][] = NODES.map((_, n) =>
   EDGES.flatMap(([a, b]) => (a === n ? [b] : b === n ? [a] : []))
 );
 
-const SIGNAL = "46,139,255";
-const QUANTUM = "91,200,255";
+const SIGNAL = "10,132,255";
+const QUANTUM = "61,177,255";
 const REJECT = "224,86,106";
 
 export default function SkillSeal() {

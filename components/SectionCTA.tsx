@@ -19,7 +19,7 @@ export default function SectionCTA({
     <div className={`mt-10 ${className}`}>
       <Link
         href={href}
-        className="group mono inline-flex items-center gap-2 text-[13px] text-[color:var(--color-signal)] transition-colors hover:text-[color:var(--color-quantum)]"
+        className="link-cta group mono inline-flex items-center gap-2 text-[13px] transition-colors"
       >
         {label}
         <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>

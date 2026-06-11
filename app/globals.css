@@ -351,6 +351,14 @@ body::after {
 .btn-outline:hover { border-color: color-mix(in oklab, var(--signal) 45%, transparent); transform: translateY(-1px); background: color-mix(in oklab, var(--color-void-2) 80%, transparent); }
 .btn-outline:active { transform: scale(0.98); transition-duration: 0.08s; }
 
+/* ── inline CTA links — theme-aware so small blue text keeps WCAG AA.
+   Dark: brand signal/quantum. Light: the deep fills (#0a84ff on white is
+   only ~3.65:1 at 13px, below AA — the deep pair clears it). ─────────── */
+.link-cta { color: var(--color-signal); }
+.link-cta:hover { color: var(--color-quantum); }
+[data-theme="light"] .link-cta { color: var(--color-signal-deep); }
+[data-theme="light"] .link-cta:hover { color: #0757ab; }
+
 /* ── kicker arrows / link arrows nudge right on hover ───────────────── */
 .btn-signal [aria-hidden], .btn-outline [aria-hidden] { transition: transform 0.16s cubic-bezier(0.2,0.8,0.2,1); }
 .btn-signal:hover [aria-hidden], .btn-outline:hover [aria-hidden] { transform: translateX(3px); }

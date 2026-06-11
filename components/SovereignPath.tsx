@@ -15,8 +15,8 @@ import { ActHeader, Reveal } from "@/components/Reveal";
    GPU-cheap: canvas 2d only, no layout-property animation.
    ─────────────────────────────────────────────────────────────────────────── */
 
-const SIGNAL = "46,139,255";   // electric azure — primary
-const QUANTUM = "91,200,255";  // sky-cyan — pulse core
+const SIGNAL = "10,132,255";   // electric azure — primary
+const QUANTUM = "61,177,255";  // sky-cyan — pulse core
 const DIM = "112,124,140";     // desaturated — the subordinate cloud
 
 // normalized layout (0..1). Inflow on the left, LOCAL hero centre,
