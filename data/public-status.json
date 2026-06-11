@@ -1,15 +1,15 @@
 {
   "format": "efl.public-status.v1",
-  "generated_at": "2026-06-11T03:58:40.007Z",
+  "generated_at": "2026-06-11T10:48:33.527Z",
   "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
   "tiles": {
     "heartbeat": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T03:06Z",
+      "updated_at": "2026-06-11T05:47Z",
       "color": "YELLOW",
       "fail": 0,
-      "warn": 2,
-      "ok": 24,
+      "warn": 3,
+      "ok": 23,
       "checks": [
         {
           "name": "session-boot ran",
@@ -41,7 +41,7 @@
         },
         {
           "name": "idea edges updated",
-          "status": "warn"
+          "status": "ok"
         },
         {
           "name": "trajectory not stale",
@@ -69,7 +69,7 @@
         },
         {
           "name": "codex verification current",
-          "status": "ok"
+          "status": "warn"
         },
         {
           "name": "protected actions gated",
@@ -113,14 +113,14 @@
         },
         {
           "name": "session economics",
-          "status": "ok"
+          "status": "warn"
         }
       ],
       "verify": "published artifact — counts and per-check states are emitted verbatim by the operating layer's heartbeat run"
     },
     "receipts": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T03:58:40.077Z",
+      "updated_at": "2026-06-11T10:48:33.601Z",
       "count": 1,
       "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
       "bundle_path": "/proof/receipts-bundle.json",
@@ -129,24 +129,24 @@
     "routing": {
       "label": "MEASURED",
       "updated_at": "2026-06-11T10:30:00Z",
-      "total": 31,
+      "total": 39,
       "rungs": {
-        "1": 15,
+        "1": 19,
         "3": 1,
         "5": 2,
-        "7": 2,
-        "8": 11
+        "7": 4,
+        "8": 13
       },
-      "rung1_pct": 48.4,
-      "flagship_used": 11,
-      "flagship_avoided": 20,
+      "rung1_pct": 48.7,
+      "flagship_used": 13,
+      "flagship_avoided": 26,
       "flagship_on_deterministic": 0,
       "method": "self-attested routing log, script-counted — counted units, not an independent audit",
       "verify": "published artifact — histogram recomputable from the counts shown"
     },
     "intelligence": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T00:47Z",
+      "updated_at": "2026-06-11T05:18Z",
       "counters": {
         "context_nodes": {
           "value": 512,
@@ -161,7 +161,7 @@
           "label": "MEASURED"
         },
         "idea_edges": {
-          "value": 108,
+          "value": 109,
           "label": "MEASURED"
         },
         "decisions_adrs": {
@@ -193,23 +193,23 @@
           "label": "MEASURED"
         },
         "archive_items": {
-          "value": 43,
+          "value": 44,
           "label": "MEASURED"
         },
         "archive_retrievals": {
-          "value": 14,
+          "value": 17,
           "label": "MEASURED"
         },
         "archive_retrievals_logged": {
-          "value": 14,
+          "value": 17,
           "label": "MEASURED"
         },
         "idea_edge_density": {
-          "value": 18,
+          "value": "18.17",
           "label": "MEASURED"
         },
         "orphan_ideas": {
-          "value": 1,
+          "value": 0,
           "label": "MEASURED"
         },
         "edge_reuse_queries": {
@@ -217,7 +217,7 @@
           "label": null
         },
         "skill_reuse_events": {
-          "value": 4,
+          "value": 5,
           "label": "MEASURED"
         },
         "workflow_reuse_events": {
@@ -225,7 +225,7 @@
           "label": null
         },
         "script_tasks_rung1": {
-          "value": 14,
+          "value": 18,
           "label": "MEASURED"
         },
         "cheap_worker_tasks": {
@@ -233,15 +233,15 @@
           "label": "MEASURED"
         },
         "codex_verifications": {
-          "value": 2,
+          "value": 3,
           "label": "MEASURED"
         },
         "fable_calls_used": {
-          "value": 10,
+          "value": 12,
           "label": "MEASURED"
         },
         "fable_calls_avoided": {
-          "value": 19,
+          "value": 24,
           "label": "MEASURED"
         },
         "fable_on_deterministic_work": {
@@ -290,7 +290,7 @@
     },
     "activation": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T02:05Z",
+      "updated_at": "2026-06-11T10:40Z",
       "production": 10,
       "total": 13,
       "components": [
@@ -361,6 +361,91 @@
         }
       ],
       "verify": "published artifact — non-PRODUCTION components are listed with their honest state"
+    },
+    "readiness": {
+      "label": "MEASURED",
+      "updated_at": "2026-06-11T06:45:00Z",
+      "overall_pct": 63.8,
+      "pillars": {
+        "launch_gates": {
+          "pct": 41.7,
+          "done": 5,
+          "total": 12
+        },
+        "operating_components": {
+          "pct": 76.9,
+          "production": 10,
+          "total": 13
+        },
+        "product_capabilities": {
+          "pct": 72.7,
+          "counted": 22
+        }
+      },
+      "gates": [
+        {
+          "id": "gate1-trust-substrate",
+          "label": "Trust substrate live on the node (capability gate · attribution ledger · identity broker)",
+          "done": true
+        },
+        {
+          "id": "independent-install",
+          "label": "Independent install verified on a clean machine (receipt produced + verified)",
+          "done": true
+        },
+        {
+          "id": "hermetic-ci",
+          "label": "Hermetic CI green across all repos",
+          "done": true
+        },
+        {
+          "id": "gate2-pairing",
+          "label": "Owner identity + device pairing ceremony (no blind trust in either direction)",
+          "done": true
+        },
+        {
+          "id": "gate2b-enforcement",
+          "label": "Mesh-side pairing enforcement + revocation",
+          "done": false
+        },
+        {
+          "id": "website-proof-layer",
+          "label": "Status proof layer live on the site (verify our receipts in your browser)",
+          "done": true
+        },
+        {
+          "id": "apex-domain-current",
+          "label": "Primary domain serves the current production build",
+          "done": false
+        },
+        {
+          "id": "status-publisher-automated",
+          "label": "Status telemetry publishes on an automated schedule",
+          "done": false
+        },
+        {
+          "id": "public-proof-publish",
+          "label": "Public proof pack reviewed and published",
+          "done": false
+        },
+        {
+          "id": "pricing-approved",
+          "label": "Pricing published",
+          "done": false
+        },
+        {
+          "id": "npm-provenance",
+          "label": "Package publish provenance",
+          "done": false
+        },
+        {
+          "id": "billing-telemetry",
+          "label": "Billing-grade savings telemetry",
+          "done": false
+        }
+      ],
+      "method": "mean of three published pillars: launch gates done/total · operating components at PRODUCTION/total · capability matrix weighted live=1/wired=.75/config=.5/standalone=.4/mock=0",
+      "verify": "published artifact — recompute from the gate list below + the activation matrix + the L0–L5 capability matrix on this page"
     }
   }
 }

@@ -52,6 +52,16 @@ export type ActivationTile = TileBase & {
   total?: number;
   components?: { name: string; verdict: "PASS" | "PARTIAL" | "FAIL"; status: string }[];
 };
+export type ReadinessTile = TileBase & {
+  overall_pct?: number;
+  pillars?: {
+    launch_gates: { pct: number; done: number; total: number };
+    operating_components: { pct: number; production: number; total: number };
+    product_capabilities: { pct: number; counted: number };
+  };
+  gates?: { id: string; label: string; done: boolean }[];
+  method?: string;
+};
 
 export type PublicStatus = {
   format: string;
@@ -64,6 +74,7 @@ export type PublicStatus = {
     intelligence: IntelligenceTile;
     economics: EconomicsTile;
     activation: ActivationTile;
+    readiness: ReadinessTile;
   };
 };
 

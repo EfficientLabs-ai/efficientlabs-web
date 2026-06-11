@@ -9,6 +9,7 @@ import VerdictBar from "@/components/proof/VerdictBar";
 import ReceiptVerifyCard from "@/components/proof/ReceiptVerifyCard";
 import RuntimeIntelligence from "@/components/proof/RuntimeIntelligence";
 import ActivationRoadmap from "@/components/proof/ActivationRoadmap";
+import ReadinessTile from "@/components/proof/ReadinessTile";
 import { getActivity } from "@/lib/live-activity";
 import { PUBLIC_STATUS } from "@/lib/public-status";
 
@@ -42,6 +43,9 @@ export default async function StatusPage() {
         </h3>
         <div className="mt-7">
           <VerdictBar tile={tiles.heartbeat} />
+        </div>
+        <div className="mt-3">
+          <ReadinessTile tile={tiles.readiness} />
         </div>
       </section>
 
