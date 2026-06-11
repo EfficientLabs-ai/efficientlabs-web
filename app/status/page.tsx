@@ -11,7 +11,7 @@ import RuntimeIntelligence from "@/components/proof/RuntimeIntelligence";
 import ActivationRoadmap from "@/components/proof/ActivationRoadmap";
 import ReadinessTile from "@/components/proof/ReadinessTile";
 import { getActivity } from "@/lib/live-activity";
-import { PUBLIC_STATUS } from "@/lib/public-status";
+import { getLiveStatus } from "@/lib/public-status";
 
 export const metadata: Metadata = {
   title: "Status",
@@ -30,7 +30,9 @@ export default async function StatusPage() {
   // Pulled live from the GitHub API (ISR-cached), merged with the committed
   // history baseline. Falls back to the baseline if GitHub is unreachable.
   const activity = await getActivity();
-  const tiles = PUBLIC_STATUS.tiles;
+  // Live operating-layer tiles — fetched at request time from the cron-published feed (ISR 5m),
+  // falling back to the committed baseline if unreachable. Staleness is rendered per tile.
+  const tiles = (await getLiveStatus()).tiles;
 
   return (
     <PageShell>
