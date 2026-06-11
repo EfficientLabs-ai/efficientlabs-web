@@ -1,0 +1,366 @@
+{
+  "format": "efl.public-status.v1",
+  "generated_at": "2026-06-11T03:18:10.031Z",
+  "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
+  "tiles": {
+    "heartbeat": {
+      "label": "MEASURED",
+      "updated_at": "2026-06-11T03:06Z",
+      "color": "YELLOW",
+      "fail": 0,
+      "warn": 2,
+      "ok": 24,
+      "checks": [
+        {
+          "name": "session-boot ran",
+          "status": "ok"
+        },
+        {
+          "name": "RESUME refreshed",
+          "status": "ok"
+        },
+        {
+          "name": "current sprint known",
+          "status": "ok"
+        },
+        {
+          "name": "next action known",
+          "status": "ok"
+        },
+        {
+          "name": "completion checks current",
+          "status": "ok"
+        },
+        {
+          "name": "receipts landing",
+          "status": "ok"
+        },
+        {
+          "name": "trust events tracked",
+          "status": "ok"
+        },
+        {
+          "name": "idea edges updated",
+          "status": "warn"
+        },
+        {
+          "name": "trajectory not stale",
+          "status": "ok"
+        },
+        {
+          "name": "active/archive within budget",
+          "status": "ok"
+        },
+        {
+          "name": "intelligence score refreshed",
+          "status": "ok"
+        },
+        {
+          "name": "token usage tracked",
+          "status": "warn"
+        },
+        {
+          "name": "skills reused/created",
+          "status": "ok"
+        },
+        {
+          "name": "failures captured",
+          "status": "ok"
+        },
+        {
+          "name": "codex verification current",
+          "status": "ok"
+        },
+        {
+          "name": "protected actions gated",
+          "status": "ok"
+        },
+        {
+          "name": "no false done claims",
+          "status": "ok"
+        },
+        {
+          "name": "queue health",
+          "status": "ok"
+        },
+        {
+          "name": "services healthy",
+          "status": "ok"
+        },
+        {
+          "name": "model economy active",
+          "status": "ok"
+        },
+        {
+          "name": "public proof current",
+          "status": "ok"
+        },
+        {
+          "name": "B-arm session hygiene",
+          "status": "ok"
+        },
+        {
+          "name": "flagship avoided (routing telemetry)",
+          "status": "ok"
+        },
+        {
+          "name": "token-savings status honest",
+          "status": "ok"
+        },
+        {
+          "name": "automation queues healthy",
+          "status": "ok"
+        },
+        {
+          "name": "session economics",
+          "status": "ok"
+        }
+      ],
+      "verify": "published artifact — counts and per-check states are emitted verbatim by the operating layer's heartbeat run"
+    },
+    "receipts": {
+      "label": "MEASURED",
+      "updated_at": "2026-06-11T03:18:10.106Z",
+      "count": 1,
+      "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
+      "bundle_path": "/proof/receipts-bundle.json",
+      "verify": "npm i -g @efficientlabs/stratos && stratos receipt verify receipts-bundle.json — or let this page verify it in your browser"
+    },
+    "routing": {
+      "label": "MEASURED",
+      "updated_at": "2026-06-11T10:30:00Z",
+      "total": 31,
+      "rungs": {
+        "1": 15,
+        "3": 1,
+        "5": 2,
+        "7": 2,
+        "8": 11
+      },
+      "rung1_pct": 48.4,
+      "flagship_used": 11,
+      "flagship_avoided": 20,
+      "flagship_on_deterministic": 0,
+      "method": "self-attested routing log, script-counted — counted units, not an independent audit",
+      "verify": "published artifact — histogram recomputable from the counts shown"
+    },
+    "intelligence": {
+      "label": "MEASURED",
+      "updated_at": "2026-06-11T00:47Z",
+      "counters": {
+        "context_nodes": {
+          "value": 512,
+          "label": "MEASURED"
+        },
+        "knowledge_nodes": {
+          "value": 5,
+          "label": "MEASURED"
+        },
+        "ideas": {
+          "value": 6,
+          "label": "MEASURED"
+        },
+        "idea_edges": {
+          "value": 108,
+          "label": "MEASURED"
+        },
+        "decisions_adrs": {
+          "value": 6,
+          "label": "MEASURED"
+        },
+        "skills_command_center": {
+          "value": 22,
+          "label": "MEASURED"
+        },
+        "skills_store": {
+          "value": 8,
+          "label": "MEASURED"
+        },
+        "workflows": {
+          "value": 1,
+          "label": "MEASURED"
+        },
+        "receipts_on_disk": {
+          "value": 1,
+          "label": "MEASURED"
+        },
+        "execution_traces": {
+          "value": 2,
+          "label": "MEASURED"
+        },
+        "active_items": {
+          "value": 4,
+          "label": "MEASURED"
+        },
+        "archive_items": {
+          "value": 43,
+          "label": "MEASURED"
+        },
+        "archive_retrievals": {
+          "value": 14,
+          "label": "MEASURED"
+        },
+        "archive_retrievals_logged": {
+          "value": 14,
+          "label": "MEASURED"
+        },
+        "idea_edge_density": {
+          "value": 18,
+          "label": "MEASURED"
+        },
+        "orphan_ideas": {
+          "value": 1,
+          "label": "MEASURED"
+        },
+        "edge_reuse_queries": {
+          "value": null,
+          "label": null
+        },
+        "skill_reuse_events": {
+          "value": 4,
+          "label": "MEASURED"
+        },
+        "workflow_reuse_events": {
+          "value": null,
+          "label": null
+        },
+        "script_tasks_rung1": {
+          "value": 14,
+          "label": "MEASURED"
+        },
+        "cheap_worker_tasks": {
+          "value": 2,
+          "label": "MEASURED"
+        },
+        "codex_verifications": {
+          "value": 2,
+          "label": "MEASURED"
+        },
+        "fable_calls_used": {
+          "value": 10,
+          "label": "MEASURED"
+        },
+        "fable_calls_avoided": {
+          "value": 19,
+          "label": "MEASURED"
+        },
+        "fable_on_deterministic_work": {
+          "value": 0,
+          "label": "MEASURED"
+        },
+        "repeated_reasoning_avoided": {
+          "value": null,
+          "label": null
+        },
+        "corrections_avoided": {
+          "value": null,
+          "label": null
+        },
+        "receipts_verified": {
+          "value": 1,
+          "label": "MEASURED"
+        },
+        "unsafe_actions_blocked": {
+          "value": 0,
+          "label": "MEASURED"
+        },
+        "token_baseline_vs_actual": {
+          "value": "A-arm UNMEASURED (no API telemetry) vs B-arm ESTIMATED from file sizes",
+          "label": "ESTIMATED"
+        },
+        "time_saved_hours": {
+          "value": null,
+          "label": null
+        },
+        "cost_avoided_usd": {
+          "value": null,
+          "label": null
+        }
+      },
+      "verify": "published artifact — null rows are printed as null, never filled"
+    },
+    "economics": {
+      "label": "MEASURED",
+      "updated_at": "2026-06-11",
+      "sessions": 12,
+      "requests": 17544,
+      "weighted_cache_hit_pct": 96,
+      "method": "provider-reported usage fields; cache hit = cache_read ÷ (input + cache_read + cache_create) summed over all sessions",
+      "verify": "published artifact — recomputable from the method shown; no dollar figure is published anywhere"
+    },
+    "activation": {
+      "label": "MEASURED",
+      "updated_at": "2026-06-11T02:05Z",
+      "production": 10,
+      "total": 13,
+      "components": [
+        {
+          "name": "session-boot-hook",
+          "verdict": "PASS",
+          "status": "PRODUCTION"
+        },
+        {
+          "name": "lifecycle-gate",
+          "verdict": "PASS",
+          "status": "PRODUCTION"
+        },
+        {
+          "name": "resume-protocol",
+          "verdict": "PASS",
+          "status": "PRODUCTION"
+        },
+        {
+          "name": "ideas",
+          "verdict": "PASS",
+          "status": "PRODUCTION"
+        },
+        {
+          "name": "trajectory",
+          "verdict": "PASS",
+          "status": "PRODUCTION"
+        },
+        {
+          "name": "active-archive-memory",
+          "verdict": "PASS",
+          "status": "PRODUCTION"
+        },
+        {
+          "name": "intelligence-score",
+          "verdict": "PARTIAL",
+          "status": "PARTIAL"
+        },
+        {
+          "name": "token-telemetry",
+          "verdict": "PASS",
+          "status": "PRODUCTION"
+        },
+        {
+          "name": "automation-runtime",
+          "verdict": "PASS",
+          "status": "PRODUCTION"
+        },
+        {
+          "name": "context-load-controller",
+          "verdict": "PARTIAL",
+          "status": "ENFORCED"
+        },
+        {
+          "name": "manifest-hygiene-auditor",
+          "verdict": "PASS",
+          "status": "PRODUCTION"
+        },
+        {
+          "name": "capability-registry",
+          "verdict": "PASS",
+          "status": "PRODUCTION"
+        },
+        {
+          "name": "harness-generator",
+          "verdict": "PARTIAL",
+          "status": "ENFORCED"
+        }
+      ],
+      "verify": "published artifact — non-PRODUCTION components are listed with their honest state"
+    }
+  }
+}
