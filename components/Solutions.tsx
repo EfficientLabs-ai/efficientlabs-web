@@ -2,6 +2,7 @@
 import { MessageSquare, Cpu, Workflow, ShieldCheck } from "lucide-react";
 import { Reveal, ActHeader } from "@/components/Reveal";
 import BrandIcon from "@/components/BrandIcon";
+import SectionCTA from "@/components/SectionCTA";
 
 const ROW_A = ["MCP", "n8n", "Telegram", "Discord", "Slack", "Matrix", "Signal", "WhatsApp", "Ollama", "OpenRouter", "Anthropic", "OpenAI", "Mistral", "DeepSeek", "Qwen"];
 const ROW_B = ["GitHub", "Notion", "Stripe", "Postgres", "Supabase", "Gmail", "Google Drive", "Linear", "Figma", "Vercel", "Cloudflare", "WASI"];
@@ -87,6 +88,10 @@ export default function Solutions() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={0.2}>
+          <SectionCTA label="Install StratosAgent on your own metal" href="/install" />
+        </Reveal>
       </div>
     </section>
   );

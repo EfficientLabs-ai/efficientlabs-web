@@ -14,6 +14,7 @@ import Capability from "@/components/acts/Capability";
 import SkillSeal from "@/components/acts/SkillSeal";
 import StatusMatrix from "@/components/acts/StatusMatrix";
 import ProofStrip from "@/components/ProofStrip";
+import SectionCTA from "@/components/SectionCTA";
 import type { Metadata } from "next";
 
 // Only override the canonical; inherit the root openGraph (image/title/desc) intact.
@@ -61,13 +62,28 @@ export default function Home() {
       {/* ── SOLUTIONS & INTEGRATIONS — scale + value ──────────── */}
       <Solutions />
 
-      {/* ── THE SCROLL ACTS ───────────────────────────────────── */}
+      {/* ── THE SCROLL ACTS — each closes with one door forward ── */}
       <div className="mx-auto max-w-7xl px-6">
-        <Act><ContentAddress /></Act>
-        <Act cinematic><HolePunch /></Act>
-        <Act><Capability /></Act>
-        <Act><SkillSeal /></Act>
-        <Act id="status"><StatusMatrix /></Act>
+        <Act>
+          <ContentAddress />
+          <SectionCTA label="Read how content addressing works" href="/architecture" />
+        </Act>
+        <Act cinematic>
+          <HolePunch />
+          <SectionCTA label="Explore The Atmosphere" href="/atmosphere" />
+        </Act>
+        <Act>
+          <Capability />
+          <SectionCTA label="See the capability model in the docs" href="/docs" />
+        </Act>
+        <Act>
+          <SkillSeal />
+          <SectionCTA label="Browse the docs" href="/docs" />
+        </Act>
+        <Act id="status">
+          <StatusMatrix />
+          <SectionCTA label="Open the live status page" href="/status" />
+        </Act>
       </div>
 
       {/* ── INSTALL — run it on your own metal ────────────────── */}

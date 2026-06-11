@@ -2,6 +2,8 @@
 // both the landing scroll and the standalone /architecture page. Render this
 // inside <main> as a top-level section (it carries its own `section`/`section-t`
 // spacing and `container-x`).
+import SectionCTA from "@/components/SectionCTA";
+
 export default function Architecture() {
   return (
     <section id="architecture" className="section section-t relative overflow-hidden">
@@ -42,6 +44,7 @@ export default function Architecture() {
               </li>
             ))}
           </ul>
+          <SectionCTA label="Read the full architecture" href="/architecture" />
         </div>
         <div className="lm-card overflow-hidden p-1.5">
           <video

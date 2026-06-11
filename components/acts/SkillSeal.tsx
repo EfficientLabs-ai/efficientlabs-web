@@ -20,8 +20,8 @@ const ADJ: number[][] = NODES.map((_, n) =>
   EDGES.flatMap(([a, b]) => (a === n ? [b] : b === n ? [a] : []))
 );
 
-const SIGNAL = "46,139,255";
-const QUANTUM = "91,200,255";
+const SIGNAL = "10,132,255";
+const QUANTUM = "61,177,255";
 const REJECT = "224,86,106";
 
 export default function SkillSeal() {
@@ -114,7 +114,7 @@ export default function SkillSeal() {
           ctx.beginPath(); ctx.arc(px(i), py(i), 16 + t * 4, 0, Math.PI * 2); ctx.stroke();
         }
         ctx.beginPath(); ctx.arc(px(i), py(i), r + hit[i] * 5, 0, Math.PI * 2);
-        ctx.fillStyle = "#06070a"; ctx.fill();
+        ctx.fillStyle = "#05070b"; ctx.fill();
         ctx.strokeStyle = `rgba(${SIGNAL},${glow})`; ctx.lineWidth = 1.5; ctx.stroke();
         ctx.beginPath(); ctx.arc(px(i), py(i), origin ? 3.4 : 2.4, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${QUANTUM},${0.7 + hit[i] * 0.3})`; ctx.fill();
@@ -146,7 +146,7 @@ export default function SkillSeal() {
           ctx.restore();
           // intruder node
           ctx.beginPath(); ctx.arc(cx2, cy2, 6, 0, Math.PI * 2);
-          ctx.fillStyle = "#06070a"; ctx.fill();
+          ctx.fillStyle = "#05070b"; ctx.fill();
           ctx.strokeStyle = `rgba(${col},0.95)`; ctx.lineWidth = 1.5; ctx.stroke();
           ctx.beginPath(); ctx.arc(cx2, cy2, 2.4, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(${col},1)`; ctx.fill();
