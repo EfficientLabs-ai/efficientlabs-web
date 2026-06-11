@@ -4,8 +4,8 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import Typewriter from "@/components/Typewriter";
 
-const SIGNAL = new THREE.Color("#2e8bff");
-const QUANTUM = new THREE.Color("#5bc8ff");
+const SIGNAL = new THREE.Color("#0a84ff");
+const QUANTUM = new THREE.Color("#3db1ff");
 
 // Ordered by willingness-to-pay for sovereign, compliant AI — highest-value
 // regulated verticals first, widening to the broad builder audiences.

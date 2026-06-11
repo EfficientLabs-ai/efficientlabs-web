@@ -1,11 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Michroma } from "next/font/google";
+import { Inter, JetBrains_Mono, Michroma, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeRoot } from "@/components/useSiteTheme";
+import SmoothScroll from "@/components/SmoothScroll";
 
-// Distinctive type: Clash Display (headlines) + General Sans (body) from Fontshare,
-// JetBrains Mono (the content-addressing / hash motif) + Chakra Petch (the squared,
-// chamfered-corner wordmark, matching the Efficient Labs logo) from Google.
+// Brand kit type system (EFFICIENT_LABS_BRAND_KIT.md): Space Grotesk (headings) +
+// Inter (body) + JetBrains Mono (terminal/code/data) — all self-hosted via
+// next/font. Michroma stays as the wide-tracked geometric wordmark face.
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk", display: "swap" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const jbMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jb-mono", display: "swap" });
 const michroma = Michroma({ subsets: ["latin"], weight: ["400"], variable: "--font-wordmark", display: "swap" });
 
@@ -54,15 +57,20 @@ export const viewport: Viewport = {
   // default — so the unconditional chrome colour is the dark canvas. We still
   // expose the light value behind the light media query for users who toggle.
   themeColor: [
-    { color: "#010207" },
-    { media: "(prefers-color-scheme: light)", color: "#f7f9fc" },
-    { media: "(prefers-color-scheme: dark)", color: "#010207" },
+    { color: "#05070b" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#05070b" },
   ],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${jbMono.variable} ${michroma.variable}`} data-theme="dark" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable} ${inter.variable} ${jbMono.variable} ${michroma.variable}`}
+      data-theme="dark"
+      suppressHydrationWarning
+    >
       <head>
         {/* Pre-paint: honour the stored site theme on <html> BEFORE first paint so
             there is no dark↔light flash on load. Default DARK when unset (the
@@ -74,13 +82,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               "(function(){try{var t=localStorage.getItem('efl-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();",
           }}
         />
-        {/* Clash Display + General Sans — distinctive, premium, not the generic stack */}
-        <link
-          href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500,400&f[]=general-sans@400,500,600&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body>
+        <SmoothScroll />
         <ThemeRoot>{children}</ThemeRoot>
       </body>
     </html>

@@ -102,7 +102,7 @@ export default function SovereignPath() {
       const lit = gatePing;
       // small lock / opt-in marker straddling the branch
       ctx.beginPath(); ctx.arc(gx, gy, 9, 0, Math.PI * 2);
-      ctx.fillStyle = "#06070a"; ctx.fill();
+      ctx.fillStyle = "#05070b"; ctx.fill();
       ctx.strokeStyle = `rgba(${DIM},${0.55 + lit * 0.4})`; ctx.lineWidth = 1.2; ctx.stroke();
       // lock body
       ctx.fillStyle = `rgba(${DIM},${0.75 + lit * 0.25})`;
@@ -116,7 +116,7 @@ export default function SovereignPath() {
       const cx = X(CLOUD()), cy = Y(CLOUD());
       // dim, desaturated, subordinate — a ceiling, not the hero
       ctx.beginPath(); ctx.arc(cx, cy, sm() ? 9 : 11, 0, Math.PI * 2);
-      ctx.fillStyle = "#06070a"; ctx.fill();
+      ctx.fillStyle = "#05070b"; ctx.fill();
       ctx.strokeStyle = `rgba(${DIM},0.65)`; ctx.lineWidth = 1.3; ctx.stroke();
       ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${DIM},0.8)`; ctx.fill();
@@ -140,7 +140,7 @@ export default function SovereignPath() {
       // core
       const cr = sm() ? 11 : 14;
       ctx.beginPath(); ctx.arc(lx, ly, cr + pulseBoost * 3, 0, Math.PI * 2);
-      ctx.fillStyle = "#06070a"; ctx.fill();
+      ctx.fillStyle = "#05070b"; ctx.fill();
       ctx.strokeStyle = `rgba(${SIGNAL},${0.7 + pulseBoost * 0.3})`; ctx.lineWidth = 1.8; ctx.stroke();
       ctx.beginPath(); ctx.arc(lx, ly, sm() ? 4 : 5, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${QUANTUM},${0.85 + pulseBoost * 0.15})`; ctx.fill();

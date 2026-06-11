@@ -100,7 +100,7 @@ export default function MeshCanvas() {
           ctx!.beginPath(); ctx!.arc(n.x + px, n.y + py, 20 * pulse, 0, Math.PI * 2); ctx!.fill();
           ctx!.strokeStyle = "rgba(46,139,255,0.55)"; ctx!.lineWidth = 1;
           ctx!.beginPath(); ctx!.arc(n.x + px, n.y + py, 9, 0, Math.PI * 2); ctx!.stroke();
-          ctx!.fillStyle = "#2e8bff";
+          ctx!.fillStyle = "#0a84ff";
           ctx!.beginPath(); ctx!.arc(n.x + px, n.y + py, 3.2, 0, Math.PI * 2); ctx!.fill();
         } else {
           ctx!.fillStyle = "rgba(154,166,180,0.5)";

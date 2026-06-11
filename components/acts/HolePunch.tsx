@@ -9,8 +9,8 @@ function Peer({ x, label, ip }: { x: number; label: string; ip: string }) {
     <g>
       <rect x={x - 46} y={150} width={92} height={64} rx={10} fill="#0a0c12" stroke="#1a2330" />
       <text x={x} y={138} textAnchor="middle" className="mono" fontSize="10" fill="#5b6675">{`NAT · ${ip}`}</text>
-      <circle cx={x} cy={182} r={15} fill="#06070a" stroke="#2e8bff" strokeWidth="1.5" />
-      <circle cx={x} cy={182} r={4} fill="#2e8bff" />
+      <circle cx={x} cy={182} r={15} fill="#05070b" stroke="#0a84ff" strokeWidth="1.5" />
+      <circle cx={x} cy={182} r={4} fill="#0a84ff" />
       <text x={x} y={236} textAnchor="middle" className="mono" fontSize="11" fill="#9aa6b4">{label}</text>
     </g>
   );
@@ -24,7 +24,7 @@ export default function HolePunch() {
           {/* DHT rendezvous */}
           <g>
             <ellipse cx={260} cy={48} rx={70} ry={26} fill="#0a0c12" stroke="#1a2330" />
-            <text x={260} y={44} textAnchor="middle" className="mono" fontSize="10" fill="#5bc8ff">Hyperswarm</text>
+            <text x={260} y={44} textAnchor="middle" className="mono" fontSize="10" fill="#3db1ff">Hyperswarm</text>
             <text x={260} y={58} textAnchor="middle" className="mono" fontSize="9" fill="#5b6675">DHT rendezvous</text>
           </g>
 
@@ -36,7 +36,7 @@ export default function HolePunch() {
             <motion.line
               key={i}
               x1={x} y1={167} x2={260} y2={70}
-              stroke="#5bc8ff" strokeWidth="1" strokeDasharray="3 4"
+              stroke="#3db1ff" strokeWidth="1" strokeDasharray="3 4"
               initial={{ pathLength: 0, opacity: 0 }}
               whileInView={{ pathLength: 1, opacity: 0.55 }}
               viewport={{ once: true }}
@@ -47,7 +47,7 @@ export default function HolePunch() {
           {/* the punched, direct link (solid signal) */}
           <motion.line
             x1={120} y1={182} x2={400} y2={182}
-            stroke="#2e8bff" strokeWidth="1.6"
+            stroke="#0a84ff" strokeWidth="1.6"
             initial={{ pathLength: 0 }}
             whileInView={{ pathLength: 1 }}
             viewport={{ once: true }}
@@ -55,14 +55,14 @@ export default function HolePunch() {
           />
           {/* packet traveling the direct link */}
           <motion.circle
-            r={3} fill="#2e8bff"
+            r={3} fill="#0a84ff"
             initial={{ cx: 120, cy: 182, opacity: 0 }}
             whileInView={{ cx: 400, opacity: [0, 1, 1, 0] }}
             viewport={{ once: true }}
             transition={{ duration: 1.1, ease: "easeInOut", delay: 1.5, repeat: Infinity, repeatDelay: 0.6 }}
           />
           <motion.text
-            x={260} y={205} textAnchor="middle" className="mono" fontSize="10" fill="#2e8bff"
+            x={260} y={205} textAnchor="middle" className="mono" fontSize="10" fill="#0a84ff"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}

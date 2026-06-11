@@ -1,30 +1,36 @@
 @import "tailwindcss";
 
 /* ============================================================================
-   Efficient Labs — "Chrome & Sky" design system
-   pure black · brushed chrome silver · electric azure blue (matches the wordmark)
+   Efficient Labs — Enterprise Brand System v1.0 (canonical: EFFICIENT_LABS_BRAND_KIT.md)
+   Intelligence Blue · Electric Blue · Infrastructure Silver on the dark system
    ========================================================================== */
 
 @theme {
-  --color-void: #010207;          /* pure-black canvas (the wordmark bg) */
-  --color-void-2: #080b12;        /* raised surfaces */
-  --color-ink: #eef2f7;           /* cool silver-white — crisp primary/headings */
-  --color-ink-dim: #cdd7e4;       /* secondary — bright, ~12:1 on void, comfortably AA */
-  --color-ink-faint: #9aa7bc;     /* tertiary — lifted ~6:1 on void, passes AA body */
-  --color-signal: #2e8bff;        /* electric azure blue — primary */
-  --color-signal-deep: #1769db;   /* deeper blue for fills */
-  --color-quantum: #5bc8ff;       /* bright sky-cyan — gradient sheen */
-  --color-edge: #16202e;          /* hairline grid */
-  --color-line: #0e1620;          /* borders */
+  --color-void: #05070b;          /* brand dark background */
+  --color-void-2: #0d1117;        /* surface */
+  --color-elevated: #151b24;      /* elevated surface */
+  --color-ink: #f8fafc;           /* primary text */
+  --color-ink-dim: #94a3b8;       /* secondary text */
+  --color-ink-faint: #64748b;     /* tertiary text */
+  --color-signal: #0a84ff;        /* Intelligence Blue — CTAs, links, active states */
+  --color-signal-deep: #0868cc;   /* derived deep fill — white-text AA on light */
+  --color-quantum: #3db1ff;       /* Electric Blue — hover, motion, AI activity */
+  --color-silver: #c0c7d2;        /* Infrastructure Silver — icons, dividers, diagrams */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-critical: #ef4444;
+  --color-sovereign: #6d5df6;     /* RESERVED: Atmosphere/Stratosphere surfaces only */
+  --color-edge: #232b38;          /* hairline grid */
+  --color-line: #1a212d;          /* section borders — one step under edge */
 
-  --font-display: "Clash Display", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "General Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jb-mono), "JetBrains Mono", ui-monospace, monospace;
 }
 
 :root {
-  --void: #010207; --signal: #2e8bff; --quantum: #5bc8ff; --ink: #eef2f7;
-  --ink-dim: #cdd7e4; --ink-faint: #9aa7bc;
+  --void: #05070b; --signal: #0a84ff; --quantum: #3db1ff; --ink: #f8fafc;
+  --ink-dim: #94a3b8; --ink-faint: #64748b;
   /* brushed-chrome gradient for the wordmark + metallic accents */
   --chrome: linear-gradient(176deg, #ffffff 0%, #e9eef5 22%, #aab4c2 48%, #ffffff 56%, #8d99a8 72%, #dfe6ef 100%);
 
@@ -43,16 +49,16 @@
     inset 0 1px 0 rgba(255,255,255,0.14),
     inset 0 0 0 1px rgba(255,255,255,0.03);
 
-  /* ── BRUTALIST EDGE TOKENS — sharp, HUD-style surfaces ─────────────── */
-  --radius-xs: 4px;    /* chips, code inline */
-  --radius-sm: 6px;    /* badges, small controls, inputs */
-  --radius: 8px;       /* default data surface / card radius */
-  --radius-lg: 10px;   /* large feature cards / media frames */
-  --radius-pill: 999px;/* the ONE pill we keep: status dots + CTAs */
+  /* ── CORNER SYSTEM — brand kit: 12px standard · 20px premium · 9999px pills ── */
+  --radius-xs: 6px;    /* chips, code inline (sub-component scale) */
+  --radius-sm: 10px;   /* badges, small controls, inputs */
+  --radius: 12px;      /* STANDARD — default card/data surface */
+  --radius-lg: 20px;   /* PREMIUM — feature cards / media frames */
+  --radius-pill: 9999px; /* pills: status dots + CTAs */
   --border-hairline: 1px solid rgba(255,255,255,0.08);
   --border-hairline-strong: 1px solid rgba(255,255,255,0.14);
   --shadow-hud: 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px -16px rgba(0,0,0,0.8);
-  --shadow-hud-lift: 0 1px 0 rgba(255,255,255,0.05), 0 18px 44px -24px rgba(46,139,255,0.4);
+  --shadow-hud-lift: 0 1px 0 rgba(255,255,255,0.05), 0 18px 44px -24px rgba(10,132,255,0.4);
 
   /* ── TYPE SCALE — clamp()-based, one source of truth ───────────────── */
   --fs-display:   clamp(2.6rem, 7.2vw, 6.2rem);   /* hero h1 */
@@ -79,34 +85,35 @@
    --signal / --quantum keep their hues for brand continuity.
    ========================================================================== */
 [data-theme="light"] {
-  /* surfaces */
-  --color-void: #f7f9fc;          /* app canvas */
-  --color-void-2: #ffffff;        /* raised surfaces / cards */
+  /* surfaces — brand kit light system */
+  --color-void: #ffffff;          /* app canvas */
+  --color-void-2: #f8fafc;        /* surface */
+  --color-elevated: #eef2f7;      /* elevated surface */
   /* ink */
-  --color-ink: #0e1726;           /* primary text */
-  --color-ink-dim: #55617a;       /* secondary — ~6.9:1 */
-  --color-ink-faint: #5f6b80;     /* tertiary — nudged to pass AA body (~4.6:1) */
+  --color-ink: #0f172a;           /* primary text */
+  --color-ink-dim: #475569;       /* secondary */
+  --color-ink-faint: #64748b;     /* tertiary */
   /* brand stays */
-  --color-signal: #2e8bff;
-  --color-signal-deep: #1769db;
-  --color-quantum: #2a9bd4;       /* slightly deepened so cyan reads on white */
+  --color-signal: #0a84ff;
+  --color-signal-deep: #0868cc;
+  --color-quantum: #1d8fe0;       /* Electric Blue deepened so it reads on white */
   /* lines */
   --color-edge: #eef2f7;          /* hairline grid */
-  --color-line: #e6eaf1;          /* borders */
+  --color-line: #d9e2ec;          /* borders — brand kit light border */
 
   /* un-prefixed aliases used directly by base CSS (.kicker, body, buttons, …) */
-  --void: #f7f9fc;
-  --ink: #0e1726;
-  --ink-dim: #55617a;
-  --ink-faint: #5f6b80;
-  --signal: #2e8bff;
-  --quantum: #2a9bd4;
+  --void: #ffffff;
+  --ink: #0f172a;
+  --ink-dim: #475569;
+  --ink-faint: #64748b;
+  --signal: #0a84ff;
+  --quantum: #1d8fe0;
 
   /* elevation: in light, soft shadows do the lifting that borders do in dark */
-  --border-hairline: 1px solid #e6eaf1;
-  --border-hairline-strong: 1px solid #d7deea;
+  --border-hairline: 1px solid #d9e2ec;
+  --border-hairline-strong: 1px solid #c8d4e2;
   --shadow-hud: 0 1px 2px rgba(16,23,38,0.04), 0 8px 24px -18px rgba(16,23,38,0.18);
-  --shadow-hud-lift: 0 1px 2px rgba(16,23,38,0.06), 0 18px 40px -22px rgba(46,139,255,0.28);
+  --shadow-hud-lift: 0 1px 2px rgba(16,23,38,0.06), 0 18px 40px -22px rgba(10,132,255,0.28);
 
   /* ── GLASS MATERIAL TOKENS (light overrides) ─────────────────────────
      On white you tint with the brand-ish neutral, not white-on-white which
@@ -130,33 +137,33 @@
    those decorative pseudo-elements are still toned down for light. */
 [data-theme="light"] .lm-card::before { display: none; }
 [data-theme="light"] .lm-card::after {
-  background: radial-gradient(125% 78% at 50% -12%, rgba(46,139,255,0.08), transparent 58%);
+  background: radial-gradient(125% 78% at 50% -12%, rgba(10,132,255,0.08), transparent 58%);
   opacity: 1;
 }
 [data-theme="light"] .data-card.is-interactive:hover,
 [data-theme="light"] .lm-card.is-interactive:hover {
-  border-color: #cfd9e8;
+  border-color: #c8d4e2;
   box-shadow: var(--shadow-hud-lift);
 }
 /* outline buttons: solid white fill + visible border on light */
 [data-theme="light"] .btn-outline {
   background: var(--color-void-2);
-  border: 1px solid #d7deea;
+  border: 1px solid #d9e2ec;
 }
 [data-theme="light"] .btn-outline:hover {
   background: #f1f5fb;
   border-color: color-mix(in oklab, var(--signal) 45%, transparent);
 }
 /* primary CTA on light: white text needs the DEEPER blue to pass WCAG AA
-   (#fff on #2e8bff was ~3.4:1; on #1769db it's ~5:1). */
+   (#fff on #0a84ff is ~3.7:1; on #0868cc it clears 4.5:1). */
 [data-theme="light"] .btn-signal { background: var(--color-signal-deep); color: #ffffff; }
 [data-theme="light"] .btn-signal:hover { filter: brightness(1.08); }
 /* sidebar nav hover used bg-white/5 — give it a token-aware tint instead */
 .os-nav-hover:hover { background: rgba(255,255,255,0.05); }
-[data-theme="light"] .os-nav-hover:hover { background: rgba(46,139,255,0.06); }
+[data-theme="light"] .os-nav-hover:hover { background: rgba(10,132,255,0.06); }
 /* scrollbar + selection inside the OS */
 [data-theme="light"] ::-webkit-scrollbar-track { background: var(--color-void); }
-[data-theme="light"] ::-webkit-scrollbar-thumb { background: #d7deea; }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: #d9e2ec; }
 [data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #c3cedd; }
 
 /* ============================================================================
@@ -168,16 +175,16 @@
    ========================================================================== */
 .cinematic,
 [data-theme="light"] .cinematic {
-  --void: #010207; --ink: #eef2f7; --ink-dim: #cdd7e4; --ink-faint: #9aa7bc;
-  --signal: #2e8bff; --quantum: #5bc8ff;
-  --color-void: #010207; --color-void-2: #080b12;
-  --color-ink: #eef2f7; --color-ink-dim: #cdd7e4; --color-ink-faint: #9aa7bc;
-  --color-edge: #16202e; --color-line: #0e1620;
-  --color-quantum: #5bc8ff;
+  --void: #05070b; --ink: #f8fafc; --ink-dim: #94a3b8; --ink-faint: #64748b;
+  --signal: #0a84ff; --quantum: #3db1ff;
+  --color-void: #05070b; --color-void-2: #0d1117; --color-elevated: #151b24;
+  --color-ink: #f8fafc; --color-ink-dim: #94a3b8; --color-ink-faint: #64748b;
+  --color-edge: #232b38; --color-line: #1a212d;
+  --color-quantum: #3db1ff;
   --border-hairline: 1px solid rgba(255,255,255,0.08);
   --border-hairline-strong: 1px solid rgba(255,255,255,0.14);
   --shadow-hud: 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px -16px rgba(0,0,0,0.8);
-  --shadow-hud-lift: 0 1px 0 rgba(255,255,255,0.05), 0 18px 44px -24px rgba(46,139,255,0.4);
+  --shadow-hud-lift: 0 1px 0 rgba(255,255,255,0.05), 0 18px 44px -24px rgba(10,132,255,0.4);
   /* restore the (strengthened) dark glass recipe locally */
   --glass-blur: 18px;
   --glass-sat: 175%;
@@ -194,7 +201,7 @@
    light mode (the light patch above hides it globally). */
 [data-theme="light"] .cinematic .lm-card::before { display: block; }
 [data-theme="light"] .cinematic .lm-card::after {
-  background: radial-gradient(125% 78% at 50% -12%, rgba(46,139,255,0.13), transparent 58%);
+  background: radial-gradient(125% 78% at 50% -12%, rgba(10,132,255,0.13), transparent 58%);
   opacity: 0.45;
 }
 
@@ -202,6 +209,42 @@
 html {
   scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
   scroll-padding-top: 5rem; /* fixed nav clearance for #anchor jumps */
+}
+
+/* ── LENIS smooth scroll (recommended base styles) — when Lenis is driving,
+   native CSS smooth-behavior must yield or the two fight over anchors. ── */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ── ORBITAL PULSE — the brand motion signature (8s cycle, never a spin):
+   core pulse → orbit glow → fade. Active only with .is-pulsing; the global
+   reduced-motion block freezes it. ── */
+.orbital-mark .om-ring { opacity: 0.55; }
+.orbital-mark .om-orbit { opacity: 0.8; }
+.orbital-mark.is-pulsing .om-core {
+  transform-origin: 24px 24px;
+  animation: om-core-pulse 8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+.orbital-mark.is-pulsing .om-orbit {
+  animation: om-orbit-glow 8s ease-in-out infinite;
+}
+.orbital-mark.is-pulsing .om-node {
+  animation: om-node-glow 8s ease-in-out infinite;
+}
+@keyframes om-core-pulse {
+  0%, 86%, 100% { transform: scale(1); }
+  90% { transform: scale(1.28); }
+  95% { transform: scale(1); }
+}
+@keyframes om-orbit-glow {
+  0%, 86%, 100% { opacity: 0.8; filter: none; }
+  91% { opacity: 1; filter: drop-shadow(0 0 4px var(--color-quantum)); }
+}
+@keyframes om-node-glow {
+  0%, 86%, 100% { opacity: 0.9; filter: none; }
+  91% { opacity: 1; filter: drop-shadow(0 0 5px var(--color-quantum)); }
 }
 body {
   margin: 0;
@@ -254,15 +297,15 @@ body::after {
 @keyframes wm-shimmer { 0%,100% { opacity: 0.7; background-position: 0% 0; } 50% { opacity: 1; background-position: 100% 0; } }
 @keyframes wm-pulse { 0%,100% { opacity: 0.5; width: 22%; } 50% { opacity: 1; width: 34%; } }
 
-.display { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.03em; line-height: 0.95; }
+.display { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.025em; line-height: 0.98; }
 .mono { font-family: var(--font-mono); letter-spacing: -0.01em; }
 .kicker { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--signal); }
 
 /* ── TYPE-SCALE UTILITIES — apply across all sections for uniformity ─── */
-.t-display    { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.035em; line-height: 0.94; font-size: var(--fs-display); }
-.t-display-sm { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.03em;  line-height: 1.04; font-size: var(--fs-display-sm); }
+.t-display    { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.025em; line-height: 0.98; font-size: var(--fs-display); }
+.t-display-sm { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;  line-height: 1.06; font-size: var(--fs-display-sm); }
 /* canonical section heading — every <h2> on the page lands here */
-.t-section    { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.025em; line-height: 1.02; font-size: var(--fs-section); color: var(--ink); }
+.t-section    { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;  line-height: 1.05; font-size: var(--fs-section); color: var(--ink); }
 .t-card       { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;  line-height: 1.1;  font-size: var(--fs-card); color: var(--ink); }
 .t-stat       { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;  line-height: 1;    font-size: var(--fs-stat); }
 .t-body-lg    { font-size: var(--fs-body-lg); line-height: 1.6; }
@@ -434,7 +477,7 @@ body::after {
   content: ""; position: absolute; inset: -1px; z-index: -1; border-radius: inherit; padding: 1px;
   background: conic-gradient(from var(--lm-angle),
     transparent 0deg, rgba(91,200,255,0) 50deg,
-    rgba(255,255,255,0.7) 115deg, rgba(46,139,255,0.95) 150deg, rgba(255,255,255,0.55) 185deg,
+    rgba(255,255,255,0.7) 115deg, rgba(10,132,255,0.95) 150deg, rgba(255,255,255,0.55) 185deg,
     transparent 250deg, transparent 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
@@ -443,7 +486,7 @@ body::after {
 /* inner top-glow that warms on hover */
 .lm-card::after {
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
-  background: radial-gradient(125% 78% at 50% -12%, rgba(46,139,255,0.13), transparent 58%);
+  background: radial-gradient(125% 78% at 50% -12%, rgba(10,132,255,0.13), transparent 58%);
   opacity: 0.45; transition: opacity 0.55s ease;
 }
 /* sheen sweep is a surface affordance — kept on all lm-cards. The translateY

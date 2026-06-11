@@ -56,7 +56,7 @@ export default function OsShell({
             __html:
               "(function(){try{var r=document.getElementById('os-root');if(!r)return;" +
               "var t=localStorage.getItem('os-theme');r.setAttribute('data-theme',t==='light'?'light':'dark');" +
-              "var ACC={azure:['#2e8bff','#1769db'],cyan:['#22b8d6','#0e93b0'],violet:['#7c6cff','#5a47e6']};" +
+              "var ACC={azure:['#0a84ff','#0868cc'],cyan:['#22b8d6','#0e93b0'],violet:['#7c6cff','#5a47e6']};" +
               "var DEN={comfortable:['8px','6px','10px','1'],compact:['6px','5px','8px','0.92']};" +
               "var p=JSON.parse(localStorage.getItem('os-prefs')||'{}');" +
               "var a=ACC[p.accent]||ACC.azure;var d=DEN[p.density]||DEN.comfortable;" +

@@ -1,6 +1,7 @@
 "use client";
 import { Share2, ShieldCheck, Eye } from "lucide-react";
 import { Reveal, ActHeader } from "@/components/Reveal";
+import SectionCTA from "@/components/SectionCTA";
 
 const MOATS = [
   {
@@ -44,6 +45,10 @@ export default function Differentiators() {
               </Reveal>
             ))}
           </div>
+
+          <Reveal delay={0.2}>
+            <SectionCTA label="Go deeper on The Atmosphere" href="/atmosphere" />
+          </Reveal>
         </div>
       </div>
     </section>

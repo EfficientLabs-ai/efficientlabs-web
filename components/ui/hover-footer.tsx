@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 /**
  * TextHoverEffect — giant outlined wordmark that draws itself in (blue stroke),
  * then reveals a chrome→electric-blue gradient fill under the cursor on hover.
- * Adapted for Efficient Labs: brand blue #2e8bff, Michroma wordmark face.
+ * Adapted for Efficient Labs: brand blue #0a84ff, Michroma wordmark face.
  */
 export const TextHoverEffect = ({
   text,
@@ -50,8 +50,8 @@ export const TextHoverEffect = ({
             <>
               <stop offset="0%" stopColor="#ffffff" />
               <stop offset="35%" stopColor="#cfd8e4" />
-              <stop offset="55%" stopColor="#2e8bff" />
-              <stop offset="80%" stopColor="#5bc8ff" />
+              <stop offset="55%" stopColor="#0a84ff" />
+              <stop offset="80%" stopColor="#3db1ff" />
               <stop offset="100%" stopColor="#ffffff" />
             </>
           )}
@@ -87,7 +87,7 @@ export const TextHoverEffect = ({
       <motion.text
         x="50%" y="50%" textAnchor="middle" dominantBaseline="middle"
         strokeWidth="0.4"
-        className="fill-transparent stroke-[#2e8bff] text-[2.6rem] font-normal uppercase"
+        className="fill-transparent stroke-[#0a84ff] text-[2.6rem] font-normal uppercase"
         style={{ fontFamily: "var(--font-wordmark), sans-serif" }}
         initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
         animate={{ strokeDashoffset: 0, strokeDasharray: 1000 }}
@@ -114,7 +114,7 @@ export const FooterBackgroundGradient = () => {
     <div
       className="absolute inset-0 z-0"
       style={{
-        background: "radial-gradient(125% 125% at 50% 12%, #01020700 45%, #2e8bff26 100%)",
+        background: "radial-gradient(125% 125% at 50% 12%, #05070b00 45%, #0a84ff26 100%)",
       }}
     />
   );
