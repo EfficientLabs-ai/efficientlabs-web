@@ -1,6 +1,10 @@
 "use client";
+import { useRef } from "react";
 import { motion } from "motion/react";
-import { ActHeader, Reveal } from "@/components/Reveal";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ActHeader } from "@/components/Reveal";
+import { registerMotion, motionOK, EASE, DUR } from "@/lib/motion";
 import { LAYERS, LEVELS, type Level } from "@/lib/status";
 
 const DOT: Record<Level, string> = {
@@ -27,6 +31,60 @@ function Badge({ level }: { level: Level }) {
 }
 
 export default function StatusMatrix() {
+  // The page's ONE pinned set-piece: on desktop the honesty scorecard pins
+  // and the proportion bar writes itself in under the user's thumb — a ledger
+  // being committed, scrubbed 1:1 (linear; scroll IS the ease). Mobile gets a
+  // triggered, non-pinned version of the same gesture. Reduced motion / no-JS
+  // render the final state (widths are server-rendered).
+  const scorecardRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const root = scorecardRef.current;
+      if (!root || !motionOK()) return;
+      registerMotion();
+      const segs = gsap.utils.toArray<HTMLElement>(root.querySelectorAll("[data-seg]"));
+      const nums = gsap.utils.toArray<HTMLElement>(root.querySelectorAll("[data-count]"));
+
+      const build = (scrub: boolean) => {
+        const tl = gsap.timeline({
+          scrollTrigger: scrub
+            ? { trigger: root, start: "top top+=120", end: "+=80%", scrub: true, pin: true }
+            : { trigger: root, start: "top 78%", once: true },
+          defaults: { ease: scrub ? "none" : EASE.out },
+        });
+        tl.from(segs, {
+          scaleX: 0,
+          transformOrigin: "left center",
+          duration: scrub ? 1 : DUR.hero,
+          stagger: scrub ? 0.35 : 0.08,
+        });
+        nums.forEach((el, i) => {
+          const target = Number(el.dataset.count || "0");
+          const state = { v: 0 };
+          tl.to(
+            state,
+            {
+              v: target,
+              duration: scrub ? 0.7 : DUR.hero,
+              snap: { v: 1 },
+              onUpdate: () => {
+                el.textContent = String(Math.round(state.v));
+              },
+            },
+            scrub ? i * 0.3 : 0.15,
+          );
+        });
+      };
+
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 1024px)", () => build(true));
+      mm.add("(max-width: 1023px)", () => build(false));
+      return () => mm.revert();
+    },
+    { scope: scorecardRef },
+  );
+
   return (
     <div className="relative">
       {/* aurora glows behind the status cards so their glass reads as frosted */}
@@ -42,40 +100,37 @@ export default function StatusMatrix() {
         <em>Standalone</em>, or <em>Mock</em>. If it isn&apos;t real yet, it says so. Honesty is the only durable moat.
       </ActHeader>
 
-      {/* ── honesty scorecard ── */}
-      <Reveal delay={0.1}>
-        <div className="lm-card mt-9 p-6">
-          {/* stacked proportion bar */}
-          <div className="flex items-center justify-between">
-            <span className="mono text-[11px] text-[color:var(--color-ink-faint)]">{TOTAL} capabilities tracked</span>
-            <span className="mono text-[11px] text-[color:var(--color-ink-faint)]">live → mock</span>
-          </div>
-          <div className="mt-3 flex h-2.5 w-full overflow-hidden rounded-full">
-            {COUNTS.map(({ lv, n }) => (
-              <motion.div key={lv} className="h-full"
-                style={{ background: DOT[lv] }}
-                initial={{ width: 0 }}
-                whileInView={{ width: `${(n / TOTAL) * 100}%` }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, ease: [0.2, 0.8, 0.2, 1], delay: 0.2 }}
-              />
-            ))}
-          </div>
-          {/* count tiles */}
-          <div className="mt-6 grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-4 sm:gap-4">
-            {COUNTS.map(({ lv, n }) => (
-              <div key={lv} className="flex flex-col gap-1">
-                <div className="flex items-baseline gap-2">
-                  <span className="display text-[1.5rem] leading-none sm:text-[1.8rem]" style={{ color: DOT[lv] }}>{n}</span>
-                  <span className="h-2 w-2 rounded-full" style={{ background: DOT[lv] }} />
-                </div>
-                <span className="mono text-[11px] text-[color:var(--color-ink)]">{LEVELS[lv].label}</span>
-                <span className="text-[11px] leading-snug text-[color:var(--color-ink-faint)]">{LEVELS[lv].blurb}</span>
-              </div>
-            ))}
-          </div>
+      {/* ── honesty scorecard — the pinned "ledger" set-piece ── */}
+      <div ref={scorecardRef} className="lm-card mt-9 p-6">
+        {/* stacked proportion bar — widths server-rendered, written in by scrub */}
+        <div className="flex items-center justify-between">
+          <span className="mono text-[11px] text-[color:var(--color-ink-faint)]">{TOTAL} capabilities tracked</span>
+          <span className="mono text-[11px] text-[color:var(--color-ink-faint)]">live → mock</span>
         </div>
-      </Reveal>
+        <div className="mt-3 flex h-2.5 w-full overflow-hidden rounded-full">
+          {COUNTS.map(({ lv, n }) => (
+            <div
+              key={lv}
+              data-seg
+              className="h-full"
+              style={{ background: DOT[lv], width: `${(n / TOTAL) * 100}%` }}
+            />
+          ))}
+        </div>
+        {/* count tiles */}
+        <div className="mt-6 grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-4 sm:gap-4">
+          {COUNTS.map(({ lv, n }) => (
+            <div key={lv} className="flex flex-col gap-1">
+              <div className="flex items-baseline gap-2">
+                <span data-count={n} className="display text-[1.5rem] leading-none sm:text-[1.8rem]" style={{ color: DOT[lv] }}>{n}</span>
+                <span className="h-2 w-2 rounded-full" style={{ background: DOT[lv] }} />
+              </div>
+              <span className="mono text-[11px] text-[color:var(--color-ink)]">{LEVELS[lv].label}</span>
+              <span className="text-[11px] leading-snug text-[color:var(--color-ink-faint)]">{LEVELS[lv].blurb}</span>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* ── matrix ── */}
       <div className="mt-8 space-y-3">

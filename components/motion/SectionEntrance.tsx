@@ -6,11 +6,10 @@ import { registerMotion, motionOK, EASE, DUR, STAGGER } from "@/lib/motion";
 
 /**
  * Role-based section choreography. Children stay server-rendered; roles are
- * marked with data-motion="kicker|heading|body|card|cta" attributes and the
- * variant decides the order of the gesture:
- *  - statement: body trails the (self-animating) heading, cards follow
+ * marked with data-motion="body|card|cta" attributes and the variant decides
+ * the order of the gesture:
+ *  - statement: body leads, cards follow (headings animate themselves)
  *  - proof:     tiles overlap-stagger in; CountUp numbers fire themselves
- *  - act:       demo panel slides last, after the header voice
  * One timeline per section; the section animates on entry, then RESTS.
  */
 export default function SectionEntrance({
@@ -18,7 +17,7 @@ export default function SectionEntrance({
   children,
   className = "",
 }: {
-  variant: "statement" | "proof" | "act";
+  variant: "statement" | "proof";
   children: ReactNode;
   className?: string;
 }) {
@@ -36,7 +35,6 @@ export default function SectionEntrance({
       const body = q("body");
       const cards = q("card");
       const cta = q("cta");
-      const panel = q("panel");
 
       const tl = gsap.timeline({
         scrollTrigger: { trigger: root, start: "top 75%", once: true },
@@ -46,13 +44,9 @@ export default function SectionEntrance({
       if (variant === "statement") {
         if (body.length) tl.from(body, { y: 18, opacity: 0, stagger: 0.08 }, 0.15);
         if (cards.length) tl.from(cards, { y: 26, opacity: 0, stagger: STAGGER.cards }, 0.3);
-      } else if (variant === "proof") {
+      } else {
         if (cards.length) tl.from(cards, { y: 26, opacity: 0, stagger: STAGGER.cards }, 0);
         if (body.length) tl.from(body, { y: 14, opacity: 0 }, 0.2);
-      } else {
-        if (body.length) tl.from(body, { y: 18, opacity: 0, stagger: 0.08 }, 0.1);
-        if (panel.length) tl.from(panel, { y: 30, opacity: 0, duration: DUR.hero * 0.7 }, 0.3);
-        if (cards.length) tl.from(cards, { y: 26, opacity: 0, stagger: STAGGER.cards }, 0.35);
       }
       if (cta.length) tl.from(cta, { y: 12, opacity: 0 }, ">-0.25");
     },

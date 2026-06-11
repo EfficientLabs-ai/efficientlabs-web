@@ -8,6 +8,7 @@ import { PUBLIC_STATUS } from "@/lib/public-status";
 import { VERDICT } from "@/components/proof/palette";
 import { LabelChip, UpdatedAt } from "@/components/proof/bits";
 import CountUp from "@/components/motion/CountUp";
+import SectionEntrance from "@/components/motion/SectionEntrance";
 
 export default function ProofStrip() {
   const { heartbeat, receipts, routing, activation } = PUBLIC_STATUS.tiles;
@@ -15,7 +16,7 @@ export default function ProofStrip() {
 
   return (
     <section id="proof" className="section section-t scroll-mt-20">
-      <div className="container-x">
+      <SectionEntrance variant="proof" className="container-x">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="kicker">Proof</p>
@@ -23,7 +24,7 @@ export default function ProofStrip() {
               Operational proof <span className="aurora-text">before</span> public proof.
             </h2>
           </div>
-          <p className="max-w-md text-[13px] leading-relaxed text-[color:var(--color-ink-faint)]">
+          <p data-motion="body" className="max-w-md text-[13px] leading-relaxed text-[color:var(--color-ink-faint)]">
             We run our own company on this system, and publish its telemetry. Numbers below are measured
             from the operating layer itself — where something is not measured, it says so.
           </p>
@@ -31,7 +32,7 @@ export default function ProofStrip() {
 
         <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {/* heartbeat verdict */}
-          <Link href="/status" className="lm-card is-interactive flex flex-col gap-1 p-5">
+          <Link href="/status" data-motion="card" className="lm-card is-interactive flex flex-col gap-1 p-5">
             {heartbeat.label === "MEASURED" && heartbeat.color ? (
               <>
                 <span className="mono inline-flex items-center gap-2 text-[13px] font-semibold" style={{ color: verdictColor }}>
@@ -56,7 +57,7 @@ export default function ProofStrip() {
           </Link>
 
           {/* receipts */}
-          <Link href="/status" className="lm-card is-interactive flex flex-col gap-1 p-5">
+          <Link href="/status" data-motion="card" className="lm-card is-interactive flex flex-col gap-1 p-5">
             {receipts.label === "MEASURED" ? (
               <>
                 <span className="display leading-none text-[1.8rem]">
@@ -82,7 +83,7 @@ export default function ProofStrip() {
           </Link>
 
           {/* routing */}
-          <Link href="/status" className="lm-card is-interactive flex flex-col gap-1 p-5">
+          <Link href="/status" data-motion="card" className="lm-card is-interactive flex flex-col gap-1 p-5">
             {routing.label === "MEASURED" ? (
               <>
                 <span className="display leading-none text-[1.8rem]" style={{ color: "var(--color-signal)" }}>
@@ -106,7 +107,7 @@ export default function ProofStrip() {
           </Link>
 
           {/* activation */}
-          <Link href="/status" className="lm-card is-interactive flex flex-col gap-1 p-5">
+          <Link href="/status" data-motion="card" className="lm-card is-interactive flex flex-col gap-1 p-5">
             {activation.label === "MEASURED" ? (
               <>
                 <span className="display leading-none text-[1.8rem]">
@@ -131,12 +132,12 @@ export default function ProofStrip() {
           </Link>
         </div>
 
-        <div className="mt-6">
+        <div data-motion="cta" className="mt-6">
           <Link href="/status" className="btn-outline text-[13px]">
             Verify everything yourself <span aria-hidden>→</span>
           </Link>
         </div>
-      </div>
+      </SectionEntrance>
     </section>
   );
 }

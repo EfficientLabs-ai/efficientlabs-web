@@ -2,18 +2,11 @@
 import { useRef, useEffect, useState, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import Typewriter from "@/components/Typewriter";
+import SplitHeading from "@/components/motion/SplitHeading";
 import { HERO_READY_EVENT } from "@/lib/motion";
 
 const SIGNAL = new THREE.Color("#0a84ff");
 const QUANTUM = new THREE.Color("#3db1ff");
-
-// Ordered by willingness-to-pay for sovereign, compliant AI — highest-value
-// regulated verticals first, widening to the broad builder audiences.
-const HERO_AUDIENCES = [
-  "AI agents", "healthcare", "finance", "legal teams", "defense & gov",
-  "biotech & pharma", "insurance", "critical infrastructure", "enterprises", "developers",
-];
 
 const smooth = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
@@ -268,15 +261,13 @@ export default function MeshHero3D() {
         </div>
         <div className="relative mx-auto w-full max-w-7xl px-5 py-24">
           <p className="kicker">Sovereign&nbsp;AI&nbsp;Infrastructure</p>
-          <h1 className="t-display-sm mt-5 [overflow-wrap:anywhere] hyphens-none">
-            The sovereign<br />internet for<br />
-            <Typewriter className="aurora-text" words={HERO_AUDIENCES} />
-          </h1>
+          <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display-sm mt-5 hyphens-none">
+            Your Intelligence.<br />Your Infrastructure.<br />
+            <span className="aurora-text">Your Rules.</span>
+          </SplitHeading>
           <p className="t-body-lg mt-6 max-w-xl text-[color:var(--color-ink-dim)]">
-            StratosAgent runs on your own metal — meshed peer-to-peer with{" "}
-            <span className="text-[color:var(--color-ink)]">no open ports</span>,{" "}
-            <span className="text-[color:var(--color-ink)]">post-quantum-sealed</span>, and able to{" "}
-            <span className="text-[color:var(--color-ink)]">see, hear, and speak</span>. No cloud. No landlord. No meter.
+            Build, run, remember, and scale AI without surrendering ownership.
+            No cloud. No landlord. No meter.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <a href="#install" className="btn-signal w-full justify-center sm:w-auto">Install now<span aria-hidden>→</span></a>
@@ -317,15 +308,16 @@ export default function MeshHero3D() {
           <div className="mx-auto w-full max-w-7xl px-6">
             <div className="max-w-3xl">
               <p className="kicker">Sovereign&nbsp;AI&nbsp;Infrastructure</p>
-              <h1 className="t-display mt-6">
-                The sovereign<br />internet for<br />
-                <Typewriter className="aurora-text" words={HERO_AUDIENCES} />
-              </h1>
+              <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display mt-6">
+                Your Intelligence.<br />Your Infrastructure.<br />
+                <span className="aurora-text">Your Rules.</span>
+              </SplitHeading>
               <p className="t-body-lg mt-7 max-w-xl text-[color:var(--color-ink-dim)]">
-                StratosAgent runs on your own metal — meshed peer-to-peer with{" "}
-                <span className="text-[color:var(--color-ink)]">no open ports</span>,{" "}
-                <span className="text-[color:var(--color-ink)]">post-quantum-sealed</span>, and able to{" "}
-                <span className="text-[color:var(--color-ink)]">see, hear, and speak</span>. No cloud. No landlord. No meter.
+                Build, run, remember, and scale AI without surrendering ownership —{" "}
+                <span className="text-[color:var(--color-ink)]">meshed peer-to-peer</span>,{" "}
+                <span className="text-[color:var(--color-ink)]">post-quantum-sealed</span>, on{" "}
+                <span className="text-[color:var(--color-ink)]">your own metal</span>.
+                No cloud. No landlord. No meter.
               </p>
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <a href="#install" className="btn-signal">Install now<span aria-hidden>→</span></a>
