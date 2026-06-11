@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
+import { setLenis } from "@/lib/lenis-store";
 
 // Lenis is a MARKETING-surface affordance. The OS (/app), ops, dashboard and
 // docs are working surfaces with their own native scroll regions (sidebars,
@@ -33,12 +34,16 @@ export default function SmoothScroll() {
       anchors: true,
       duration: 1.1,
     });
+    setLenis(lenis);
 
-    const stop = () => lenis.destroy();
-    reduced.addEventListener("change", stop, { once: true });
-    return () => {
-      reduced.removeEventListener("change", stop);
+    const teardown = () => {
+      setLenis(null);
       lenis.destroy();
+    };
+    reduced.addEventListener("change", teardown, { once: true });
+    return () => {
+      reduced.removeEventListener("change", teardown);
+      teardown();
     };
   }, [excluded]);
 

@@ -484,7 +484,7 @@ body::after {
 .lm-card::before {
   content: ""; position: absolute; inset: -1px; z-index: -1; border-radius: inherit; padding: 1px;
   background: conic-gradient(from var(--lm-angle),
-    transparent 0deg, rgba(91,200,255,0) 50deg,
+    transparent 0deg, rgba(61,177,255,0) 50deg,
     rgba(255,255,255,0.7) 115deg, rgba(10,132,255,0.95) 150deg, rgba(255,255,255,0.55) 185deg,
     transparent 250deg, transparent 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
