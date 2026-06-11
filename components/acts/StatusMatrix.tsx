@@ -62,12 +62,20 @@ export default function StatusMatrix() {
         nums.forEach((el, i) => {
           const target = Number(el.dataset.count || "0");
           const state = { v: 0 };
+          // Scrub mode zeroes immediately (the pinned ledger starts empty and
+          // ScrollTrigger repositions the playhead on refresh for mid-page
+          // reloads). Triggered mode keeps the server-rendered final value
+          // until the tween starts — never a visible backwards jump.
+          if (scrub) el.textContent = "0";
           tl.to(
             state,
             {
               v: target,
               duration: scrub ? 0.7 : DUR.hero,
               snap: { v: 1 },
+              onStart: () => {
+                el.textContent = "0";
+              },
               onUpdate: () => {
                 el.textContent = String(Math.round(state.v));
               },

@@ -225,6 +225,10 @@ html {
   will-change: transform;
 }
 html[data-intro="pending"] #efl-preloader { display: flex; }
+/* Hard scroll lock while the intro is pending — CSS so it holds regardless of
+   when (or whether) Lenis initializes. Released when the wipe flips the attr. */
+html[data-intro="pending"],
+html[data-intro="pending"] body { overflow: hidden; }
 
 /* ── LENIS smooth scroll (recommended base styles) — when Lenis is driving,
    native CSS smooth-behavior must yield or the two fight over anchors. ── */

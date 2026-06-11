@@ -35,6 +35,10 @@ export default function Preloader() {
       if (document.documentElement.getAttribute("data-intro") !== "pending") return;
 
       registerMotion();
+      // Background scroll is locked by CSS ([data-intro="pending"] →
+      // overflow:hidden) — that holds even though Lenis initializes later
+      // (MotionProvider's useEffect runs after this layout effect). The
+      // lenis stop is belt-and-braces for re-entry cases only.
       getLenis()?.stop();
       window.scrollTo(0, 0);
 

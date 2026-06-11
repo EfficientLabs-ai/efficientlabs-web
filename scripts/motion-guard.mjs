@@ -2,16 +2,17 @@
 /**
  * motion-guard — the 60fps discipline as a CI guarantee, not a review hope.
  *
- * Scans every GSAP tween call site (gsap.to / gsap.from / gsap.fromTo /
- * tl.to / tl.from / tl.fromTo) in components/, app/ and lib/ and FAILS the
- * build if the tween's vars object animates a layout property. Compositor
- * rule: transform (x/y/scale/rotate/percent variants) and opacity only;
- * blurs and shadows are never animated directly (crossfade a pre-rendered
- * layer instead).
+ * Scans GSAP tween call sites in components/, app/ and lib/ and FAILS the
+ * build if a tween's vars animate a layout/paint property. Compositor rule:
+ * transform (x/y/scale/rotate/percent variants) and opacity only; blurs and
+ * shadows are never animated directly.
  *
- * Heuristic: from each tween call, capture up to its closing braces and grep
- * the captured object literal for banned keys. Non-animating uses (gsap.set,
- * CSS files, motion/react props) are out of scope by design.
+ * Detection: ANY `<ident>.to(` / `.from(` / `.fromTo(` call in a file that
+ * imports gsap — so timelines named tl/master/introTl/etc. are all covered —
+ * minus a denylist of known non-GSAP receivers (Array.from, Object, …).
+ * Callback bodies (`=> { … }`) inside the captured args are stripped before
+ * matching, so DOM work inside onUpdate/onComplete can't false-positive.
+ * Both bare and quoted keys are matched.
  *
  * Usage: node scripts/motion-guard.mjs   (exit 1 on any violation)
  */
@@ -22,11 +23,17 @@ import { fileURLToPath } from "node:url";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SCAN_DIRS = ["components", "app", "lib"];
 
-// Layout/paint properties that must never appear in a gsap tween.
-const BANNED =
-  /(?<![A-Za-z$_])(width|height|top|left|right|bottom|margin[A-Za-z]*|padding[A-Za-z]*|boxShadow|filter|backdropFilter|fontSize|lineHeight|borderWidth)\s*:/;
+// Receivers whose .to/.from are never GSAP.
+const NOT_GSAP = new Set([
+  "Array", "Object", "Promise", "String", "Number", "JSON", "Math",
+  "Buffer", "TypedArray", "Uint8Array", "BigInt",
+]);
 
-const TWEEN_CALL = /\b(?:gsap|tl|timeline)\s*\.\s*(?:to|from|fromTo)\s*\(/g;
+// Layout/paint properties that must never appear in a gsap tween (bare or quoted keys).
+const BANNED =
+  /['"]?(?<![A-Za-z$_])(width|height|top|left|right|bottom|margin[A-Za-z]*|padding[A-Za-z]*|boxShadow|filter|backdropFilter|fontSize|lineHeight|borderWidth)['"]?\s*:/;
+
+const TWEEN_CALL = /\b([A-Za-z_$][\w$]*)\s*\.\s*(to|from|fromTo)\s*\(/g;
 
 function* walk(dir) {
   for (const name of readdirSync(dir)) {
@@ -41,17 +48,46 @@ function* walk(dir) {
   }
 }
 
-/** Capture the argument span of a call, balancing parens (good enough for vars objects). */
+/** Capture the argument span of a call, balancing parens (string-naive but adequate for vars objects). */
 function captureArgs(src, openParenIdx) {
   let depth = 0;
-  for (let i = openParenIdx; i < Math.min(src.length, openParenIdx + 4000); i++) {
+  for (let i = openParenIdx; i < Math.min(src.length, openParenIdx + 6000); i++) {
     if (src[i] === "(") depth++;
     else if (src[i] === ")") {
       depth--;
       if (depth === 0) return src.slice(openParenIdx, i + 1);
     }
   }
-  return src.slice(openParenIdx, openParenIdx + 4000);
+  return src.slice(openParenIdx, openParenIdx + 6000);
+}
+
+/** Remove `=> { … }` callback bodies (brace-balanced) so handler code can't false-positive. */
+function stripCallbackBodies(text) {
+  let out = "";
+  let i = 0;
+  while (i < text.length) {
+    const arrow = text.indexOf("=>", i);
+    if (arrow === -1) {
+      out += text.slice(i);
+      break;
+    }
+    let j = arrow + 2;
+    while (j < text.length && /\s/.test(text[j])) j++;
+    if (text[j] !== "{") {
+      out += text.slice(i, arrow + 2);
+      i = arrow + 2;
+      continue;
+    }
+    out += text.slice(i, arrow + 2) + " {…}";
+    let depth = 0;
+    do {
+      if (text[j] === "{") depth++;
+      else if (text[j] === "}") depth--;
+      j++;
+    } while (j < text.length && depth > 0);
+    i = j;
+  }
+  return out;
 }
 
 const violations = [];
@@ -64,15 +100,19 @@ for (const dir of SCAN_DIRS) {
   }
   for (const file of files) {
     const src = readFileSync(file, "utf8");
-    if (!src.includes("gsap")) continue;
+    if (!/from\s+["']gsap|require\(["']gsap/.test(src)) continue;
     let m;
     TWEEN_CALL.lastIndex = 0;
     while ((m = TWEEN_CALL.exec(src))) {
-      const args = captureArgs(src, m.index + m[0].length - 1);
+      if (NOT_GSAP.has(m[1])) continue;
+      const args = stripCallbackBodies(captureArgs(src, m.index + m[0].length - 1));
+      if (!args.includes("{")) continue; // no vars object — not a tween shape
       const hit = args.match(BANNED);
       if (hit) {
         const line = src.slice(0, m.index).split("\n").length;
-        violations.push(`${file.replace(ROOT + "/", "")}:${line} — tween animates layout property "${hit[1]}"`);
+        violations.push(
+          `${file.replace(ROOT + "/", "")}:${line} — ${m[1]}.${m[2]}() animates layout property "${hit[1]}"`,
+        );
       }
     }
   }
