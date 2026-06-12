@@ -1,6 +1,6 @@
 {
   "format": "efl.runtime-score.v1",
-  "generated_at": "2026-06-12T04:33:30.773Z",
+  "generated_at": "2026-06-12T04:40:16.636Z",
   "render_rules": "MEASURED cards render values with verdicts; null cards render 'not measured' with the reason, greyed, in place — the grid shape never changes. Staleness is shown, never hidden.",
   "hero": {
     "measured": 6,
@@ -46,11 +46,11 @@
     },
     "session": {
       "label": "MEASURED",
-      "updated_at": "2026-06-12T04:33:30.773Z",
+      "updated_at": "2026-06-12T04:40:16.636Z",
       "verdict": "GREEN",
       "inputs": {
         "level": "HEALTHY",
-        "context_per_request": 118706,
+        "context_per_request": 134612,
         "fixed_context_slimming": null
       },
       "method": "verdict GREEN when the session-economics checker reports HEALTHY, YELLOW otherwise; context-per-request is the checker's recent average; fixed-context slimming is ESTIMATED pending replication and is therefore null here",

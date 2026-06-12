@@ -62,7 +62,23 @@ const NOW = new Date().toISOString();
 /** An honest null card: the page renders "not measured", never a guess. */
 const notMeasured = (reason) => ({ label: null, reason });
 
-const isMeasured = (tile) => tile && tile.label === "MEASURED";
+/* Shape validation — a tile that CLAIMS "MEASURED" but is malformed must
+ * degrade to a null card (fail-closed), never publish a half-invented state.
+ * Numbers are required to be finite numbers (a "$12" string never flows
+ * through); enums are closed. */
+const isNum = (v) => typeof v === "number" && Number.isFinite(v);
+const COLORS = new Set(["GREEN", "YELLOW", "RED"]);
+const TILE_SHAPE = {
+  heartbeat: (t) => COLORS.has(t.color) && isNum(t.fail) && isNum(t.warn) && isNum(t.ok),
+  receipts: (t) => isNum(t.count) && t.count >= 0 && (t.bundle_path == null || typeof t.bundle_path === "string"),
+  routing: (t) => isNum(t.total) && isNum(t.rung1_pct) && isNum(t.flagship_on_deterministic),
+  economics: (t) => isNum(t.weighted_cache_hit_pct),
+  activation: (t) => isNum(t.production) && isNum(t.total) && t.total > 0 && t.production <= t.total,
+  readiness: (t) => Array.isArray(t.gates),
+};
+const isMeasured = (tile, shape) =>
+  !!tile && tile.label === "MEASURED" && (!shape || (() => { try { return TILE_SHAPE[shape](tile); } catch { return false; } })());
+const MALFORMED = (name) => `${name} tile claims MEASURED but is malformed — fail-closed to not-measured`;
 
 /* ── session-economics probe (explicit field whitelist) ─────────────────── */
 // The checker's raw output carries internal identifiers (transcript filename);
@@ -75,9 +91,12 @@ function readSessionEconomics() {
     const out = execFileSync(process.execPath, [bin, "check"], {
       env: process.env,
       maxBuffer: 4 * 1024 * 1024,
+      timeout: 30_000, // a wedged checker must never hang the automated publisher
+      killSignal: "SIGKILL",
     }).toString();
     const v = JSON.parse(out);
-    if (typeof v.level !== "string" || !Number.isFinite(Number(v.recent_avg_ctx_per_req))) return null;
+    // Whitelist + closed shape: level is a short ALL_CAPS token, the average a finite number.
+    if (typeof v.level !== "string" || !/^[A-Z_]{1,32}$/.test(v.level) || !Number.isFinite(Number(v.recent_avg_ctx_per_req))) return null;
     return { level: v.level, recent_avg_ctx_per_req: Number(v.recent_avg_ctx_per_req) };
   } catch {
     return null;
@@ -91,20 +110,20 @@ const SEVERITY = { GREEN: 0, YELLOW: 1, RED: 2 };
 export function deriveScores(status, sessionEcon) {
   const tiles = status?.tiles || {};
   const { heartbeat, receipts, routing, economics, activation, readiness } = tiles;
-  const hermeticCi = isMeasured(readiness)
-    ? (readiness.gates || []).find((g) => g.id === "hermetic-ci") || null
+  const hermeticCi = isMeasured(readiness, "readiness")
+    ? readiness.gates.find((g) => g && g.id === "hermetic-ci" && typeof g.label === "string") || null
     : null;
 
   /* 1 · Runtime — is the node healthy and is its software production-real. */
-  const runtime = !isMeasured(heartbeat)
-    ? notMeasured(heartbeat?.reason || "heartbeat tile not measured in public-status source")
+  const runtime = !isMeasured(heartbeat, "heartbeat")
+    ? notMeasured(heartbeat?.label === "MEASURED" ? MALFORMED("heartbeat") : heartbeat?.reason || "heartbeat tile not measured in public-status source")
     : {
         label: "MEASURED",
         updated_at: heartbeat.updated_at || null,
         verdict: heartbeat.color,
         inputs: {
           heartbeat: { color: heartbeat.color, fail: heartbeat.fail, warn: heartbeat.warn, ok: heartbeat.ok },
-          activation: isMeasured(activation)
+          activation: isMeasured(activation, "activation")
             ? { production: activation.production, total: activation.total }
             : null,
           hermetic_ci_gate: hermeticCi ? { done: !!hermeticCi.done, label: hermeticCi.label } : null,
@@ -118,8 +137,8 @@ export function deriveScores(status, sessionEcon) {
   /* 2 · Continuity — does work survive sessions as a verifiable chain. */
   // public-status only emits a MEASURED receipts tile after a fail-closed
   // chain + hybrid-signature replay, so MEASURED here IS chain-intact.
-  const continuity = !isMeasured(receipts)
-    ? notMeasured(receipts?.reason || "receipts tile not measured in public-status source")
+  const continuity = !isMeasured(receipts, "receipts")
+    ? notMeasured(receipts?.label === "MEASURED" ? MALFORMED("receipts") : receipts?.reason || "receipts tile not measured in public-status source")
     : {
         label: "MEASURED",
         updated_at: receipts.updated_at || null,
@@ -150,8 +169,8 @@ export function deriveScores(status, sessionEcon) {
       };
 
   /* 4 · Cost — routing-discipline PROXY; dollars are NOT measured. */
-  const cost = !isMeasured(routing)
-    ? notMeasured(routing?.reason || "routing tile not measured in public-status source")
+  const cost = !isMeasured(routing, "routing")
+    ? notMeasured(routing?.label === "MEASURED" ? MALFORMED("routing") : routing?.reason || "routing tile not measured in public-status source")
     : {
         label: "MEASURED",
         footnote: "cost-discipline proxy (routing) — $ not measured",
@@ -161,7 +180,7 @@ export function deriveScores(status, sessionEcon) {
           rung1_pct: routing.rung1_pct,
           routed_total: routing.total,
           flagship_on_deterministic: routing.flagship_on_deterministic,
-          weighted_cache_hit_pct: isMeasured(economics) ? economics.weighted_cache_hit_pct : null,
+          weighted_cache_hit_pct: isMeasured(economics, "economics") ? economics.weighted_cache_hit_pct : null,
           dollars: null,
         },
         method:
@@ -170,8 +189,8 @@ export function deriveScores(status, sessionEcon) {
       };
 
   /* 5 · Ownership — portable, self-verifying evidence. */
-  const ownership = !isMeasured(receipts)
-    ? notMeasured(receipts?.reason || "receipts tile not measured in public-status source")
+  const ownership = !isMeasured(receipts, "receipts")
+    ? notMeasured(receipts?.label === "MEASURED" ? MALFORMED("receipts") : receipts?.reason || "receipts tile not measured in public-status source")
     : {
         label: "MEASURED",
         updated_at: receipts.updated_at || null,
@@ -187,8 +206,8 @@ export function deriveScores(status, sessionEcon) {
       };
 
   /* 6 · Agent-Readiness — is the substrate agents need actually live. */
-  const agentReadiness = !isMeasured(activation)
-    ? notMeasured(activation?.reason || "activation tile not measured in public-status source")
+  const agentReadiness = !isMeasured(activation, "activation")
+    ? notMeasured(activation?.label === "MEASURED" ? MALFORMED("activation") : activation?.reason || "activation tile not measured in public-status source")
     : {
         label: "MEASURED",
         updated_at: activation.updated_at || null,
@@ -202,7 +221,7 @@ export function deriveScores(status, sessionEcon) {
           components_production: activation.production,
           components_total: activation.total,
           hermetic_ci_gate: hermeticCi ? { done: !!hermeticCi.done, label: hermeticCi.label } : null,
-          rung1_pct: isMeasured(routing) ? routing.rung1_pct : null,
+          rung1_pct: isMeasured(routing, "routing") ? routing.rung1_pct : null,
           ci_test_counts: null,
         },
         method:
@@ -220,7 +239,7 @@ export function deriveScores(status, sessionEcon) {
   };
 
   /* hero composite — composites MEASURED sub-scores only, denominator shown */
-  const measured = Object.values(scores).filter(isMeasured);
+  const measured = Object.values(scores).filter((s) => isMeasured(s));
   const hero = {
     measured: measured.length,
     total: 6,
@@ -313,6 +332,28 @@ function selfTest() {
   // Empty: nothing measured → no invented hero verdict.
   const empty = deriveScores({}, null);
   assert(empty.hero.measured === 0 && empty.hero.verdict === null, "nothing measured → hero verdict null, never invented");
+
+  // Malformed-but-labelled-MEASURED tiles must fail closed to null cards —
+  // a tile that CLAIMS measured never publishes a half-invented state.
+  const poisoned = {
+    tiles: {
+      heartbeat: { label: "MEASURED", fail: 0, warn: 1, ok: 25 }, // color missing
+      receipts: { label: "MEASURED", count: "abc", bundle_path: "/proof/receipts-bundle.json" }, // count not a number
+      routing: { label: "MEASURED", total: 39, rung1_pct: "$12", flagship_on_deterministic: 0 }, // dollar-string number
+      activation: { label: "MEASURED", production: 14, total: 13 }, // production > total
+      readiness: { label: "MEASURED", gates: "not-an-array" },
+    },
+  };
+  const bad = deriveScores(poisoned, null);
+  for (const [k, s] of Object.entries(bad.scores)) {
+    assert(s.label === null && typeof s.reason === "string", `malformed MEASURED ${k} source degrades to null card`);
+  }
+  assert(bad.hero.measured === 0 && bad.hero.verdict === null, "nothing survives malformed sources — hero never invents");
+  assert(!/\$\d/.test(JSON.stringify(bad)), "dollar-shaped strings never flow through");
+  // Closed verdict vocabulary on every measured card.
+  for (const s of Object.values(full.scores)) {
+    assert(s.label !== "MEASURED" || ["GREEN", "YELLOW", "RED"].includes(s.verdict), "verdict vocabulary is closed");
+  }
 
   // Anonymization gate trips on poisoned content.
   assert(anonymizationGate('{"x":"/home/someone/secret"}').length > 0, "gate catches home paths");
