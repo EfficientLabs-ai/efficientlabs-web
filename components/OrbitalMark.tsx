@@ -34,11 +34,13 @@ export default function OrbitalMark({
         cx="24" cy="24" r="20"
         fill="none" stroke="var(--color-silver)" strokeWidth="1.5"
       />
-      {/* crossed orbital bands — the kit v2 sphere */}
+      {/* crossed orbital bands — the kit v2 sphere. Only the signal band
+          carries the om-orbit glow animation (same single-element motion
+          cost as the previous mark); the silver band is static depth. */}
       <ellipse
-        className="om-orbit"
         cx="24" cy="24" rx="19" ry="9.5"
         fill="none" stroke="var(--color-silver)" strokeWidth="1.5"
+        opacity="0.6"
         transform="rotate(45 24 24)"
       />
       <ellipse
