@@ -62,7 +62,7 @@ export default async function ScorePage() {
             <Link href="/status" className="link-cta">the full status page</Link> carries the raw tiles.
           </p>
         </div>
-        <SectionCTA label="Install StratosAgent — light up your own scoreboard" href="/install" />
+        <SectionCTA label="Start here — score your setup, then light it up" href="/start" />
       </section>
     </PageShell>
   );

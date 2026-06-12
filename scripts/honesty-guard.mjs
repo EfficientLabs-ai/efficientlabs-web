@@ -175,6 +175,13 @@ const SURFACES = [
   // (components/score/*) is a truth renderer like components/proof/* and is
   // excluded for the same self-trip reason; the PAGE carries marketing copy.
   "app/score/page.tsx",
+  // Onboarding journey (2026-06-13): page + checklist/segmentation component
+  // both carry copy; lib/onboarding.ts carries the checklist + teach-lines;
+  // signup carries the sovereign-path escape line.
+  "app/start/page.tsx",
+  "components/onboarding/StartJourney.tsx",
+  "lib/onboarding.ts",
+  "app/signup/page.tsx",
   // shared sub-page building blocks that carry marketing copy (added 2026-06-06
   // with the full nav→sub-page wiring). The route pages above pass copy as props
   // to these; we also scan the components themselves for any inline claim text.
