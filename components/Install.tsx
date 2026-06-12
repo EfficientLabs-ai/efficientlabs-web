@@ -10,9 +10,10 @@ const UNIX: TermLine[] = [
   { t: "# 2 · set up your node, then a real local completion *", c: "dim" },
   { p: "$", t: "stratos init", c: "cmd" },
   { p: "$", t: "stratos task create local/demo/flow/t1", c: "cmd" },
-  { p: "$", t: "stratos complete local/demo/flow/t1 \"what is sovereign AI?\"", c: "cmd" },
+  { p: "$", t: "export STRATOS_GATEWAY_URL=http://127.0.0.1:11434/v1/chat/completions", c: "cmd" },
+  { p: "$", t: "stratos complete local/demo/flow/t1 \"what is sovereign AI?\" --model gemma2:2b", c: "cmd" },
   { t: "✓ completion · local · $0 · PQC-signed receipt verified (public key only)", c: "ok" },
-  { t: "* needs a local OpenAI-compatible endpoint (e.g. Ollama) via STRATOS_GATEWAY_URL", c: "dim" },
+  { t: "* your local OpenAI-compatible endpoint — e.g. Ollama (ollama pull gemma2:2b)", c: "dim" },
 ];
 
 const WIN: TermLine[] = [
@@ -22,9 +23,10 @@ const WIN: TermLine[] = [
   { t: "# 2 · set up your node, then a real local completion *", c: "dim" },
   { p: ">", t: "stratos init", c: "cmd" },
   { p: ">", t: "stratos task create local/demo/flow/t1", c: "cmd" },
-  { p: ">", t: "stratos complete local/demo/flow/t1 \"what is sovereign AI?\"", c: "cmd" },
+  { p: ">", t: "$env:STRATOS_GATEWAY_URL = \"http://127.0.0.1:11434/v1/chat/completions\"", c: "cmd" },
+  { p: ">", t: "stratos complete local/demo/flow/t1 \"what is sovereign AI?\" --model gemma2:2b", c: "cmd" },
   { t: "✓ completion · local · $0 · PQC-signed receipt verified (public key only)", c: "ok" },
-  { t: "* needs a local OpenAI-compatible endpoint (e.g. Ollama) via $env:STRATOS_GATEWAY_URL", c: "dim" },
+  { t: "* your local OpenAI-compatible endpoint — e.g. Ollama (ollama pull gemma2:2b)", c: "dim" },
 ];
 
 const STEPS = [
