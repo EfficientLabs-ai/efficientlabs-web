@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-12T18:51:46.956Z",
+  "generatedAt": "2026-06-12T19:00:31.590Z",
   "repos": [
     {
       "key": "web",
       "label": "efficientlabs-web",
       "present": true,
-      "commits": 43,
-      "newestAt": "2026-06-12T10:47:22.000Z",
+      "commits": 44,
+      "newestAt": "2026-06-12T18:54:21.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web"
     },
     {
@@ -19,13 +19,13 @@
     }
   ],
   "rollups": {
-    "totalCommits": 316,
-    "last7Days": 77,
-    "last30Days": 316,
-    "featuresShipped": 136,
-    "activeDays": 8,
+    "totalCommits": 317,
+    "last7Days": 78,
+    "last30Days": 317,
+    "featuresShipped": 137,
+    "activeDays": 9,
     "byType": {
-      "feat": 136,
+      "feat": 137,
       "fix": 63,
       "other": 71,
       "docs": 29,
@@ -37,6 +37,16 @@
     }
   },
   "feed": [
+    {
+      "iso": "2026-06-13T02:54:21+08:00",
+      "date": "2026-06-13",
+      "subject": "feat(score): Runtime Score MVP — /score page, six MEASURED-only sub-scores",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "84aeee8",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/84aeee873c0efe502d7bf38e2e666c5a71f58c0d"
+    },
     {
       "iso": "2026-06-12T08:48:35-04:00",
       "date": "2026-06-12",
@@ -826,19 +836,28 @@
       "type": "other",
       "hash": "6d7523b",
       "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/6d7523b80fdd7da111a03bf4c3bf9e160684b44d"
-    },
-    {
-      "iso": "2026-06-06T01:41:45+08:00",
-      "date": "2026-06-06",
-      "subject": "chore: rename btn-ghost utility to btn-outline (scrub 'ghost' from the surface)",
-      "repo": "web",
-      "repoLabel": "efficientlabs-web",
-      "type": "chore",
-      "hash": "eb08f3b",
-      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/eb08f3b615de4405438189316124485f197ff3af"
     }
   ],
   "feedByDate": [
+    {
+      "date": "2026-06-13",
+      "count": 1,
+      "byType": {
+        "feat": 1
+      },
+      "commits": [
+        {
+          "iso": "2026-06-13T02:54:21+08:00",
+          "date": "2026-06-13",
+          "subject": "feat(score): Runtime Score MVP — /score page, six MEASURED-only sub-scores",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "84aeee8",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/84aeee873c0efe502d7bf38e2e666c5a71f58c0d"
+        }
+      ]
+    },
     {
       "date": "2026-06-12",
       "count": 14,
@@ -1527,11 +1546,11 @@
     },
     {
       "date": "2026-06-06",
-      "count": 17,
+      "count": 16,
       "byType": {
         "feat": 12,
         "fix": 1,
-        "chore": 3,
+        "chore": 2,
         "docs": 1
       },
       "commits": [
@@ -1694,16 +1713,6 @@
           "type": "feat",
           "hash": "8f808ff",
           "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/8f808ffd52611c00e099867dae73266b64a7a362"
-        },
-        {
-          "iso": "2026-06-06T01:41:45+08:00",
-          "date": "2026-06-06",
-          "subject": "chore: rename btn-ghost utility to btn-outline (scrub 'ghost' from the surface)",
-          "repo": "web",
-          "repoLabel": "efficientlabs-web",
-          "type": "chore",
-          "hash": "eb08f3b",
-          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/eb08f3b615de4405438189316124485f197ff3af"
         }
       ]
     },

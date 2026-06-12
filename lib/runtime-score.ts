@@ -4,12 +4,17 @@
 // "not measured" with the reason, greyed, IN PLACE — the grid never reshapes.
 // Staleness is shown, never hidden. No invented benchmarks, no $ figures.
 import data from "@/data/runtime-score.json";
-import type { TileLabel } from "@/lib/public-status";
 
 export type Verdict = "GREEN" | "YELLOW" | "RED";
+const VERDICTS = new Set(["GREEN", "YELLOW", "RED"]);
+
+// This artifact's label vocabulary is STRICTER than public-status: a sub-score
+// is MEASURED or it is null. ESTIMATED figures are gated upstream and never
+// appear here (spec hard rule) — so the type refuses them too.
+export type ScoreLabel = "MEASURED" | null;
 
 export type SubScore = {
-  label: TileLabel;
+  label: ScoreLabel;
   updated_at?: string | null;
   verdict?: Verdict;
   /** e.g. the cost card's "cost-discipline proxy (routing) — $ not measured" */
@@ -24,7 +29,8 @@ export type RuntimeScore = {
   format: string;
   generated_at: string;
   render_rules: string;
-  hero: { measured: number; total: number; verdict: Verdict; method: string };
+  /** verdict is null in the fail-closed 0-of-N-measured case — render the grey state, never invent a color. */
+  hero: { measured: number; total: number; verdict: Verdict | null; method: string };
   scores: {
     runtime: SubScore;
     continuity: SubScore;
@@ -35,6 +41,30 @@ export type RuntimeScore = {
   };
   not_measured_registry: { what: string; reason: string }[];
 };
+
+export const SCORE_KEYS = ["runtime", "continuity", "session", "cost", "ownership", "agent_readiness"] as const;
+
+/**
+ * The render rules are only as honest as the payload that reaches the board —
+ * so a live payload must pass the FULL contract, not a shape sniff. Any drift
+ * (unknown label, measured-without-verdict, missing score, non-null bad hero
+ * verdict) rejects the payload and the committed baseline renders instead.
+ */
+export function isValidRuntimeScore(x: unknown): x is RuntimeScore {
+  const r = x as RuntimeScore;
+  if (!r || r.format !== RUNTIME_SCORE.format || typeof r.generated_at !== "string") return false;
+  if (!r.hero || typeof r.hero.measured !== "number" || typeof r.hero.total !== "number") return false;
+  if (r.hero.verdict !== null && !VERDICTS.has(r.hero.verdict)) return false;
+  if (!r.scores) return false;
+  for (const k of SCORE_KEYS) {
+    const s = r.scores[k];
+    if (!s) return false;
+    if (s.label !== "MEASURED" && s.label !== null) return false;     // ESTIMATED/unknown never renders here
+    if (s.label === "MEASURED" && !VERDICTS.has(s.verdict as string)) return false; // measured requires a real verdict
+  }
+  if (!Array.isArray(r.not_measured_registry)) return false;
+  return true;
+}
 
 // The committed artifact is the BUILD-TIME baseline + the fallback.
 export const RUNTIME_SCORE = data as RuntimeScore;
@@ -53,11 +83,9 @@ export async function getLiveRuntimeScore(): Promise<RuntimeScore> {
   try {
     const res = await fetch(LIVE_SCORE_URL, { next: { revalidate: 300 } });
     if (!res.ok) return RUNTIME_SCORE;
-    const live = (await res.json()) as RuntimeScore;
-    if (live?.format === RUNTIME_SCORE.format && live?.scores && typeof live.generated_at === "string") {
-      return live;
-    }
-    return RUNTIME_SCORE;
+    const live: unknown = await res.json();
+    // full-contract validation — a drifted payload must not render dishonestly
+    return isValidRuntimeScore(live) ? live : RUNTIME_SCORE;
   } catch {
     return RUNTIME_SCORE;
   }

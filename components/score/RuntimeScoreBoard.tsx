@@ -14,17 +14,21 @@ import {
   headlineScalar,
   type RuntimeScore,
   type SubScore,
+  type Verdict,
 } from "@/lib/runtime-score";
 
 function HeroRing({ hero, generatedAt }: { hero: RuntimeScore["hero"]; generatedAt: string }) {
-  const color = VERDICT[hero.verdict] || VERDICT.YELLOW;
+  // verdict null = the fail-closed 0-measured case: grey ring, honest words,
+  // no invented color (the producer emits null deliberately — render it).
+  const verdictText = hero.verdict ?? "not measured";
+  const color = hero.verdict ? VERDICT[hero.verdict] : "#5b6675";
   // Ring fill = measured/total — the DENOMINATOR is the message, not a score number.
   const R = 56;
   const C = 2 * Math.PI * R;
   const filled = hero.total ? hero.measured / hero.total : 0;
   return (
     <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-8">
-      <svg width="140" height="140" viewBox="0 0 140 140" role="img" aria-label={`Runtime Score: ${hero.verdict}, ${hero.measured} of ${hero.total} sub-scores measured`}>
+      <svg width="140" height="140" viewBox="0 0 140 140" role="img" aria-label={`Runtime Score: ${verdictText}, ${hero.measured} of ${hero.total} sub-scores measured`}>
         <circle cx="70" cy="70" r={R} fill="none" stroke="var(--color-line)" strokeWidth="6" />
         <circle
           cx="70" cy="70" r={R} fill="none"
@@ -32,8 +36,8 @@ function HeroRing({ hero, generatedAt }: { hero: RuntimeScore["hero"]; generated
           strokeDasharray={`${C * filled} ${C}`}
           transform="rotate(-90 70 70)"
         />
-        <text x="70" y="66" textAnchor="middle" className="mono" fill={color} fontSize="18" fontWeight="600">
-          {hero.verdict}
+        <text x="70" y="66" textAnchor="middle" className="mono" fill={color} fontSize={hero.verdict ? 18 : 12} fontWeight="600">
+          {verdictText}
         </text>
         <text x="70" y="86" textAnchor="middle" className="mono" fill="var(--color-ink-faint)" fontSize="10">
           {hero.measured} of {hero.total} measured
@@ -53,8 +57,11 @@ function HeroRing({ hero, generatedAt }: { hero: RuntimeScore["hero"]; generated
 }
 
 function ScoreCard({ id, title, score }: { id: (typeof SCORE_ORDER)[number][0]; title: string; score: SubScore }) {
-  // Null label = the designed grey state, in place — absence is information (P7/P24).
-  if (!score.label) {
+  // A card renders as measured ONLY with the full contract: label MEASURED and
+  // a real verdict. Anything less is the designed grey state, in place —
+  // absence is information (P7/P24); a verdict is never invented.
+  const measured = score.label === "MEASURED" && !!score.verdict && score.verdict in VERDICT;
+  if (!measured) {
     return (
       <div className="lm-card p-5 opacity-70">
         <div className="flex items-center justify-between gap-2">
@@ -68,7 +75,7 @@ function ScoreCard({ id, title, score }: { id: (typeof SCORE_ORDER)[number][0]; 
     );
   }
   const { value, caption } = headlineScalar(id, score);
-  const verdict = score.verdict || "YELLOW";
+  const verdict = score.verdict as Verdict;
   const bridge = verdict !== "GREEN" ? BRIDGE[id] : null;
   return (
     <div className="lm-card flex h-full flex-col p-5">
