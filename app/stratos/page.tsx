@@ -16,7 +16,7 @@ import { Reveal } from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "StratosAgent — the local-first sovereign agent",
   description:
-    "A deep look at StratosAgent: a local-first agent that runs on hardware you own. The local⇄BYOK router, signed skills, capability receipts, owner-gating, and the five channels it answers on — with an honest account of what's live.",
+    "A deep look at StratosAgent: a local-first agent that runs on hardware you own. The local ⇄ your-own-cloud router, signed skills, capability receipts, owner-gating, and the five channels it answers on — with an honest account of what's live.",
   alternates: { canonical: "/stratos" },
 };
 
@@ -41,7 +41,7 @@ export default function StratosPage() {
         }
         facts={[
           { k: "Default", v: "Local inference" },
-          { k: "Cloud", v: "BYOK · opt-in" },
+          { k: "Cloud", v: "your own account · opt-in" },
           { k: "Authority", v: "Owner-gated" },
           { k: "Channels", v: "5 adapters" },
         ]}
@@ -87,7 +87,7 @@ export default function StratosPage() {
       {/* 02 — the router */}
       <DeepSection
         index="02"
-        kicker="The router · local ⇄ BYOK"
+        kicker="The router · local ⇄ your own cloud"
         title={<>Local first. Cloud <span className="aurora-text">only when it earns it</span>.</>}
         lede={
           <>
@@ -103,7 +103,7 @@ export default function StratosPage() {
             steps={[
               { title: "Request arrives", body: "A prompt comes in from any of the five channels and is attributed to its sender." },
               { title: "Classify the work", body: <>Coding and routine tasks route <strong className="text-[color:var(--color-ink)]">local</strong>; genuinely complex reasoning is a candidate for the frontier.</> },
-              { title: "Cost gate (BYOK)", body: "If escalation is warranted, the BYOK cost gate on /v1/chat/completions checks the spend handshake before any paid call leaves the node." },
+              { title: "Cost gate (your own AI accounts)", body: "If escalation is warranted, the cost gate on /v1/chat/completions checks the spend handshake before any paid call leaves the node." },
               { title: "Resolve & receipt", body: "Work runs at the chosen tier and returns with a sealed receipt of what happened." },
             ]}
           />
@@ -113,9 +113,9 @@ export default function StratosPage() {
               The router classifies each request and sends it to the cheapest tier that can actually do the
               job. Most work never leaves your machine.
             </DeepCard>
-            <DeepCard icon={KeyRound} title="BYOK cost gate" level="live"
+            <DeepCard icon={KeyRound} title="Cost gate (your own AI accounts)" level="live"
               points={["Lives on /v1/chat/completions — the only spend route", "Your key, your bill, your ceiling", "No paid call without passing the gate"]}>
-              Frontier inference is bring-your-own-key. The single spend route is gated, so the cloud is
+              Frontier AI requests run through your own account — your key, your bill. The single spend route is gated, so the cloud is
               opt-in by construction rather than the silent default.
             </DeepCard>
           </div>

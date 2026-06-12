@@ -67,7 +67,7 @@ export default function AgentsPage() {
         </OsCard>
         <OsCard icon={Radio} title="Inference routing" statusLevel="live" variant="data">
           Local ⇄ cloud language routing — coding stays local, complex work proxies out
-          through the BYOK cost gate.
+          through the cost gate on your own AI accounts.
         </OsCard>
       </div>
 
@@ -186,7 +186,7 @@ export default function AgentsPage() {
         <div className="space-y-2.5">
           <CapStatus name="Channel adapters" />
           <CapStatus name="Local ⇄ cloud language routing" />
-          <CapStatus name="BYOK cost gate" />
+          <CapStatus name="Cost gate (your own AI accounts)" />
           <CapStatus name="Owner-gating (fail-closed)" />
         </div>
       </section>

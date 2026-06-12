@@ -27,7 +27,7 @@ const LAYER_META: Record<string, { icon: typeof Layers; tag: string; intent: str
   L1: { icon: Database, tag: "Content", intent: "Data named by its hash, with hermetic CI proving freshness — integrity is intrinsic, not bolted on." },
   L2: { icon: Network, tag: "Transport", intent: "The peer-to-peer mesh: DHT discovery, hole-punch links, gossip sync — no central hub." },
   L3: { icon: ShieldCheck, tag: "Capability", intent: "Isolation and approval — children stripped of secrets, writes gated, exec sandboxed." },
-  L4: { icon: Route, tag: "Routing", intent: "Where work resolves: local-first inference, BYOK cost gate, fail-closed owner authority." },
+  L4: { icon: Route, tag: "Routing", intent: "Where work resolves: local-first AI requests, a cost gate on your own accounts, fail-closed owner authority." },
   L5: { icon: MessageSquare, tag: "Surface", intent: "How people reach the agent: five channel adapters, with honest stubs marked as stubs." },
 };
 

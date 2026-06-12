@@ -104,7 +104,7 @@ export const ARTICLES: Article[] = [
     slug: "quickstart",
     title: "Quickstart",
     group: "Get started",
-    description: "The fastest path to a running StratosAgent — bring-your-own-key, local-first.",
+    description: "The fastest path to a running StratosAgent — your own AI accounts, local-first.",
     keywords: ["quickstart", "fast", "byok", "start", "first run"],
     updated: "2026-06-03",
     blocks: [
@@ -122,7 +122,7 @@ export const ARTICLES: Article[] = [
       { kind: "h2", id: "next", text: "Where to next" },
       { kind: "ul", items: [
         "Requirements — confirm your Node version and OS.",
-        "Configure (Vault + BYOK) — seal secrets and set the cost gate.",
+        "Configure (Vault + your own AI accounts) — seal secrets and set the cost gate.",
         "Verify your install — what a healthy node looks like.",
       ] },
     ],
@@ -174,7 +174,7 @@ export const ARTICLES: Article[] = [
       ] },
       { kind: "status", caps: ["Hermetic CI"] },
       { kind: "h2", id: "model-key", text: "A model key" },
-      { kind: "p", text: "StratosAgent is bring-your-own-key. You supply a key for your preferred provider; spend is gated locally before any request leaves your machine. See Configure (Vault + BYOK) for setup." },
+      { kind: "p", text: "StratosAgent works with your own AI accounts — your keys, your bills, no middleman. You supply a key for your preferred provider; spend is gated locally before any request leaves your machine. See Configure (Vault + your own AI accounts) for setup." },
     ],
   },
   {
@@ -202,9 +202,9 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "configure",
-    title: "Configure (Vault + BYOK)",
+    title: "Configure (Vault + your own AI accounts)",
     group: "Install StratosAgent",
-    description: "Seal secrets in the Vault, set the BYOK cost gate, and gate command authority to the owner.",
+    description: "Seal secrets in the Vault, set the cost gate on your own AI accounts, and gate command authority to the owner.",
     keywords: ["configure", "vault", "byok", "cost gate", "owner", "secrets"],
     updated: "2026-06-03",
     blocks: [
@@ -212,9 +212,9 @@ export const ARTICLES: Article[] = [
       { kind: "p", text: "Secrets are sealed at rest with AES-GCM, and derived keys are zeroed from memory after use. Set a secret once and StratosAgent never writes it back out in plaintext." },
       { kind: "code", lang: "bash", code: "stratos vault set OPENAI_API_KEY   # prompts; sealed with AES-GCM\nstratos vault list                 # names only, never values" },
       { kind: "status", caps: ["Vault (AES-GCM, memory-wiped)"] },
-      { kind: "h2", id: "byok", text: "BYOK cost gate" },
+      { kind: "h2", id: "byok", text: "Cost gate (your own AI accounts)" },
       { kind: "p", text: "All spend flows through a single route — /v1/chat/completions — guarded by a cost gate. Nothing else can spend on your behalf." },
-      { kind: "status", caps: ["BYOK cost gate"] },
+      { kind: "status", caps: ["Cost gate (your own AI accounts)"] },
       { kind: "h2", id: "owner-gating", text: "Owner-gating (fail-closed)" },
       { kind: "p", text: "Command authority is owner-gated and fails closed: if no owner is set, the agent has no command authority at all. There is no implicit-trust default." },
       { kind: "status", caps: ["Owner-gating (fail-closed)"] },
@@ -308,9 +308,9 @@ export const ARTICLES: Article[] = [
     keywords: ["inference", "routing", "local", "cloud", "model", "proxy"],
     updated: "2026-06-03",
     blocks: [
-      { kind: "p", text: "Inference is routed by the kind of work: coding and routine tasks run against a local model, while complex requests proxy out to a cloud provider through the BYOK cost gate. This routing runs in production." },
-      { kind: "status", caps: ["Local ⇄ cloud language routing", "BYOK cost gate"] },
-      { kind: "callout", variant: "tip", text: "Because spend only flows through the BYOK cost gate, local routing costs you nothing — only proxied requests touch your provider key." },
+      { kind: "p", text: "Inference is routed by the kind of work: coding and routine tasks run against a local model, while complex requests proxy out to a cloud provider through the cost gate on your own account. This routing runs in production." },
+      { kind: "status", caps: ["Local ⇄ cloud language routing", "Cost gate (your own AI accounts)"] },
+      { kind: "callout", variant: "tip", text: "Because spend only flows through the cost gate, local routing costs you nothing — only proxied requests touch your provider key." },
     ],
   },
   {
@@ -428,7 +428,7 @@ export const ARTICLES: Article[] = [
     blocks: [
       { kind: "faq", items: [
         { q: "Is this actually decentralized?", a: "The transport is peer-to-peer over a Hyperswarm DHT with hole-punching, and there is no central broker server in the data path. Per-platform bundles are built and connected; broad multi-device meshes are still early, so we call that part Wired, not Live." },
-        { q: "What runs locally versus proxied?", a: "Coding and routine work run against a local model. Complex requests proxy out to a cloud provider through the BYOK cost gate. Spend only happens on that single gated route." },
+        { q: "What runs locally versus proxied?", a: "Coding and routine work run against a local model. Complex requests proxy out to a cloud provider through the cost gate on your own account. Spend only happens on that single gated route." },
         { q: "Do you broadcast anything on-chain?", a: "No. Economic settlement is designed to be offline-signed and never broadcast, and today it is an explicit scaffold (Mock). Nothing is published to any chain." },
         { q: "What is real today?", a: "Check the published capability matrix at /#status. Anything not marked Live there is shown in these docs with a Wired, Standalone, or Mock badge — we do not call scaffolds shipped." },
         { q: "How do I report security issues?", a: "Email hello@efficientlabs.ai with details. Secrets are sealed in the Vault and outbound text is scrubbed of secret-shaped strings, but responsible disclosure is always welcome." },

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const GROUP_META: Record<string, { icon: typeof Rocket; blurb: string }> = {
   "Get started": { icon: Rocket, blurb: "The thesis, a two-command quickstart, and the core concepts." },
-  "Install StratosAgent": { icon: TerminalSquare, blurb: "Requirements, install, Vault + BYOK config, and verification." },
+  "Install StratosAgent": { icon: TerminalSquare, blurb: "Requirements, install, Vault + your own AI accounts, and verification." },
   "The Atmosphere": { icon: Network, blurb: "The peer-to-peer mesh: transport, skill-sync, and settlement." },
   "Integrations": { icon: Plug, blurb: "Channels, inference routing, and what is still a scaffold." },
   "CLI reference": { icon: SquareTerminal, blurb: "Command groups, flags, and per-command usage." },
