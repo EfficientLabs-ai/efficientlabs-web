@@ -46,23 +46,49 @@ export const SCORE_KEYS = ["runtime", "continuity", "session", "cost", "ownershi
 
 /**
  * The render rules are only as honest as the payload that reaches the board —
- * so a live payload must pass the FULL contract, not a shape sniff. Any drift
- * (unknown label, measured-without-verdict, missing score, non-null bad hero
- * verdict) rejects the payload and the committed baseline renders instead.
+ * so a live payload must pass the FULL contract, not a shape sniff: labels,
+ * verdicts, the per-card inputs each headline renders from, and the string
+ * safety of every field JSX will dereference. Any drift rejects the payload
+ * and the committed baseline renders instead.
  */
+const isStr = (v: unknown): v is string => typeof v === "string";
+const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
+const optStr = (v: unknown) => v === undefined || v === null || isStr(v);
+
+/** What headlineScalar() needs per key for a MEASURED card to render a real value. */
+const INPUTS_VALID: Record<(typeof SCORE_KEYS)[number], (i: Record<string, unknown>) => boolean> = {
+  runtime: (i) => {
+    const hb = i.heartbeat as Record<string, unknown> | undefined;
+    return !!hb && isNum(hb.fail) && isNum(hb.warn) && isNum(hb.ok);
+  },
+  continuity: (i) => isNum(i.signed_receipts) && typeof i.chain_intact === "boolean",
+  session: (i) => isNum(i.context_per_request) && isStr(i.level),
+  cost: (i) => isNum(i.rung1_pct) && isNum(i.flagship_on_deterministic),
+  ownership: (i) => typeof i.chain_intact === "boolean",
+  agent_readiness: (i) => isNum(i.components_production) && isNum(i.components_total),
+};
+
 export function isValidRuntimeScore(x: unknown): x is RuntimeScore {
   const r = x as RuntimeScore;
-  if (!r || r.format !== RUNTIME_SCORE.format || typeof r.generated_at !== "string") return false;
-  if (!r.hero || typeof r.hero.measured !== "number" || typeof r.hero.total !== "number") return false;
+  if (!r || r.format !== RUNTIME_SCORE.format || !isStr(r.generated_at)) return false;
+  if (!r.hero || !isNum(r.hero.measured) || !isNum(r.hero.total) || !isStr(r.hero.method)) return false;
   if (r.hero.verdict !== null && !VERDICTS.has(r.hero.verdict)) return false;
   if (!r.scores) return false;
   for (const k of SCORE_KEYS) {
     const s = r.scores[k];
     if (!s) return false;
     if (s.label !== "MEASURED" && s.label !== null) return false;     // ESTIMATED/unknown never renders here
-    if (s.label === "MEASURED" && !VERDICTS.has(s.verdict as string)) return false; // measured requires a real verdict
+    // every field JSX dereferences must be string-safe regardless of label
+    if (!optStr(s.updated_at) || !optStr(s.method) || !optStr(s.verify) || !optStr(s.footnote) || !optStr(s.reason)) return false;
+    if (s.label === "MEASURED") {
+      if (!VERDICTS.has(s.verdict as string)) return false;            // measured requires a real verdict
+      if (!s.inputs || !INPUTS_VALID[k](s.inputs)) return false;       // …and the inputs its headline renders from
+    }
   }
   if (!Array.isArray(r.not_measured_registry)) return false;
+  for (const e of r.not_measured_registry) {
+    if (!e || !isStr((e as { what?: unknown }).what) || !isStr((e as { reason?: unknown }).reason)) return false;
+  }
   return true;
 }
 

@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-12T19:00:31.590Z",
+  "generatedAt": "2026-06-12T19:04:50.531Z",
   "repos": [
     {
       "key": "web",
       "label": "efficientlabs-web",
       "present": true,
-      "commits": 44,
-      "newestAt": "2026-06-12T18:54:21.000Z",
+      "commits": 45,
+      "newestAt": "2026-06-12T19:01:39.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web"
     },
     {
@@ -19,14 +19,14 @@
     }
   ],
   "rollups": {
-    "totalCommits": 317,
-    "last7Days": 78,
-    "last30Days": 317,
+    "totalCommits": 318,
+    "last7Days": 79,
+    "last30Days": 318,
     "featuresShipped": 137,
-    "activeDays": 9,
+    "activeDays": 8,
     "byType": {
+      "fix": 64,
       "feat": 137,
-      "fix": 63,
       "other": 71,
       "docs": 29,
       "chore": 8,
@@ -37,6 +37,16 @@
     }
   },
   "feed": [
+    {
+      "iso": "2026-06-13T03:01:39+08:00",
+      "date": "2026-06-13",
+      "subject": "fix(score): enforce the full render contract (Codex round 1)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "fix",
+      "hash": "51ed440",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/51ed44069532def7380499a96838d4654c523d8e"
+    },
     {
       "iso": "2026-06-13T02:54:21+08:00",
       "date": "2026-06-13",
@@ -826,26 +836,27 @@
       "type": "feat",
       "hash": "8f808ff",
       "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/8f808ffd52611c00e099867dae73266b64a7a362"
-    },
-    {
-      "iso": "2026-06-05T13:43:29-04:00",
-      "date": "2026-06-05",
-      "subject": "Merge pull request #57 from EfficientLabs-ai/feat/phone-voice",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "other",
-      "hash": "6d7523b",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/6d7523b80fdd7da111a03bf4c3bf9e160684b44d"
     }
   ],
   "feedByDate": [
     {
       "date": "2026-06-13",
-      "count": 1,
+      "count": 2,
       "byType": {
+        "fix": 1,
         "feat": 1
       },
       "commits": [
+        {
+          "iso": "2026-06-13T03:01:39+08:00",
+          "date": "2026-06-13",
+          "subject": "fix(score): enforce the full render contract (Codex round 1)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "fix",
+          "hash": "51ed440",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/51ed44069532def7380499a96838d4654c523d8e"
+        },
         {
           "iso": "2026-06-13T02:54:21+08:00",
           "date": "2026-06-13",
@@ -1713,25 +1724,6 @@
           "type": "feat",
           "hash": "8f808ff",
           "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/8f808ffd52611c00e099867dae73266b64a7a362"
-        }
-      ]
-    },
-    {
-      "date": "2026-06-05",
-      "count": 1,
-      "byType": {
-        "other": 1
-      },
-      "commits": [
-        {
-          "iso": "2026-06-05T13:43:29-04:00",
-          "date": "2026-06-05",
-          "subject": "Merge pull request #57 from EfficientLabs-ai/feat/phone-voice",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "other",
-          "hash": "6d7523b",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/6d7523b80fdd7da111a03bf4c3bf9e160684b44d"
         }
       ]
     }
