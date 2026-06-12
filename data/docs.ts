@@ -375,7 +375,7 @@ export const ARTICLES: Article[] = [
     updated: "2026-06-13",
     blocks: [
       { kind: "h2", id: "stratos-init", text: "stratos init" },
-      { kind: "p", text: "Set up this node: a persistent identity (keys generated locally, sealed) and a default workspace. Idempotent; re-run to add provider keys." },
+      { kind: "p", text: "Set up this node: a persistent identity (keys generated locally, written 0600 — the private half never leaves the machine) and a default workspace. Idempotent: re-running reuses the identity; it never rotates keys." },
       { kind: "code", lang: "bash", code: "stratos init [workspace]   # default workspace name: local" },
       { kind: "h2", id: "stratos-doctor", text: "stratos doctor" },
       { kind: "p", text: "Read-only health report: runtime, identity, workspaces, receipt chain (fail-closed verify), model gateway. Suggests the exact next command for anything not green; never fixes, never writes." },

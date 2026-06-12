@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-12T23:32:50.882Z",
+  "generatedAt": "2026-06-12T23:35:30.049Z",
   "repos": [
     {
       "key": "web",
       "label": "efficientlabs-web",
       "present": true,
-      "commits": 47,
-      "newestAt": "2026-06-12T23:26:57.000Z",
+      "commits": 48,
+      "newestAt": "2026-06-12T23:33:39.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web"
     },
     {
@@ -19,14 +19,14 @@
     }
   ],
   "rollups": {
-    "totalCommits": 322,
+    "totalCommits": 323,
     "last7Days": 73,
-    "last30Days": 322,
+    "last30Days": 323,
     "featuresShipped": 137,
     "activeDays": 8,
     "byType": {
+      "fix": 65,
       "other": 74,
-      "fix": 64,
       "feat": 137,
       "docs": 30,
       "chore": 8,
@@ -37,6 +37,16 @@
     }
   },
   "feed": [
+    {
+      "iso": "2026-06-13T07:33:39+08:00",
+      "date": "2026-06-13",
+      "subject": "fix: Codex round 1 — true key-flow docs, guard coverage, size guard, a11y",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "fix",
+      "hash": "ee5602a",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/ee5602a189680eef65bd1a7e76d9459b94e71b42"
+    },
     {
       "iso": "2026-06-13T07:26:57+08:00",
       "date": "2026-06-13",
@@ -826,26 +836,27 @@
       "type": "chore",
       "hash": "2d3f6c5",
       "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/2d3f6c5a07deb230467388fd659d17344475c8c9"
-    },
-    {
-      "iso": "2026-06-06T05:37:51+08:00",
-      "date": "2026-06-06",
-      "subject": "feat(web): nav→standalone pages, ChatGPT-style /docs, mobile fixes",
-      "repo": "web",
-      "repoLabel": "efficientlabs-web",
-      "type": "feat",
-      "hash": "37f06bf",
-      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/37f06bf5fd133bd23d0eece068c8f67401c6eebc"
     }
   ],
   "feedByDate": [
     {
       "date": "2026-06-13",
-      "count": 1,
+      "count": 2,
       "byType": {
+        "fix": 1,
         "other": 1
       },
       "commits": [
+        {
+          "iso": "2026-06-13T07:33:39+08:00",
+          "date": "2026-06-13",
+          "subject": "fix: Codex round 1 — true key-flow docs, guard coverage, size guard, a11y",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "fix",
+          "hash": "ee5602a",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/ee5602a189680eef65bd1a7e76d9459b94e71b42"
+        },
         {
           "iso": "2026-06-13T07:26:57+08:00",
           "date": "2026-06-13",
@@ -1597,9 +1608,9 @@
     },
     {
       "date": "2026-06-06",
-      "count": 12,
+      "count": 11,
       "byType": {
-        "feat": 8,
+        "feat": 7,
         "fix": 1,
         "chore": 2,
         "docs": 1
@@ -1714,16 +1725,6 @@
           "type": "chore",
           "hash": "2d3f6c5",
           "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/2d3f6c5a07deb230467388fd659d17344475c8c9"
-        },
-        {
-          "iso": "2026-06-06T05:37:51+08:00",
-          "date": "2026-06-06",
-          "subject": "feat(web): nav→standalone pages, ChatGPT-style /docs, mobile fixes",
-          "repo": "web",
-          "repoLabel": "efficientlabs-web",
-          "type": "feat",
-          "hash": "37f06bf",
-          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/37f06bf5fd133bd23d0eece068c8f67401c6eebc"
         }
       ]
     }
