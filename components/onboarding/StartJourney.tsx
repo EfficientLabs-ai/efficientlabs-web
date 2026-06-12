@@ -102,6 +102,14 @@ export default function StartJourney() {
                 </code>
                 <CopyButton text={step.cmd} />
               </div>
+              {"cmdWin" in step && (
+                <div className="mt-1.5 flex items-center gap-2">
+                  <code className="mono flex-1 overflow-x-auto rounded bg-[color:var(--color-void-2)]/60 px-3 py-2 text-[12.5px] text-[color:var(--color-ink)]">
+                    PS&gt; {step.cmdWin}
+                  </code>
+                  <CopyButton text={step.cmdWin} />
+                </div>
+              )}
               <p className="mt-1.5 text-[11.5px] leading-snug text-[color:var(--color-ink-faint)]">{step.note}</p>
             </li>
           ))}
@@ -111,7 +119,7 @@ export default function StartJourney() {
         <p className="mono mt-4 border-t border-[color:var(--color-line)] pt-3 text-[11px] text-[color:var(--color-ink-faint)]">
           When step 5 passes: &ldquo;All steps done. Your chain verifies.&rdquo; That verified chain is
           exactly what the grey Continuity and Ownership cards above describe — your node now proves
-          what they ask for. (A per-node scoreboard view ships with the dashboard;{" "}
+          what they ask for. (A per-node scoreboard view is on the roadmap;{" "}
           <Link href="/score" className="link-cta">our own node&apos;s board</Link> shows what a lit one looks like.)
         </p>
         {segment === "enterprise" && (

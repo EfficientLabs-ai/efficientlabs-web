@@ -14,7 +14,13 @@ import type { RuntimeScore } from "@/lib/runtime-score";
  * change TOGETHER.
  */
 export const CHECKLIST = [
-  { n: 1, title: "Install", cmd: "curl -fsSL https://efficientlabs.ai/install.sh | sh", note: "user-space, no sudo, nothing auto-starts — same command as the install page", sovereign: true },
+  {
+    n: 1, title: "Install",
+    cmd: "curl -fsSL https://efficientlabs.ai/install.sh | sh",
+    cmdWin: "irm https://efficientlabs.ai/install.ps1 | iex",
+    note: "user-space, no sudo, nothing auto-starts — same commands as the install page (macOS/Linux above, Windows below)",
+    sovereign: true,
+  },
   { n: 2, title: "First run", cmd: "stratos init", note: "sets up your node locally; keys are generated on your machine and sealed", sovereign: true },
   { n: 3, title: "Pair your node", cmd: "stratos pair", note: "the ONLY account-bound step — everything else works without one", sovereign: false },
   { n: 4, title: "First receipt", cmd: "stratos receipt export", note: "run any local task first — the install page walks a full demo task; the export is your evidence bundle", sovereign: true },
