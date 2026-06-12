@@ -5,7 +5,7 @@ import { TextHoverEffect, FooterBackgroundGradient } from "@/components/ui/hover
 import OrbitalMark from "@/components/OrbitalMark";
 
 const COLUMNS = [
-  { title: "Platform", links: [["The Atmosphere", "/atmosphere"], ["StratosAgent", "/stratos"], ["Architecture", "/architecture"], ["Honest status", "/status"], ["Updates", "/updates"]] },
+  { title: "Platform", links: [["The Atmosphere", "/atmosphere"], ["StratosAgent", "/stratos"], ["Architecture", "/architecture"], ["Runtime Score", "/score"], ["Honest status", "/status"], ["Updates", "/updates"]] },
   { title: "Company", links: [["Pricing", "/pricing"], ["Docs", "/docs"]] },
 ] as const;
 

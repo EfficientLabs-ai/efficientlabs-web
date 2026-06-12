@@ -9,7 +9,6 @@ import {
   HERO_READY_EVENT,
   INTRO_PLAY_EVENT,
 } from "@/lib/motion";
-import OrbitalMark from "@/components/OrbitalMark";
 
 /**
  * Act zero — the counting preloader (homepage only, once per session).
@@ -141,8 +140,7 @@ export default function Preloader() {
         <img alt="" draggable={false} data-src="/img/brand-loading-astronaut.webp" />
       </picture>
       <div className="efl-preloader-scrim" />
-      <span className="relative z-[1] flex items-center gap-2 mono text-[11px] tracking-[0.34em] text-[color:var(--color-ink-faint)]">
-        <OrbitalMark size={15} pulse={false} />
+      <span className="relative z-[1] mono text-[11px] tracking-[0.34em] text-[color:var(--color-ink-faint)]">
         EFFICIENT&nbsp;LABS
       </span>
       <span

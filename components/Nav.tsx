@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Wordmark from "@/components/Wordmark";
+import OrbitalMark from "@/components/OrbitalMark";
 import ThemeToggle from "@/components/ThemeToggle";
 import { getLenis } from "@/lib/lenis-store";
 
@@ -50,8 +51,9 @@ export default function Nav() {
         }
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-          <Link href="/" onClick={() => setOpen(false)} className="group flex items-center transition-transform hover:scale-[1.02]">
-            <Wordmark size={17} tracking="0.16em" pulse />
+          <Link href="/" onClick={() => setOpen(false)} className="group flex items-center gap-2.5 transition-transform hover:scale-[1.02]">
+            <OrbitalMark size={22} />
+            <Wordmark size={17} tracking="0.16em" />
           </Link>
 
           {/* Desktop links */}
