@@ -16,7 +16,7 @@ const SIGNUPS_SERIES = [3, 5, 4, 8, 6, 11, 9];                      // last 7 da
 const PLAN_MIX = [
   { name: "Sovereign", n: 31, color: "#5a6576" },
   { name: "Pro", n: 11, color: "#0a84ff" },
-  { name: "Team", n: 4, color: "#3db1ff" },
+  { name: "Team", n: 4, color: "#3d6cff" },
   { name: "Enterprise", n: 1, color: "#c9a24b" },
 ];
 const KPIS = [
@@ -27,7 +27,7 @@ const KPIS = [
 ];
 const ACTIVITY = [
   { icon: UserPlus, color: "#0a84ff", text: "New signup — Pro", who: "darnell@…", t: "2m" },
-  { icon: Boxes, color: "#3db1ff", text: "Node paired to mesh", who: "workstation-01", t: "19m" },
+  { icon: Boxes, color: "#3d6cff", text: "Node paired to mesh", who: "workstation-01", t: "19m" },
   { icon: Rocket, color: "#0a84ff", text: "Shipped — Skill-seal verification → Live", who: "status feed", t: "1h" },
   { icon: Building2, color: "#c9a24b", text: "Enterprise inquiry", who: "regulated fintech", t: "3h" },
   { icon: UserPlus, color: "#0a84ff", text: "New signup — Sovereign", who: "ona@…", t: "5h" },
@@ -64,7 +64,7 @@ function AreaChart({ data, color = "#0a84ff", id }: { data: number[]; color?: st
   );
 }
 
-function BarChart({ data, color = "#3db1ff" }: { data: number[]; color?: string }) {
+function BarChart({ data, color = "#3d6cff" }: { data: number[]; color?: string }) {
   const w = 600, h = 180; const max = Math.max(...data) || 1; const bw = w / data.length;
   return (
     <svg viewBox={`0 0 ${w} ${h}`} className="h-44 w-full" preserveAspectRatio="none">

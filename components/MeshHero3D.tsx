@@ -6,7 +6,7 @@ import SplitHeading from "@/components/motion/SplitHeading";
 import { HERO_READY_EVENT } from "@/lib/motion";
 
 const SIGNAL = new THREE.Color("#0a84ff");
-const QUANTUM = new THREE.Color("#3db1ff");
+const QUANTUM = new THREE.Color("#3d6cff");
 
 const smooth = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));

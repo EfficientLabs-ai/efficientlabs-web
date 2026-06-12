@@ -32,6 +32,10 @@ export default function Footer() {
             <span className="wordmark items-start">
               <span className="wm-text" style={{ fontSize: 16, letterSpacing: "0.16em" }}>Efficient&nbsp;Labs</span>
             </span>
+            {/* brand pillars — kit v2 lockup subline */}
+            <p className="mono -mt-2 text-[10px] uppercase leading-relaxed tracking-[0.22em] text-[color:var(--color-ink-faint)]">
+              Intelligence · Continuity · Infrastructure · Ownership · Optimization
+            </p>
             <p className="text-sm leading-relaxed text-[color:var(--color-ink-dim)]">
               Sovereign AI infrastructure. Your agents, your hardware, your rules — content-addressed,
               capability-secured, post-quantum.

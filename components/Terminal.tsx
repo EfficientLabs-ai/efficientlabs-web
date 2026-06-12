@@ -36,7 +36,7 @@ export default function Terminal({
 
   const color = (c?: TermLine["c"]) =>
     c === "ok" ? "var(--color-signal)"
-    : c === "hash" ? "var(--color-quantum)"
+    : c === "hash" ? "var(--color-quantum-text)"
     : c === "dim" ? "var(--color-ink-faint)"
     : c === "out" ? "var(--color-ink-dim)"
     : "var(--color-ink)";
