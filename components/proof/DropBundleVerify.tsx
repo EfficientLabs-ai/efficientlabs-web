@@ -21,6 +21,12 @@ export default function DropBundleVerify() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const verifyFile = useCallback(async (file: File) => {
+    // size guard: real bundles are KBs; an arbitrary multi-hundred-MB file would
+    // allocate string + parse tree and can freeze the tab (Codex finding).
+    if (file.size > 10 * 1024 * 1024) {
+      setState({ s: "invalid", name: file.name, why: "over 10 MB — receipt bundles are small; this is not one" });
+      return;
+    }
     setState({ s: "verifying", name: file.name });
     try {
       const text = await file.text();
@@ -71,14 +77,20 @@ export default function DropBundleVerify() {
           type="file"
           accept=".json,application/json"
           className="sr-only"
+          tabIndex={-1}
+          aria-hidden="true"
           onChange={(e) => { const f = e.target.files?.[0]; if (f) verifyFile(f); e.target.value = ""; }}
         />
         <p className="mono text-[12px] text-[color:var(--color-ink-dim)]">
-          {state.s === "verifying" ? `replaying ${state.name}…` : "drop bundle.json here — or click to choose"}
+          drop bundle.json here — or click to choose
         </p>
       </div>
 
+      {/* one live region carries EVERY state change, the in-progress one included */}
       <div className="mt-3 min-h-[3.2rem]" aria-live="polite">
+        {state.s === "verifying" && (
+          <p className="mono text-[12px] text-[color:var(--color-ink-faint)]">replaying {state.name}…</p>
+        )}
         {state.s === "done" && state.r.ok && (
           <>
             <p className="mono text-[14px] font-semibold" style={{ color: VERDICT.GREEN }}>

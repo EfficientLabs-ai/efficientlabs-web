@@ -209,8 +209,8 @@ export const ARTICLES: Article[] = [
     updated: "2026-06-03",
     blocks: [
       { kind: "h2", id: "vault", text: "Vault" },
-      { kind: "p", text: "Secrets are sealed at rest with AES-256-GCM (machine-local 0600 master key) and derived keys are zeroed from memory after use. Provider keys are added during stratos init — the prompt hides your input, the key is sealed immediately, and config stores only an opaque handle. The plaintext key never appears in config, env, or logs. Re-run init to add another provider." },
-      { kind: "code", lang: "bash", code: "stratos init   # interactive: provider + key (input hidden) -> sealed, handle stored" },
+      { kind: "p", text: "The published stratos CLI never handles your provider keys at all: completions go through YOUR gateway via STRATOS_GATEWAY_URL, so the key stays wherever your endpoint keeps it. On a full Atmosphere node, provider keys are sealed in the runtime's vault (AES-256-GCM, machine-local 0600 master key, derived keys zeroed after use) during the daemon's setup — config stores only an opaque handle; the plaintext key never appears in config, env, or logs." },
+      { kind: "code", lang: "bash", code: "# the CLI's spend path is bring-your-own-endpoint:\nSTRATOS_GATEWAY_URL=http://127.0.0.1:11434/v1/chat/completions \\\n  stratos complete <ws/proj/wf/task> \"prompt\" --model gemma2:2b" },
       { kind: "status", caps: ["Vault (AES-GCM, memory-wiped)"] },
       { kind: "h2", id: "byok", text: "Cost gate (your own AI accounts)" },
       { kind: "p", text: "All spend flows through a single route — /v1/chat/completions — guarded by a cost gate. Nothing else can spend on your behalf." },
