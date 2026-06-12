@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import PageShell from "@/components/PageShell";
 import StatusMatrix from "@/components/acts/StatusMatrix";
 import ActivityHeadline from "@/components/status/ActivityHeadline";
@@ -49,6 +50,10 @@ export default async function StatusPage() {
         <div className="mt-3">
           <ReadinessTile tile={tiles.readiness} />
         </div>
+        <p className="mono mt-3 text-[11px] text-[color:var(--color-ink-faint)]">
+          The same telemetry, scored:{" "}
+          <Link href="/score" className="link-cta">the Runtime Score — six measured sub-scores →</Link>
+        </p>
       </section>
 
       {/* ── B · the proof hero: verification runs in YOUR browser ── */}

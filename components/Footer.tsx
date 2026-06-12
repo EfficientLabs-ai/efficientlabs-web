@@ -2,9 +2,10 @@
 import { Mail, Phone, MapPin, Globe } from "lucide-react";
 import { siGithub, siX } from "simple-icons";
 import { TextHoverEffect, FooterBackgroundGradient } from "@/components/ui/hover-footer";
+import OrbitalMark from "@/components/OrbitalMark";
 
 const COLUMNS = [
-  { title: "Platform", links: [["The Atmosphere", "/atmosphere"], ["StratosAgent", "/stratos"], ["Architecture", "/architecture"], ["Honest status", "/status"], ["Updates", "/updates"]] },
+  { title: "Platform", links: [["The Atmosphere", "/atmosphere"], ["StratosAgent", "/stratos"], ["Architecture", "/architecture"], ["Runtime Score", "/score"], ["Honest status", "/status"], ["Updates", "/updates"]] },
   { title: "Company", links: [["Pricing", "/pricing"], ["Docs", "/docs"]] },
 ] as const;
 
@@ -29,9 +30,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-12 pb-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-16">
           {/* brand */}
           <div className="flex flex-col gap-4">
-            <span className="wordmark items-start">
+            <span className="wordmark items-center gap-2.5">
+              <OrbitalMark size={26} pulse={false} />
               <span className="wm-text" style={{ fontSize: 16, letterSpacing: "0.16em" }}>Efficient&nbsp;Labs</span>
             </span>
+            {/* brand pillars — kit v2 lockup subline */}
+            <p className="mono -mt-2 text-[10px] uppercase leading-relaxed tracking-[0.22em] text-[color:var(--color-ink-dim)]">
+              Intelligence · Continuity · Infrastructure · Ownership · Optimization
+            </p>
             <p className="text-sm leading-relaxed text-[color:var(--color-ink-dim)]">
               Sovereign AI infrastructure. Your agents, your hardware, your rules — content-addressed,
               capability-secured, post-quantum.

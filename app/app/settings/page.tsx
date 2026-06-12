@@ -20,7 +20,7 @@ import ComingSoon from "@/components/os/ComingSoon";
 import CustomizePanel from "@/components/os/CustomizePanel";
 import AdvancedControls from "@/components/os/AdvancedControls";
 
-// BYOK model sources — keys are sealed locally and never leave the machine.
+// Model sources — your own AI accounts; keys are sealed locally and never leave the machine.
 const KEY_PROVIDERS = [
   { icon: KeyRound, name: "OpenAI", detail: "Sealed locally — never leaves your machine" },
   { icon: KeyRound, name: "Anthropic", detail: "Sealed locally — never leaves your machine" },
@@ -50,7 +50,7 @@ export default function SettingsPage() {
             Customize &amp; <span className="aurora-text">account</span>
           </>
         }
-        description="Tune the OS to your liking — theme, accent, density, and your Home layout — then manage account, BYOK keys, channels, and owner controls. Customization is client-side and persisted to your browser; nothing is shown as connected until it really is."
+        description="Tune the OS to your liking — theme, accent, density, and your Home layout — then manage account, your AI provider keys, channels, and owner controls. Customization is client-side and persisted to your browser; nothing is shown as connected until it really is."
       />
 
       {/* Customize — the customization hub. All client-side + persisted. */}
@@ -101,11 +101,11 @@ export default function SettingsPage() {
         </OsCard>
       </section>
 
-      {/* Model sources (BYOK) */}
+      {/* Model sources (your own AI accounts) */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-[14px] font-semibold text-[color:var(--color-ink)]">
-            Model sources (BYOK)
+            Model sources (your own AI accounts)
           </h2>
           <KeyRound size={15} className="text-[color:var(--color-signal)]" />
         </div>
@@ -127,7 +127,7 @@ export default function SettingsPage() {
           ))}
         </div>
         <div className="space-y-2.5">
-          <CapStatus name="BYOK cost gate" />
+          <CapStatus name="Cost gate (your own AI accounts)" />
           <CapStatus name="Local ⇄ cloud language routing" />
         </div>
       </section>
@@ -169,7 +169,7 @@ export default function SettingsPage() {
             Command authority fails closed — no owner set means no authority at all. Only the
             owner can grant command rights.
           </OsCard>
-          <OsCard icon={KeyRound} title="BYOK cost gate" statusLevel="live" variant="data">
+          <OsCard icon={KeyRound} title="Cost gate (your own AI accounts)" statusLevel="live" variant="data">
             All spend flows through one gated route. Nothing else can spend on your behalf,
             and every outbound action passes the cost handshake first.
           </OsCard>

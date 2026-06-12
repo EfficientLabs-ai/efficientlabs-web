@@ -1,31 +1,1730 @@
 {
-  "generatedAt": "2026-06-11T21:54:25.052Z",
+  "generatedAt": "2026-06-12T20:03:59.498Z",
   "repos": [
     {
       "key": "web",
       "label": "efficientlabs-web",
       "present": true,
-      "commits": 0,
-      "newestAt": null,
+      "commits": 45,
+      "newestAt": "2026-06-12T19:55:44.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web"
     },
     {
       "key": "core",
       "label": "atmosphere-core",
       "present": true,
-      "commits": 0,
-      "newestAt": null,
+      "commits": 273,
+      "newestAt": "2026-06-12T12:48:35.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/atmosphere-core"
     }
   ],
   "rollups": {
-    "totalCommits": 0,
-    "last7Days": 0,
-    "last30Days": 0,
-    "featuresShipped": 0,
-    "activeDays": 0,
-    "byType": {}
+    "totalCommits": 318,
+    "last7Days": 76,
+    "last30Days": 318,
+    "featuresShipped": 137,
+    "activeDays": 8,
+    "byType": {
+      "feat": 137,
+      "other": 72,
+      "fix": 63,
+      "docs": 29,
+      "chore": 8,
+      "test": 3,
+      "perf": 1,
+      "ci": 2,
+      "refactor": 3
+    }
   },
-  "feed": [],
-  "feedByDate": []
+  "feed": [
+    {
+      "iso": "2026-06-13T03:55:44+08:00",
+      "date": "2026-06-13",
+      "subject": "feat(onboarding): /start journey — grey score aha → one question → GET RUNNING checklist",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "3b6cf01",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/3b6cf0159a9d9558beb67afe82ead18bbf57af7b"
+    },
+    {
+      "iso": "2026-06-12T15:07:55-04:00",
+      "date": "2026-06-12",
+      "subject": "Runtime Score MVP — /score (six MEASURED-only sub-scores) (#25)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "other",
+      "hash": "66edcd9",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/66edcd90b71735c03cfb7f5198076423c9de60fc"
+    },
+    {
+      "iso": "2026-06-12T08:48:35-04:00",
+      "date": "2026-06-12",
+      "subject": "feat(product): F3 (safe slice) — local offline entitlement verifier (#115)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "6854d0b",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/6854d0bad926fbac3dc07edf1dfe507f1bafe3f4"
+    },
+    {
+      "iso": "2026-06-12T08:32:24-04:00",
+      "date": "2026-06-12",
+      "subject": "feat(product): F2 — compute.route dry-run + continuity store/retrieve (#114)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "5f39508",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/5f395085988022462a8d03ac815a1a5a3717f698"
+    },
+    {
+      "iso": "2026-06-12T08:10:45-04:00",
+      "date": "2026-06-12",
+      "subject": "feat(product): F1 — FE-unblocking read APIs + onboarding state (#113)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "9578ffe",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/9578ffe9b9a5cc4b748db6b3210803082d1bf781"
+    },
+    {
+      "iso": "2026-06-12T07:00:44-04:00",
+      "date": "2026-06-12",
+      "subject": "fix(security): strict-auth + WS denials persist to the denial-audit sink (#112)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "b3ceebb",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/b3ceebbd4bcee306c2c433beb3eff1e7315158a3"
+    },
+    {
+      "iso": "2026-06-12T06:47:22-04:00",
+      "date": "2026-06-12",
+      "subject": "copy: world-terms sweep — BYOK → \"your own AI accounts\" (founder-approved wording) (#24)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "other",
+      "hash": "fb045ef",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/fb045ef3b35399fd6c8e9d6a84c0b0525e3fa4de"
+    },
+    {
+      "iso": "2026-06-12T05:52:15-04:00",
+      "date": "2026-06-12",
+      "subject": "Hero eyebrow removed; kit lockup (mark+wordmark) across every surface (#23)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "other",
+      "hash": "8d74ca5",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/8d74ca50a52abad1264d5c9e7e9d8ed8d9167070"
+    },
+    {
+      "iso": "2026-06-12T05:40:25-04:00",
+      "date": "2026-06-12",
+      "subject": "reland(terminal): PTY sessions — recover #109 (merged into an orphaned stacked base) (#111)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "other",
+      "hash": "f067ed9",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/f067ed97729e16f0d4d0d6442715ac457663a270"
+    },
+    {
+      "iso": "2026-06-12T05:32:17-04:00",
+      "date": "2026-06-12",
+      "subject": "feat(mesh): periodic node heartbeat — liveness as a measured, bounded local trace (#110)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "348794c",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/348794c92372690977a7f02206d70de2cd126c42"
+    },
+    {
+      "iso": "2026-06-12T05:16:23-04:00",
+      "date": "2026-06-12",
+      "subject": "Logo suite v2 — kit mark, SVG favicon, footer lockup, gradient tokens (#22)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "other",
+      "hash": "970c2f0",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/970c2f025efd0927ae9cb64be773821202fdd57a"
+    },
+    {
+      "iso": "2026-06-12T04:09:41-04:00",
+      "date": "2026-06-12",
+      "subject": "Brand System v2 — kit tokens, astronaut loading screen, pillars, og image (#21)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "other",
+      "hash": "19e01aa",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/19e01aa0cea927db60b8613d296a30ce9d9dcb4d"
+    },
+    {
+      "iso": "2026-06-12T02:24:41-04:00",
+      "date": "2026-06-12",
+      "subject": "feat(terminal): Atmos Terminal slice 1 — read-only /term file/log/metrics/receipt APIs (#108)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "ada1aec",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/ada1aec2488e716d24d16dadb7a50ba2bd80f417"
+    },
+    {
+      "iso": "2026-06-12T02:24:17-04:00",
+      "date": "2026-06-12",
+      "subject": "feat(security): denial-audit sink — denials leave a persistent, bounded, secret-safe trace (#107)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "fd1243c",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/fd1243c5251ef077e43769c433a578a0b5dd2429"
+    },
+    {
+      "iso": "2026-06-12T00:51:32-04:00",
+      "date": "2026-06-12",
+      "subject": "Runtime Score emitter — six MEASURED-only sub-scores (unblocks Runtime Score MVP FE) (#20)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "other",
+      "hash": "29e5c01",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/29e5c01322a25b6c3e5852594e2690e4fcb0b867"
+    },
+    {
+      "iso": "2026-06-11T17:58:59-04:00",
+      "date": "2026-06-11",
+      "subject": "Choreography — preloader, founder headline, honesty-ledger set-piece, canonical pricing, motion-guard (#19)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "other",
+      "hash": "814ad6c",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/814ad6c736d7e6aaca49d7376661531efc3bdaf5"
+    },
+    {
+      "iso": "2026-06-11T17:32:56-04:00",
+      "date": "2026-06-11",
+      "subject": "Motion foundation — written motion system, GSAP+Lenis single RAF loop, split-line headlines (#18)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "other",
+      "hash": "63a82f6",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/63a82f6e999e6f0220d3b35228f8c9cf003aa2db"
+    },
+    {
+      "iso": "2026-06-11T15:01:49-04:00",
+      "date": "2026-06-11",
+      "subject": "Enterprise Brand System v1.0 — brand tokens, type system, lenis, Orbital Pulse, funnel CTAs (#17)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "other",
+      "hash": "5403902",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/540390240b1b5f5696e18c58996787b7c0a65ee3"
+    },
+    {
+      "iso": "2026-06-12T00:05:06+08:00",
+      "date": "2026-06-12",
+      "subject": "feat(status): live runtime fetch of the cron-published status feed (ISR, fail-safe to baseline)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "a16c80f",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/a16c80f25a0f969df9d3e7c5e9823ff87cd9e744"
+    },
+    {
+      "iso": "2026-06-11T11:59:16-04:00",
+      "date": "2026-06-11",
+      "subject": "feat(auth): styled success/error state · post-login redirect · mobile overflow fix (#16)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "cfa8f33",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/cfa8f3302103e4ddc49be386da3fa89b029b11da"
+    },
+    {
+      "iso": "2026-06-11T11:59:12-04:00",
+      "date": "2026-06-11",
+      "subject": "feat(status): launch-readiness tile — transparent production-readiness percentage (#15)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "2b238ae",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/2b238ae7e29650b176115d2a2b0b5d7ca9eaa8f0"
+    },
+    {
+      "iso": "2026-06-11T11:59:08-04:00",
+      "date": "2026-06-11",
+      "subject": "fix(proof): mirror legacy v0 receipt-body versioning into the browser verifier + publisher (#14)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "fix",
+      "hash": "94c84bb",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/94c84bb759f55d85a13ebb4484d163c5290da0cd"
+    },
+    {
+      "iso": "2026-06-11T09:14:00-04:00",
+      "date": "2026-06-11",
+      "subject": "feat(gate2b): mesh-side command authorization + revocation (#106)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "eea78c2",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/eea78c29ab2b99cd6c39f20afd3c80aa0e5dac51"
+    },
+    {
+      "iso": "2026-06-11T05:39:32-04:00",
+      "date": "2026-06-11",
+      "subject": "feat(gate2): cryptographic owner identity + explicit node-pairing ceremony (#105)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "b80a231",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/b80a2311c602e685a174459e9a3fea419277d39d"
+    },
+    {
+      "iso": "2026-06-11T05:17:28-04:00",
+      "date": "2026-06-11",
+      "subject": "fix(receipts+tap): P1 residue — live-receipts test into CI, receipt-log rotation, fail-visible telemetry (#104)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "cf75c27",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/cf75c2761a32ad9ab1fe227ad35b2e3bb6152be0"
+    },
+    {
+      "iso": "2026-06-11T05:11:03-04:00",
+      "date": "2026-06-11",
+      "subject": "fix(receipts): body-version legacy v0 receipts — pre-owner_wallet chains verify again (#103)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "a36c2d0",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/a36c2d05f4d721e35de06de0de84798fd84b05c5"
+    },
+    {
+      "iso": "2026-06-11T00:10:30-04:00",
+      "date": "2026-06-11",
+      "subject": "feat(status): operating-layer proof layer — verdict bar, in-browser hybrid-PQC receipt verify, runtime intelligence, landing Proof strip (#13)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "fef3e92",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/fef3e92de112e8f2e5e2a8dd172d15462e955eaa"
+    },
+    {
+      "iso": "2026-06-10T16:39:54-04:00",
+      "date": "2026-06-10",
+      "subject": "docs(activation): gateway secret SET + enforced live (#58 closed) (#102)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs",
+      "hash": "1761ea3",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/1761ea3bf193a67f24435160837ebd7e5715183e"
+    },
+    {
+      "iso": "2026-06-10T16:17:27-04:00",
+      "date": "2026-06-10",
+      "subject": "feat(security): vault hydration for ATMOS_GATEWAY_SECRET (#58) (#101)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "babc20d",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/babc20d1b5f97dd1526c77edac9799046a62be67"
+    },
+    {
+      "iso": "2026-06-10T15:33:10-04:00",
+      "date": "2026-06-10",
+      "subject": "fix(metrics): count live-receipts.jsonl in trust_events (P1 rollout) (#99)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "665666d",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/665666d167dcb7bcfab0ae1dd34ff3288b0f782a"
+    },
+    {
+      "iso": "2026-06-10T15:27:32-04:00",
+      "date": "2026-06-10",
+      "subject": "feat(continuity): live tap mints signed receipts by default (SPRINT_002 #2) [PARTIAL] (#98)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "61c2846",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/61c284678eb3c9829bf70a08c76bb9c172b9fb2e"
+    },
+    {
+      "iso": "2026-06-10T14:55:38-04:00",
+      "date": "2026-06-10",
+      "subject": "fix(honesty+governance): post-merge blockers #88/#95/#96 from the GitHub-side Codex review (#97)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "37e40b4",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/37e40b46fe7ef73a47df2d68f974788baef0b850"
+    },
+    {
+      "iso": "2026-06-10T12:56:20-04:00",
+      "date": "2026-06-10",
+      "subject": "feat(honesty): automated claim gate in CI — banned/false claims fail the build (#77) (#91)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "515d26f",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/515d26f37e1ab03fec978ce5683e8dc631c472c3"
+    },
+    {
+      "iso": "2026-06-10T12:55:54-04:00",
+      "date": "2026-06-10",
+      "subject": "fix(status): honest two-state framing, drop 'live/real-time' overclaim (EFL-010) [reopened] (#12)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "fix",
+      "hash": "7430c5b",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/7430c5b33380ee1f79a4fd1360da5eae004d64be"
+    },
+    {
+      "iso": "2026-06-10T12:52:50-04:00",
+      "date": "2026-06-10",
+      "subject": "docs(governance): first-party AGENTS.md + root LICENSE (#78) (#92)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs",
+      "hash": "0be96b0",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/0be96b03596ea7ab20cc4df95cc6c799ac577e18"
+    },
+    {
+      "iso": "2026-06-10T12:51:47-04:00",
+      "date": "2026-06-10",
+      "subject": "docs(trust): skill-seal integration comment — the P2pSkillSync gate is DONE, not a follow-up (#81) (#94)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs",
+      "hash": "fee6cf6",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/fee6cf6cb9505a965ae53db1261a4a0a5534da5e"
+    },
+    {
+      "iso": "2026-06-10T12:49:56-04:00",
+      "date": "2026-06-10",
+      "subject": "feat(activation): canonical activation matrix + compounding-intelligence metrics (#79) (#93)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "f28c691",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/f28c6911446a3f206bb82944d293234bdb1082fa"
+    },
+    {
+      "iso": "2026-06-10T12:43:53-04:00",
+      "date": "2026-06-10",
+      "subject": "feat(trust): carve-sync drift gate — canonical PQC primitive enforced byte-identical across public mirrors (#75, #76) (#90)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "a38988a",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/a38988a3ff1c8e3069451fb5f4cc5513cbc300df"
+    },
+    {
+      "iso": "2026-06-10T12:34:48-04:00",
+      "date": "2026-06-10",
+      "subject": "fix(honesty): honest model ids, no fake qwen on receipts (EFL-007) [reland of #67] (#89)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "86bd739",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/86bd739ca294978da1b424bb866c350d64d2b75b"
+    },
+    {
+      "iso": "2026-06-10T12:29:21-04:00",
+      "date": "2026-06-10",
+      "subject": "fix(security): close cross-channel context-bleed in vector RAG (EFL-003) (#73)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "bbe18a6",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/bbe18a6cf09ddbe6a46e1459bb02497a63747bd7"
+    },
+    {
+      "iso": "2026-06-10T12:27:40-04:00",
+      "date": "2026-06-10",
+      "subject": "fix(gateway): upstream circuit-breaker + heap config (EFL-014) (#74)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "a77ab86",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/a77ab864d25a291fd27e20b5d63e84396af6b2fc"
+    },
+    {
+      "iso": "2026-06-10T12:24:49-04:00",
+      "date": "2026-06-10",
+      "subject": "fix(honesty): /vision no longer fabricates screen contents (resolves #62) (#66)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "674cb41",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/674cb411b1c65b8710490a86ca42cd52b4472d9c"
+    },
+    {
+      "iso": "2026-06-10T12:24:44-04:00",
+      "date": "2026-06-10",
+      "subject": "docs(honesty): reconcile qwen->gemma in README + doctrine, part 1 (EFL-001) (#69)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs",
+      "hash": "9e9d53b",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/9e9d53bb68e52136aaeffcd63947db6bf896ef9d"
+    },
+    {
+      "iso": "2026-06-10T12:19:55-04:00",
+      "date": "2026-06-10",
+      "subject": "docs(honesty): qwen->gemma in routing docs, part 4 (EFL-001 final) (#72)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs",
+      "hash": "95922a4",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/95922a4cb51be45cc5c1ab550549f27a934d737b"
+    },
+    {
+      "iso": "2026-06-10T12:19:26-04:00",
+      "date": "2026-06-10",
+      "subject": "docs(honesty): reconcile qwen->gemma in ARCHITECTURE/NORTH_STAR/GROUNDED (EFL-001 pt3) (#71)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs",
+      "hash": "693c1a7",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/693c1a7e33e332f4030d953dcbb14b9f2e9affac"
+    },
+    {
+      "iso": "2026-06-10T12:19:11-04:00",
+      "date": "2026-06-10",
+      "subject": "docs(honesty): reconcile qwen->gemma in canonical docs + fix adapter under-claim (EFL-001 pt2, EFL-013) (#70)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs",
+      "hash": "f70f65f",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/f70f65ff86932671de23fd770ad5f3ae8b4213b1"
+    },
+    {
+      "iso": "2026-06-10T12:19:05-04:00",
+      "date": "2026-06-10",
+      "subject": "fix(billing): getLiveBalance fails closed, never fabricates a balance (EFL-012) (#68)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "c7ab601",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/c7ab60122b11e21de59ae42830773e037a870b2b"
+    },
+    {
+      "iso": "2026-06-10T12:18:34-04:00",
+      "date": "2026-06-10",
+      "subject": "docs(operating): operating system + merged audit backlog (resolves #61) (#64)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs",
+      "hash": "51f169b",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/51f169b6a049b4d7a0ecbde101b44dc55445111d"
+    },
+    {
+      "iso": "2026-06-10T12:08:36-04:00",
+      "date": "2026-06-10",
+      "subject": "fix(web): remove footer dead links + noindex /app preview surface (web hygiene) (#11)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "fix",
+      "hash": "0996c97",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/0996c978589c74241869c7534ac3a5f3b2ba046b"
+    },
+    {
+      "iso": "2026-06-10T12:08:06-04:00",
+      "date": "2026-06-10",
+      "subject": "fix(ci): honesty-guard self-test false positive (resolves #5) (#9)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "fix",
+      "hash": "e20f642",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/e20f6428b5489a1b0796ace931fb2d8245b29a40"
+    },
+    {
+      "iso": "2026-06-10T11:51:43-04:00",
+      "date": "2026-06-10",
+      "subject": "fix(ci): hermetic Composio test green in CI via catalog fixture (resolves #59) (#65)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "1da60eb",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/1da60ebf4e20ab7ad403bbd2a30db73f662d83a7"
+    },
+    {
+      "iso": "2026-06-09T04:47:15+08:00",
+      "date": "2026-06-09",
+      "subject": "docs(doctrine): establish the Founding Operating Doctrine canon",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs",
+      "hash": "784fad0",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/784fad0d35ba98b5eda63df9a0442583f73ca8dc"
+    },
+    {
+      "iso": "2026-06-09T04:28:30+08:00",
+      "date": "2026-06-09",
+      "subject": "chore: refresh activity feed",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "chore",
+      "hash": "d56afb0",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/d56afb00a537274cd23ec40cce0ff81875cdd92b"
+    },
+    {
+      "iso": "2026-06-09T04:27:36+08:00",
+      "date": "2026-06-09",
+      "subject": "fix: expose config-needed status truth",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "fix",
+      "hash": "4af2f91",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/4af2f91668e061628e1934612c5d4f916ba12664"
+    },
+    {
+      "iso": "2026-06-09T00:36:35+08:00",
+      "date": "2026-06-09",
+      "subject": "feat: ship public Stratos install flow",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "0ca4896",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/0ca48968e9a2c9f0b9e1a2e1d99286ecf48a49d3"
+    },
+    {
+      "iso": "2026-06-08T18:34:28+08:00",
+      "date": "2026-06-08",
+      "subject": "chore(test): make 'npm test' the honest hermetic suite, not the mock harness",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "chore",
+      "hash": "05c190c",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/05c190c620cd60de50b5e35935d10f49c1ab943d"
+    },
+    {
+      "iso": "2026-06-08T18:32:37+08:00",
+      "date": "2026-06-08",
+      "subject": "fix(api-shim): harden shutdown so optional channel adapters can't throw during PM2 reload",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "0b677fc",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/0b677fcdc486d159330d0893643ee7434b0cf207"
+    },
+    {
+      "iso": "2026-06-08T18:32:37+08:00",
+      "date": "2026-06-08",
+      "subject": "fix(local-inference): report the actual local model; stop silently forcing gemma2:2b",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "8966f41",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/8966f4160127a1e3648f78c248cf0318973f15a4"
+    },
+    {
+      "iso": "2026-06-08T00:19:39+08:00",
+      "date": "2026-06-08",
+      "subject": "docs(truth): reconcile stale mocks — peer-compute/mesh is REAL (node bundle); on-chain rewards intentionally not-live (not a stub)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs",
+      "hash": "acb079e",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/acb079e70519dced5ca91369300dcd58b8fb1a0e"
+    },
+    {
+      "iso": "2026-06-08T00:18:08+08:00",
+      "date": "2026-06-08",
+      "subject": "docs(truth): correct stale 'Cloud tier unimplemented' — it's built + tested (BYOK + OpenRouter, 47 checks)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "docs",
+      "hash": "2459827",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/2459827bdb57ad91536cc6b6e2a9671fa7282763"
+    },
+    {
+      "iso": "2026-06-08T00:12:25+08:00",
+      "date": "2026-06-08",
+      "subject": "merge(security): exec job-policy gate + symlink-traversal hardening (trust substrate → live)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "other",
+      "hash": "1c8ef6e",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/1c8ef6ece7fef3be776a296f1d7a8dfcaba806ae"
+    },
+    {
+      "iso": "2026-06-08T00:07:08+08:00",
+      "date": "2026-06-08",
+      "subject": "fix(web): real working install — efficientlabs.ai/install.sh + @efficientlabs/stratos",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "fix",
+      "hash": "89e9a81",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/89e9a81d7079051272a56c626adaebb1cafa21c4"
+    },
+    {
+      "iso": "2026-06-07T20:19:18+08:00",
+      "date": "2026-06-07",
+      "subject": "feat(web): live Stripe checkout — monthly default + annual toggle (2 months free)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "c9faa83",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/c9faa8340d9e61525fe333b2e0e6234cd63be608"
+    },
+    {
+      "iso": "2026-06-07T09:36:49+08:00",
+      "date": "2026-06-07",
+      "subject": "feat(web): dark default + glassmorphism + per-command copy + real status + customizable OS",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "27a7bc1",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/27a7bc142c9e1f2b4ab4f68ffb6ec110645e091c"
+    },
+    {
+      "iso": "2026-06-06T08:24:40+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(web): OS light-first theme + Mobbin dashboard, distinct in-depth nav pages, 5-tier pricing, live status feed",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "5b74cda",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/5b74cdaa1f83d759128feb8a0d89f100f024582c"
+    },
+    {
+      "iso": "2026-06-06T08:05:51+08:00",
+      "date": "2026-06-06",
+      "subject": "fix(api-shim): shutdown handler — rename param shadowing the SignalAdapter (signal.stop TypeError)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "0fa3cd7",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/0fa3cd7cabbf6ab95d46dce371fa289f4176534c"
+    },
+    {
+      "iso": "2026-06-06T07:47:38+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(stratos): operating-core live tap — flag-gated, default-off, fail-open (deep phase increment 5)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "da401b9",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/da401b9c7ad3782caf6e78fec30b7c0c90e63434"
+    },
+    {
+      "iso": "2026-06-06T07:42:07+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(stratos): model-agnostic routing — policies + unified adapter (deep phase increment 4)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "4c6e152",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/4c6e15240420c98806227183f07ef3bddc2e94d2"
+    },
+    {
+      "iso": "2026-06-06T07:35:13+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(stratos): self-improvement compression engine (deep phase increment 3)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "820d355",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/820d355ff7d44de5653909c96abedbba6ea9be17"
+    },
+    {
+      "iso": "2026-06-06T07:27:06+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(stratos): eval-engine (deep phase increment 2)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "3a1a264",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/3a1a264735e3b04b7271f6089bc9ff046e506193"
+    },
+    {
+      "iso": "2026-06-06T07:16:00+08:00",
+      "date": "2026-06-06",
+      "subject": "feat: sovereign Composio adapter + operating-architecture layer (docs + files-first core)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "6307064",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/6307064fa04761d022cb83951205f9731b6aa121"
+    },
+    {
+      "iso": "2026-06-06T07:12:45+08:00",
+      "date": "2026-06-06",
+      "subject": "chore: deploy author verification [redacted]",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "chore",
+      "hash": "c764c22",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/c764c22e540777799f1d84776ceee3f8cceb51a0"
+    },
+    {
+      "iso": "2026-06-06T07:11:38+08:00",
+      "date": "2026-06-06",
+      "subject": "docs: architecture + context-routing (operating architecture layer)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "docs",
+      "hash": "749fb1d",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/749fb1df987c577fcc62b90f68a9f1b0da9c22a6"
+    },
+    {
+      "iso": "2026-06-06T06:22:44+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(web): Atmosphere OS at /app (11 honest modules) + mobile & motion polish",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "480cfb3",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/480cfb3a959f4743a98e7c466b610eb254894181"
+    },
+    {
+      "iso": "2026-06-06T05:42:48+08:00",
+      "date": "2026-06-06",
+      "subject": "chore(web): add marketing ad images + commercial videos (own-your-ai, stop-paying-rent, efl-commercial 16x9/9x16)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "chore",
+      "hash": "2d3f6c5",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/2d3f6c5a07deb230467388fd659d17344475c8c9"
+    },
+    {
+      "iso": "2026-06-06T05:37:51+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(web): nav→standalone pages, ChatGPT-style /docs, mobile fixes",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "feat",
+      "hash": "37f06bf",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/37f06bf5fd133bd23d0eece068c8f67401c6eebc"
+    },
+    {
+      "iso": "2026-06-06T03:53:47+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(mesh): wallet attribution — every node's compute attributed to its owner Solana wallet",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "e9aff5f",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/e9aff5f02b77bd0d6107418021b3c425828b16d9"
+    },
+    {
+      "iso": "2026-06-06T03:22:34+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(telegram): gemma4:e4b chat agent + persistent typing + token-streaming",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "f4e0092",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/f4e00926d29d3182e7d6eb9db2d5b816849b1f65"
+    },
+    {
+      "iso": "2026-06-06T03:15:39+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(mesh): origin records a signed capability receipt per verified job",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "ad9191b",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/ad9191b6ec101f84982d1bf154b0b4ea391fb5de"
+    },
+    {
+      "iso": "2026-06-06T02:32:38+08:00",
+      "date": "2026-06-06",
+      "subject": "feat(content): sovereign content engine — infinite personal-brand + EL pipeline",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "feat",
+      "hash": "8f808ff",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/8f808ffd52611c00e099867dae73266b64a7a362"
+    }
+  ],
+  "feedByDate": [
+    {
+      "date": "2026-06-13",
+      "count": 1,
+      "byType": {
+        "feat": 1
+      },
+      "commits": [
+        {
+          "iso": "2026-06-13T03:55:44+08:00",
+          "date": "2026-06-13",
+          "subject": "feat(onboarding): /start journey — grey score aha → one question → GET RUNNING checklist",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "3b6cf01",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/3b6cf0159a9d9558beb67afe82ead18bbf57af7b"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-12",
+      "count": 15,
+      "byType": {
+        "other": 7,
+        "feat": 7,
+        "fix": 1
+      },
+      "commits": [
+        {
+          "iso": "2026-06-12T15:07:55-04:00",
+          "date": "2026-06-12",
+          "subject": "Runtime Score MVP — /score (six MEASURED-only sub-scores) (#25)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "other",
+          "hash": "66edcd9",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/66edcd90b71735c03cfb7f5198076423c9de60fc"
+        },
+        {
+          "iso": "2026-06-12T08:48:35-04:00",
+          "date": "2026-06-12",
+          "subject": "feat(product): F3 (safe slice) — local offline entitlement verifier (#115)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "6854d0b",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/6854d0bad926fbac3dc07edf1dfe507f1bafe3f4"
+        },
+        {
+          "iso": "2026-06-12T08:32:24-04:00",
+          "date": "2026-06-12",
+          "subject": "feat(product): F2 — compute.route dry-run + continuity store/retrieve (#114)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "5f39508",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/5f395085988022462a8d03ac815a1a5a3717f698"
+        },
+        {
+          "iso": "2026-06-12T08:10:45-04:00",
+          "date": "2026-06-12",
+          "subject": "feat(product): F1 — FE-unblocking read APIs + onboarding state (#113)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "9578ffe",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/9578ffe9b9a5cc4b748db6b3210803082d1bf781"
+        },
+        {
+          "iso": "2026-06-12T07:00:44-04:00",
+          "date": "2026-06-12",
+          "subject": "fix(security): strict-auth + WS denials persist to the denial-audit sink (#112)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "b3ceebb",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/b3ceebbd4bcee306c2c433beb3eff1e7315158a3"
+        },
+        {
+          "iso": "2026-06-12T06:47:22-04:00",
+          "date": "2026-06-12",
+          "subject": "copy: world-terms sweep — BYOK → \"your own AI accounts\" (founder-approved wording) (#24)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "other",
+          "hash": "fb045ef",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/fb045ef3b35399fd6c8e9d6a84c0b0525e3fa4de"
+        },
+        {
+          "iso": "2026-06-12T05:52:15-04:00",
+          "date": "2026-06-12",
+          "subject": "Hero eyebrow removed; kit lockup (mark+wordmark) across every surface (#23)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "other",
+          "hash": "8d74ca5",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/8d74ca50a52abad1264d5c9e7e9d8ed8d9167070"
+        },
+        {
+          "iso": "2026-06-12T05:40:25-04:00",
+          "date": "2026-06-12",
+          "subject": "reland(terminal): PTY sessions — recover #109 (merged into an orphaned stacked base) (#111)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "other",
+          "hash": "f067ed9",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/f067ed97729e16f0d4d0d6442715ac457663a270"
+        },
+        {
+          "iso": "2026-06-12T05:32:17-04:00",
+          "date": "2026-06-12",
+          "subject": "feat(mesh): periodic node heartbeat — liveness as a measured, bounded local trace (#110)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "348794c",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/348794c92372690977a7f02206d70de2cd126c42"
+        },
+        {
+          "iso": "2026-06-12T05:16:23-04:00",
+          "date": "2026-06-12",
+          "subject": "Logo suite v2 — kit mark, SVG favicon, footer lockup, gradient tokens (#22)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "other",
+          "hash": "970c2f0",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/970c2f025efd0927ae9cb64be773821202fdd57a"
+        },
+        {
+          "iso": "2026-06-12T04:09:41-04:00",
+          "date": "2026-06-12",
+          "subject": "Brand System v2 — kit tokens, astronaut loading screen, pillars, og image (#21)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "other",
+          "hash": "19e01aa",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/19e01aa0cea927db60b8613d296a30ce9d9dcb4d"
+        },
+        {
+          "iso": "2026-06-12T02:24:41-04:00",
+          "date": "2026-06-12",
+          "subject": "feat(terminal): Atmos Terminal slice 1 — read-only /term file/log/metrics/receipt APIs (#108)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "ada1aec",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/ada1aec2488e716d24d16dadb7a50ba2bd80f417"
+        },
+        {
+          "iso": "2026-06-12T02:24:17-04:00",
+          "date": "2026-06-12",
+          "subject": "feat(security): denial-audit sink — denials leave a persistent, bounded, secret-safe trace (#107)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "fd1243c",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/fd1243c5251ef077e43769c433a578a0b5dd2429"
+        },
+        {
+          "iso": "2026-06-12T00:51:32-04:00",
+          "date": "2026-06-12",
+          "subject": "Runtime Score emitter — six MEASURED-only sub-scores (unblocks Runtime Score MVP FE) (#20)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "other",
+          "hash": "29e5c01",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/29e5c01322a25b6c3e5852594e2690e4fcb0b867"
+        },
+        {
+          "iso": "2026-06-12T00:05:06+08:00",
+          "date": "2026-06-12",
+          "subject": "feat(status): live runtime fetch of the cron-published status feed (ISR, fail-safe to baseline)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "a16c80f",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/a16c80f25a0f969df9d3e7c5e9823ff87cd9e744"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-11",
+      "count": 11,
+      "byType": {
+        "other": 3,
+        "feat": 5,
+        "fix": 3
+      },
+      "commits": [
+        {
+          "iso": "2026-06-11T17:58:59-04:00",
+          "date": "2026-06-11",
+          "subject": "Choreography — preloader, founder headline, honesty-ledger set-piece, canonical pricing, motion-guard (#19)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "other",
+          "hash": "814ad6c",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/814ad6c736d7e6aaca49d7376661531efc3bdaf5"
+        },
+        {
+          "iso": "2026-06-11T17:32:56-04:00",
+          "date": "2026-06-11",
+          "subject": "Motion foundation — written motion system, GSAP+Lenis single RAF loop, split-line headlines (#18)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "other",
+          "hash": "63a82f6",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/63a82f6e999e6f0220d3b35228f8c9cf003aa2db"
+        },
+        {
+          "iso": "2026-06-11T15:01:49-04:00",
+          "date": "2026-06-11",
+          "subject": "Enterprise Brand System v1.0 — brand tokens, type system, lenis, Orbital Pulse, funnel CTAs (#17)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "other",
+          "hash": "5403902",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/540390240b1b5f5696e18c58996787b7c0a65ee3"
+        },
+        {
+          "iso": "2026-06-11T11:59:16-04:00",
+          "date": "2026-06-11",
+          "subject": "feat(auth): styled success/error state · post-login redirect · mobile overflow fix (#16)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "cfa8f33",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/cfa8f3302103e4ddc49be386da3fa89b029b11da"
+        },
+        {
+          "iso": "2026-06-11T11:59:12-04:00",
+          "date": "2026-06-11",
+          "subject": "feat(status): launch-readiness tile — transparent production-readiness percentage (#15)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "2b238ae",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/2b238ae7e29650b176115d2a2b0b5d7ca9eaa8f0"
+        },
+        {
+          "iso": "2026-06-11T11:59:08-04:00",
+          "date": "2026-06-11",
+          "subject": "fix(proof): mirror legacy v0 receipt-body versioning into the browser verifier + publisher (#14)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "fix",
+          "hash": "94c84bb",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/94c84bb759f55d85a13ebb4484d163c5290da0cd"
+        },
+        {
+          "iso": "2026-06-11T09:14:00-04:00",
+          "date": "2026-06-11",
+          "subject": "feat(gate2b): mesh-side command authorization + revocation (#106)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "eea78c2",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/eea78c29ab2b99cd6c39f20afd3c80aa0e5dac51"
+        },
+        {
+          "iso": "2026-06-11T05:39:32-04:00",
+          "date": "2026-06-11",
+          "subject": "feat(gate2): cryptographic owner identity + explicit node-pairing ceremony (#105)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "b80a231",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/b80a2311c602e685a174459e9a3fea419277d39d"
+        },
+        {
+          "iso": "2026-06-11T05:17:28-04:00",
+          "date": "2026-06-11",
+          "subject": "fix(receipts+tap): P1 residue — live-receipts test into CI, receipt-log rotation, fail-visible telemetry (#104)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "cf75c27",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/cf75c2761a32ad9ab1fe227ad35b2e3bb6152be0"
+        },
+        {
+          "iso": "2026-06-11T05:11:03-04:00",
+          "date": "2026-06-11",
+          "subject": "fix(receipts): body-version legacy v0 receipts — pre-owner_wallet chains verify again (#103)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "a36c2d0",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/a36c2d05f4d721e35de06de0de84798fd84b05c5"
+        },
+        {
+          "iso": "2026-06-11T00:10:30-04:00",
+          "date": "2026-06-11",
+          "subject": "feat(status): operating-layer proof layer — verdict bar, in-browser hybrid-PQC receipt verify, runtime intelligence, landing Proof strip (#13)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "fef3e92",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/fef3e92de112e8f2e5e2a8dd172d15462e955eaa"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-10",
+      "count": 24,
+      "byType": {
+        "docs": 8,
+        "feat": 5,
+        "fix": 11
+      },
+      "commits": [
+        {
+          "iso": "2026-06-10T16:39:54-04:00",
+          "date": "2026-06-10",
+          "subject": "docs(activation): gateway secret SET + enforced live (#58 closed) (#102)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "1761ea3",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/1761ea3bf193a67f24435160837ebd7e5715183e"
+        },
+        {
+          "iso": "2026-06-10T16:17:27-04:00",
+          "date": "2026-06-10",
+          "subject": "feat(security): vault hydration for ATMOS_GATEWAY_SECRET (#58) (#101)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "babc20d",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/babc20d1b5f97dd1526c77edac9799046a62be67"
+        },
+        {
+          "iso": "2026-06-10T15:33:10-04:00",
+          "date": "2026-06-10",
+          "subject": "fix(metrics): count live-receipts.jsonl in trust_events (P1 rollout) (#99)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "665666d",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/665666d167dcb7bcfab0ae1dd34ff3288b0f782a"
+        },
+        {
+          "iso": "2026-06-10T15:27:32-04:00",
+          "date": "2026-06-10",
+          "subject": "feat(continuity): live tap mints signed receipts by default (SPRINT_002 #2) [PARTIAL] (#98)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "61c2846",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/61c284678eb3c9829bf70a08c76bb9c172b9fb2e"
+        },
+        {
+          "iso": "2026-06-10T14:55:38-04:00",
+          "date": "2026-06-10",
+          "subject": "fix(honesty+governance): post-merge blockers #88/#95/#96 from the GitHub-side Codex review (#97)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "37e40b4",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/37e40b46fe7ef73a47df2d68f974788baef0b850"
+        },
+        {
+          "iso": "2026-06-10T12:56:20-04:00",
+          "date": "2026-06-10",
+          "subject": "feat(honesty): automated claim gate in CI — banned/false claims fail the build (#77) (#91)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "515d26f",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/515d26f37e1ab03fec978ce5683e8dc631c472c3"
+        },
+        {
+          "iso": "2026-06-10T12:55:54-04:00",
+          "date": "2026-06-10",
+          "subject": "fix(status): honest two-state framing, drop 'live/real-time' overclaim (EFL-010) [reopened] (#12)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "fix",
+          "hash": "7430c5b",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/7430c5b33380ee1f79a4fd1360da5eae004d64be"
+        },
+        {
+          "iso": "2026-06-10T12:52:50-04:00",
+          "date": "2026-06-10",
+          "subject": "docs(governance): first-party AGENTS.md + root LICENSE (#78) (#92)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "0be96b0",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/0be96b03596ea7ab20cc4df95cc6c799ac577e18"
+        },
+        {
+          "iso": "2026-06-10T12:51:47-04:00",
+          "date": "2026-06-10",
+          "subject": "docs(trust): skill-seal integration comment — the P2pSkillSync gate is DONE, not a follow-up (#81) (#94)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "fee6cf6",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/fee6cf6cb9505a965ae53db1261a4a0a5534da5e"
+        },
+        {
+          "iso": "2026-06-10T12:49:56-04:00",
+          "date": "2026-06-10",
+          "subject": "feat(activation): canonical activation matrix + compounding-intelligence metrics (#79) (#93)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "f28c691",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/f28c6911446a3f206bb82944d293234bdb1082fa"
+        },
+        {
+          "iso": "2026-06-10T12:43:53-04:00",
+          "date": "2026-06-10",
+          "subject": "feat(trust): carve-sync drift gate — canonical PQC primitive enforced byte-identical across public mirrors (#75, #76) (#90)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "a38988a",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/a38988a3ff1c8e3069451fb5f4cc5513cbc300df"
+        },
+        {
+          "iso": "2026-06-10T12:34:48-04:00",
+          "date": "2026-06-10",
+          "subject": "fix(honesty): honest model ids, no fake qwen on receipts (EFL-007) [reland of #67] (#89)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "86bd739",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/86bd739ca294978da1b424bb866c350d64d2b75b"
+        },
+        {
+          "iso": "2026-06-10T12:29:21-04:00",
+          "date": "2026-06-10",
+          "subject": "fix(security): close cross-channel context-bleed in vector RAG (EFL-003) (#73)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "bbe18a6",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/bbe18a6cf09ddbe6a46e1459bb02497a63747bd7"
+        },
+        {
+          "iso": "2026-06-10T12:27:40-04:00",
+          "date": "2026-06-10",
+          "subject": "fix(gateway): upstream circuit-breaker + heap config (EFL-014) (#74)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "a77ab86",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/a77ab864d25a291fd27e20b5d63e84396af6b2fc"
+        },
+        {
+          "iso": "2026-06-10T12:24:49-04:00",
+          "date": "2026-06-10",
+          "subject": "fix(honesty): /vision no longer fabricates screen contents (resolves #62) (#66)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "674cb41",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/674cb411b1c65b8710490a86ca42cd52b4472d9c"
+        },
+        {
+          "iso": "2026-06-10T12:24:44-04:00",
+          "date": "2026-06-10",
+          "subject": "docs(honesty): reconcile qwen->gemma in README + doctrine, part 1 (EFL-001) (#69)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "9e9d53b",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/9e9d53bb68e52136aaeffcd63947db6bf896ef9d"
+        },
+        {
+          "iso": "2026-06-10T12:19:55-04:00",
+          "date": "2026-06-10",
+          "subject": "docs(honesty): qwen->gemma in routing docs, part 4 (EFL-001 final) (#72)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "95922a4",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/95922a4cb51be45cc5c1ab550549f27a934d737b"
+        },
+        {
+          "iso": "2026-06-10T12:19:26-04:00",
+          "date": "2026-06-10",
+          "subject": "docs(honesty): reconcile qwen->gemma in ARCHITECTURE/NORTH_STAR/GROUNDED (EFL-001 pt3) (#71)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "693c1a7",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/693c1a7e33e332f4030d953dcbb14b9f2e9affac"
+        },
+        {
+          "iso": "2026-06-10T12:19:11-04:00",
+          "date": "2026-06-10",
+          "subject": "docs(honesty): reconcile qwen->gemma in canonical docs + fix adapter under-claim (EFL-001 pt2, EFL-013) (#70)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "f70f65f",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/f70f65ff86932671de23fd770ad5f3ae8b4213b1"
+        },
+        {
+          "iso": "2026-06-10T12:19:05-04:00",
+          "date": "2026-06-10",
+          "subject": "fix(billing): getLiveBalance fails closed, never fabricates a balance (EFL-012) (#68)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "c7ab601",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/c7ab60122b11e21de59ae42830773e037a870b2b"
+        },
+        {
+          "iso": "2026-06-10T12:18:34-04:00",
+          "date": "2026-06-10",
+          "subject": "docs(operating): operating system + merged audit backlog (resolves #61) (#64)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "51f169b",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/51f169b6a049b4d7a0ecbde101b44dc55445111d"
+        },
+        {
+          "iso": "2026-06-10T12:08:36-04:00",
+          "date": "2026-06-10",
+          "subject": "fix(web): remove footer dead links + noindex /app preview surface (web hygiene) (#11)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "fix",
+          "hash": "0996c97",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/0996c978589c74241869c7534ac3a5f3b2ba046b"
+        },
+        {
+          "iso": "2026-06-10T12:08:06-04:00",
+          "date": "2026-06-10",
+          "subject": "fix(ci): honesty-guard self-test false positive (resolves #5) (#9)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "fix",
+          "hash": "e20f642",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/e20f6428b5489a1b0796ace931fb2d8245b29a40"
+        },
+        {
+          "iso": "2026-06-10T11:51:43-04:00",
+          "date": "2026-06-10",
+          "subject": "fix(ci): hermetic Composio test green in CI via catalog fixture (resolves #59) (#65)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "1da60eb",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/1da60ebf4e20ab7ad403bbd2a30db73f662d83a7"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-09",
+      "count": 4,
+      "byType": {
+        "docs": 1,
+        "chore": 1,
+        "fix": 1,
+        "feat": 1
+      },
+      "commits": [
+        {
+          "iso": "2026-06-09T04:47:15+08:00",
+          "date": "2026-06-09",
+          "subject": "docs(doctrine): establish the Founding Operating Doctrine canon",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "784fad0",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/784fad0d35ba98b5eda63df9a0442583f73ca8dc"
+        },
+        {
+          "iso": "2026-06-09T04:28:30+08:00",
+          "date": "2026-06-09",
+          "subject": "chore: refresh activity feed",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "chore",
+          "hash": "d56afb0",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/d56afb00a537274cd23ec40cce0ff81875cdd92b"
+        },
+        {
+          "iso": "2026-06-09T04:27:36+08:00",
+          "date": "2026-06-09",
+          "subject": "fix: expose config-needed status truth",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "fix",
+          "hash": "4af2f91",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/4af2f91668e061628e1934612c5d4f916ba12664"
+        },
+        {
+          "iso": "2026-06-09T00:36:35+08:00",
+          "date": "2026-06-09",
+          "subject": "feat: ship public Stratos install flow",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "0ca4896",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/0ca48968e9a2c9f0b9e1a2e1d99286ecf48a49d3"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-08",
+      "count": 7,
+      "byType": {
+        "chore": 1,
+        "fix": 3,
+        "docs": 2,
+        "other": 1
+      },
+      "commits": [
+        {
+          "iso": "2026-06-08T18:34:28+08:00",
+          "date": "2026-06-08",
+          "subject": "chore(test): make 'npm test' the honest hermetic suite, not the mock harness",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "chore",
+          "hash": "05c190c",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/05c190c620cd60de50b5e35935d10f49c1ab943d"
+        },
+        {
+          "iso": "2026-06-08T18:32:37+08:00",
+          "date": "2026-06-08",
+          "subject": "fix(api-shim): harden shutdown so optional channel adapters can't throw during PM2 reload",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "0b677fc",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/0b677fcdc486d159330d0893643ee7434b0cf207"
+        },
+        {
+          "iso": "2026-06-08T18:32:37+08:00",
+          "date": "2026-06-08",
+          "subject": "fix(local-inference): report the actual local model; stop silently forcing gemma2:2b",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "8966f41",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/8966f4160127a1e3648f78c248cf0318973f15a4"
+        },
+        {
+          "iso": "2026-06-08T00:19:39+08:00",
+          "date": "2026-06-08",
+          "subject": "docs(truth): reconcile stale mocks — peer-compute/mesh is REAL (node bundle); on-chain rewards intentionally not-live (not a stub)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "acb079e",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/acb079e70519dced5ca91369300dcd58b8fb1a0e"
+        },
+        {
+          "iso": "2026-06-08T00:18:08+08:00",
+          "date": "2026-06-08",
+          "subject": "docs(truth): correct stale 'Cloud tier unimplemented' — it's built + tested (BYOK + OpenRouter, 47 checks)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "docs",
+          "hash": "2459827",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/2459827bdb57ad91536cc6b6e2a9671fa7282763"
+        },
+        {
+          "iso": "2026-06-08T00:12:25+08:00",
+          "date": "2026-06-08",
+          "subject": "merge(security): exec job-policy gate + symlink-traversal hardening (trust substrate → live)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "other",
+          "hash": "1c8ef6e",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/1c8ef6ece7fef3be776a296f1d7a8dfcaba806ae"
+        },
+        {
+          "iso": "2026-06-08T00:07:08+08:00",
+          "date": "2026-06-08",
+          "subject": "fix(web): real working install — efficientlabs.ai/install.sh + @efficientlabs/stratos",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "fix",
+          "hash": "89e9a81",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/89e9a81d7079051272a56c626adaebb1cafa21c4"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-07",
+      "count": 2,
+      "byType": {
+        "feat": 2
+      },
+      "commits": [
+        {
+          "iso": "2026-06-07T20:19:18+08:00",
+          "date": "2026-06-07",
+          "subject": "feat(web): live Stripe checkout — monthly default + annual toggle (2 months free)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "c9faa83",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/c9faa8340d9e61525fe333b2e0e6234cd63be608"
+        },
+        {
+          "iso": "2026-06-07T09:36:49+08:00",
+          "date": "2026-06-07",
+          "subject": "feat(web): dark default + glassmorphism + per-command copy + real status + customizable OS",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "27a7bc1",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/27a7bc142c9e1f2b4ab4f68ffb6ec110645e091c"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-06",
+      "count": 16,
+      "byType": {
+        "feat": 12,
+        "fix": 1,
+        "chore": 2,
+        "docs": 1
+      },
+      "commits": [
+        {
+          "iso": "2026-06-06T08:24:40+08:00",
+          "date": "2026-06-06",
+          "subject": "feat(web): OS light-first theme + Mobbin dashboard, distinct in-depth nav pages, 5-tier pricing, live status feed",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "5b74cda",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/5b74cdaa1f83d759128feb8a0d89f100f024582c"
+        },
+        {
+          "iso": "2026-06-06T08:05:51+08:00",
+          "date": "2026-06-06",
+          "subject": "fix(api-shim): shutdown handler — rename param shadowing the SignalAdapter (signal.stop TypeError)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "0fa3cd7",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/0fa3cd7cabbf6ab95d46dce371fa289f4176534c"
+        },
+        {
+          "iso": "2026-06-06T07:47:38+08:00",
+          "date": "2026-06-06",
+          "subject": "feat(stratos): operating-core live tap — flag-gated, default-off, fail-open (deep phase increment 5)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "da401b9",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/da401b9c7ad3782caf6e78fec30b7c0c90e63434"
+        },
+        {
+          "iso": "2026-06-06T07:42:07+08:00",
+          "date": "2026-06-06",
+          "subject": "feat(stratos): model-agnostic routing — policies + unified adapter (deep phase increment 4)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "4c6e152",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/4c6e15240420c98806227183f07ef3bddc2e94d2"
+        },
+        {
+          "iso": "2026-06-06T07:35:13+08:00",
+          "date": "2026-06-06",
+          "subject": "feat(stratos): self-improvement compression engine (deep phase increment 3)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "820d355",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/820d355ff7d44de5653909c96abedbba6ea9be17"
+        },
+        {
+          "iso": "2026-06-06T07:27:06+08:00",
+          "date": "2026-06-06",
+          "subject": "feat(stratos): eval-engine (deep phase increment 2)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "3a1a264",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/3a1a264735e3b04b7271f6089bc9ff046e506193"
+        },
+        {
+          "iso": "2026-06-06T07:16:00+08:00",
+          "date": "2026-06-06",
+          "subject": "feat: sovereign Composio adapter + operating-architecture layer (docs + files-first core)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "6307064",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/6307064fa04761d022cb83951205f9731b6aa121"
+        },
+        {
+          "iso": "2026-06-06T07:12:45+08:00",
+          "date": "2026-06-06",
+          "subject": "chore: deploy author verification [redacted]",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "chore",
+          "hash": "c764c22",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/c764c22e540777799f1d84776ceee3f8cceb51a0"
+        },
+        {
+          "iso": "2026-06-06T07:11:38+08:00",
+          "date": "2026-06-06",
+          "subject": "docs: architecture + context-routing (operating architecture layer)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "docs",
+          "hash": "749fb1d",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/749fb1df987c577fcc62b90f68a9f1b0da9c22a6"
+        },
+        {
+          "iso": "2026-06-06T06:22:44+08:00",
+          "date": "2026-06-06",
+          "subject": "feat(web): Atmosphere OS at /app (11 honest modules) + mobile & motion polish",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "480cfb3",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/480cfb3a959f4743a98e7c466b610eb254894181"
+        },
+        {
+          "iso": "2026-06-06T05:42:48+08:00",
+          "date": "2026-06-06",
+          "subject": "chore(web): add marketing ad images + commercial videos (own-your-ai, stop-paying-rent, efl-commercial 16x9/9x16)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "chore",
+          "hash": "2d3f6c5",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/2d3f6c5a07deb230467388fd659d17344475c8c9"
+        },
+        {
+          "iso": "2026-06-06T05:37:51+08:00",
+          "date": "2026-06-06",
+          "subject": "feat(web): nav→standalone pages, ChatGPT-style /docs, mobile fixes",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "feat",
+          "hash": "37f06bf",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/37f06bf5fd133bd23d0eece068c8f67401c6eebc"
+        },
+        {
+          "iso": "2026-06-06T03:53:47+08:00",
+          "date": "2026-06-06",
+          "subject": "feat(mesh): wallet attribution — every node's compute attributed to its owner Solana wallet",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "e9aff5f",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/e9aff5f02b77bd0d6107418021b3c425828b16d9"
+        },
+        {
+          "iso": "2026-06-06T03:22:34+08:00",
+          "date": "2026-06-06",
+          "subject": "feat(telegram): gemma4:e4b chat agent + persistent typing + token-streaming",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "f4e0092",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/f4e00926d29d3182e7d6eb9db2d5b816849b1f65"
+        },
+        {
+          "iso": "2026-06-06T03:15:39+08:00",
+          "date": "2026-06-06",
+          "subject": "feat(mesh): origin records a signed capability receipt per verified job",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "ad9191b",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/ad9191b6ec101f84982d1bf154b0b4ea391fb5de"
+        },
+        {
+          "iso": "2026-06-06T02:32:38+08:00",
+          "date": "2026-06-06",
+          "subject": "feat(content): sovereign content engine — infinite personal-brand + EL pipeline",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "8f808ff",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/8f808ffd52611c00e099867dae73266b64a7a362"
+        }
+      ]
+    }
+  ]
 }

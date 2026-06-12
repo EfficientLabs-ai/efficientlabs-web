@@ -116,7 +116,7 @@
       "name": "Routing · inference",
       "caps": [
         {
-          "name": "BYOK cost gate",
+          "name": "Cost gate (your own AI accounts)",
           "detail": "On /v1/chat/completions — the only spend route.",
           "level": "live"
         },

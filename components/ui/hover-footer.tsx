@@ -51,7 +51,7 @@ export const TextHoverEffect = ({
               <stop offset="0%" stopColor="#ffffff" />
               <stop offset="35%" stopColor="#cfd8e4" />
               <stop offset="55%" stopColor="#0a84ff" />
-              <stop offset="80%" stopColor="#3db1ff" />
+              <stop offset="80%" stopColor="#3d6cff" />
               <stop offset="100%" stopColor="#ffffff" />
             </>
           )}
@@ -114,7 +114,7 @@ export const FooterBackgroundGradient = () => {
     <div
       className="absolute inset-0 z-0"
       style={{
-        background: "radial-gradient(125% 125% at 50% 12%, #05070b00 45%, #0a84ff26 100%)",
+        background: "radial-gradient(125% 125% at 50% 12%, #0b0f1a00 45%, #0a84ff26 100%)",
       }}
     />
   );

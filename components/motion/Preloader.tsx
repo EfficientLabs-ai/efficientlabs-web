@@ -22,6 +22,11 @@ import {
  * The counter paces 000→100 gated on real readiness (fonts + the hero's
  * first frame) with a 2.5s hard cap and a 1.2s minimum, then the SAME
  * timeline wipes the overlay and fires the hero intro.
+ *
+ * The brand artwork (kit v2 loading screen) is progressive enhancement:
+ * its src is only set once this visit is known to be pending (so non-intro
+ * visitors never download it), and it fades in ONLY after decode — the
+ * count/wipe never waits for the image. Type-only is the base state.
  */
 export default function Preloader() {
   const ref = useRef<HTMLDivElement>(null);
@@ -35,6 +40,28 @@ export default function Preloader() {
       if (document.documentElement.getAttribute("data-intro") !== "pending") return;
 
       registerMotion();
+      let cancelled = false;
+      let finishing = false; // wipe timeline started — a late decode() must not fade the art in
+
+      // Brand art: kick off the fetch now (pending confirmed), reveal on decode.
+      const art = root.querySelector<HTMLImageElement>(".efl-preloader-art img");
+      const artSource = root.querySelector<HTMLSourceElement>(".efl-preloader-art source");
+      const scrim = root.querySelector<HTMLElement>(".efl-preloader-scrim");
+      if (art?.dataset.src) {
+        if (artSource?.dataset.srcset) artSource.srcset = artSource.dataset.srcset;
+        art.fetchPriority = "high";
+        art.src = art.dataset.src;
+        art
+          .decode()
+          .then(() => {
+            if (cancelled || finishing) return;
+            if (document.documentElement.getAttribute("data-intro") !== "pending") return;
+            gsap.to([art, scrim].filter(Boolean), { opacity: 1, duration: 0.6, ease: EASE.out });
+          })
+          .catch(() => {
+            /* image failed/slow — type-only preloader is the designed base */
+          });
+      }
       // Background scroll is locked by CSS ([data-intro="pending"] →
       // overflow:hidden) — that holds even though Lenis initializes later
       // (MotionProvider's useEffect runs after this layout effect). The
@@ -61,13 +88,13 @@ export default function Preloader() {
       });
       const minPace = new Promise((r) => setTimeout(r, 1200));
       const hardCap = new Promise((r) => setTimeout(r, 2500));
-      let cancelled = false;
 
       Promise.race([
         Promise.all([document.fonts.ready, heroReady, minPace]),
         hardCap,
       ]).then(() => {
         if (cancelled) return;
+        finishing = true;
         drift.kill();
         const tl = gsap.timeline();
         tl.to(counter, { v: 100, duration: 0.25, ease: "none", snap: { v: 1 }, onUpdate: print });
@@ -107,12 +134,18 @@ export default function Preloader() {
 
   return (
     <div id="efl-preloader" ref={ref} aria-hidden>
-      <span className="mono text-[11px] tracking-[0.34em] text-[color:var(--color-ink-faint)]">
+      <picture className="efl-preloader-art">
+        <source type="image/avif" data-srcset="/img/brand-loading-astronaut.avif" />
+        {/* src set at runtime only when the intro is pending — see effect */}
+        <img alt="" draggable={false} data-src="/img/brand-loading-astronaut.webp" />
+      </picture>
+      <div className="efl-preloader-scrim" />
+      <span className="relative z-[1] mono text-[11px] tracking-[0.34em] text-[color:var(--color-ink-faint)]">
         EFFICIENT&nbsp;LABS
       </span>
       <span
         ref={counterRef}
-        className="mono text-[2.6rem] leading-none text-[color:var(--color-ink)]"
+        className="relative z-[1] mono text-[2.6rem] leading-none text-[color:var(--color-ink)]"
       >
         000
       </span>

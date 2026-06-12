@@ -6,7 +6,7 @@ import SplitHeading from "@/components/motion/SplitHeading";
 import { HERO_READY_EVENT } from "@/lib/motion";
 
 const SIGNAL = new THREE.Color("#0a84ff");
-const QUANTUM = new THREE.Color("#3db1ff");
+const QUANTUM = new THREE.Color("#3d6cff");
 
 const smooth = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
@@ -260,8 +260,7 @@ export default function MeshHero3D() {
                style={{ background: "linear-gradient(to top, var(--color-void), transparent)" }} />
         </div>
         <div className="relative mx-auto w-full max-w-7xl px-5 py-24">
-          <p className="kicker">Sovereign&nbsp;AI&nbsp;Infrastructure</p>
-          <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display-sm mt-5 hyphens-none">
+          <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display-sm hyphens-none">
             Your Intelligence.<br />Your Infrastructure.<br />
             <span className="aurora-text">Your Rules.</span>
           </SplitHeading>
@@ -307,8 +306,7 @@ export default function MeshHero3D() {
         <div className="absolute inset-0 flex items-center" style={{ opacity: heroFade, transition: "opacity 0.1s linear", pointerEvents: heroFade > 0.5 ? "auto" : "none" }}>
           <div className="mx-auto w-full max-w-7xl px-6">
             <div className="max-w-3xl">
-              <p className="kicker">Sovereign&nbsp;AI&nbsp;Infrastructure</p>
-              <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display mt-6">
+              <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display">
                 Your Intelligence.<br />Your Infrastructure.<br />
                 <span className="aurora-text">Your Rules.</span>
               </SplitHeading>

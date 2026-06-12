@@ -254,7 +254,7 @@ const SYSTEM_ROWS: SystemRow[] = [
   {
     icon: Radio,
     title: "Inference routing",
-    detail: "Local for code · cloud for complex work · BYOK cost gate",
+    detail: "Local for code · cloud for complex work · cost gate on your own accounts",
     level: "live" as const,
     chipLabel: undefined,
   },
@@ -284,5 +284,5 @@ const MODULES = [
   { href: "/app/atmosphere", icon: Boxes, title: "Atmosphere", body: "Your private P2P mesh of paired devices." },
   { href: "/app/wallet", icon: Wallet, title: "Wallet", body: "Reserve contributor identity before rewards." },
   { href: "/app/rewards", icon: Gift, title: "Rewards", body: "Contribution credits — tracked, payouts not live." },
-  { href: "/app/settings", icon: Settings, title: "Settings", body: "Customize, account, BYOK keys, owner-gating." },
+  { href: "/app/settings", icon: Settings, title: "Settings", body: "Customize, account, your AI provider keys, owner-gating." },
 ];

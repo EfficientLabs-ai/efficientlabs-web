@@ -11,7 +11,7 @@ const STATS = [
   ["5", "native channels"],
   ["∞", "MCP tools"],
   ["400+", "n8n integrations"],
-  ["any", "BYOK model"],
+  ["any", "model — your keys"],
 ];
 
 const VALUE = [

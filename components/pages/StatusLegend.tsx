@@ -20,7 +20,7 @@ export default function StatusLegend() {
           </p>
           <Link
             href="/status"
-            className="mono text-[11px] text-[color:var(--color-signal)] transition-colors hover:text-[color:var(--color-quantum)]"
+            className="mono text-[11px] text-[color:var(--color-signal)] transition-colors hover:text-[color:var(--color-quantum-text)]"
           >
             Full status matrix →
           </Link>

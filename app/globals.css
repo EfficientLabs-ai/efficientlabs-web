@@ -1,25 +1,27 @@
 @import "tailwindcss";
 
 /* ============================================================================
-   Efficient Labs — Enterprise Brand System v1.0 (canonical: EFFICIENT_LABS_BRAND_KIT.md)
-   Intelligence Blue · Electric Blue · Infrastructure Silver on the dark system
+   Efficient Labs — Enterprise Brand System v2.0 (canonical: EFFICIENT_LABS_BRAND_KIT.md)
+   Intelligence Blue · Deep Electric Blue · Infrastructure Silver on the dark system
    ========================================================================== */
 
 @theme {
-  --color-void: #05070b;          /* brand dark background */
-  --color-void-2: #0d1117;        /* surface */
-  --color-elevated: #151b24;      /* elevated surface */
-  --color-ink: #f8fafc;           /* primary text */
-  --color-ink-dim: #94a3b8;       /* secondary text */
+  --color-void: #0b0f1a;          /* brand dark background — kit v2 neutral ramp */
+  --color-void-2: #111722;        /* surface */
+  --color-elevated: #1a2333;      /* elevated surface */
+  --color-ink: #e6e9f1;           /* primary text */
+  --color-ink-dim: #8a93a6;       /* secondary text */
   --color-ink-faint: #64748b;     /* tertiary text */
   --color-signal: #0a84ff;        /* Intelligence Blue — CTAs, links, active states */
   --color-signal-deep: #0868cc;   /* derived deep fill — white-text AA on light */
-  --color-quantum: #3db1ff;       /* Electric Blue — hover, motion, AI activity */
+  --color-quantum: #3d6cff;       /* Deep Electric Blue (kit v2) — hover, motion, AI activity; graphics/large text */
+  --color-quantum-text: #5b82ff;  /* derived hue-true lift — small-text AA on dark (5.5:1 bg / 4.6:1 elevated) */
   --color-silver: #c0c7d2;        /* Infrastructure Silver — icons, dividers, diagrams */
   --color-success: #22c55e;
   --color-warning: #f59e0b;
   --color-critical: #ef4444;
-  --color-sovereign: #6d5df6;     /* RESERVED: Atmosphere/Stratosphere surfaces only */
+  --color-sovereign: #a855f7;     /* kit v2 violet — RESERVED: Atmosphere/Stratosphere surfaces only */
+  --color-cyan: #06b6d4;          /* kit v2 accent — data/flow highlights */
   --color-edge: #232b38;          /* hairline grid */
   --color-line: #1a212d;          /* section borders — one step under edge */
 
@@ -29,10 +31,17 @@
 }
 
 :root {
-  --void: #05070b; --signal: #0a84ff; --quantum: #3db1ff; --ink: #f8fafc;
-  --ink-dim: #94a3b8; --ink-faint: #64748b;
+  --void: #0b0f1a; --signal: #0a84ff; --quantum: #3d6cff; --ink: #e6e9f1;
+  --ink-dim: #8a93a6; --ink-faint: #64748b;
   /* brushed-chrome gradient for the wordmark + metallic accents */
   --chrome: linear-gradient(176deg, #ffffff 0%, #e9eef5 22%, #aab4c2 48%, #ffffff 56%, #8d99a8 72%, #dfe6ef 100%);
+
+  /* ── KIT v2 GRADIENT SET — accents for feature surfaces/data viz (sheet §10) ── */
+  --grad-signal:    linear-gradient(135deg, #0a84ff, #3d6cff);
+  --grad-sovereign: linear-gradient(135deg, #6d5df6, #a855f7);
+  --grad-flow:      linear-gradient(135deg, #06b6d4, #22c55e);
+  --grad-depth:     linear-gradient(135deg, #3d6cff, #06b6d4);
+  --grad-ember:     linear-gradient(135deg, #f59e0b, #ef4444);
 
   /* ── GLASS MATERIAL TOKENS (dark defaults) ───────────────────────────
      The translucent fill is white-alpha on dark; the 1px inset top-highlight
@@ -96,7 +105,8 @@
   /* brand stays */
   --color-signal: #0a84ff;
   --color-signal-deep: #0868cc;
-  --color-quantum: #1d8fe0;       /* Electric Blue deepened so it reads on white */
+  --color-quantum: #3d6cff;       /* kit v2 secondary — 4.8:1 on white, text-safe as-is */
+  --color-quantum-text: #3d6cff;  /* in light, the kit value itself passes AA */
   /* lines */
   --color-edge: #eef2f7;          /* hairline grid */
   --color-line: #d9e2ec;          /* borders — brand kit light border */
@@ -107,7 +117,7 @@
   --ink-dim: #475569;
   --ink-faint: #64748b;
   --signal: #0a84ff;
-  --quantum: #1d8fe0;
+  --quantum: #3d6cff;
 
   /* elevation: in light, soft shadows do the lifting that borders do in dark */
   --border-hairline: 1px solid #d9e2ec;
@@ -175,12 +185,13 @@
    ========================================================================== */
 .cinematic,
 [data-theme="light"] .cinematic {
-  --void: #05070b; --ink: #f8fafc; --ink-dim: #94a3b8; --ink-faint: #64748b;
-  --signal: #0a84ff; --quantum: #3db1ff;
-  --color-void: #05070b; --color-void-2: #0d1117; --color-elevated: #151b24;
-  --color-ink: #f8fafc; --color-ink-dim: #94a3b8; --color-ink-faint: #64748b;
+  --void: #0b0f1a; --ink: #e6e9f1; --ink-dim: #8a93a6; --ink-faint: #64748b;
+  --signal: #0a84ff; --quantum: #3d6cff;
+  --color-void: #0b0f1a; --color-void-2: #111722; --color-elevated: #1a2333;
+  --color-ink: #e6e9f1; --color-ink-dim: #8a93a6; --color-ink-faint: #64748b;
   --color-edge: #232b38; --color-line: #1a212d;
-  --color-quantum: #3db1ff;
+  --color-quantum: #3d6cff;
+  --color-quantum-text: #5b82ff;
   --border-hairline: 1px solid rgba(255,255,255,0.08);
   --border-hairline-strong: 1px solid rgba(255,255,255,0.14);
   --shadow-hud: 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px -16px rgba(0,0,0,0.8);
@@ -225,6 +236,24 @@ html {
   will-change: transform;
 }
 html[data-intro="pending"] #efl-preloader { display: flex; }
+/* Brand artwork layer (kit v2 loading screen) — absolutely stacked under the
+   type; starts invisible and is faded in by GSAP only after the image decodes,
+   so the type-only preloader is the base state, never a broken-image flash. */
+#efl-preloader .efl-preloader-art,
+#efl-preloader .efl-preloader-scrim { position: absolute; inset: 0; }
+#efl-preloader .efl-preloader-art img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 42%;
+  opacity: 0; /* GSAP fades the img itself in after decode */
+}
+/* Legibility veil: bottom gradient where the wordmark + counter live, plus a
+   faint overall tint so the white counter keeps contrast over the starfield. */
+#efl-preloader .efl-preloader-scrim {
+  opacity: 0; /* fades in with the artwork */
+  background:
+    linear-gradient(to top, rgba(11, 15, 26, 0.88) 0%, rgba(11, 15, 26, 0.28) 30%, rgba(11, 15, 26, 0) 52%),
+    rgba(11, 15, 26, 0.18);
+}
 /* Hard scroll lock while the intro is pending — CSS so it holds regardless of
    when (or whether) Lenis initializes. Released when the wipe flips the attr. */
 html[data-intro="pending"],
@@ -374,7 +403,7 @@ body::after {
    Dark: brand signal/quantum. Light: the deep fills (#0a84ff on white is
    only ~3.65:1 at 13px, below AA — the deep pair clears it). ─────────── */
 .link-cta { color: var(--color-signal); }
-.link-cta:hover { color: var(--color-quantum); }
+.link-cta:hover { color: var(--color-quantum-text); }
 [data-theme="light"] .link-cta { color: var(--color-signal-deep); }
 [data-theme="light"] .link-cta:hover { color: #0757ab; }
 

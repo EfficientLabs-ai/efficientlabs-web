@@ -1,9 +1,9 @@
 {
   "format": "efl.runtime-score.v1",
-  "generated_at": "2026-06-12T05:05:19.112Z",
+  "generated_at": "2026-06-12T23:00:19.328Z",
   "render_rules": "MEASURED cards render values with verdicts; null cards render 'not measured' with the reason, greyed, in place — the grid shape never changes. Staleness is shown, never hidden.",
   "hero": {
-    "measured": 6,
+    "measured": 5,
     "total": 6,
     "verdict": "YELLOW",
     "method": "worst verdict among measured sub-scores only; the denominator is shown ('N of 6 measured') — the ring never silently fills in for missing data"
@@ -11,14 +11,14 @@
   "scores": {
     "runtime": {
       "label": "MEASURED",
-      "updated_at": "2026-06-12T04:52Z",
+      "updated_at": "2026-06-12T22:36Z",
       "verdict": "YELLOW",
       "inputs": {
         "heartbeat": {
           "color": "YELLOW",
           "fail": 0,
-          "warn": 2,
-          "ok": 25
+          "warn": 4,
+          "ok": 29
         },
         "activation": {
           "production": 13,
@@ -35,7 +35,7 @@
     },
     "continuity": {
       "label": "MEASURED",
-      "updated_at": "2026-06-12T05:05:18.974Z",
+      "updated_at": "2026-06-12T23:00:19.179Z",
       "verdict": "GREEN",
       "inputs": {
         "signed_receipts": 1,
@@ -45,16 +45,8 @@
       "verify": "re-verify the chain yourself: the published bundle at /proof/receipts-bundle.json, in-browser or offline"
     },
     "session": {
-      "label": "MEASURED",
-      "updated_at": "2026-06-12T05:05:19.112Z",
-      "verdict": "GREEN",
-      "inputs": {
-        "level": "HEALTHY",
-        "context_per_request": 120557,
-        "fixed_context_slimming": null
-      },
-      "method": "verdict GREEN when the session-economics checker reports HEALTHY, YELLOW otherwise; context-per-request is the checker's recent average; fixed-context slimming is ESTIMATED pending replication and is therefore null here",
-      "verify": "the operating layer's session-economics checker emits these fields verbatim"
+      "label": null,
+      "reason": "session-economics checker not available on build machine"
     },
     "cost": {
       "label": "MEASURED",
@@ -65,7 +57,7 @@
         "rung1_pct": 48,
         "routed_total": 50,
         "flagship_on_deterministic": 0,
-        "weighted_cache_hit_pct": 96,
+        "weighted_cache_hit_pct": 97.7,
         "dollars": null
       },
       "method": "verdict GREEN when zero deterministic units reached a flagship model, YELLOW otherwise; billing instrumentation is gated so no dollar figure exists anywhere in this artifact",
@@ -73,7 +65,7 @@
     },
     "ownership": {
       "label": "MEASURED",
-      "updated_at": "2026-06-12T05:05:18.974Z",
+      "updated_at": "2026-06-12T23:00:19.179Z",
       "verdict": "GREEN",
       "inputs": {
         "signed_receipts": 1,
@@ -85,7 +77,7 @@
     },
     "agent_readiness": {
       "label": "MEASURED",
-      "updated_at": "2026-06-12T04:52Z",
+      "updated_at": "2026-06-12T22:36Z",
       "verdict": "GREEN",
       "inputs": {
         "components_production": 13,
