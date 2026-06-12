@@ -171,6 +171,10 @@ const SURFACES = [
   "app/stratos/page.tsx",
   "app/architecture/page.tsx",
   "app/install/page.tsx",
+  // Runtime Score lead-magnet page (2026-06-13). The board component
+  // (components/score/*) is a truth renderer like components/proof/* and is
+  // excluded for the same self-trip reason; the PAGE carries marketing copy.
+  "app/score/page.tsx",
   // shared sub-page building blocks that carry marketing copy (added 2026-06-06
   // with the full nav→sub-page wiring). The route pages above pass copy as props
   // to these; we also scan the components themselves for any inline claim text.
