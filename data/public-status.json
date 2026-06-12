@@ -1,15 +1,15 @@
 {
   "format": "efl.public-status.v1",
-  "generated_at": "2026-06-12T23:00:19.085Z",
+  "generated_at": "2026-06-12T23:31:01.457Z",
   "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
   "tiles": {
     "heartbeat": {
       "label": "MEASURED",
-      "updated_at": "2026-06-12T22:36Z",
+      "updated_at": "2026-06-12T23:12Z",
       "color": "YELLOW",
       "fail": 0,
-      "warn": 4,
-      "ok": 29,
+      "warn": 3,
+      "ok": 30,
       "checks": [
         {
           "name": "session-boot ran",
@@ -117,7 +117,7 @@
         },
         {
           "name": "runtime-score artifact fresh",
-          "status": "warn"
+          "status": "ok"
         },
         {
           "name": "dop evolution shadow",
@@ -148,7 +148,7 @@
     },
     "receipts": {
       "label": "MEASURED",
-      "updated_at": "2026-06-12T23:00:19.179Z",
+      "updated_at": "2026-06-12T23:31:01.582Z",
       "count": 1,
       "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
       "bundle_path": "/proof/receipts-bundle.json",
