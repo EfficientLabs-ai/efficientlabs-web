@@ -5,13 +5,20 @@
 // demo is the live status page; no prices in onboarding surfaces.
 import type { RuntimeScore } from "@/lib/runtime-score";
 
-/** The 5-step GET RUNNING checklist — V2 verbatim (checklist, not wizard). */
+/**
+ * The 5-step GET RUNNING checklist. Step semantics are V2's (5 steps; pairing
+ * is the only account-bound one; completion is quiet). COMMANDS are the site's
+ * existing install canon (/install page + docs) — one canonical flow, never
+ * two. The spec's `npm i -g` step-1 wording is under live verification
+ * (quickstart lane); if that lands as the true path, /install and this list
+ * change TOGETHER.
+ */
 export const CHECKLIST = [
-  { n: 1, title: "Install", cmd: "npm i -g @efficientlabs/stratos", note: "user-space, no sudo, nothing auto-starts", sovereign: true },
-  { n: 2, title: "First run", cmd: "stratos", note: "prints this same checklist in your terminal — one source of truth", sovereign: true },
+  { n: 1, title: "Install", cmd: "curl -fsSL https://efficientlabs.ai/install.sh | sh", note: "user-space, no sudo, nothing auto-starts — same command as the install page", sovereign: true },
+  { n: 2, title: "First run", cmd: "stratos init", note: "sets up your node locally; keys are generated on your machine and sealed", sovereign: true },
   { n: 3, title: "Pair your node", cmd: "stratos pair", note: "the ONLY account-bound step — everything else works without one", sovereign: false },
-  { n: 4, title: "First receipt", cmd: "stratos receipt export", note: "run a local task first; the export is your evidence bundle", sovereign: true },
-  { n: 5, title: "Verify it", cmd: "stratos receipt verify bundle.json", note: "or drop the bundle on the web verifier — same check, your browser", sovereign: true },
+  { n: 4, title: "First receipt", cmd: "stratos receipt export", note: "run any local task first — the install page walks a full demo task; the export is your evidence bundle", sovereign: true },
+  { n: 5, title: "Verify it", cmd: "stratos receipt verify bundle.json", note: "or drop the bundle on the web verifier — the same check our status page runs in your browser", sovereign: true },
 ] as const;
 
 /** Self-segmentation — one question, three answers, framing only (the 5 steps never change). */

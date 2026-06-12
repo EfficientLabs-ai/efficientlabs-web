@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-12T19:04:50.531Z",
+  "generatedAt": "2026-06-12T20:03:59.498Z",
   "repos": [
     {
       "key": "web",
       "label": "efficientlabs-web",
       "present": true,
       "commits": 45,
-      "newestAt": "2026-06-12T19:01:39.000Z",
+      "newestAt": "2026-06-12T19:55:44.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web"
     },
     {
@@ -20,14 +20,14 @@
   ],
   "rollups": {
     "totalCommits": 318,
-    "last7Days": 79,
+    "last7Days": 76,
     "last30Days": 318,
     "featuresShipped": 137,
     "activeDays": 8,
     "byType": {
-      "fix": 64,
       "feat": 137,
-      "other": 71,
+      "other": 72,
+      "fix": 63,
       "docs": 29,
       "chore": 8,
       "test": 3,
@@ -38,24 +38,24 @@
   },
   "feed": [
     {
-      "iso": "2026-06-13T03:01:39+08:00",
+      "iso": "2026-06-13T03:55:44+08:00",
       "date": "2026-06-13",
-      "subject": "fix(score): enforce the full render contract (Codex round 1)",
-      "repo": "web",
-      "repoLabel": "efficientlabs-web",
-      "type": "fix",
-      "hash": "51ed440",
-      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/51ed44069532def7380499a96838d4654c523d8e"
-    },
-    {
-      "iso": "2026-06-13T02:54:21+08:00",
-      "date": "2026-06-13",
-      "subject": "feat(score): Runtime Score MVP — /score page, six MEASURED-only sub-scores",
+      "subject": "feat(onboarding): /start journey — grey score aha → one question → GET RUNNING checklist",
       "repo": "web",
       "repoLabel": "efficientlabs-web",
       "type": "feat",
-      "hash": "84aeee8",
-      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/84aeee873c0efe502d7bf38e2e666c5a71f58c0d"
+      "hash": "3b6cf01",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/3b6cf0159a9d9558beb67afe82ead18bbf57af7b"
+    },
+    {
+      "iso": "2026-06-12T15:07:55-04:00",
+      "date": "2026-06-12",
+      "subject": "Runtime Score MVP — /score (six MEASURED-only sub-scores) (#25)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "other",
+      "hash": "66edcd9",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/66edcd90b71735c03cfb7f5198076423c9de60fc"
     },
     {
       "iso": "2026-06-12T08:48:35-04:00",
@@ -841,43 +841,42 @@
   "feedByDate": [
     {
       "date": "2026-06-13",
-      "count": 2,
+      "count": 1,
       "byType": {
-        "fix": 1,
         "feat": 1
       },
       "commits": [
         {
-          "iso": "2026-06-13T03:01:39+08:00",
+          "iso": "2026-06-13T03:55:44+08:00",
           "date": "2026-06-13",
-          "subject": "fix(score): enforce the full render contract (Codex round 1)",
-          "repo": "web",
-          "repoLabel": "efficientlabs-web",
-          "type": "fix",
-          "hash": "51ed440",
-          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/51ed44069532def7380499a96838d4654c523d8e"
-        },
-        {
-          "iso": "2026-06-13T02:54:21+08:00",
-          "date": "2026-06-13",
-          "subject": "feat(score): Runtime Score MVP — /score page, six MEASURED-only sub-scores",
+          "subject": "feat(onboarding): /start journey — grey score aha → one question → GET RUNNING checklist",
           "repo": "web",
           "repoLabel": "efficientlabs-web",
           "type": "feat",
-          "hash": "84aeee8",
-          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/84aeee873c0efe502d7bf38e2e666c5a71f58c0d"
+          "hash": "3b6cf01",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/3b6cf0159a9d9558beb67afe82ead18bbf57af7b"
         }
       ]
     },
     {
       "date": "2026-06-12",
-      "count": 14,
+      "count": 15,
       "byType": {
+        "other": 7,
         "feat": 7,
-        "fix": 1,
-        "other": 6
+        "fix": 1
       },
       "commits": [
+        {
+          "iso": "2026-06-12T15:07:55-04:00",
+          "date": "2026-06-12",
+          "subject": "Runtime Score MVP — /score (six MEASURED-only sub-scores) (#25)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "other",
+          "hash": "66edcd9",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/66edcd90b71735c03cfb7f5198076423c9de60fc"
+        },
         {
           "iso": "2026-06-12T08:48:35-04:00",
           "date": "2026-06-12",

@@ -11,17 +11,22 @@ import { CHECKLIST, SEGMENTS, type SegmentId } from "@/lib/onboarding";
 // Selection lives in localStorage (until the onboarding state API lands) and
 // is read via useSyncExternalStore — SSR renders the unselected state, the
 // client snapshot is the saved choice; no effect, no hydration mismatch.
+// Storage-denied contexts (private mode) fall back to an in-memory value so
+// the selection still WORKS for the session — it just doesn't persist.
 const LS_KEY = "efl-onboarding-segment";
 const listeners = new Set<() => void>();
+let memorySegment: SegmentId | null = null;
 const subscribe = (cb: () => void) => { listeners.add(cb); return () => { listeners.delete(cb); }; };
 const readSegment = (): SegmentId | null => {
   try {
     const v = localStorage.getItem(LS_KEY) as SegmentId | null;
-    return v && SEGMENTS.some((s) => s.id === v) ? v : null;
-  } catch { return null; }
+    if (v && SEGMENTS.some((s) => s.id === v)) return v;
+  } catch { /* storage blocked — memory carries the session */ }
+  return memorySegment;
 };
 const writeSegment = (id: SegmentId) => {
-  try { localStorage.setItem(LS_KEY, id); } catch { /* private mode — selection just doesn't persist */ }
+  memorySegment = id;
+  try { localStorage.setItem(LS_KEY, id); } catch { /* private mode — session-only via memory */ }
   listeners.forEach((l) => l());
 };
 
@@ -32,26 +37,33 @@ export default function StartJourney() {
 
   return (
     <div>
-      {/* ── one question, three answers, no follow-ups ── */}
-      <div className="lm-card p-6" id="segment">
+      {/* ── one question, three answers, no follow-ups — REAL radio semantics
+             (native inputs, visually hidden; labels are the cards) ── */}
+      <fieldset className="lm-card p-6" id="segment">
+        <legend className="sr-only">What are you setting up?</legend>
         <p className="kicker">One question</p>
-        <h3 className="mt-2 text-[17px] text-[color:var(--color-ink)]">What are you setting up?</h3>
+        <h3 className="mt-2 text-[17px] text-[color:var(--color-ink)]" aria-hidden>What are you setting up?</h3>
         <div className="mt-4 flex flex-col gap-2 sm:flex-row">
           {SEGMENTS.map((s) => (
-            <button
+            <label
               key={s.id}
-              type="button"
-              onClick={() => pick(s.id)}
-              aria-pressed={segment === s.id}
               className={
-                "mono flex-1 rounded-[var(--radius-sm)] border px-4 py-3 text-left text-[13px] transition-colors " +
+                "mono flex-1 cursor-pointer rounded-[var(--radius-sm)] border px-4 py-3 text-left text-[13px] transition-colors has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[color:var(--color-signal)] " +
                 (segment === s.id
                   ? "border-[color:var(--color-signal)] text-[color:var(--color-ink)]"
                   : "border-[color:var(--color-line)] text-[color:var(--color-ink-dim)] hover:text-[color:var(--color-ink)]")
               }
             >
+              <input
+                type="radio"
+                name="efl-segment"
+                value={s.id}
+                checked={segment === s.id}
+                onChange={() => pick(s.id)}
+                className="sr-only"
+              />
               {s.label}
-            </button>
+            </label>
           ))}
         </div>
         {active && (
@@ -59,7 +71,7 @@ export default function StartJourney() {
             {active.framing}
           </p>
         )}
-      </div>
+      </fieldset>
 
       {/* ── GET RUNNING — the checklist, terminal idiom (P14/P15) ── */}
       <div className="lm-card mt-3 p-6" id="checklist">
@@ -94,11 +106,13 @@ export default function StartJourney() {
             </li>
           ))}
         </ol>
-        {/* quiet completion — stated, never celebrated */}
+        {/* quiet completion — stated, never celebrated; no per-user score view
+            exists yet, so the copy promises only what step 5 actually proves */}
         <p className="mono mt-4 border-t border-[color:var(--color-line)] pt-3 text-[11px] text-[color:var(--color-ink-faint)]">
-          When step 5 passes: &ldquo;All steps done. Your chain verifies.&rdquo; Then your{" "}
-          <Link href="/score" className="link-cta">Runtime Score</Link> shows its first measured values —
-          the before/after is the whole point.
+          When step 5 passes: &ldquo;All steps done. Your chain verifies.&rdquo; That verified chain is
+          exactly what the grey Continuity and Ownership cards above describe — your node now proves
+          what they ask for. (A per-node scoreboard view ships with the dashboard;{" "}
+          <Link href="/score" className="link-cta">our own node&apos;s board</Link> shows what a lit one looks like.)
         </p>
         {segment === "enterprise" && (
           <p className="mono mt-2 text-[11px] text-[color:var(--color-ink-faint)]">
