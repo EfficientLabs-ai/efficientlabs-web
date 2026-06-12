@@ -1,0 +1,126 @@
+{
+  "format": "efl.runtime-score.v1",
+  "generated_at": "2026-06-12T04:33:30.773Z",
+  "render_rules": "MEASURED cards render values with verdicts; null cards render 'not measured' with the reason, greyed, in place — the grid shape never changes. Staleness is shown, never hidden.",
+  "hero": {
+    "measured": 6,
+    "total": 6,
+    "verdict": "YELLOW",
+    "method": "worst verdict among measured sub-scores only; the denominator is shown ('N of 6 measured') — the ring never silently fills in for missing data"
+  },
+  "scores": {
+    "runtime": {
+      "label": "MEASURED",
+      "updated_at": "2026-06-11T05:47Z",
+      "verdict": "YELLOW",
+      "inputs": {
+        "heartbeat": {
+          "color": "YELLOW",
+          "fail": 0,
+          "warn": 3,
+          "ok": 23
+        },
+        "activation": {
+          "production": 10,
+          "total": 13
+        },
+        "hermetic_ci_gate": {
+          "done": true,
+          "label": "Hermetic CI green across all repos"
+        },
+        "ci_test_counts": null
+      },
+      "method": "verdict = the heartbeat run's own GREEN/YELLOW/RED, emitted verbatim; activation and the hermetic-CI launch gate shown with denominators; CI test COUNTS are not publicly instrumented and stay null",
+      "verify": "the live status page renders the same heartbeat tile — counts match this card"
+    },
+    "continuity": {
+      "label": "MEASURED",
+      "updated_at": "2026-06-11T10:48:33.601Z",
+      "verdict": "GREEN",
+      "inputs": {
+        "signed_receipts": 1,
+        "chain_intact": true
+      },
+      "method": "chain_intact = the publisher's fail-closed Ed25519+ML-DSA-65 chain replay passed (a bundle that fails is never published); verdict GREEN when ≥1 receipt is on the verified chain, YELLOW at 0",
+      "verify": "re-verify the chain yourself: the published bundle at /proof/receipts-bundle.json, in-browser or offline"
+    },
+    "session": {
+      "label": "MEASURED",
+      "updated_at": "2026-06-12T04:33:30.773Z",
+      "verdict": "GREEN",
+      "inputs": {
+        "level": "HEALTHY",
+        "context_per_request": 118706,
+        "fixed_context_slimming": null
+      },
+      "method": "verdict GREEN when the session-economics checker reports HEALTHY, YELLOW otherwise; context-per-request is the checker's recent average; fixed-context slimming is ESTIMATED pending replication and is therefore null here",
+      "verify": "the operating layer's session-economics checker emits these fields verbatim"
+    },
+    "cost": {
+      "label": "MEASURED",
+      "footnote": "cost-discipline proxy (routing) — $ not measured",
+      "updated_at": "2026-06-11T10:30:00Z",
+      "verdict": "GREEN",
+      "inputs": {
+        "rung1_pct": 48.7,
+        "routed_total": 39,
+        "flagship_on_deterministic": 0,
+        "weighted_cache_hit_pct": 96,
+        "dollars": null
+      },
+      "method": "verdict GREEN when zero deterministic units reached a flagship model, YELLOW otherwise; billing instrumentation is gated so no dollar figure exists anywhere in this artifact",
+      "verify": "the live status page's routing tile — histogram recomputable from the counts shown"
+    },
+    "ownership": {
+      "label": "MEASURED",
+      "updated_at": "2026-06-11T10:48:33.601Z",
+      "verdict": "GREEN",
+      "inputs": {
+        "signed_receipts": 1,
+        "chain_intact": true,
+        "export_artifact": "/proof/receipts-bundle.json"
+      },
+      "method": "verdict GREEN when a verified chain with ≥1 receipt is published as a portable bundle a third party can verify offline, YELLOW otherwise",
+      "verify": "download the bundle and run the offline verifier — the verification layer needs no vendor in the loop"
+    },
+    "agent_readiness": {
+      "label": "MEASURED",
+      "updated_at": "2026-06-11T10:40Z",
+      "verdict": "YELLOW",
+      "inputs": {
+        "components_production": 10,
+        "components_total": 13,
+        "hermetic_ci_gate": {
+          "done": true,
+          "label": "Hermetic CI green across all repos"
+        },
+        "rung1_pct": 48.7,
+        "ci_test_counts": null
+      },
+      "method": "verdict GREEN when every component is PRODUCTION and the hermetic-CI gate is done; YELLOW when CI is done and more than half are PRODUCTION; RED otherwise — non-PRODUCTION components are counted, never hidden",
+      "verify": "the live status page's activation matrix lists every component with its honest state"
+    }
+  },
+  "not_measured_registry": [
+    {
+      "what": "dollar cost",
+      "reason": "billing instrumentation gated — ESTIMATED figures exist internally and are never published"
+    },
+    {
+      "what": "fixed-context slimming",
+      "reason": "single-run ESTIMATED — replication needed before it can render as measured"
+    },
+    {
+      "what": "CI test counts",
+      "reason": "test totals are not publicly instrumented; only the hermetic-CI gate's done state is published"
+    },
+    {
+      "what": "nodes-online fleet counts",
+      "reason": "single-node today"
+    },
+    {
+      "what": "workflow completion counts",
+      "reason": "not publicly instrumented"
+    }
+  ]
+}
