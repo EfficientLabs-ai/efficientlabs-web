@@ -36,6 +36,13 @@
   /* brushed-chrome gradient for the wordmark + metallic accents */
   --chrome: linear-gradient(176deg, #ffffff 0%, #e9eef5 22%, #aab4c2 48%, #ffffff 56%, #8d99a8 72%, #dfe6ef 100%);
 
+  /* ── KIT v2 GRADIENT SET — accents for feature surfaces/data viz (sheet §10) ── */
+  --grad-signal:    linear-gradient(135deg, #0a84ff, #3d6cff);
+  --grad-sovereign: linear-gradient(135deg, #6d5df6, #a855f7);
+  --grad-flow:      linear-gradient(135deg, #06b6d4, #22c55e);
+  --grad-depth:     linear-gradient(135deg, #3d6cff, #06b6d4);
+  --grad-ember:     linear-gradient(135deg, #f59e0b, #ef4444);
+
   /* ── GLASS MATERIAL TOKENS (dark defaults) ───────────────────────────
      The translucent fill is white-alpha on dark; the 1px inset top-highlight
      gives the "lit glass edge"; saturate() keeps content behind glass vivid. */

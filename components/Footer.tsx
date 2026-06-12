@@ -2,6 +2,7 @@
 import { Mail, Phone, MapPin, Globe } from "lucide-react";
 import { siGithub, siX } from "simple-icons";
 import { TextHoverEffect, FooterBackgroundGradient } from "@/components/ui/hover-footer";
+import OrbitalMark from "@/components/OrbitalMark";
 
 const COLUMNS = [
   { title: "Platform", links: [["The Atmosphere", "/atmosphere"], ["StratosAgent", "/stratos"], ["Architecture", "/architecture"], ["Honest status", "/status"], ["Updates", "/updates"]] },
@@ -29,7 +30,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-12 pb-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-16">
           {/* brand */}
           <div className="flex flex-col gap-4">
-            <span className="wordmark items-start">
+            <span className="wordmark items-center gap-2.5">
+              <OrbitalMark size={26} pulse={false} />
               <span className="wm-text" style={{ fontSize: 16, letterSpacing: "0.16em" }}>Efficient&nbsp;Labs</span>
             </span>
             {/* brand pillars — kit v2 lockup subline */}
