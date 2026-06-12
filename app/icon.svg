@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Efficient Labs favicon — brand kit v2 mark on the dark tile -->
+  <rect width="64" height="64" rx="14" fill="#0b0f1a"/>
+  <g transform="translate(8 8)">
+    <circle cx="24" cy="24" r="20" fill="none" stroke="#c0c7d2" stroke-width="2" opacity="0.6"/>
+    <ellipse cx="24" cy="24" rx="19" ry="9.5" fill="none" stroke="#c0c7d2" stroke-width="2" transform="rotate(45 24 24)" opacity="0.85"/>
+    <ellipse cx="24" cy="24" rx="19" ry="9.5" fill="none" stroke="#0a84ff" stroke-width="2" transform="rotate(-45 24 24)"/>
+    <path d="M24 15.2 C25.7 20.4 27.6 22.3 32.8 24 C27.6 25.7 25.7 27.6 24 32.8 C22.3 27.6 20.4 25.7 15.2 24 C20.4 22.3 22.3 20.4 24 15.2 Z" fill="#0a84ff"/>
+    <circle cx="38.1" cy="9.9" r="2.2" fill="#3d6cff"/>
+  </g>
+</svg>
