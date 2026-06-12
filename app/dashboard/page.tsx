@@ -9,7 +9,7 @@ const CARDS = [
   { icon: Cpu, title: "StratosAgent", body: "Your agent's live status, recent runs, and cost-approval queue.", stat: "—", hint: "offline" },
   { icon: Boxes, title: "Your mesh", body: "Nodes paired into your private P2P mesh, pooling compute.", stat: "0 / 2", hint: "free tier" },
   { icon: TerminalSquare, title: "Install", body: "Bring a new device online in two commands.", stat: "↗", hint: "quickstart", href: "/#install" },
-  { icon: KeyRound, title: "BYOK keys", body: "Your model keys, sealed locally — never leave your machine.", stat: "—", hint: "add a key" },
+  { icon: KeyRound, title: "Your own AI accounts", body: "Your model keys, sealed locally — never leave your machine.", stat: "—", hint: "add a key" },
   { icon: MessageSquare, title: "Channels", body: "Telegram, Discord, Slack, Matrix, Signal — one agent, every inbox.", stat: "5", hint: "available" },
   { icon: CreditCard, title: "Plan", body: "Sovereign (Free). Pool more devices on Pro.", stat: "Free", hint: "upgrade", href: "/pricing" },
 ];

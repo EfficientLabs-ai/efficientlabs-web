@@ -125,7 +125,7 @@ export default function InstallPage() {
         index="03"
         kicker="Requirements"
         title="What you need to run a node"
-        lede="Modest. A node is meant to run on the hardware you already own — a laptop is enough to get started. The frontier cloud is optional and bring-your-own-key."
+        lede="Modest. A node is meant to run on the hardware you already own — a laptop is enough to get started. The frontier cloud is optional — your own account, your key."
       >
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           <DeepCard icon={Server} title="OS + Node.js">
@@ -141,7 +141,7 @@ export default function InstallPage() {
             light work resolves anywhere.
           </DeepCard>
           <DeepCard icon={KeyRound} title="Frontier key (optional)">
-            Only needed if you want cloud escalation. It&apos;s bring-your-own-key, gated by cost, and
+            Only needed if you want cloud escalation. It uses your own AI account — your key, your bill — gated by cost, and
             never the default.
           </DeepCard>
         </div>

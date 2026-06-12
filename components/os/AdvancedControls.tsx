@@ -187,9 +187,9 @@ const GROUPS: Group[] = [
         capName: "Local ⇄ cloud language routing",
       },
       {
-        name: "BYOK cost gate",
+        name: "Cost gate (your own AI accounts)",
         detail: "Spend ceiling enforced before any request leaves the machine.",
-        capName: "BYOK cost gate",
+        capName: "Cost gate (your own AI accounts)",
       },
       {
         name: "Speech & vision routing",

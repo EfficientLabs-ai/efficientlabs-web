@@ -69,7 +69,7 @@ export default function StratosAgent() {
             <ul className="mt-8 space-y-3">
               {[
                 ["Local-first", "Coding and routine work never leave your machine."],
-                ["Cost-aware", "It asks before it spends a cent of your BYOK budget."],
+                ["Cost-aware", "It asks before it spends a cent of your own AI budget."],
                 ["Sovereign", "No landlord can read it, throttle it, or switch it off."],
               ].map(([h, d]) => (
                 <li key={h} className="flex items-start gap-3">
