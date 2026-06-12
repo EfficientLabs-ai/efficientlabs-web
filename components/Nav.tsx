@@ -2,7 +2,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Wordmark from "@/components/Wordmark";
+import OrbitalMark from "@/components/OrbitalMark";
 import ThemeToggle from "@/components/ThemeToggle";
+import { getLenis } from "@/lib/lenis-store";
 
 const NAV = [
   ["The Atmosphere", "/atmosphere"],
@@ -24,10 +26,18 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll while the mobile sheet is open.
+  // Lock scroll while the mobile sheet is open — both the native overflow
+  // lock AND the Lenis root smoother (which would otherwise keep consuming
+  // wheel/touch input behind the sheet).
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    const lenis = getLenis();
+    if (open) lenis?.stop();
+    else lenis?.start();
+    return () => {
+      document.body.style.overflow = "";
+      getLenis()?.start();
+    };
   }, [open]);
 
   const opaque = scrolled || open;
@@ -41,7 +51,8 @@ export default function Nav() {
         }
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-          <Link href="/" onClick={() => setOpen(false)} className="group flex items-center transition-transform hover:scale-[1.02]">
+          <Link href="/" onClick={() => setOpen(false)} className="group flex items-center gap-2.5 transition-transform hover:scale-[1.02]">
+            <OrbitalMark size={22} />
             <Wordmark size={17} tracking="0.16em" />
           </Link>
 
@@ -87,8 +98,10 @@ export default function Nav() {
         </nav>
       </div>
 
-      {/* Mobile dropdown sheet */}
+      {/* Mobile dropdown sheet — data-lenis-prevent keeps any scrolling inside
+          the sheet native even if the root smoother is mid-frame. */}
       <div
+        data-lenis-prevent
         className="overflow-hidden transition-[max-height,opacity] duration-300 md:hidden"
         style={{
           maxHeight: open ? "420px" : "0px",

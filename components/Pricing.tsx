@@ -25,7 +25,7 @@ type Tier = {
 // on every tier; rewards/payouts NOT live (counsel-gated). Free = install, no card.
 const TIERS: Tier[] = [
   {
-    name: "Free",
+    name: "Free Forever",
     layer: "Troposphere",
     tagline: "Ground level. Run it on your own hardware, sovereign and DIY.",
     fixedPrice: "$0",
@@ -40,7 +40,7 @@ const TIERS: Tier[] = [
     ],
   },
   {
-    name: "Pro",
+    name: "Exos Pro",
     layer: "Stratosphere",
     tagline: "Above the clouds — where StratosAgent flies.",
     monthly: 20,
@@ -49,7 +49,7 @@ const TIERS: Tier[] = [
       monthly: "https://buy.stripe.com/eVq9AS5d13Bw56wbNg3AY0r",
       annual: "https://buy.stripe.com/14AdR8dJxb3Y2YobNg3AY0u",
     },
-    cta: { label: "Start Pro" },
+    cta: { label: "Start Exos Pro" },
     featured: true,
     features: [
       "Up to 5 meshed nodes — pool compute & RAM",
@@ -61,16 +61,16 @@ const TIERS: Tier[] = [
     ],
   },
   {
-    name: "Builder",
+    name: "Apex",
     layer: "Mesosphere",
-    tagline: "Power tier (Max) — the biggest models, the full skill library.",
+    tagline: "Power tier — the biggest models, the full skill library.",
     monthly: 100,
     annual: 1000,
     links: {
       monthly: "https://buy.stripe.com/00w4gy6h51to42s04y3AY0s",
       annual: "https://buy.stripe.com/eVq5kC48X0pk9mM9F83AY0v",
     },
-    cta: { label: "Start Builder" },
+    cta: { label: "Start Apex" },
     features: [
       "Higher node limits — build a real personal mesh",
       "Priority scheduling for the largest local models",
@@ -80,7 +80,21 @@ const TIERS: Tier[] = [
     ],
   },
   {
-    name: "Team",
+    name: "Apex Max",
+    layer: "Ionosphere",
+    tagline: "The ceiling — Apex pushed to its maximum.",
+    fixedPrice: "—",
+    fixedCadence: "pricing TBD",
+    cta: { label: "Talk to us", href: "mailto:hello@efficientlabs.ai?subject=Apex%20Max" },
+    features: [
+      "Everything in Apex",
+      "Maximum node limits for a personal mesh",
+      "First-priority scheduling for the largest local models",
+      "Early access to new capabilities as they land",
+    ],
+  },
+  {
+    name: "Teams",
     layer: "Thermosphere",
     tagline: "One mesh across the whole team's hardware.",
     monthly: 30,
@@ -90,9 +104,9 @@ const TIERS: Tier[] = [
       monthly: "https://buy.stripe.com/00w4gy8pddc656wbNg3AY0t",
       annual: "https://buy.stripe.com/8x26oG6h50pk42s5oS3AY0w",
     },
-    cta: { label: "Start Team" },
+    cta: { label: "Start Teams" },
     features: [
-      "Everything in Builder",
+      "Everything in Apex Max",
       "Multi-user mesh orchestration (min. 5 seats)",
       "Shared skills, connectors & RAG across devices",
       "Role-based access control + audit logs",
@@ -106,7 +120,7 @@ const TIERS: Tier[] = [
     fixedPrice: "Custom",
     cta: { label: "Contact sales", href: "mailto:hello@efficientlabs.ai?subject=Enterprise%20early%20access" },
     features: [
-      "Everything in Team",
+      "Everything in Teams",
       "On-prem & air-gapped private mesh",
       "HIPAA / SOC 2 / data-residency support",
       "Private capability registry + commercial license",
@@ -180,7 +194,7 @@ export default function Pricing() {
           </div>
         </Reveal>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {TIERS.map((t, i) => {
             const paid = t.monthly != null && t.annual != null && t.links;
             const price = paid ? (annual ? t.annual! : t.monthly!) : null;
@@ -257,8 +271,33 @@ export default function Pricing() {
           })}
         </div>
 
+        {/* ── ATMOS CREDITS — the expansion layer, never the meter ───────── */}
+        <Reveal>
+          <div className="lm-card mt-8 gap-6 p-6 md:flex md:items-center md:justify-between">
+            <div className="max-w-2xl">
+              <p className="kicker">Need extra compute?</p>
+              <h3 className="t-card mt-2">Atmos Credits</h3>
+              <p className="mt-2 text-[13px] leading-relaxed text-[color:var(--color-ink-dim)]">
+                Credits can come from node participation, distributed compute contribution,
+                your subscription&apos;s allocation, or direct purchase — pay-as-you-go later.
+                Compute is an expansion layer, never the business model: your tier is flat,
+                and credits only ever buy <em>more</em>, not access.
+              </p>
+              <p className="mono mt-2 text-[11px] text-[color:var(--color-ink-faint)]">
+                Credits are tracked today; redemption is not live (counsel-gated).
+              </p>
+            </div>
+            <a
+              href="mailto:hello@efficientlabs.ai?subject=Atmos%20Credits"
+              className="btn-outline mt-5 shrink-0 text-[13px] md:mt-0"
+            >
+              Ask about credits <span aria-hidden>→</span>
+            </a>
+          </div>
+        </Reveal>
+
         <p className="mono mt-10 text-center text-[12px] text-[color:var(--color-ink-faint)]">
-          Annual saves 2 months · no per-token billing · no egress fees · no lock-in · cancel anytime.
+          StratosAgent is free forever. Annual saves 2 months · no per-token billing · no egress fees · no lock-in · cancel anytime.
           <br />
           Early access — features open as they land. Contribution tracking is active across all tiers;
           the rewards / payout layer is not live (counsel-gated, no return promised).

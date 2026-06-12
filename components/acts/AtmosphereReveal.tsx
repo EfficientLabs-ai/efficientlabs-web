@@ -90,7 +90,7 @@ export default function AtmosphereReveal() {
         const apex = earth.apex;
         // deep-space → atmosphere wash above the limb
         const g = ctx!.createLinearGradient(0, apex, 0, apex - h * 0.6);
-        g.addColorStop(0, `rgba(46,139,255,${0.42 * skyA})`);
+        g.addColorStop(0, `rgba(10,132,255,${0.42 * skyA})`);
         g.addColorStop(0.5, `rgba(40,110,200,${0.12 * skyA})`);
         g.addColorStop(1, "rgba(1,2,7,0)");
         ctx!.fillStyle = g; ctx!.fillRect(0, 0, w, apex + 2);
@@ -103,8 +103,8 @@ export default function AtmosphereReveal() {
           const bw2 = w * 0.075;
           const bg = ctx!.createLinearGradient(0, apex, 0, apex - h * 0.5);
           bg.addColorStop(0, `rgba(130,205,255,${0.18 * skyA * flick})`);
-          bg.addColorStop(0.5, `rgba(46,139,255,${0.08 * skyA * flick})`);
-          bg.addColorStop(1, "rgba(46,139,255,0)");
+          bg.addColorStop(0.5, `rgba(10,132,255,${0.08 * skyA * flick})`);
+          bg.addColorStop(1, "rgba(10,132,255,0)");
           ctx!.fillStyle = bg; ctx!.fillRect(bx - bw2 / 2, apex - h * 0.5, bw2, h * 0.5);
         }
         ctx!.filter = "none"; ctx!.restore();
@@ -185,7 +185,7 @@ export default function AtmosphereReveal() {
             const red = (i + g + d) % 7 === 0;
             ctx!.fillStyle = red
               ? `rgba(255,90,70,${(blink ? 0.95 : 0.3) * a})`
-              : `rgba(91,200,255,${(blink ? 0.9 : 0.22) * a})`;
+              : `rgba(61,177,255,${(blink ? 0.9 : 0.22) * a})`;
             ctx!.fillRect(lx, ly - 0.9, 2.4, 1.8);
           }
         }
@@ -195,7 +195,7 @@ export default function AtmosphereReveal() {
       // ── the world mesh: sovereign nodes spread around the curved world
       if (skyA > 0.02) {
         const link = (a: { x: number; y: number }, b: { x: number; y: number }, lift: number) => {
-          ctx!.strokeStyle = `rgba(91,200,255,${0.24 * skyA})`; ctx!.lineWidth = 0.8;
+          ctx!.strokeStyle = `rgba(61,177,255,${0.24 * skyA})`; ctx!.lineWidth = 0.8;
           const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2 - lift;
           ctx!.beginPath(); ctx!.moveTo(a.x, a.y); ctx!.quadraticCurveTo(mx, my, b.x, b.y); ctx!.stroke();
           const tt = (t * 0.5 + a.x * 0.0013) % 1;
@@ -220,7 +220,7 @@ export default function AtmosphereReveal() {
 
         // transparent sovereign nodes
         const drawNode = (n: { x: number; y: number }, r: number) => {
-          ctx!.fillStyle = `rgba(46,139,255,${0.14 * skyA})`; ctx!.beginPath(); ctx!.arc(n.x, n.y, r * 2.2, 0, 6.28); ctx!.fill();
+          ctx!.fillStyle = `rgba(10,132,255,${0.14 * skyA})`; ctx!.beginPath(); ctx!.arc(n.x, n.y, r * 2.2, 0, 6.28); ctx!.fill();
           ctx!.strokeStyle = `rgba(120,200,255,${0.85 * skyA})`; ctx!.lineWidth = 1; ctx!.beginPath(); ctx!.arc(n.x, n.y, r, 0, 6.28); ctx!.stroke();
         };
         orbitN.forEach((n) => drawNode(n, 3));

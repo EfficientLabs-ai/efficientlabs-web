@@ -40,7 +40,7 @@ export const ACCENTS: Record<
   OsAccent,
   { label: string; signal: string; signalDeep: string }
 > = {
-  azure: { label: "Azure", signal: "#2e8bff", signalDeep: "#1769db" },
+  azure: { label: "Azure", signal: "#0a84ff", signalDeep: "#0868cc" },
   cyan: { label: "Cyan", signal: "#22b8d6", signalDeep: "#0e93b0" },
   violet: { label: "Violet", signal: "#7c6cff", signalDeep: "#5a47e6" },
 };

@@ -1,15 +1,15 @@
 {
   "format": "efl.public-status.v1",
-  "generated_at": "2026-06-11T13:19:37.345Z",
+  "generated_at": "2026-06-12T05:05:18.874Z",
   "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
   "tiles": {
     "heartbeat": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T13:14Z",
+      "updated_at": "2026-06-12T04:52Z",
       "color": "YELLOW",
       "fail": 0,
       "warn": 2,
-      "ok": 24,
+      "ok": 25,
       "checks": [
         {
           "name": "session-boot ran",
@@ -113,6 +113,10 @@
         },
         {
           "name": "session economics",
+          "status": "ok"
+        },
+        {
+          "name": "runtime-score artifact fresh",
           "status": "warn"
         }
       ],
@@ -120,7 +124,7 @@
     },
     "receipts": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T13:19:37.425Z",
+      "updated_at": "2026-06-12T05:05:18.974Z",
       "count": 1,
       "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
       "bundle_path": "/proof/receipts-bundle.json",
@@ -128,25 +132,25 @@
     },
     "routing": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T13:40Z",
-      "total": 45,
+      "updated_at": "2026-06-12T01:00Z",
+      "total": 50,
       "rungs": {
-        "1": 21,
+        "1": 24,
         "3": 1,
         "5": 2,
-        "7": 5,
-        "8": 16
+        "7": 6,
+        "8": 17
       },
-      "rung1_pct": 46.7,
-      "flagship_used": 16,
-      "flagship_avoided": 29,
+      "rung1_pct": 48,
+      "flagship_used": 17,
+      "flagship_avoided": 33,
       "flagship_on_deterministic": 0,
       "method": "self-attested routing log, script-counted — counted units, not an independent audit",
       "verify": "published artifact — histogram recomputable from the counts shown"
     },
     "intelligence": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T12:46Z",
+      "updated_at": "2026-06-12T04:52Z",
       "counters": {
         "context_nodes": {
           "value": 512,
@@ -193,15 +197,15 @@
           "label": "MEASURED"
         },
         "archive_items": {
-          "value": 45,
+          "value": 48,
           "label": "MEASURED"
         },
         "archive_retrievals": {
-          "value": 19,
+          "value": 25,
           "label": "MEASURED"
         },
         "archive_retrievals_logged": {
-          "value": 19,
+          "value": 25,
           "label": "MEASURED"
         },
         "idea_edge_density": {
@@ -225,7 +229,7 @@
           "label": null
         },
         "script_tasks_rung1": {
-          "value": 20,
+          "value": 24,
           "label": "MEASURED"
         },
         "cheap_worker_tasks": {
@@ -233,15 +237,15 @@
           "label": "MEASURED"
         },
         "codex_verifications": {
-          "value": 5,
+          "value": 6,
           "label": "MEASURED"
         },
         "fable_calls_used": {
-          "value": 14,
+          "value": 17,
           "label": "MEASURED"
         },
         "fable_calls_avoided": {
-          "value": 28,
+          "value": 33,
           "label": "MEASURED"
         },
         "fable_on_deterministic_work": {
@@ -290,7 +294,7 @@
     },
     "activation": {
       "label": "MEASURED",
-      "updated_at": "2026-06-11T12:45Z",
+      "updated_at": "2026-06-12T04:52Z",
       "production": 13,
       "total": 13,
       "components": [
@@ -361,6 +365,91 @@
         }
       ],
       "verify": "published artifact — non-PRODUCTION components are listed with their honest state"
+    },
+    "readiness": {
+      "label": "MEASURED",
+      "updated_at": "2026-06-12T01:00Z",
+      "overall_pct": 79.8,
+      "pillars": {
+        "launch_gates": {
+          "pct": 66.7,
+          "done": 8,
+          "total": 12
+        },
+        "operating_components": {
+          "pct": 100,
+          "production": 13,
+          "total": 13
+        },
+        "product_capabilities": {
+          "pct": 72.7,
+          "counted": 22
+        }
+      },
+      "gates": [
+        {
+          "id": "gate1-trust-substrate",
+          "label": "Trust substrate live on the node (capability gate · attribution ledger · identity broker)",
+          "done": true
+        },
+        {
+          "id": "independent-install",
+          "label": "Independent install verified on a clean machine (receipt produced + verified)",
+          "done": true
+        },
+        {
+          "id": "hermetic-ci",
+          "label": "Hermetic CI green across all repos",
+          "done": true
+        },
+        {
+          "id": "gate2-pairing",
+          "label": "Owner identity + device pairing ceremony (no blind trust in either direction)",
+          "done": true
+        },
+        {
+          "id": "gate2b-enforcement",
+          "label": "Mesh-side pairing enforcement + revocation",
+          "done": true
+        },
+        {
+          "id": "website-proof-layer",
+          "label": "Status proof layer live on the site (verify our receipts in your browser)",
+          "done": true
+        },
+        {
+          "id": "apex-domain-current",
+          "label": "Primary domain serves the current production build",
+          "done": true
+        },
+        {
+          "id": "status-publisher-automated",
+          "label": "Status telemetry publishes on an automated schedule",
+          "done": true
+        },
+        {
+          "id": "public-proof-publish",
+          "label": "Public proof pack reviewed and published",
+          "done": false
+        },
+        {
+          "id": "pricing-approved",
+          "label": "Pricing published",
+          "done": false
+        },
+        {
+          "id": "npm-provenance",
+          "label": "Package publish provenance",
+          "done": false
+        },
+        {
+          "id": "billing-telemetry",
+          "label": "Billing-grade savings telemetry",
+          "done": false
+        }
+      ],
+      "method": "mean of three published pillars: launch gates done/total · operating components at PRODUCTION/total · capability matrix weighted live=1/wired=.75/config=.5/standalone=.4/mock=0",
+      "verify": "published artifact — recompute from the gate list below + the activation matrix + the L0–L5 capability matrix on this page"
     }
   }
 }

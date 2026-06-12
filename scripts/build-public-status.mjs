@@ -127,12 +127,17 @@ function canonical(v) {
   return "{" + Object.keys(v).sort().map((k) => JSON.stringify(k) + ":" + canonical(v[k])).join(",") + "}";
 }
 const sha256hex = (s) => createHash("sha256").update(s).digest("hex");
-const receiptBody = (r) => ({
-  receipt_id: r.receipt_id, ts: r.ts, actor_id: r.actor_id, action: r.action,
-  ref: r.ref, node_id: r.node_id, owner_wallet: r.owner_wallet ?? null,
-  input_hash: r.input_hash, output_hash: r.output_hash, cost_units: r.cost_units,
-  caller_id: r.caller_id ?? null, prev_hash: r.prev_hash,
-});
+const receiptBody = (r) => {
+  // Legacy v0 (mirrors the node): owner_wallet only when the key is PRESENT on the stored receipt.
+  const body = {
+    receipt_id: r.receipt_id, ts: r.ts, actor_id: r.actor_id, action: r.action,
+    ref: r.ref, node_id: r.node_id,
+    input_hash: r.input_hash, output_hash: r.output_hash, cost_units: r.cost_units,
+    caller_id: r.caller_id ?? null, prev_hash: r.prev_hash,
+  };
+  if (Object.hasOwn(r, "owner_wallet")) body.owner_wallet = r.owner_wallet ?? null;
+  return body;
+};
 function replayChain(bundle) {
   if (!bundle || !Array.isArray(bundle.receipts)) return { ok: false, reason: "malformed bundle" };
   if (!bundle.public_key?.ed25519Der || !bundle.public_key?.mldsaDer) {
@@ -337,6 +342,55 @@ function readActivation() {
   };
 }
 
+/* ── 7 · launch readiness (the "how close to production" number) ────────── */
+// THE FORMULA IS THE TILE (claim discipline — a readiness % is only honest if the
+// method is printed and every input is a published artifact):
+//   pillar A = launch gates done/total            (operating layer's LAUNCH_GATES.json)
+//   pillar B = operating components PRODUCTION/total (completion check)
+//   pillar C = product capability score            (site's own status.json:
+//              live=1 · wired=0.75 · config=0.5 · standalone=0.4 · mock=0)
+//   readiness = mean(A, B, C) — unweighted, stated, recomputable by anyone.
+const CAP_WEIGHT = { live: 1, wired: 0.75, config: 0.5, standalone: 0.4, mock: 0 };
+function readReadiness(activation) {
+  const gatesFile = OPS && existsSync(join(OPS, 'LAUNCH_GATES.json')) ? join(OPS, 'LAUNCH_GATES.json') : null;
+  if (!gatesFile) return notMeasured('launch-gates source not present on build machine');
+  let gates;
+  try { gates = JSON.parse(readFileSync(gatesFile, 'utf8')); } catch { return notMeasured('launch-gates file unparseable'); }
+  if (!Array.isArray(gates.gates) || !gates.gates.length) return notMeasured('launch-gates file empty');
+  if (gates.gates.some((g) => typeof g.public_label !== 'string' || !g.public_label)) {
+    return notMeasured('a launch gate lacks public_label — refusing to publish internal gate text (fail-closed)');
+  }
+  const done = gates.gates.filter((g) => g.done === true);
+  const pillarGates = done.length / gates.gates.length;
+
+  if (activation.label !== 'MEASURED' || !activation.total) return notMeasured('activation matrix unavailable — readiness needs all three pillars');
+  const pillarOps = activation.production / activation.total;
+
+  let capScore = 0, capCount = 0;
+  try {
+    const site = JSON.parse(readFileSync(join(ROOT, 'data/status.json'), 'utf8'));
+    for (const layer of site.layers) for (const cap of layer.caps) { capScore += CAP_WEIGHT[cap.level] ?? 0; capCount += 1; }
+  } catch { return notMeasured('site capability matrix unreadable — readiness needs all three pillars'); }
+  const pillarCaps = capScore / capCount;
+
+  const pct = (x) => Math.round(x * 1000) / 10;
+  return {
+    label: 'MEASURED',
+    updated_at: gates.updated_at || null,
+    overall_pct: pct((pillarGates + pillarOps + pillarCaps) / 3),
+    pillars: {
+      launch_gates: { pct: pct(pillarGates), done: done.length, total: gates.gates.length },
+      operating_components: { pct: pct(pillarOps), production: activation.production, total: activation.total },
+      product_capabilities: { pct: pct(pillarCaps), counted: capCount },
+    },
+    // PUBLIC labels only (Codex finding): the internal label/evidence fields carry roadmap/process
+    // language that must not ship. Fail closed: a gate without a public_label blocks the tile.
+    gates: gates.gates.map((g) => ({ id: g.id, label: g.public_label, done: !!g.done })),
+    method: 'mean of three published pillars: launch gates done/total · operating components at PRODUCTION/total · capability matrix weighted live=1/wired=.75/config=.5/standalone=.4/mock=0',
+    verify: 'published artifact — recompute from the gate list below + the activation matrix + the L0–L5 capability matrix on this page',
+  };
+}
+
 /* ── anonymization gate (fail-closed, before any write) ─────────────────── */
 // Scans the SERIALIZED artifacts for secret shapes + internal identifiers.
 // Patterns mirror the org's pre-publish anonymization gate. Any hit = abort.
@@ -362,6 +416,7 @@ function anonymizationGate(name, text) {
 
 /* ── main ───────────────────────────────────────────────────────────────── */
 const { tile: receipts, bundle } = readReceipts();
+const activationTile = readActivation();
 const status = {
   format: "efl.public-status.v1",
   generated_at: NOW,
@@ -372,7 +427,8 @@ const status = {
     routing: readRouting(),
     intelligence: readIntelligence(),
     economics: readEconomics(),
-    activation: readActivation(),
+    activation: activationTile,
+    readiness: readReadiness(activationTile),
   },
 };
 

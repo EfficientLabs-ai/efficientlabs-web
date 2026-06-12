@@ -52,6 +52,16 @@ export type ActivationTile = TileBase & {
   total?: number;
   components?: { name: string; verdict: "PASS" | "PARTIAL" | "FAIL"; status: string }[];
 };
+export type ReadinessTile = TileBase & {
+  overall_pct?: number;
+  pillars?: {
+    launch_gates: { pct: number; done: number; total: number };
+    operating_components: { pct: number; production: number; total: number };
+    product_capabilities: { pct: number; counted: number };
+  };
+  gates?: { id: string; label: string; done: boolean }[];
+  method?: string;
+};
 
 export type PublicStatus = {
   format: string;
@@ -64,10 +74,35 @@ export type PublicStatus = {
     intelligence: IntelligenceTile;
     economics: EconomicsTile;
     activation: ActivationTile;
+    readiness: ReadinessTile;
   };
 };
 
+// The committed artifact is the BUILD-TIME baseline + the fallback.
 export const PUBLIC_STATUS = data as PublicStatus;
+
+// The VPS cron pushes fresh artifacts to the `status-artifacts` branch (STATUS_PUBLISHER_CRON.md).
+// getLiveStatus() fetches that at request time (ISR) so /status reflects the operating layer as it
+// is RIGHT NOW, not as it was at the last deploy — without committing to main or redeploying.
+// Fail-safe: any fetch/parse problem, or a payload that isn't our format, falls back to the
+// committed baseline — never a blank page, never a fabricated number.
+const LIVE_STATUS_URL =
+  process.env.NEXT_PUBLIC_STATUS_FEED_URL ||
+  "https://raw.githubusercontent.com/EfficientLabs-ai/efficientlabs-web/status-artifacts/data/public-status.json";
+
+export async function getLiveStatus(): Promise<PublicStatus> {
+  try {
+    const res = await fetch(LIVE_STATUS_URL, { next: { revalidate: 300 } });
+    if (!res.ok) return PUBLIC_STATUS;
+    const live = (await res.json()) as PublicStatus;
+    if (live?.format === PUBLIC_STATUS.format && live?.tiles && typeof live.generated_at === "string") {
+      return live;
+    }
+    return PUBLIC_STATUS;
+  } catch {
+    return PUBLIC_STATUS;
+  }
+}
 
 /** Hours since a tile's source updated; null when the tile carries no stamp. */
 export function ageHours(updatedAt: string | null | undefined, now = Date.now()): number | null {

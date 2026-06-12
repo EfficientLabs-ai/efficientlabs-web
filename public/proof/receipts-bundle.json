@@ -1,6 +1,6 @@
 {
   "format": "stratos.capability-receipts.v1",
-  "exported_at": 1781183977425,
+  "exported_at": 1781240718974,
   "node_id": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
   "public_key": {
     "x25519Der": "MCowBQYDK2VuAyEAqTznazYQXs+VK+o4ZVw3hegviXovVyqsWhViYJrrW38=",
@@ -16,12 +16,12 @@
       "action": "skill-run",
       "ref": "2026-06-10",
       "node_id": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
-      "owner_wallet": null,
       "input_hash": "e27a506d7886c5703f5631dc9e0bc41632e36e057604c419807f8a18fc70a8ba",
       "output_hash": "786540c07a4328412280be8e415545a8641686a9087b026628a91f3a91143dfa",
       "cost_units": 0,
       "caller_id": null,
       "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "owner_wallet": null,
       "hash": "320e43cd8dc4b418309b50f81da656cf529c3a71c265b1600429087f85f038e5",
       "sig": {
         "ed25519Sig": "fr4VzHpr90gMncBBuwLEqyBHB4SyxRTT6stSJTPbJBLdlsLtBeLJLbZtlr6w+YmTjLtLK7knnaOnyXGmlG9CCw==",
