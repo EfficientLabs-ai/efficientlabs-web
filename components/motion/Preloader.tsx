@@ -41,6 +41,7 @@ export default function Preloader() {
 
       registerMotion();
       let cancelled = false;
+      let finishing = false; // wipe timeline started — a late decode() must not fade the art in
 
       // Brand art: kick off the fetch now (pending confirmed), reveal on decode.
       const art = root.querySelector<HTMLImageElement>(".efl-preloader-art img");
@@ -53,7 +54,7 @@ export default function Preloader() {
         art
           .decode()
           .then(() => {
-            if (cancelled) return;
+            if (cancelled || finishing) return;
             if (document.documentElement.getAttribute("data-intro") !== "pending") return;
             gsap.to([art, scrim].filter(Boolean), { opacity: 1, duration: 0.6, ease: EASE.out });
           })
@@ -93,6 +94,7 @@ export default function Preloader() {
         hardCap,
       ]).then(() => {
         if (cancelled) return;
+        finishing = true;
         drift.kill();
         const tl = gsap.timeline();
         tl.to(counter, { v: 100, duration: 0.25, ease: "none", snap: { v: 1 }, onUpdate: print });

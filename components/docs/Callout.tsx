@@ -6,7 +6,7 @@ type Variant = "note" | "tip" | "warning" | "planned";
 
 const CONFIG: Record<Variant, { icon: typeof Info; accent: string; label: string }> = {
   note: { icon: Info, accent: "var(--color-ink-dim)", label: "Note" },
-  tip: { icon: Lightbulb, accent: "var(--color-quantum)", label: "Tip" },
+  tip: { icon: Lightbulb, accent: "var(--color-quantum-text)", label: "Tip" },
   warning: { icon: TriangleAlert, accent: "#f5b94a", label: "Warning" },
   planned: { icon: Clock, accent: "var(--color-signal)", label: "Planned" },
 };

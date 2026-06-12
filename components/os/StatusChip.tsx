@@ -46,7 +46,7 @@ export default function StatusChip({
   const style =
     t === "coming"
       ? {
-          color: "var(--color-quantum)",
+          color: "var(--color-quantum-text)",
           background: "color-mix(in oklab, var(--color-quantum) 10%, transparent)",
           border: "1px solid color-mix(in oklab, var(--color-quantum) 30%, transparent)",
         }

@@ -11,7 +11,7 @@ const LIFECYCLE: Record<string, string> = {
   PARTIAL: "#ff9f6e",
   WIRED: "#86c5ff",
   ENFORCED: "#c9a24b",
-  MEASURED: "#3d6cff",
+  MEASURED: "#5b82ff", // quantum-text lift — this hex colors 10px pill TEXT (AA)
   PRODUCTION: "#3fd68f",
 };
 const pillColor = (status: string) =>

@@ -24,7 +24,7 @@ export default function HolePunch() {
           {/* DHT rendezvous */}
           <g>
             <ellipse cx={260} cy={48} rx={70} ry={26} fill="#0a0c12" stroke="#1a2330" />
-            <text x={260} y={44} textAnchor="middle" className="mono" fontSize="10" fill="#3d6cff">Hyperswarm</text>
+            <text x={260} y={44} textAnchor="middle" className="mono" fontSize="10" fill="var(--color-quantum-text)">Hyperswarm</text>
             <text x={260} y={58} textAnchor="middle" className="mono" fontSize="9" fill="#5b6675">DHT rendezvous</text>
           </g>
 
