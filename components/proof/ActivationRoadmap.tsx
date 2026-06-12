@@ -11,7 +11,7 @@ const LIFECYCLE: Record<string, string> = {
   PARTIAL: "#ff9f6e",
   WIRED: "#86c5ff",
   ENFORCED: "#c9a24b",
-  MEASURED: "#3db1ff",
+  MEASURED: "#3d6cff",
   PRODUCTION: "#3fd68f",
 };
 const pillColor = (status: string) =>

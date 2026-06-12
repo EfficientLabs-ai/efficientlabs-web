@@ -184,7 +184,7 @@ export default function Pricing() {
                 Annual
                 <span
                   className={`rounded-full px-1.5 py-0.5 text-[9px] tracking-wider ${
-                    annual ? "bg-white/20 text-white" : "bg-[color:var(--color-quantum)]/15 text-[color:var(--color-quantum)]"
+                    annual ? "bg-white/20 text-white" : "bg-[color:var(--color-quantum)]/15 text-[color:var(--color-quantum-text)]"
                   }`}
                 >
                   2 MONTHS FREE
@@ -228,7 +228,7 @@ export default function Pricing() {
                     )}
                   </div>
                   {/* annual sub-line: effective monthly + savings */}
-                  <p className="mono mt-1 h-4 text-[10.5px] text-[color:var(--color-quantum)]">
+                  <p className="mono mt-1 h-4 text-[10.5px] text-[color:var(--color-quantum-text)]">
                     {perMonthAnnual != null
                       ? `≈ $${perMonthAnnual.toFixed(perMonthAnnual % 1 === 0 ? 0 : 2)}/mo billed annually · 2 months free`
                       : ""}

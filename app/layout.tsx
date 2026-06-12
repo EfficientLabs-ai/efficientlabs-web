@@ -15,7 +15,7 @@ const michroma = Michroma({ subsets: ["latin"], weight: ["400"], variable: "--fo
 const TITLE = "Efficient Labs — Sovereign AI infrastructure";
 const DESCRIPTION =
   "StratosAgent runs on your hardware. The Atmosphere meshes it with the world — content-addressed, capability-secured, post-quantum. No central server can seize, censor, or surveil it.";
-const OG_IMAGE = "/img/launch-reveal-wide.png";
+const OG_IMAGE = "/img/og-efficient-labs.jpg";
 
 export const metadata: Metadata = {
   title: { default: TITLE, template: "%s — Efficient Labs" },
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     description: "The sovereign internet for AI agents. Content-addressed, capability-secured, post-quantum.",
     siteName: "Efficient Labs",
     type: "website",
-    images: [{ url: OG_IMAGE, width: 1376, height: 768, alt: "Efficient Labs — The Atmosphere sovereign mesh" }],
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Efficient Labs — Intelligence · Continuity · Infrastructure · Ownership · Optimization" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -57,9 +57,9 @@ export const viewport: Viewport = {
   // default — so the unconditional chrome colour is the dark canvas. We still
   // expose the light value behind the light media query for users who toggle.
   themeColor: [
-    { color: "#05070b" },
+    { color: "#0b0f1a" },
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#05070b" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0f1a" },
   ],
 };
 
