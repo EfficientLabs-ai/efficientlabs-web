@@ -49,7 +49,8 @@ function HeroRing({ hero, generatedAt }: { hero: RuntimeScore["hero"]; generated
           A yellow ring shown honestly beats a green ring assembled from hope.
         </p>
         <p className="mono mt-2 text-[10px] text-[color:var(--color-ink-faint)]">
-          method: {hero.method} · artifact generated {generatedAt.slice(0, 10)}
+          method: {hero.method}
+          {generatedAt && <> · artifact generated {generatedAt.slice(0, 10)}</>}
         </p>
       </div>
     </div>
