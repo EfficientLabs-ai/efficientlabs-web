@@ -8,6 +8,8 @@ import Stakes from "@/components/landing/Stakes";
 import Answer from "@/components/landing/Answer";
 import ProofLede from "@/components/landing/ProofLede";
 import HowItWorks from "@/components/landing/HowItWorks";
+import ReadinessCards from "@/components/landing/ReadinessCards";
+import NodeConsole from "@/components/landing/NodeConsole";
 import ReadinessLadder from "@/components/landing/ReadinessLadder";
 import FinalCTA from "@/components/landing/FinalCTA";
 import type { Metadata } from "next";
@@ -55,6 +57,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── 5b · THE READINESS INDEX — 12-dimension ARI card grid, honest-null ── */}
+      <ReadinessCards />
+
       {/* ── 6 · THE ATMOSPHERE — extractive cloud dissolves into the sky ── */}
       <section id="atmosphere" className="cinematic">
         <AtmosphereReveal />
@@ -62,6 +67,9 @@ export default function Home() {
 
       {/* ── 7 · HOW IT WORKS — start free, own it in one line ── */}
       <HowItWorks />
+
+      {/* ── 7b · THE NODE CONSOLE — glass preview of the node-served console ── */}
+      <NodeConsole />
 
       {/* ── 8 · HONEST READINESS LADDER — honesty as the trust signal ── */}
       <ReadinessLadder />

@@ -164,6 +164,13 @@ const SURFACES = [
   "components/landing/HowItWorks.tsx",
   "components/landing/ReadinessLadder.tsx",
   "components/landing/FinalCTA.tsx",
+  // Readiness-index card grid + node-console preview (2026-06-14) — both carry
+  // marketing copy (12-dimension ARI framing, console-preview product copy) and
+  // are policed like any landing surface. ReadinessCards renders honest maturity
+  // labels (MEASURED/WIRED/DOCUMENTED) verbatim; NodeConsole frames itself as a
+  // PREVIEW and fabricates no live metrics — the copy half is policed here.
+  "components/landing/ReadinessCards.tsx",
+  "components/landing/NodeConsole.tsx",
   "components/Solutions.tsx",
   "components/Differentiators.tsx",
   "components/Install.tsx",
