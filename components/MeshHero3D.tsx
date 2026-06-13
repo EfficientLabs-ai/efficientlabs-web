@@ -260,18 +260,23 @@ export default function MeshHero3D() {
                style={{ background: "linear-gradient(to top, var(--color-void), transparent)" }} />
         </div>
         <div className="relative mx-auto w-full max-w-7xl px-5 py-24">
-          <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display-sm hyphens-none">
-            Your Intelligence.<br />Your Infrastructure.<br />
-            <span className="aurora-text">Your Rules.</span>
+          <p className="kicker">Governed intelligence infrastructure</p>
+          <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display-sm mt-5 hyphens-none">
+            <span className="aurora-text">Your</span> Intelligence.<br />
+            <span className="aurora-text">Your</span> Infrastructure.<br />
+            <span className="aurora-text">Your</span> Rules.
           </SplitHeading>
           <p className="t-body-lg mt-6 max-w-xl text-[color:var(--color-ink-dim)]">
-            Build, run, remember, and scale AI without surrendering ownership.
-            No cloud. No landlord. No meter.
+            Build, run, remember, and scale AI on infrastructure you own — governed,
+            verifiable, and yours to keep.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-            <a href="#install" className="btn-signal w-full justify-center sm:w-auto">Install now<span aria-hidden>→</span></a>
-            <a href="#atmosphere" className="btn-outline w-full justify-center sm:w-auto">Enter the Atmosphere</a>
+            <a href="/score" className="btn-signal w-full justify-center sm:w-auto">Run your free readiness assessment<span aria-hidden>→</span></a>
+            <a href="/start" className="btn-outline w-full justify-center sm:w-auto">Install free</a>
           </div>
+          <p className="mono mt-5 text-[12px] tracking-[0.04em] text-[color:var(--color-ink-faint)]">
+            Receipt-backed · deny-by-default · customer-owned
+          </p>
         </div>
       </section>
     );
@@ -306,21 +311,24 @@ export default function MeshHero3D() {
         <div className="absolute inset-0 flex items-center" style={{ opacity: heroFade, transition: "opacity 0.1s linear", pointerEvents: heroFade > 0.5 ? "auto" : "none" }}>
           <div className="mx-auto w-full max-w-7xl px-6">
             <div className="max-w-3xl">
-              <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display">
-                Your Intelligence.<br />Your Infrastructure.<br />
-                <span className="aurora-text">Your Rules.</span>
+              <p className="kicker">Governed intelligence infrastructure</p>
+              <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display mt-5">
+                <span className="aurora-text">Your</span> Intelligence.<br />
+                <span className="aurora-text">Your</span> Infrastructure.<br />
+                <span className="aurora-text">Your</span> Rules.
               </SplitHeading>
               <p className="t-body-lg mt-7 max-w-xl text-[color:var(--color-ink-dim)]">
-                Build, run, remember, and scale AI without surrendering ownership —{" "}
-                <span className="text-[color:var(--color-ink)]">meshed peer-to-peer</span>,{" "}
-                <span className="text-[color:var(--color-ink)]">post-quantum-sealed</span>, on{" "}
-                <span className="text-[color:var(--color-ink)]">your own metal</span>.
-                No cloud. No landlord. No meter.
+                Build, run, remember, and scale AI on{" "}
+                <span className="text-[color:var(--color-ink)]">infrastructure you own</span> —{" "}
+                governed, verifiable, and yours to keep.
               </p>
               <div className="mt-9 flex flex-wrap items-center gap-4">
-                <a href="#install" className="btn-signal">Install now<span aria-hidden>→</span></a>
-                <a href="#atmosphere" className="btn-outline">Enter the Atmosphere</a>
+                <a href="/score" className="btn-signal">Run your free readiness assessment<span aria-hidden>→</span></a>
+                <a href="/start" className="btn-outline">Install free</a>
               </div>
+              <p className="mono mt-5 text-[12px] tracking-[0.04em] text-[color:var(--color-ink-faint)]">
+                Receipt-backed · deny-by-default · customer-owned
+              </p>
             </div>
           </div>
         </div>

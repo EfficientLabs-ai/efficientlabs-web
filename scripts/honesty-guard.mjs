@@ -154,6 +154,16 @@ const SURFACES = [
   // honest labels (MEASURED / not measured / lifecycle states) verbatim and
   // would self-trip, exactly like the other truth renderers noted below.
   "components/ProofStrip.tsx",
+  // Cinematic glass landing sections (2026-06-14) — each carries marketing copy
+  // (stakes/answer/proof-lede/how-it-works/readiness/final-CTA) and is policed
+  // like any landing surface. The glass kit (components/glass/*) is presentational
+  // (no claims) so it is not scanned.
+  "components/landing/Stakes.tsx",
+  "components/landing/Answer.tsx",
+  "components/landing/ProofLede.tsx",
+  "components/landing/HowItWorks.tsx",
+  "components/landing/ReadinessLadder.tsx",
+  "components/landing/FinalCTA.tsx",
   "components/Solutions.tsx",
   "components/Differentiators.tsx",
   "components/Install.tsx",
