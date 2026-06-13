@@ -1,15 +1,15 @@
 {
   "format": "efl.public-status.v1",
-  "generated_at": "2026-06-13T00:01:01.655Z",
+  "generated_at": "2026-06-13T10:01:01.434Z",
   "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
   "tiles": {
     "heartbeat": {
       "label": "MEASURED",
-      "updated_at": "2026-06-12T23:37Z",
+      "updated_at": "2026-06-13T09:58Z",
       "color": "YELLOW",
       "fail": 0,
-      "warn": 3,
-      "ok": 30,
+      "warn": 4,
+      "ok": 29,
       "checks": [
         {
           "name": "session-boot ran",
@@ -45,7 +45,7 @@
         },
         {
           "name": "trajectory not stale",
-          "status": "ok"
+          "status": "warn"
         },
         {
           "name": "active/archive within budget",
@@ -148,7 +148,7 @@
     },
     "receipts": {
       "label": "MEASURED",
-      "updated_at": "2026-06-13T00:01:01.817Z",
+      "updated_at": "2026-06-13T10:01:01.555Z",
       "count": 1,
       "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
       "bundle_path": "/proof/receipts-bundle.json",
@@ -174,7 +174,7 @@
     },
     "intelligence": {
       "label": "MEASURED",
-      "updated_at": "2026-06-12T23:37Z",
+      "updated_at": "2026-06-13T09:59Z",
       "counters": {
         "context_nodes": {
           "value": 512,
@@ -225,11 +225,11 @@
           "label": "MEASURED"
         },
         "archive_retrievals": {
-          "value": 44,
+          "value": 46,
           "label": "MEASURED"
         },
         "archive_retrievals_logged": {
-          "value": 44,
+          "value": 46,
           "label": "MEASURED"
         },
         "idea_edge_density": {
@@ -277,7 +277,7 @@
           "label": "MEASURED"
         },
         "actions_evaluated": {
-          "value": 23,
+          "value": 24,
           "label": "MEASURED"
         },
         "action_success_rate_pct": {
@@ -326,8 +326,8 @@
     },
     "activation": {
       "label": "MEASURED",
-      "updated_at": "2026-06-12T23:37Z",
-      "production": 13,
+      "updated_at": "2026-06-13T09:59Z",
+      "production": 12,
       "total": 13,
       "components": [
         {
@@ -352,8 +352,8 @@
         },
         {
           "name": "trajectory",
-          "verdict": "PASS",
-          "status": "PRODUCTION"
+          "verdict": "PARTIAL",
+          "status": "PARTIAL"
         },
         {
           "name": "active-archive-memory",
@@ -401,7 +401,7 @@
     "readiness": {
       "label": "MEASURED",
       "updated_at": "2026-06-12T01:00Z",
-      "overall_pct": 79.8,
+      "overall_pct": 77.2,
       "pillars": {
         "launch_gates": {
           "pct": 66.7,
@@ -409,8 +409,8 @@
           "total": 12
         },
         "operating_components": {
-          "pct": 100,
-          "production": 13,
+          "pct": 92.3,
+          "production": 12,
           "total": 13
         },
         "product_capabilities": {

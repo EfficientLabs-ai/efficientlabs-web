@@ -1,6 +1,6 @@
 {
   "format": "efl.runtime-score.v1",
-  "generated_at": "2026-06-13T00:01:02.022Z",
+  "generated_at": "2026-06-13T10:01:01.744Z",
   "render_rules": "MEASURED cards render values with verdicts; null cards render 'not measured' with the reason, greyed, in place — the grid shape never changes. Staleness is shown, never hidden.",
   "hero": {
     "measured": 5,
@@ -11,17 +11,17 @@
   "scores": {
     "runtime": {
       "label": "MEASURED",
-      "updated_at": "2026-06-12T23:37Z",
+      "updated_at": "2026-06-13T09:58Z",
       "verdict": "YELLOW",
       "inputs": {
         "heartbeat": {
           "color": "YELLOW",
           "fail": 0,
-          "warn": 3,
-          "ok": 30
+          "warn": 4,
+          "ok": 29
         },
         "activation": {
-          "production": 13,
+          "production": 12,
           "total": 13
         },
         "hermetic_ci_gate": {
@@ -35,7 +35,7 @@
     },
     "continuity": {
       "label": "MEASURED",
-      "updated_at": "2026-06-13T00:01:01.817Z",
+      "updated_at": "2026-06-13T10:01:01.555Z",
       "verdict": "GREEN",
       "inputs": {
         "signed_receipts": 1,
@@ -65,7 +65,7 @@
     },
     "ownership": {
       "label": "MEASURED",
-      "updated_at": "2026-06-13T00:01:01.817Z",
+      "updated_at": "2026-06-13T10:01:01.555Z",
       "verdict": "GREEN",
       "inputs": {
         "signed_receipts": 1,
@@ -77,10 +77,10 @@
     },
     "agent_readiness": {
       "label": "MEASURED",
-      "updated_at": "2026-06-12T23:37Z",
-      "verdict": "GREEN",
+      "updated_at": "2026-06-13T09:59Z",
+      "verdict": "YELLOW",
       "inputs": {
-        "components_production": 13,
+        "components_production": 12,
         "components_total": 13,
         "hermetic_ci_gate": {
           "done": true,
