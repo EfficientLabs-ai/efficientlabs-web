@@ -8,6 +8,7 @@ import CompletedCapabilities from "@/components/status/CompletedCapabilities";
 import ActivityFeed from "@/components/status/ActivityFeed";
 import VerdictBar from "@/components/proof/VerdictBar";
 import ReceiptVerifyCard from "@/components/proof/ReceiptVerifyCard";
+import DropBundleVerify from "@/components/proof/DropBundleVerify";
 import RuntimeIntelligence from "@/components/proof/RuntimeIntelligence";
 import ActivationRoadmap from "@/components/proof/ActivationRoadmap";
 import ReadinessTile from "@/components/proof/ReadinessTile";
@@ -57,7 +58,7 @@ export default async function StatusPage() {
       </section>
 
       {/* ── B · the proof hero: verification runs in YOUR browser ── */}
-      <section className="section scroll-mt-20 pt-0">
+      <section className="section scroll-mt-20 pt-0" id="verify">
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
           <ReceiptVerifyCard tile={tiles.receipts} />
           <div className="lm-card p-6">
@@ -73,6 +74,10 @@ export default async function StatusPage() {
               key. Receipts record hashes, identity, and measured cost units. Never content, never a price.
             </p>
           </div>
+        </div>
+        {/* the onboarding checklist's "or drop the bundle" promise — local-only verify */}
+        <div className="mt-3">
+          <DropBundleVerify />
         </div>
       </section>
 

@@ -182,6 +182,9 @@ const SURFACES = [
   "components/onboarding/StartJourney.tsx",
   "lib/onboarding.ts",
   "app/signup/page.tsx",
+  // DropBundleVerify carries CLAIM copy ("never leaves this page", step-5 promise)
+  // alongside its truth-rendering — the copy half is policed (2026-06-13).
+  "components/proof/DropBundleVerify.tsx",
   // shared sub-page building blocks that carry marketing copy (added 2026-06-06
   // with the full nav→sub-page wiring). The route pages above pass copy as props
   // to these; we also scan the components themselves for any inline claim text.

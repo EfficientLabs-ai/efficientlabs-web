@@ -1,34 +1,34 @@
 {
-  "generatedAt": "2026-06-12T20:03:59.498Z",
+  "generatedAt": "2026-06-12T23:35:30.049Z",
   "repos": [
     {
       "key": "web",
       "label": "efficientlabs-web",
       "present": true,
-      "commits": 45,
-      "newestAt": "2026-06-12T19:55:44.000Z",
+      "commits": 48,
+      "newestAt": "2026-06-12T23:33:39.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web"
     },
     {
       "key": "core",
       "label": "atmosphere-core",
       "present": true,
-      "commits": 273,
-      "newestAt": "2026-06-12T12:48:35.000Z",
+      "commits": 275,
+      "newestAt": "2026-06-12T21:20:20.000Z",
       "repoUrl": "https://github.com/EfficientLabs-ai/atmosphere-core"
     }
   ],
   "rollups": {
-    "totalCommits": 318,
-    "last7Days": 76,
-    "last30Days": 318,
+    "totalCommits": 323,
+    "last7Days": 73,
+    "last30Days": 323,
     "featuresShipped": 137,
     "activeDays": 8,
     "byType": {
+      "fix": 65,
+      "other": 74,
       "feat": 137,
-      "other": 72,
-      "fix": 63,
-      "docs": 29,
+      "docs": 30,
       "chore": 8,
       "test": 3,
       "perf": 1,
@@ -38,14 +38,64 @@
   },
   "feed": [
     {
-      "iso": "2026-06-13T03:55:44+08:00",
+      "iso": "2026-06-13T07:33:39+08:00",
       "date": "2026-06-13",
-      "subject": "feat(onboarding): /start journey — grey score aha → one question → GET RUNNING checklist",
+      "subject": "fix: Codex round 1 — true key-flow docs, guard coverage, size guard, a11y",
       "repo": "web",
       "repoLabel": "efficientlabs-web",
+      "type": "fix",
+      "hash": "ee5602a",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/ee5602a189680eef65bd1a7e76d9459b94e71b42"
+    },
+    {
+      "iso": "2026-06-13T07:26:57+08:00",
+      "date": "2026-06-13",
+      "subject": "feat(proof)+fix(docs): drop-your-own-bundle verifier + CLI docs rewritten to the real, published CLI",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "other",
+      "hash": "641a8f4",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/641a8f4dd7caf41165bae98a97f4b43ce907b476"
+    },
+    {
+      "iso": "2026-06-12T17:20:20-04:00",
+      "date": "2026-06-12",
+      "subject": "fix(product): land the dual-Codex fix set for #116 (re-cut onto main) (#118)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
+      "type": "fix",
+      "hash": "7ce3dc5",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/7ce3dc5b443925b6bea4032bf569ed3bfd11dd95"
+    },
+    {
+      "iso": "2026-06-12T16:24:19-04:00",
+      "date": "2026-06-12",
+      "subject": "feat(product): Lane B — onboarding state machine + remaining unified API wrappers (#116)",
+      "repo": "core",
+      "repoLabel": "atmosphere-core",
       "type": "feat",
-      "hash": "3b6cf01",
-      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/3b6cf0159a9d9558beb67afe82ead18bbf57af7b"
+      "hash": "52c164a",
+      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/52c164a5966d20274fa0002c596fd2993b78b250"
+    },
+    {
+      "iso": "2026-06-12T16:17:52-04:00",
+      "date": "2026-06-12",
+      "subject": "docs(install): make the quickstart copy-paste actually finish — verified from scratch (#27)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "docs",
+      "hash": "ec1bce2",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/ec1bce2d0a62fabb7dfb1bc490d53854a4c9b55c"
+    },
+    {
+      "iso": "2026-06-12T16:13:12-04:00",
+      "date": "2026-06-12",
+      "subject": "Onboarding /start — grey-score aha, segmentation, GET RUNNING checklist (#26)",
+      "repo": "web",
+      "repoLabel": "efficientlabs-web",
+      "type": "other",
+      "hash": "46c7545",
+      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/46c754521bde3173a4fec7e453fbb34f5cb2214e"
     },
     {
       "iso": "2026-06-12T15:07:55-04:00",
@@ -786,87 +836,89 @@
       "type": "chore",
       "hash": "2d3f6c5",
       "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/2d3f6c5a07deb230467388fd659d17344475c8c9"
-    },
-    {
-      "iso": "2026-06-06T05:37:51+08:00",
-      "date": "2026-06-06",
-      "subject": "feat(web): nav→standalone pages, ChatGPT-style /docs, mobile fixes",
-      "repo": "web",
-      "repoLabel": "efficientlabs-web",
-      "type": "feat",
-      "hash": "37f06bf",
-      "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/37f06bf5fd133bd23d0eece068c8f67401c6eebc"
-    },
-    {
-      "iso": "2026-06-06T03:53:47+08:00",
-      "date": "2026-06-06",
-      "subject": "feat(mesh): wallet attribution — every node's compute attributed to its owner Solana wallet",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "feat",
-      "hash": "e9aff5f",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/e9aff5f02b77bd0d6107418021b3c425828b16d9"
-    },
-    {
-      "iso": "2026-06-06T03:22:34+08:00",
-      "date": "2026-06-06",
-      "subject": "feat(telegram): gemma4:e4b chat agent + persistent typing + token-streaming",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "feat",
-      "hash": "f4e0092",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/f4e00926d29d3182e7d6eb9db2d5b816849b1f65"
-    },
-    {
-      "iso": "2026-06-06T03:15:39+08:00",
-      "date": "2026-06-06",
-      "subject": "feat(mesh): origin records a signed capability receipt per verified job",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "feat",
-      "hash": "ad9191b",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/ad9191b6ec101f84982d1bf154b0b4ea391fb5de"
-    },
-    {
-      "iso": "2026-06-06T02:32:38+08:00",
-      "date": "2026-06-06",
-      "subject": "feat(content): sovereign content engine — infinite personal-brand + EL pipeline",
-      "repo": "core",
-      "repoLabel": "atmosphere-core",
-      "type": "feat",
-      "hash": "8f808ff",
-      "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/8f808ffd52611c00e099867dae73266b64a7a362"
     }
   ],
   "feedByDate": [
     {
       "date": "2026-06-13",
-      "count": 1,
+      "count": 2,
       "byType": {
-        "feat": 1
+        "fix": 1,
+        "other": 1
       },
       "commits": [
         {
-          "iso": "2026-06-13T03:55:44+08:00",
+          "iso": "2026-06-13T07:33:39+08:00",
           "date": "2026-06-13",
-          "subject": "feat(onboarding): /start journey — grey score aha → one question → GET RUNNING checklist",
+          "subject": "fix: Codex round 1 — true key-flow docs, guard coverage, size guard, a11y",
           "repo": "web",
           "repoLabel": "efficientlabs-web",
-          "type": "feat",
-          "hash": "3b6cf01",
-          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/3b6cf0159a9d9558beb67afe82ead18bbf57af7b"
+          "type": "fix",
+          "hash": "ee5602a",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/ee5602a189680eef65bd1a7e76d9459b94e71b42"
+        },
+        {
+          "iso": "2026-06-13T07:26:57+08:00",
+          "date": "2026-06-13",
+          "subject": "feat(proof)+fix(docs): drop-your-own-bundle verifier + CLI docs rewritten to the real, published CLI",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "other",
+          "hash": "641a8f4",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/641a8f4dd7caf41165bae98a97f4b43ce907b476"
         }
       ]
     },
     {
       "date": "2026-06-12",
-      "count": 15,
+      "count": 19,
       "byType": {
-        "other": 7,
-        "feat": 7,
-        "fix": 1
+        "fix": 2,
+        "feat": 8,
+        "docs": 1,
+        "other": 8
       },
       "commits": [
+        {
+          "iso": "2026-06-12T17:20:20-04:00",
+          "date": "2026-06-12",
+          "subject": "fix(product): land the dual-Codex fix set for #116 (re-cut onto main) (#118)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "fix",
+          "hash": "7ce3dc5",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/7ce3dc5b443925b6bea4032bf569ed3bfd11dd95"
+        },
+        {
+          "iso": "2026-06-12T16:24:19-04:00",
+          "date": "2026-06-12",
+          "subject": "feat(product): Lane B — onboarding state machine + remaining unified API wrappers (#116)",
+          "repo": "core",
+          "repoLabel": "atmosphere-core",
+          "type": "feat",
+          "hash": "52c164a",
+          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/52c164a5966d20274fa0002c596fd2993b78b250"
+        },
+        {
+          "iso": "2026-06-12T16:17:52-04:00",
+          "date": "2026-06-12",
+          "subject": "docs(install): make the quickstart copy-paste actually finish — verified from scratch (#27)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "docs",
+          "hash": "ec1bce2",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/ec1bce2d0a62fabb7dfb1bc490d53854a4c9b55c"
+        },
+        {
+          "iso": "2026-06-12T16:13:12-04:00",
+          "date": "2026-06-12",
+          "subject": "Onboarding /start — grey-score aha, segmentation, GET RUNNING checklist (#26)",
+          "repo": "web",
+          "repoLabel": "efficientlabs-web",
+          "type": "other",
+          "hash": "46c7545",
+          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/46c754521bde3173a4fec7e453fbb34f5cb2214e"
+        },
         {
           "iso": "2026-06-12T15:07:55-04:00",
           "date": "2026-06-12",
@@ -1556,9 +1608,9 @@
     },
     {
       "date": "2026-06-06",
-      "count": 16,
+      "count": 11,
       "byType": {
-        "feat": 12,
+        "feat": 7,
         "fix": 1,
         "chore": 2,
         "docs": 1
@@ -1673,56 +1725,6 @@
           "type": "chore",
           "hash": "2d3f6c5",
           "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/2d3f6c5a07deb230467388fd659d17344475c8c9"
-        },
-        {
-          "iso": "2026-06-06T05:37:51+08:00",
-          "date": "2026-06-06",
-          "subject": "feat(web): nav→standalone pages, ChatGPT-style /docs, mobile fixes",
-          "repo": "web",
-          "repoLabel": "efficientlabs-web",
-          "type": "feat",
-          "hash": "37f06bf",
-          "commitUrl": "https://github.com/EfficientLabs-ai/efficientlabs-web/commit/37f06bf5fd133bd23d0eece068c8f67401c6eebc"
-        },
-        {
-          "iso": "2026-06-06T03:53:47+08:00",
-          "date": "2026-06-06",
-          "subject": "feat(mesh): wallet attribution — every node's compute attributed to its owner Solana wallet",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "feat",
-          "hash": "e9aff5f",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/e9aff5f02b77bd0d6107418021b3c425828b16d9"
-        },
-        {
-          "iso": "2026-06-06T03:22:34+08:00",
-          "date": "2026-06-06",
-          "subject": "feat(telegram): gemma4:e4b chat agent + persistent typing + token-streaming",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "feat",
-          "hash": "f4e0092",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/f4e00926d29d3182e7d6eb9db2d5b816849b1f65"
-        },
-        {
-          "iso": "2026-06-06T03:15:39+08:00",
-          "date": "2026-06-06",
-          "subject": "feat(mesh): origin records a signed capability receipt per verified job",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "feat",
-          "hash": "ad9191b",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/ad9191b6ec101f84982d1bf154b0b4ea391fb5de"
-        },
-        {
-          "iso": "2026-06-06T02:32:38+08:00",
-          "date": "2026-06-06",
-          "subject": "feat(content): sovereign content engine — infinite personal-brand + EL pipeline",
-          "repo": "core",
-          "repoLabel": "atmosphere-core",
-          "type": "feat",
-          "hash": "8f808ff",
-          "commitUrl": "https://github.com/EfficientLabs-ai/atmosphere-core/commit/8f808ffd52611c00e099867dae73266b64a7a362"
         }
       ]
     }

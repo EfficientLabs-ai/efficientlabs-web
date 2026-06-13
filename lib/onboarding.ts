@@ -21,10 +21,10 @@ export const CHECKLIST = [
     note: "user-space, no sudo, nothing auto-starts — same commands as the install page (macOS/Linux above, Windows below)",
     sovereign: true,
   },
-  { n: 2, title: "First run", cmd: "stratos init", note: "sets up your node locally; keys are generated on your machine and sealed", sovereign: true },
+  { n: 2, title: "First run", cmd: "stratos init", note: "sets up your node locally; keys are generated on your machine and the private half never leaves it", sovereign: true },
   { n: 3, title: "Pair your node", cmd: "stratos pair", note: "the ONLY account-bound step — everything else works without one", sovereign: false },
   { n: 4, title: "First receipt", cmd: "stratos receipt export", note: "run any local task first — the install page walks a full demo task; the export is your evidence bundle", sovereign: true },
-  { n: 5, title: "Verify it", cmd: "stratos receipt verify bundle.json", note: "or drop the bundle on the web verifier — the same check our status page runs in your browser", sovereign: true },
+  { n: 5, title: "Verify it", cmd: "stratos receipt verify bundle.json", note: "or drop the bundle on the web verifier (/status#verify) — read locally, never uploaded", sovereign: true },
 ] as const;
 
 /** Self-segmentation — one question, three answers, framing only (the 5 steps never change). */
