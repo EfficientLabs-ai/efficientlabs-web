@@ -1,15 +1,15 @@
 {
   "format": "efl.public-status.v1",
-  "generated_at": "2026-06-13T10:31:01.527Z",
+  "generated_at": "2026-06-14T09:31:01.469Z",
   "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
   "tiles": {
     "heartbeat": {
       "label": "MEASURED",
-      "updated_at": "2026-06-13T10:06Z",
+      "updated_at": "2026-06-14T09:24Z",
       "color": "YELLOW",
       "fail": 0,
-      "warn": 4,
-      "ok": 29,
+      "warn": 7,
+      "ok": 26,
       "checks": [
         {
           "name": "session-boot ran",
@@ -53,7 +53,7 @@
         },
         {
           "name": "intelligence score refreshed",
-          "status": "ok"
+          "status": "warn"
         },
         {
           "name": "token usage tracked",
@@ -129,7 +129,7 @@
         },
         {
           "name": "dop evaluation coverage",
-          "status": "ok"
+          "status": "warn"
         },
         {
           "name": "dop outcome coverage",
@@ -141,14 +141,14 @@
         },
         {
           "name": "ecp leases healthy",
-          "status": "ok"
+          "status": "warn"
         }
       ],
       "verify": "published artifact — counts and per-check states are emitted verbatim by the operating layer's heartbeat run"
     },
     "receipts": {
       "label": "MEASURED",
-      "updated_at": "2026-06-13T10:31:01.630Z",
+      "updated_at": "2026-06-14T09:31:01.586Z",
       "count": 1,
       "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
       "bundle_path": "/proof/receipts-bundle.json",
@@ -174,7 +174,7 @@
     },
     "intelligence": {
       "label": "MEASURED",
-      "updated_at": "2026-06-13T10:07Z",
+      "updated_at": "2026-06-14T09:24Z",
       "counters": {
         "context_nodes": {
           "value": 512,
@@ -221,15 +221,15 @@
           "label": "MEASURED"
         },
         "archive_items": {
-          "value": 63,
+          "value": 71,
           "label": "MEASURED"
         },
         "archive_retrievals": {
-          "value": 48,
+          "value": 49,
           "label": "MEASURED"
         },
         "archive_retrievals_logged": {
-          "value": 48,
+          "value": 49,
           "label": "MEASURED"
         },
         "idea_edge_density": {
@@ -326,7 +326,7 @@
     },
     "activation": {
       "label": "MEASURED",
-      "updated_at": "2026-06-13T10:07Z",
+      "updated_at": "2026-06-14T09:25Z",
       "production": 12,
       "total": 13,
       "components": [
