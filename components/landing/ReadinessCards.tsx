@@ -63,7 +63,7 @@ export default function ReadinessCards() {
             data-motion="body"
             className="t-body-lg mt-7 max-w-2xl text-[color:var(--color-ink-dim)]"
           >
-            The live score instruments {measured} of {total} dimensions today; the rest render
+            The live score instruments {measured} of {total}&nbsp;dimensions today; the rest render
             honest-null until their telemetry lands. The empty cells aren&apos;t hidden — they&apos;re
             the map of what&apos;s left to wire.
           </p>

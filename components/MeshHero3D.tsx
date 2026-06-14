@@ -99,24 +99,27 @@ function Field({ progress }: { progress: Prog }) {
     globe.current.rotation.y = t * 0.045 * (1 - dive * 0.92) + p * 0.4;
     globe.current.rotation.x = Math.sin(t * 0.1) * 0.05 * (1 - dive);
 
-    // camera flies from far → up to just OUTSIDE the front node (never inside the
-    // globe, so the node reads as a clean cross-section rather than a line jumble)
-    camPos.set(0, 0.45 * dive, 12).lerp(new THREE.Vector3(0, 0.45, 8.0), dive);
+    // CINEMATIC FRAMING (Cosmos): start farther back for vast negative space, and look
+    // ABOVE origin so the luminous core sits LOWER-CENTER (room for the headline above it).
+    // As the dive commits, the look pulls down to the node and we approach it.
+    camPos.set(0, 0.45 * dive, 17.8).lerp(new THREE.Vector3(0, 0.45, 8.0), dive);
     camera.position.copy(camPos);
-    lookAt.set(0, 0, 0).lerp(NODE, smooth(0.3, 0.82, p));
+    lookAt.set(0, 3.95, 0).lerp(NODE, smooth(0.3, 0.82, p));
     camera.lookAt(lookAt);
 
-    // the sovereign node — bright from the start, opens as we arrive
-    const pulse = 1 + Math.sin(t * 1.7) * 0.08;
-    sov.current.scale.setScalar(pulse * (0.32 + dive * 0.3));
+    // the sovereign node — luminous from the start (Cosmos: one bright object in the void),
+    // opens as we arrive. Slightly larger core + brighter halo for that "powerful" read.
+    const pulse = 1 + Math.sin(t * 1.7) * 0.07;
+    sov.current.scale.setScalar(pulse * (0.42 + dive * 0.3));
     (sov.current.material as THREE.MeshBasicMaterial).opacity = 1 - open * 0.92;
-    halo.current.scale.setScalar(pulse * (0.9 + dive * 0.9));
-    (halo.current.material as THREE.MeshBasicMaterial).opacity = (0.22 + dive * 0.12) * (1 - open * 0.45);
+    halo.current.scale.setScalar(pulse * (1.15 + dive * 0.9));
+    (halo.current.material as THREE.MeshBasicMaterial).opacity = (0.3 + dive * 0.12) * (1 - open * 0.45);
 
-    // globe fades out completely as the node fills the frame
+    // globe fades out completely as the node fills the frame. Dimmed at rest so it reads as an
+    // ambient field behind the headline (Cosmos calm), not a dense net competing with the type.
     const fade = 1 - smooth(0.58, 0.86, p);
-    ptsMat.current.opacity = fade;
-    lineMat.current.opacity = 0.42 * fade;
+    ptsMat.current.opacity = fade * 0.34;
+    lineMat.current.opacity = 0.11 * fade;
 
     // nested shells L0→L5 reveal in sequence; counter-rotation = "alive"
     shells.current.scale.setScalar(1 + open * 0.08);
@@ -303,33 +306,33 @@ export default function MeshHero3D() {
           <Field progress={progress} />
         </Canvas>
 
-        {/* seat the type */}
+        {/* seat the type — clear void up top for the headline, the core glows up from lower-center */}
         <div aria-hidden className="pointer-events-none absolute inset-0"
-             style={{ background: "radial-gradient(120% 90% at 30% 50%, transparent 30%, rgba(6,7,10,0.5) 74%, var(--color-void) 100%)" }} />
+             style={{ background: "radial-gradient(115% 75% at 50% 64%, transparent 26%, rgba(6,7,10,0.45) 64%, var(--color-void) 100%)" }} />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[50%]"
+             style={{ background: "linear-gradient(to bottom, var(--color-void) 8%, rgba(6,7,10,0.86) 42%, transparent)" }} />
 
-        {/* hero copy — fades as the dive begins */}
-        <div className="absolute inset-0 flex items-center" style={{ opacity: heroFade, transition: "opacity 0.1s linear", pointerEvents: heroFade > 0.5 ? "auto" : "none" }}>
-          <div className="mx-auto w-full max-w-7xl px-6">
-            <div className="max-w-3xl">
-              <p className="kicker">Governed intelligence infrastructure</p>
-              <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display mt-5">
-                <span className="aurora-text">Your</span> Intelligence.<br />
-                <span className="aurora-text">Your</span> Infrastructure.<br />
-                <span className="aurora-text">Your</span> Rules.
-              </SplitHeading>
-              <p className="t-body-lg mt-7 max-w-xl text-[color:var(--color-ink-dim)]">
-                Build, run, remember, and scale AI on{" "}
-                <span className="text-[color:var(--color-ink)]">infrastructure you own</span> —{" "}
-                governed, verifiable, and yours to keep.
-              </p>
-              <div className="mt-9 flex flex-wrap items-center gap-4">
-                <a href="/score" className="btn-signal">Run your free readiness assessment<span aria-hidden>→</span></a>
-                <a href="/start" className="btn-outline">Install free</a>
-              </div>
-              <p className="mono mt-5 text-[12px] tracking-[0.04em] text-[color:var(--color-ink-faint)]">
-                Receipt-backed · deny-by-default · customer-owned
-              </p>
+        {/* hero copy — CENTERED (Modal grammar), seated in the upper third, clears the fixed nav */}
+        <div className="absolute inset-0 flex flex-col items-center" style={{ opacity: heroFade, transition: "opacity 0.1s linear", pointerEvents: heroFade > 0.5 ? "auto" : "none" }}>
+          <div className="mx-auto w-full max-w-4xl px-6 pt-[17vh] text-center">
+            <p className="kicker">Governed intelligence infrastructure</p>
+            <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display mt-5">
+              <span className="aurora-text">Your</span> Intelligence.<br />
+              <span className="aurora-text">Your</span> Infrastructure.<br />
+              <span className="aurora-text">Your</span> Rules.
+            </SplitHeading>
+            <p className="t-body-lg mt-7 mx-auto max-w-2xl text-[color:var(--color-ink-dim)]">
+              Build, run, remember, and scale AI on{" "}
+              <span className="text-[color:var(--color-ink)]">infrastructure you own</span> —{" "}
+              governed, verifiable, and yours to keep.
+            </p>
+            <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
+              <a href="/score" className="btn-signal">Run your free readiness assessment<span aria-hidden>→</span></a>
+              <a href="/start" className="btn-outline">Install free</a>
             </div>
+            <p className="mono mt-5 text-[12px] tracking-[0.04em] text-[color:var(--color-ink-faint)]">
+              Receipt-backed · deny-by-default · customer-owned
+            </p>
           </div>
         </div>
 

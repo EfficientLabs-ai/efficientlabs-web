@@ -503,9 +503,11 @@ body::after {
 /* frosted nav material — a slightly stronger lip + heavier blur for the fixed
    top chrome, sharing the same theme-aware tokens so it flips with the site. */
 .glass-nav {
-  background: var(--glass-fill);
-  backdrop-filter: blur(calc(var(--glass-blur) - 2px)) saturate(var(--glass-sat));
-  -webkit-backdrop-filter: blur(calc(var(--glass-blur) - 2px)) saturate(var(--glass-sat));
+  /* near-solid so a bright section (the WebGL mesh) can't bleed through and wash out the
+     wordmark/links — translucent glass over a luminous section killed contrast. */
+  background: color-mix(in srgb, var(--color-void) 88%, transparent);
+  backdrop-filter: blur(calc(var(--glass-blur) + 4px)) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) + 4px)) saturate(var(--glass-sat));
   border-bottom: var(--glass-border);
   box-shadow: var(--glass-shadow);
 }
