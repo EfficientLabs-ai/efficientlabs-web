@@ -1,17 +1,21 @@
-import Aurora from "@/components/glass/Aurora";
 import GlassCard from "@/components/glass/GlassCard";
 import SplitHeading from "@/components/motion/SplitHeading";
 import SectionEntrance from "@/components/motion/SectionEntrance";
 
 /**
- * FINAL CTA — one frosted glass panel over a centered aurora. Names the gap,
- * then offers the two free, low-risk doors (assessment / install). No price on
- * this surface, by rule. Copy server-rendered; motion is transform+opacity.
+ * FINAL CTA — a frosted glass panel over a cinematic ambient backdrop (the sovereign
+ * core, generated for us). Names the gap, then offers the two free, low-risk doors
+ * (assessment / install). No price on this surface, by rule. The backdrop is a static
+ * CSS image (no layout/filter tweens); a vignette keeps the card legible.
  */
 export default function FinalCTA() {
   return (
     <section id="get-started" className="section section-t relative overflow-hidden scroll-mt-20">
-      <Aurora variant="center" />
+      {/* cinematic backdrop — the luminous sovereign core in the void */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-[0.6]"
+           style={{ backgroundImage: "url('/media/core-ambient.webp')" }} />
+      <div aria-hidden className="pointer-events-none absolute inset-0"
+           style={{ background: "radial-gradient(120% 100% at 50% 45%, transparent 14%, color-mix(in srgb, var(--color-void) 80%, transparent) 58%, var(--color-void) 100%)" }} />
       <div className="container-x relative">
         <GlassCard className="mx-auto max-w-3xl px-6 py-14 text-center sm:px-12 sm:py-16">
           <SectionEntrance variant="statement">
