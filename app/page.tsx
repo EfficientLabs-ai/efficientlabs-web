@@ -2,6 +2,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import MeshHero3D from "@/components/MeshHero3D";
 import AtmosphereReveal from "@/components/acts/AtmosphereReveal";
+import ArchitectureFilm from "@/components/acts/ArchitectureFilm";
 import ProofStrip from "@/components/ProofStrip";
 import Preloader from "@/components/motion/Preloader";
 import Stakes from "@/components/landing/Stakes";
@@ -45,6 +46,13 @@ export default function Home() {
 
       {/* ── 3 · THE STAKES — name the fear before naming the product ── */}
       <Stakes />
+
+      {/* ── 3b · THE ARCHITECTURE — cinematic journey film scrubbed across the 7
+          real layer beats (Act 2: the stack). Canvas fallback lives in
+          ArchitectureSequence.tsx (dormant). ── */}
+      <section className="cinematic">
+        <ArchitectureFilm />
+      </section>
 
       {/* ── 4 · THE ANSWER — the ownership layer: four frosted pillars ── */}
       <Answer />
