@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import MeshHero3D from "@/components/MeshHero3D";
 import AtmosphereReveal from "@/components/acts/AtmosphereReveal";
 import ArchitectureFilm from "@/components/acts/ArchitectureFilm";
+import CinematicTransition from "@/components/acts/CinematicTransition";
 import ProofStrip from "@/components/ProofStrip";
 import Preloader from "@/components/motion/Preloader";
 import Stakes from "@/components/landing/Stakes";
@@ -52,6 +53,18 @@ export default function Home() {
           ArchitectureSequence.tsx (dormant). ── */}
       <section className="cinematic">
         <ArchitectureFilm />
+      </section>
+
+      {/* ── 3c · 360° TRANSITION — a cinematic breath orbiting out of the stack
+          into the ownership story (one continuous film) ── */}
+      <section className="cinematic">
+        <CinematicTransition
+          dir="/media/cinematic/orbit"
+          count={91}
+          heightVh={150}
+          kicker="The ownership layer"
+          title={<>Owned. Governed. <span className="aurora-text">Proven.</span></>}
+        />
       </section>
 
       {/* ── 4 · THE ANSWER — the ownership layer: four frosted pillars ── */}
