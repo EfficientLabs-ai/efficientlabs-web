@@ -1,6 +1,6 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import MeshHero3D from "@/components/MeshHero3D";
+import HeroVideo from "@/components/HeroVideo";
 import AtmosphereReveal from "@/components/acts/AtmosphereReveal";
 import ArchitectureFilm from "@/components/acts/ArchitectureFilm";
 import CinematicTransition from "@/components/acts/CinematicTransition";
@@ -38,12 +38,10 @@ export default function Home() {
       <Preloader />
       <Nav />
 
-      {/* ── 2 · CINEMATIC HERO — scroll dives the camera into a node ──
-          .cinematic forces the dark dramatic palette locally so the WebGL hero
-          stays theatrical even when the site is in light mode (pure CSS scope). */}
-      <section className="cinematic">
-        <MeshHero3D />
-      </section>
+      {/* ── 2 · HERO — seamless-looping cinematic brand film; full-screen, then
+          transitions into the site on scroll. HeroVideo owns its own .cinematic
+          section. WebGL hero (MeshHero3D) kept dormant as a fallback option. ── */}
+      <HeroVideo />
 
       {/* ── 3 · THE STAKES — name the fear before naming the product ── */}
       <Stakes />
