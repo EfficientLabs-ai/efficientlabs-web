@@ -7,6 +7,7 @@ import PageShell from "@/components/PageShell";
 import SubPageHero from "@/components/pages/SubPageHero";
 import DeepSection from "@/components/pages/DeepSection";
 import DeepCard from "@/components/pages/DeepCard";
+import MeshField from "@/components/pages/MeshField";
 import StatusLegend from "@/components/pages/StatusLegend";
 import StepFlow from "@/components/pages/StepFlow";
 import SubPageCTA from "@/components/pages/SubPageCTA";
@@ -68,7 +69,9 @@ export default function AtmospherePage() {
           </>
         }
       >
-        <div className="grid gap-5 md:grid-cols-3">
+        {/* signature: peers connect directly — no central hub */}
+        <MeshField />
+        <div className="mt-14 grid gap-5 md:grid-cols-3">
           <DeepCard icon={Globe} title="Owned, not rented">
             Every node runs on hardware its operator controls — a laptop, a workstation, a home server.
             Capacity comes from the edge, not a rented region. Nothing about you lives on infrastructure

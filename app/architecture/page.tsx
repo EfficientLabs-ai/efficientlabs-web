@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import PageShell from "@/components/PageShell";
 import SubPageHero from "@/components/pages/SubPageHero";
+import LayerStack from "@/components/pages/LayerStack";
 import DeepSection from "@/components/pages/DeepSection";
 import DeepCard from "@/components/pages/DeepCard";
 import StatusLegend from "@/components/pages/StatusLegend";
@@ -94,7 +95,9 @@ export default function ArchitecturePage() {
           </>
         }
       >
-        <div className="space-y-4">
+        {/* signature: the stack builds bottom-up before the per-layer detail */}
+        <LayerStack />
+        <div className="mt-14 space-y-4">
           {STACK.map((l, i) => {
             const Icon = ICON[l.name] ?? Layers;
             const tone = TONE[l.tone].hex;
