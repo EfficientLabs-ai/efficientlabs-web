@@ -9,6 +9,7 @@ import Preloader from "@/components/motion/Preloader";
 import Stakes from "@/components/landing/Stakes";
 import Answer from "@/components/landing/Answer";
 import ProofLede from "@/components/landing/ProofLede";
+import ReceiptProof from "@/components/landing/ReceiptProof";
 import HowItWorks from "@/components/landing/HowItWorks";
 import ReadinessCards from "@/components/landing/ReadinessCards";
 import NodeConsole from "@/components/landing/NodeConsole";
@@ -71,7 +72,10 @@ export default function Home() {
       {/* ── 5 · PROOF — verifiability over vibes; ProofStrip telemetry ── */}
       <section id="proof" className="section section-t scroll-mt-20">
         <ProofLede />
-        <div className="mt-10">
+        {/* the receipt that verifies itself — HOW we prove */}
+        <ReceiptProof />
+        {/* the live MEASURED telemetry — WHAT we prove */}
+        <div className="mt-16">
           <ProofStrip embedded />
         </div>
       </section>

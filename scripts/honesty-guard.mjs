@@ -161,6 +161,7 @@ const SURFACES = [
   "components/landing/Stakes.tsx",
   "components/landing/Answer.tsx",
   "components/landing/ProofLede.tsx",
+  "components/landing/ReceiptProof.tsx",
   "components/landing/HowItWorks.tsx",
   "components/landing/ReadinessLadder.tsx",
   "components/landing/FinalCTA.tsx",
