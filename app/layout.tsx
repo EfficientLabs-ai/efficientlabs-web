@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono, Michroma, Space_Grotesk } from "next/font/google
 import "./globals.css";
 import { ThemeRoot } from "@/components/useSiteTheme";
 import MotionProvider from "@/components/MotionProvider";
+import BackToTop from "@/components/BackToTop";
 import StructuredData from "@/components/StructuredData";
 
 // Brand kit type system (EFFICIENT_LABS_BRAND_KIT.md): Space Grotesk (headings) +
@@ -90,6 +91,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <MotionProvider />
         <ThemeRoot>{children}</ThemeRoot>
+        <BackToTop />
       </body>
     </html>
   );
