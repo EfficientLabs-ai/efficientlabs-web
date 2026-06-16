@@ -27,7 +27,7 @@ export default function ArchitectureFilm() {
       eyebrow="The architecture"
       heading={
         <>
-          Six products. <span className="aurora-text">One owned environment.</span>
+          Eight layers. <span className="aurora-text">One owned environment.</span>
         </>
       }
       beats={BEATS}
