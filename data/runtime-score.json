@@ -1,9 +1,9 @@
 {
   "format": "efl.runtime-score.v1",
-  "generated_at": "2026-06-15T18:31:03.975Z",
+  "generated_at": "2026-06-16T00:01:01.709Z",
   "render_rules": "MEASURED cards render values with verdicts; null cards render 'not measured' with the reason, greyed, in place — the grid shape never changes. Staleness is shown, never hidden.",
   "hero": {
-    "measured": 6,
+    "measured": 5,
     "total": 6,
     "verdict": "YELLOW",
     "method": "worst verdict among measured sub-scores only; the denominator is shown ('N of 6 measured') — the ring never silently fills in for missing data"
@@ -35,7 +35,7 @@
     },
     "continuity": {
       "label": "MEASURED",
-      "updated_at": "2026-06-15T18:31:03.801Z",
+      "updated_at": "2026-06-16T00:01:01.560Z",
       "verdict": "GREEN",
       "inputs": {
         "signed_receipts": 1,
@@ -45,16 +45,8 @@
       "verify": "re-verify the chain yourself: the published bundle at /proof/receipts-bundle.json, in-browser or offline"
     },
     "session": {
-      "label": "MEASURED",
-      "updated_at": "2026-06-15T18:31:03.975Z",
-      "verdict": "GREEN",
-      "inputs": {
-        "level": "HEALTHY",
-        "context_per_request": 128542,
-        "fixed_context_slimming": null
-      },
-      "method": "verdict GREEN when the session-economics checker reports HEALTHY, YELLOW otherwise; context-per-request is the checker's recent average; fixed-context slimming is ESTIMATED pending replication and is therefore null here",
-      "verify": "the operating layer's session-economics checker emits these fields verbatim"
+      "label": null,
+      "reason": "session-economics checker not available on build machine"
     },
     "cost": {
       "label": "MEASURED",
@@ -73,7 +65,7 @@
     },
     "ownership": {
       "label": "MEASURED",
-      "updated_at": "2026-06-15T18:31:03.801Z",
+      "updated_at": "2026-06-16T00:01:01.560Z",
       "verdict": "GREEN",
       "inputs": {
         "signed_receipts": 1,

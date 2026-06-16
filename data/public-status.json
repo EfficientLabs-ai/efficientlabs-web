@@ -1,6 +1,6 @@
 {
   "format": "efl.public-status.v1",
-  "generated_at": "2026-06-15T18:31:03.539Z",
+  "generated_at": "2026-06-16T00:01:01.463Z",
   "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
   "tiles": {
     "heartbeat": {
@@ -148,7 +148,7 @@
     },
     "receipts": {
       "label": "MEASURED",
-      "updated_at": "2026-06-15T18:31:03.801Z",
+      "updated_at": "2026-06-16T00:01:01.560Z",
       "count": 1,
       "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
       "bundle_path": "/proof/receipts-bundle.json",
