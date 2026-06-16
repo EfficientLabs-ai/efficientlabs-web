@@ -673,6 +673,68 @@ body::after {
   .rcpt-seal { opacity: 1; transform: none; animation: none; }
 }
 
+/* ── HONEST READINESS LADDER — a vertical rail with rungs; a spark climbs the
+   rail and each node pulses as the eye descends the honesty spectrum. Rail is a
+   static gradient; spark + node glow are transform/opacity (compositor-safe). ── */
+.ladder { position: relative; }
+.ladder-rail {
+  position: absolute; left: 13px; top: 8px; bottom: 8px; width: 2px; border-radius: 2px;
+  background: linear-gradient(180deg, #3ddc97, #22d3ee 48%, #f5a623);
+  opacity: 0.34;
+}
+.ladder-spark {
+  position: absolute; left: 9px; top: 0; width: 10px; height: 10px; border-radius: 9999px;
+  background: #eaf3ff; box-shadow: 0 0 14px 3px rgba(34, 211, 238, 0.8);
+  will-change: transform, opacity; animation: ladder-spark 5.5s ease-in-out infinite;
+}
+@keyframes ladder-spark {
+  0% { transform: translateY(0); opacity: 0; }
+  8% { opacity: 1; }
+  82% { transform: translateY(var(--ladder-h, 360px)); opacity: 1; }
+  92%, 100% { transform: translateY(var(--ladder-h, 360px)); opacity: 0; }
+}
+.ladder-node { position: relative; will-change: transform; }
+.ladder-node::after {
+  content: ""; position: absolute; inset: -7px; border-radius: 9999px;
+  background: radial-gradient(circle, var(--rung-c), transparent 64%);
+  opacity: 0; will-change: opacity; animation: ladder-glow 5.5s ease-in-out infinite; animation-delay: var(--rung-d);
+}
+@keyframes ladder-glow {
+  0%, 100% { opacity: 0; }
+  10% { opacity: 0.7; }
+  26% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ladder-spark { display: none; }
+  .ladder-node::after { opacity: 0.4; animation: none; }
+}
+
+/* ── HOW IT WORKS — a journey track behind the four steps (lg only); a spark
+   travels the path left→right. Connector line shows in the gaps between cards. ── */
+.jpath { position: relative; }
+.jpath-line {
+  position: absolute; top: 43px; left: 12.5%; right: 12.5%; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, #3ddc97, #0a84ff 52%, #22d3ee); opacity: 0.3;
+}
+.jpath-spark {
+  position: absolute; top: 39px; width: 10px; height: 10px; margin-left: -5px; border-radius: 9999px;
+  background: #eaf3ff; box-shadow: 0 0 14px 3px rgba(10, 132, 255, 0.8);
+  animation: jpath-flow 6s linear infinite;
+}
+@keyframes jpath-flow {
+  0% { left: 12.5%; opacity: 0; }
+  6% { opacity: 1; }
+  88% { left: 87.5%; opacity: 1; }
+  96%, 100% { left: 87.5%; opacity: 0; }
+}
+@media (max-width: 1023px) { .jpath-line, .jpath-spark { display: none; } }
+@media (prefers-reduced-motion: reduce) { .jpath-spark { display: none; } }
+
+/* ── READINESS INDEX gauge — the measured arc draws in once on entry. ── */
+.ari-arc { stroke-dashoffset: 0; animation: ari-draw 1.5s cubic-bezier(0.2,0.8,0.2,1) both; }
+@keyframes ari-draw { from { stroke-dashoffset: var(--arc); } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .ari-arc { animation: none; } }
+
 /* flat brutalist data surface — STATIC by default: no hover-lift. Opt into
    interactivity with `.is-interactive` on cards that are actually clickable.
    (fill/border/shadow inherited from the shared .glass material above.) */

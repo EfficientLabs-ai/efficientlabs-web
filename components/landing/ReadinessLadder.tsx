@@ -6,24 +6,29 @@ import { Reveal } from "@/components/Reveal";
 import SectionCTA from "@/components/SectionCTA";
 
 /**
- * HONEST READINESS LADDER — honesty as the trust signal. We show what is deep,
- * what is new, and what is maturing, labeled plainly. The counter-signal to
- * overclaiming competitors: the green you can check yourself is the only green
- * worth anything. Generic labels, no invented metrics (honesty-guard-safe).
+ * HONEST READINESS LADDER — honesty as the trust signal, rendered as an actual
+ * vertical ladder: a rail from bedrock (Deep, green) up through Maturing (cyan)
+ * to New (amber), a spark climbing it and each rung-node glowing as the eye
+ * descends. The counter-signal to overclaiming competitors — the green you can
+ * check yourself is the only green worth anything. Generic labels, no invented
+ * metrics (honesty-guard-safe). Server-rendered; CSS-only motion (.ladder-*).
  */
 const RUNGS = [
   {
     tag: "Deep",
+    c: "#3ddc97",
     title: "Proven and load-bearing",
     body: "The parts we lean on every day to run our own company — and that you can verify, not just take on faith.",
   },
   {
     tag: "Maturing",
+    c: "#22d3ee",
     title: "Built, hardening in the open",
     body: "Connected and working, with the rough edges named in public rather than papered over.",
   },
   {
     tag: "New",
+    c: "#f5a623",
     title: "Early, and labeled as early",
     body: "Recent additions we're honest about. You'll always know whether you're standing on bedrock or fresh ground.",
   },
@@ -49,21 +54,44 @@ export default function ReadinessLadder() {
           </Reveal>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {RUNGS.map((r, i) => (
-            <Reveal key={r.tag} delay={0.06 * i}>
-              <GlassCard className="flex h-full flex-col p-6">
-                <span className="mono inline-flex w-fit items-center gap-2 rounded-[var(--radius-pill)] border border-[color:var(--color-edge)] px-3 py-1 text-[11px] tracking-[0.18em] text-[color:var(--color-signal)]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--color-signal)]" aria-hidden />
-                  {r.tag}
-                </span>
-                <h3 className="t-card mt-5">{r.title}</h3>
-                <p className="mt-2.5 text-[13.5px] leading-relaxed text-[color:var(--color-ink-dim)]">
-                  {r.body}
-                </p>
-              </GlassCard>
-            </Reveal>
-          ))}
+        {/* the ladder — a rail from bedrock up, a spark climbing it */}
+        <div className="ladder mx-auto mt-12 max-w-3xl" style={{ ["--ladder-h" as string]: "440px" }}>
+          <span className="ladder-rail" aria-hidden />
+          <span className="ladder-spark" aria-hidden />
+          <div className="flex flex-col gap-5">
+            {RUNGS.map((r, i) => (
+              <Reveal key={r.tag} delay={0.06 * i}>
+                <div className="grid grid-cols-[28px_1fr] items-start gap-5">
+                  {/* rail node */}
+                  <span className="relative mt-5 flex justify-center">
+                    <span
+                      className="ladder-node grid h-3.5 w-3.5 place-items-center rounded-full"
+                      style={{
+                        ["--rung-c" as string]: r.c,
+                        ["--rung-d" as string]: `${i * 0.6}s`,
+                        background: r.c,
+                        boxShadow: `0 0 0 4px color-mix(in oklab, ${r.c} 18%, transparent)`,
+                      }}
+                      aria-hidden
+                    />
+                  </span>
+                  <GlassCard className="flex flex-col p-6">
+                    <span
+                      className="mono inline-flex w-fit items-center gap-2 rounded-[var(--radius-pill)] px-3 py-1 text-[11px] tracking-[0.18em]"
+                      style={{ color: r.c, border: `1px solid color-mix(in oklab, ${r.c} 38%, transparent)`, background: `color-mix(in oklab, ${r.c} 10%, transparent)` }}
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full" style={{ background: r.c }} aria-hidden />
+                      {r.tag}
+                    </span>
+                    <h3 className="t-card mt-5">{r.title}</h3>
+                    <p className="mt-2.5 text-[13.5px] leading-relaxed text-[color:var(--color-ink-dim)]">
+                      {r.body}
+                    </p>
+                  </GlassCard>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
 
         <Reveal delay={0.2}>

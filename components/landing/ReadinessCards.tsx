@@ -46,6 +46,10 @@ export default function ReadinessCards() {
   // Denominator is derived, never hardcoded — this IS the honest framing.
   const measured = DIMENSIONS.filter((d) => d.maturity === "MEASURED").length;
   const total = DIMENSIONS.length;
+  // gauge geometry — the measured arc length is derived from the same truth.
+  const R = 52;
+  const C = 2 * Math.PI * R;
+  const arcLen = (measured / total) * C;
 
   return (
     <section
@@ -54,19 +58,39 @@ export default function ReadinessCards() {
     >
       <Aurora variant="balanced" />
       <SectionEntrance variant="statement" className="container-x relative">
-        <div className="max-w-2xl">
-          <KickerLabel index="—" text="The readiness index" />
-          <SplitHeading as="h2" className="t-section mt-6">
-            What can your AI stack <span className="aurora-text">actually prove?</span>
-          </SplitHeading>
-          <p
-            data-motion="body"
-            className="t-body-lg mt-7 max-w-2xl text-[color:var(--color-ink-dim)]"
-          >
-            The live score instruments {measured} of {total}&nbsp;dimensions today; the rest render
-            honest-null until their telemetry lands. The empty cells aren&apos;t hidden — they&apos;re
-            the map of what&apos;s left to wire.
-          </p>
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-2xl">
+            <KickerLabel index="—" text="The readiness index" />
+            <SplitHeading as="h2" className="t-section mt-6">
+              What can your AI stack <span className="aurora-text">actually prove?</span>
+            </SplitHeading>
+            <p
+              data-motion="body"
+              className="t-body-lg mt-7 max-w-2xl text-[color:var(--color-ink-dim)]"
+            >
+              The live score instruments {measured} of {total}&nbsp;dimensions today; the rest render
+              honest-null until their telemetry lands. The empty cells aren&apos;t hidden — they&apos;re
+              the map of what&apos;s left to wire.
+            </p>
+          </div>
+
+          {/* the ARI gauge — the measured arc is derived from the same data */}
+          <div data-motion="card" className="relative mx-auto grid h-[148px] w-[148px] shrink-0 place-items-center lg:mx-0">
+            <svg viewBox="0 0 128 128" className="h-full w-full -rotate-90" aria-hidden>
+              <circle cx="64" cy="64" r={R} fill="none" stroke="var(--color-edge)" strokeWidth="8" />
+              <circle
+                cx="64" cy="64" r={R} fill="none" stroke="#3ddc97" strokeWidth="8" strokeLinecap="round"
+                className="ari-arc"
+                style={{ ["--arc" as string]: `${arcLen}`, strokeDasharray: `${arcLen} ${C}` }}
+              />
+            </svg>
+            <div className="absolute flex flex-col items-center">
+              <span className="t-section text-[2rem] leading-none text-[color:var(--color-ink)]">
+                {measured}<span className="text-[color:var(--color-ink-faint)]">/{total}</span>
+              </span>
+              <span className="mono mt-1.5 text-[10px] tracking-[0.18em] text-[color:#3ddc97]">MEASURED</span>
+            </div>
+          </div>
         </div>
 
         <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -49,7 +49,10 @@ export default function HowItWorks() {
           </SplitHeading>
         </div>
 
-        <ol className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="jpath relative mt-12">
+          <span className="jpath-line" aria-hidden />
+          <span className="jpath-spark" aria-hidden />
+          <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((s, i) => (
             <Reveal key={s.n} delay={0.06 * i}>
               <GlassCard material="flat" as="li" className="flex h-full flex-col p-6">
@@ -68,7 +71,8 @@ export default function HowItWorks() {
               </GlassCard>
             </Reveal>
           ))}
-        </ol>
+          </ol>
+        </div>
       </div>
     </section>
   );
