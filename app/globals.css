@@ -61,7 +61,7 @@
   /* ── CORNER SYSTEM — brand kit: 12px standard · 20px premium · 9999px pills ── */
   --radius-xs: 6px;    /* chips, code inline (sub-component scale) */
   --radius-sm: 10px;   /* badges, small controls, inputs */
-  --radius: 12px;      /* STANDARD — default card/data surface */
+  --radius: 14px;      /* STANDARD — default card/data surface (softened for glass) */
   --radius-lg: 20px;   /* PREMIUM — feature cards / media frames */
   --radius-pill: 9999px; /* pills: status dots + CTAs */
   --border-hairline: 1px solid rgba(255,255,255,0.08);
@@ -153,7 +153,10 @@
 [data-theme="light"] .data-card.is-interactive:hover,
 [data-theme="light"] .lm-card.is-interactive:hover {
   border-color: #c8d4e2;
-  box-shadow: var(--shadow-hud-lift);
+  box-shadow:
+    0 1px 2px rgba(16,23,38,0.06),
+    0 28px 64px -22px rgba(16,23,38,0.22),
+    0 14px 30px -18px rgba(10,132,255,0.30);
 }
 /* outline buttons: solid white fill + visible border on light */
 [data-theme="light"] .btn-outline {
@@ -300,6 +303,37 @@ body {
   color: var(--ink);
   font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
   overflow-x: hidden;
+}
+
+/* global mesh field — a fixed, very soft aurora behind ALL content so every
+   frosted surface (nav, cards) has colour to refract. z-index:-1 paints it
+   above the body void but below the in-flow content; opaque .cinematic
+   sections cover it, so they stay pure. Compositor-safe slow drift (transform);
+   static under reduced motion. */
+body::before {
+  content: "";
+  position: fixed; inset: -12%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(38rem 38rem at 12% 6%, rgba(10,132,255,0.10), transparent 60%),
+    radial-gradient(34rem 34rem at 88% 20%, rgba(34,211,238,0.07), transparent 60%),
+    radial-gradient(36rem 36rem at 72% 96%, rgba(139,92,246,0.09), transparent 62%),
+    radial-gradient(30rem 30rem at 26% 82%, rgba(10,132,255,0.06), transparent 62%);
+  will-change: transform;
+  animation: mesh-drift 42s ease-in-out infinite alternate;
+}
+[data-theme="light"] body::before {
+  background:
+    radial-gradient(38rem 38rem at 12% 6%, rgba(10,132,255,0.10), transparent 60%),
+    radial-gradient(34rem 34rem at 88% 20%, rgba(34,211,238,0.10), transparent 60%),
+    radial-gradient(36rem 36rem at 72% 96%, rgba(139,92,246,0.10), transparent 62%),
+    radial-gradient(30rem 30rem at 26% 82%, rgba(10,132,255,0.07), transparent 62%);
+}
+@keyframes mesh-drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-2.5%, 1.8%, 0) scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
 }
 
 /* grain overlay — the whole page sits under a faint film, never flat */
@@ -644,9 +678,15 @@ body::after {
    (fill/border/shadow inherited from the shared .glass material above.) */
 .data-card {
   position: relative; border-radius: var(--radius);
-  transition: transform 0.2s cubic-bezier(0.2,0.8,0.2,1), border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.data-card.is-interactive:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.16); box-shadow: var(--shadow-hud-lift); }
+.data-card.is-interactive:hover {
+  transform: translateY(-5px); border-color: rgba(255,255,255,0.22);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.07),
+    0 28px 70px -22px rgba(0,0,0,0.75),
+    0 14px 34px -18px rgba(10,132,255,0.5);
+}
 .data-card.is-interactive:active { transform: translateY(0); transition-duration: 0.08s; }
 
 /* liquid-metal card: glass fill + a chrome sheen that sweeps the border on hover.
@@ -655,7 +695,7 @@ body::after {
   position: relative; isolation: isolate; overflow: hidden;
   border-radius: var(--radius-lg);
   /* fill/blur/border/shadow inherited from the shared .glass material above */
-  transition: transform 0.2s cubic-bezier(0.2,0.8,0.2,1), border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 /* rotating conic chrome ring, masked to a 1px border */
 .lm-card::before {
@@ -679,8 +719,11 @@ body::after {
 .lm-card:hover::before { opacity: 1; }
 .lm-card:hover::after  { opacity: 1; }
 .lm-card.is-interactive:hover {
-  transform: translateY(-2px); border-color: rgba(255,255,255,0.04);
-  box-shadow: var(--shadow-hud-lift);
+  transform: translateY(-5px); border-color: rgba(255,255,255,0.06);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.08),
+    0 30px 76px -22px rgba(0,0,0,0.78),
+    0 16px 38px -18px rgba(10,132,255,0.55);
 }
 .lm-card.is-interactive:active { transform: translateY(0); transition-duration: 0.08s; }
 
