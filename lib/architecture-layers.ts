@@ -1,15 +1,19 @@
-/* The seven layers we actually built — single source of truth for both the
-   cinematic film (ArchitectureFilm) and the Canvas fallback (ArchitectureSequence).
-   Names + one-liners verbatim from PRODUCT_ARCHITECTURE_V2; maturity never rounded up.
-   `full` spells out the acronyms (people don't know what ECP/DOP/ARI are); `cta`
-   sends them to the most relevant real page for more detail. */
+/* Canonical architecture (2026) — single source of truth for the homepage
+   cinematic stack (ArchitectureFilm) and the /architecture page.
 
-export type Tone = "prod" | "enforced" | "measured";
+   The EIGHT FOUNDATIONAL LAYERS (Intelligence → … → Financial). Each carries an
+   honest maturity badge — never rounded up. DOP remains the Digital Organism
+   Protocol (the improvement metabolism); the Financial layer is Commerce.
+   Names/structure per the founder's 2026 canonical-architecture brief. */
+
+export type Tone = "open" | "enforced" | "prod" | "measured" | "roadmap";
 
 export const TONE: Record<Tone, { hex: string; label: string }> = {
+  open: { hex: "#0a84ff", label: "Open" },
   prod: { hex: "#3ddc97", label: "Production" },
   enforced: { hex: "#8b5cf6", label: "Enforced" },
   measured: { hex: "#22d3ee", label: "Measured" },
+  roadmap: { hex: "#f5a623", label: "Roadmap" },
 };
 
 export type Layer = {
@@ -25,38 +29,99 @@ export type Layer = {
 
 export const LAYERS: Layer[] = [
   {
-    n: "01", name: "Atmos", full: "The Universal Intelligence Environment", role: "The environment", status: "PRODUCTION", tone: "prod",
-    blurb: "Your owned environment for agents, models, files, workflows, receipts, terminal access and governance — the file system is the source of truth.",
-    cta: { label: "Explore Atmos", href: "/atmosphere" },
-  },
-  {
-    n: "02", name: "ECP", full: "Efficient Context Protocol", role: "The context", status: "PRODUCTION", tone: "prod",
-    blurb: "The filesystem becomes the agent architecture — manifests make it machine-readable, the compiler loadable, ledgers compaction-proof, receipts provable.",
+    n: "01", name: "Intelligence", full: "Bring any model", role: "Reasoning", status: "OPEN", tone: "open",
+    blurb: "Claude, GPT, Gemini, Qwen, DeepSeek, open-weights — frontier or local. Models are commodities; you bring them, swap them, and never get locked in.",
     cta: { label: "See the docs", href: "/docs/concepts" },
   },
   {
-    n: "03", name: "StratosAgent", full: "Open-source execution runtime", role: "The runtime", status: "PRODUCTION", tone: "prod",
-    blurb: "Governed hands for AI agents: CLI, terminal, tools, workflows, receipts, safe execution boundaries. Free forever, open source.",
+    n: "02", name: "Identity", full: "Ownership & authority", role: "Who owns & acts", status: "ENFORCED", tone: "enforced",
+    blurb: "Who owns this intelligence, which node and which agent is acting, what authority and permissions exist. Identity is the first requirement for accountability.",
+    cta: { label: "See the docs", href: "/docs/concepts" },
+  },
+  {
+    n: "03", name: "ECP", full: "Efficient Context Protocol", role: "Continuity", status: "PRODUCTION", tone: "prod",
+    blurb: "Context, state, knowledge, receipts, ledgers and manifests that persist — turning temporary AI outputs into durable, compounding organizational intelligence.",
+    cta: { label: "See the docs", href: "/docs/concepts" },
+  },
+  {
+    n: "04", name: "StratosAgent", full: "Open-source runtime", role: "Infrastructure", status: "PRODUCTION", tone: "prod",
+    blurb: "Run autonomous intelligence locally, under your control — model routing, tool and workflow execution, identity, receipts and governance. Open source, free forever.",
     cta: { label: "Get StratosAgent", href: "/stratos" },
   },
   {
-    n: "04", name: "Governance Harness", full: "Authority & safety envelope", role: "The authority", status: "ENFORCED", tone: "enforced",
-    blurb: "Every action bounded by authority, permissions, approvals and protected-action gates — deny-by-default, the denial audited.",
+    n: "05", name: "Governance Harness", full: "Trust infrastructure", role: "Governance", status: "ENFORCED", tone: "enforced",
+    blurb: "Capability, authority and human-approval gates, escalation and evaluation policies, receipts, audit trails and denial records — turning autonomous into trustworthy autonomous.",
     cta: { label: "See the docs", href: "/docs/concepts" },
   },
   {
-    n: "05", name: "Receipts", full: "Signed, verifiable proof", role: "The proof", status: "PRODUCTION", tone: "prod",
-    blurb: "Signed, hash-chained evidence for autonomous work. Not “trust me” — verify it with a public key, in your browser.",
-    cta: { label: "Verify a receipt", href: "/status" },
+    n: "06", name: "Atmosphere", full: "Ownership infrastructure", role: "Ownership", status: "PRODUCTION", tone: "prod",
+    blurb: "Own your compute, context, memory, identity and infrastructure — intelligence that lives outside cloud dependency. Sovereignty instead of data sharecropping.",
+    cta: { label: "Explore Atmosphere", href: "/atmosphere" },
   },
   {
-    n: "06", name: "ARI", full: "Autonomous Readiness Index", role: "The readiness", status: "MEASURED", tone: "measured",
-    blurb: "Owned, governed, verifiable, cost-aware, continuous, ready for autonomy? The runtime score is live; the full 12-dimension index renders honest-null where not yet instrumented.",
+    n: "07", name: "ARI", full: "Autonomous Readiness Index", role: "Economic & readiness", status: "MEASURED", tone: "measured",
+    blurb: "Measure whether intelligence is ready for autonomy — across governance, ownership, continuity, security, economics, commerce, identity and infrastructure — and what it costs.",
     cta: { label: "Run your readiness index", href: "/score" },
   },
   {
-    n: "07", name: "DOP", full: "Digital Organism Protocol", role: "The metabolism", status: "MEASURED", tone: "measured",
-    blurb: "Records outcomes, evaluates work, promotes what proves value, prunes what decays — humans keep control of evolution.",
+    n: "08", name: "Commerce", full: "Governed spend", role: "Financial", status: "ROADMAP", tone: "roadmap",
+    blurb: "The money-governance layer for autonomous work: should this transaction occur, who authorized it, what budget and wallet govern it, what limits and evidence apply — governed spend before autonomy ever touches money.",
     cta: { label: "See the docs", href: "/docs/concepts" },
   },
+];
+
+/* The product ecosystem — what's actually shippable, mapped to the layers above.
+   DOP = the Digital Organism Protocol (improvement metabolism). */
+export type Product = {
+  name: string;
+  full: string;
+  category: string;
+  status: string;
+  tone: Tone;
+  blurb: string;
+  href: string;
+};
+
+export const PRODUCTS: Product[] = [
+  {
+    name: "StratosAgent", full: "Open-source runtime", category: "Intelligence Infrastructure", status: "PRODUCTION", tone: "prod",
+    blurb: "Run autonomous intelligence locally — model routing, tools, workflows, identity, receipts, governance. Free forever.",
+    href: "/stratos",
+  },
+  {
+    name: "ECP", full: "Efficient Context Protocol", category: "Continuity Infrastructure", status: "PRODUCTION", tone: "prod",
+    blurb: "Preserve and compound intelligence — manifests, ledgers, receipts, read models. Outputs become durable, reusable intelligence.",
+    href: "/docs/concepts",
+  },
+  {
+    name: "Governance Harness", full: "Trust infrastructure", category: "Trust Infrastructure", status: "ENFORCED", tone: "enforced",
+    blurb: "Govern and prove every action — authority, approvals, protected-action gates, deny-by-default, audited denials.",
+    href: "/docs/concepts",
+  },
+  {
+    name: "Atmosphere", full: "Ownership infrastructure", category: "Ownership Infrastructure", status: "PRODUCTION", tone: "prod",
+    blurb: "Replace cloud dependency with sovereign infrastructure — own your compute, context, memory and intelligence.",
+    href: "/atmosphere",
+  },
+  {
+    name: "ARI", full: "Autonomous Readiness Index", category: "Measurement Infrastructure", status: "MEASURED", tone: "measured",
+    blurb: "Measure whether intelligence is ready for autonomy across eight dimensions — and what it costs.",
+    href: "/score",
+  },
+  {
+    name: "DOP", full: "Digital Organism Protocol", category: "Improvement Metabolism", status: "MEASURED", tone: "measured",
+    blurb: "Records outcomes, evaluates work, promotes what proves value, prunes what decays — humans keep control of evolution.",
+    href: "/docs/concepts",
+  },
+  {
+    name: "Commerce", full: "Governed spend", category: "Financial Infrastructure", status: "ROADMAP", tone: "roadmap",
+    blurb: "Govern budgets, wallets, approvals and settlement — financial accountability before autonomy touches money.",
+    href: "/docs/concepts",
+  },
+];
+
+// ARI's eight readiness dimensions (canon).
+export const ARI_DIMENSIONS = [
+  "Governance", "Ownership", "Continuity", "Security",
+  "Economics", "Commerce", "Identity", "Infrastructure",
 ];

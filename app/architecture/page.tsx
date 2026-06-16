@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import {
   Layers, Lock, Database, Network, ShieldCheck, Route,
-  ScanLine, Stamp, BadgeCheck, KeyRound, Boxes, Terminal, Receipt, Gauge, Activity,
+  ScanLine, Stamp, BadgeCheck, KeyRound, Boxes, Terminal, Gauge, Activity, Cpu, Fingerprint, Wallet,
 } from "lucide-react";
 import PageShell from "@/components/PageShell";
 import SubPageHero from "@/components/pages/SubPageHero";
@@ -11,24 +11,36 @@ import StatusLegend from "@/components/pages/StatusLegend";
 import SubPageCTA from "@/components/pages/SubPageCTA";
 import StatusBadge from "@/components/pages/StatusBadge";
 import { Reveal } from "@/components/Reveal";
-import { LAYERS as STACK, TONE, type Tone } from "@/lib/architecture-layers";
+import { LAYERS as STACK, PRODUCTS, TONE, type Tone } from "@/lib/architecture-layers";
 
 export const metadata: Metadata = {
-  title: "Architecture — the seven layers you own",
+  title: "Architecture — the eight layers of the Ownership Layer",
   description:
-    "A deep look at the Efficient Labs architecture: the seven components you own — Atmos, ECP, StratosAgent, the Governance Harness, Receipts, ARI and DOP — the trust properties that hold them together, and how signed work moves across the mesh. Every component is labelled with its honest maturity.",
+    "The Efficient Labs architecture: eight foundational layers — Intelligence, Identity, Continuity (ECP), Infrastructure (StratosAgent), Governance, Ownership (Atmosphere), Economic (ARI) and Financial (Commerce) — and the product ecosystem that implements them. Every layer carries its honest maturity.",
   alternates: { canonical: "/architecture" },
 };
 
-// Per-component iconography — keyed by the canonical name in lib/architecture-layers.
+// Per-layer iconography — keyed by the canonical layer name in lib/architecture-layers.
 const ICON: Record<string, typeof Layers> = {
-  Atmos: Boxes,
+  Intelligence: Cpu,
+  Identity: Fingerprint,
   ECP: Database,
   StratosAgent: Terminal,
   "Governance Harness": ShieldCheck,
-  Receipts: Receipt,
+  Atmosphere: Boxes,
+  ARI: Gauge,
+  Commerce: Wallet,
+};
+
+// Per-product iconography for the ecosystem grid.
+const PROD_ICON: Record<string, typeof Layers> = {
+  StratosAgent: Terminal,
+  ECP: Database,
+  "Governance Harness": ShieldCheck,
+  Atmosphere: Boxes,
   ARI: Gauge,
   DOP: Activity,
+  Commerce: Wallet,
 };
 
 export default function ArchitecturePage() {
@@ -39,20 +51,19 @@ export default function ArchitecturePage() {
         crumb="Architecture"
         title={
           <>
-            Seven layers, <span className="aurora-text">one environment you own.</span>
+            Eight layers, <span className="aurora-text">one environment you own.</span>
           </>
         }
         lede={
           <>
-            Efficient Labs isn&apos;t one feature — it&apos;s a stack of seven components you own, each
-            labelled with what it can actually prove today. The file system is the source of truth;
-            everything else is a projection of it. This page walks the architecture component by component,
-            the trust properties that hold it together, and how a signed unit of work travels the mesh
-            without anyone having to trust where it came from.
+            Efficient Labs isn&apos;t one feature — it&apos;s the Ownership Layer for autonomous
+            intelligence: eight foundational layers, from the models you bring to the money your
+            agents may spend, each labelled with what it can actually prove today. The file system
+            is the source of truth; everything else is a projection of it.
           </>
         }
         facts={[
-          { k: "Components", v: "Seven" },
+          { k: "Layers", v: "Eight" },
           { k: "Source of truth", v: "Your file system" },
           { k: "Proof", v: "Signed receipts" },
           { k: "Status", v: "Honestly labelled" },
@@ -64,21 +75,22 @@ export default function ArchitecturePage() {
         }}
       />
 
-      {/* 01 — the seven components */}
+      {/* 01 — the eight layers */}
       <DeepSection
         index="01"
-        kicker="The stack"
-        title="Seven components, one environment"
+        kicker="The eight layers"
+        title="From the model you bring to the money it may spend"
         lede={
           <>
-            Read it as a stack. <strong className="text-[color:var(--color-ink)]">Atmos</strong> is the
-            environment; <strong className="text-[color:var(--color-ink)]">ECP</strong> makes it
-            machine-loadable; <strong className="text-[color:var(--color-ink)]">StratosAgent</strong> acts
-            on it; the <strong className="text-[color:var(--color-ink)]">Governance Harness</strong> bounds
-            every action; <strong className="text-[color:var(--color-ink)]">Receipts</strong> prove what
-            happened; <strong className="text-[color:var(--color-ink)]">ARI</strong> measures readiness; and{" "}
-            <strong className="text-[color:var(--color-ink)]">DOP</strong> decides what to keep. Each is
-            labelled with the maturity it has actually reached — never rounded up.
+            Read it as a stack. <strong className="text-[color:var(--color-ink)]">Intelligence</strong> is any
+            model you bring; <strong className="text-[color:var(--color-ink)]">Identity</strong> establishes who
+            owns and who acts; <strong className="text-[color:var(--color-ink)]">Continuity (ECP)</strong>
+            preserves it across time; <strong className="text-[color:var(--color-ink)]">StratosAgent</strong>
+            runs it locally; the <strong className="text-[color:var(--color-ink)]">Governance Harness</strong>
+            bounds every action; <strong className="text-[color:var(--color-ink)]">Atmosphere</strong> makes it
+            yours to own; <strong className="text-[color:var(--color-ink)]">ARI</strong> measures readiness; and{" "}
+            <strong className="text-[color:var(--color-ink)]">Commerce</strong> governs spend. Each is labelled
+            with the maturity it has actually reached — never rounded up.
           </>
         }
       >
@@ -90,43 +102,28 @@ export default function ArchitecturePage() {
               <Reveal key={l.n} delay={i * 0.04}>
                 <div className="lm-card p-6 md:p-7">
                   <div className="flex flex-col gap-5 md:flex-row md:items-start md:gap-6">
-                    {/* component header rail */}
                     <div className="flex items-center gap-4 md:w-64 md:shrink-0">
-                      <span
-                        className="grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-sm)] border"
-                        style={{
-                          borderColor: `color-mix(in oklab, ${tone} 32%, transparent)`,
-                          background: `color-mix(in oklab, ${tone} 9%, transparent)`,
-                          color: tone,
-                        }}
-                      >
+                      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-sm)] border"
+                        style={{ borderColor: `color-mix(in oklab, ${tone} 32%, transparent)`, background: `color-mix(in oklab, ${tone} 9%, transparent)`, color: tone }}>
                         <Icon size={18} aria-hidden />
                       </span>
                       <div className="min-w-0">
                         <div className="mono text-[11px] uppercase tracking-wider" style={{ color: tone }}>
-                          {l.n} · {l.role}
+                          Layer {l.n} · {l.role}
                         </div>
                         <div className="text-[15px] font-semibold text-[color:var(--color-ink)]">{l.name}</div>
                         <div className="text-[12px] text-[color:var(--color-ink-faint)]">{l.full}</div>
                       </div>
                     </div>
-                    {/* body */}
                     <div className="min-w-0 flex-1">
-                      <span
-                        className="mono mb-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10.5px] tracking-[0.1em]"
-                        style={{ color: tone, background: `color-mix(in oklab, ${tone} 14%, transparent)` }}
-                      >
+                      <span className="mono mb-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10.5px] tracking-[0.1em]"
+                        style={{ color: tone, background: `color-mix(in oklab, ${tone} 14%, transparent)` }}>
                         <span className="h-1.5 w-1.5 rounded-full" style={{ background: tone }} />
                         {l.status}
                       </span>
                       <p className="text-[14px] leading-relaxed text-[color:var(--color-ink-dim)]">{l.blurb}</p>
-                      <a
-                        href={l.cta.href}
-                        className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium transition-opacity hover:opacity-80"
-                        style={{ color: tone }}
-                      >
-                        {l.cta.label}
-                        <span aria-hidden>→</span>
+                      <a href={l.cta.href} className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium transition-opacity hover:opacity-80" style={{ color: tone }}>
+                        {l.cta.label}<span aria-hidden>→</span>
                       </a>
                     </div>
                   </div>
@@ -138,7 +135,7 @@ export default function ArchitecturePage() {
 
         {/* honest maturity legend */}
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
-          {(["prod", "enforced", "measured"] as Tone[]).map((t) => (
+          {(["open", "prod", "enforced", "measured", "roadmap"] as Tone[]).map((t) => (
             <span key={t} className="mono inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.1em] text-[color:var(--color-ink-faint)]">
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: TONE[t].hex }} />
               {TONE[t].label}
@@ -148,9 +145,52 @@ export default function ArchitecturePage() {
         </div>
       </DeepSection>
 
-      {/* 02 — trust trifecta */}
+      {/* 02 — the product ecosystem */}
       <DeepSection
         index="02"
+        kicker="The product ecosystem"
+        title="What actually ships against the layers"
+        lede={
+          <>
+            The layers are the frame; these are the products that implement them. Each is owned by you,
+            open where it counts, and labelled with its real maturity. DOP — the Digital Organism Protocol —
+            is the improvement metabolism that decides what proves out and what gets retired.
+          </>
+        }
+      >
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {PRODUCTS.map((p, i) => {
+            const Icon = PROD_ICON[p.name] ?? Layers;
+            const tone = TONE[p.tone].hex;
+            return (
+              <Reveal key={p.name} delay={(i % 3) * 0.05}>
+                <div className="lm-card flex h-full flex-col p-6">
+                  <div className="flex items-center justify-between">
+                    <span className="grid h-10 w-10 place-items-center rounded-[var(--radius-sm)] border"
+                      style={{ borderColor: `color-mix(in oklab, ${tone} 30%, transparent)`, background: `color-mix(in oklab, ${tone} 9%, transparent)`, color: tone }}>
+                      <Icon size={18} aria-hidden />
+                    </span>
+                    <span className="mono inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] tracking-[0.1em]"
+                      style={{ color: tone, background: `color-mix(in oklab, ${tone} 14%, transparent)` }}>
+                      <span className="h-1.5 w-1.5 rounded-full" style={{ background: tone }} />{p.status}
+                    </span>
+                  </div>
+                  <h3 className="mt-4 text-[16px] font-semibold text-[color:var(--color-ink)]">{p.name}</h3>
+                  <p className="mono text-[11px] uppercase tracking-[0.12em]" style={{ color: tone }}>{p.category}</p>
+                  <p className="mt-2.5 flex-1 text-[13.5px] leading-relaxed text-[color:var(--color-ink-dim)]">{p.blurb}</p>
+                  <a href={p.href} className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium transition-opacity hover:opacity-80" style={{ color: tone }}>
+                    Learn more<span aria-hidden>→</span>
+                  </a>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
+      </DeepSection>
+
+      {/* 03 — trust trifecta */}
+      <DeepSection
+        index="03"
         kicker="The trust trifecta"
         title="Three guarantees that compose"
         lede={
@@ -195,9 +235,9 @@ export default function ArchitecturePage() {
         </Reveal>
       </DeepSection>
 
-      {/* 03 — signed skills lifecycle */}
+      {/* 04 — signed skills lifecycle */}
       <DeepSection
-        index="03"
+        index="04"
         kicker="Signed skills"
         title="How a skill crosses the mesh safely"
         lede="A skill is the unit of capability that moves between nodes. Its lifecycle is built so that no node ever has to trust where a skill came from — only that its seal verifies and its execution is contained."
@@ -244,14 +284,14 @@ export default function ArchitecturePage() {
         </div>
       </DeepSection>
 
-      {/* 04 — the thesis */}
+      {/* 05 — the thesis */}
       <DeepSection
-        index="04"
+        index="05"
         kicker="The thesis"
         title="Automate the architecture, not the wrapper"
         lede={
           <>
-            The design principle under all seven components: a correctly-designed file and dataflow
+            The design principle under all eight layers: a correctly-designed file and dataflow
             architecture does the work deterministically, cheaply, and auditably. The agent earns its place
             only where genuine ambiguity lives — not as a wrapper around everything.
           </>

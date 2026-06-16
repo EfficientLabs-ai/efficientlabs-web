@@ -24,6 +24,7 @@ export type Beat = {
   n: string;
   name: string;
   full: string;
+  layer?: string;
   role: string;
   status: string;
   color: string;
@@ -235,7 +236,8 @@ export default function CinematicScrub({
                     <span className="h-1.5 w-1.5 rounded-full" style={{ background: b.color }} />{b.status}
                   </span>
                 </div>
-                <p className="mono mt-3 text-[11px] uppercase tracking-[0.18em]" style={{ color: b.color }}>{b.role}</p>
+                {b.layer && <p className="mono mt-3 text-[10px] uppercase tracking-[0.14em] text-[color:var(--color-ink-faint)]">{b.layer}</p>}
+                <p className="mono mt-1.5 text-[11px] uppercase tracking-[0.18em]" style={{ color: b.color }}>{b.role}</p>
                 <h3 className="t-card-title mt-1.5 text-[1.75rem]">{b.name}</h3>
                 <p className="mt-1 text-[14px] text-[color:var(--color-ink)]">{b.full}</p>
                 <p className="mt-3.5 text-[15px] leading-relaxed text-[color:var(--color-ink-dim)]">{b.blurb}</p>
