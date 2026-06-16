@@ -9,6 +9,7 @@ const NAV = [
   ["StratosAgent", "/stratos"],
   ["Architecture", "/architecture"],
   ["Pricing", "/pricing"],
+  ["Enterprise", "/enterprise"],
   ["Docs", "/docs"],
   ["Status", "/status"],
 ];

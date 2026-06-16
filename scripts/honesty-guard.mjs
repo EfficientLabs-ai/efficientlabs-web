@@ -188,6 +188,7 @@ const SURFACES = [
   "app/atmosphere/page.tsx",
   "app/stratos/page.tsx",
   "app/architecture/page.tsx",
+  "app/enterprise/page.tsx",
   "app/install/page.tsx",
   // Runtime Score lead-magnet page (2026-06-13). The board component
   // (components/score/*) is a truth renderer like components/proof/* and is
