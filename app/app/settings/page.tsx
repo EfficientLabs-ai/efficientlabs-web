@@ -12,6 +12,7 @@ import {
 import { CapStatus } from "@/components/docs/StatusBadge";
 import { supabase } from "@/lib/supabase";
 import { useOs } from "@/components/os/useOsSession";
+import { PLAN_LABEL } from "@/lib/plans";
 import { useOsPrefs } from "@/components/os/useOsPrefs";
 import ModuleHeader from "@/components/os/ModuleHeader";
 import OsCard from "@/components/os/OsCard";
@@ -38,7 +39,7 @@ const CHANNELS = [
 ];
 
 export default function SettingsPage() {
-  const { email, signedIn } = useOs();
+  const { email, signedIn, plan } = useOs();
   const { prefs } = useOsPrefs();
 
   return (
@@ -83,7 +84,7 @@ export default function SettingsPage() {
             <p className="mono text-[12px] text-[color:var(--color-ink-dim)]">
               {signedIn ? email : "Not signed in"}
             </p>
-            <p className="mono text-[11px] text-[color:var(--color-ink-faint)]">Sovereign · Free</p>
+            <p className="mono text-[11px] text-[color:var(--color-ink-faint)]">{PLAN_LABEL[plan]}</p>
             {signedIn ? (
               <button
                 onClick={() => supabase?.auth.signOut().then(() => location.reload())}
@@ -190,8 +191,10 @@ export default function SettingsPage() {
         <h2 className="text-[14px] font-semibold text-[color:var(--color-ink)]">Plan &amp; team</h2>
         <div className="grid gap-4 lg:grid-cols-2">
           <OsCard icon={Cpu} title="Billing &amp; plan" variant="data" href="/pricing">
-            You are on Sovereign (Free). Manage plans and pool more devices on the pricing
-            page.
+            You are on {PLAN_LABEL[plan]}.{" "}
+            {plan === "free"
+              ? "Upgrade to pool more devices and unlock the full skill library on the pricing page."
+              : "Manage your plan and seats on the pricing page."}
           </OsCard>
           <ComingSoon
             title="Team seats"
