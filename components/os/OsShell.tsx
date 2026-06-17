@@ -1,8 +1,12 @@
 "use client";
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { planMeets } from "@/lib/plans";
+import { requiredPlanForPath, moduleForPath } from "./modules";
+import { PlanWall } from "./PlanGate";
 import { useOsSession, OsSessionProvider } from "./useOsSession";
 import { useOsThemeState, OsThemeProvider } from "./useOsTheme";
 import { useOsPrefsState, OsPrefsProvider, prefsStyle } from "./useOsPrefs";
@@ -36,10 +40,15 @@ export default function OsShell({
   const session = useOsSession();
   const theme = useOsThemeState();
   const prefs = useOsPrefsState();
-  const { email, signedIn, ready } = session;
+  const { email, signedIn, ready, plan } = session;
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const pathname = usePathname();
 
   const showPreviewBanner = ready && !signedIn;
+  // module-level plan gate: lock the active route's content for a signed-in user
+  // whose plan is below what the module requires (signed-out users see preview).
+  const requiredPlan = requiredPlanForPath(pathname);
+  const moduleLocked = Boolean(requiredPlan && ready && signedIn && !planMeets(plan, requiredPlan));
 
   return (
     <OsSessionProvider value={session}>
@@ -110,7 +119,13 @@ export default function OsShell({
                 showPreviewBanner && "opacity-80",
               )}
             >
-              {typeof children === "function" ? children(session) : children}
+              {moduleLocked && requiredPlan ? (
+                <PlanWall required={requiredPlan} module={moduleForPath(pathname)?.label} />
+              ) : typeof children === "function" ? (
+                children(session)
+              ) : (
+                children
+              )}
             </main>
           </div>
         </div>
