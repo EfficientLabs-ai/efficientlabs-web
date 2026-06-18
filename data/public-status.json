@@ -1,15 +1,15 @@
 {
   "format": "efl.public-status.v1",
-  "generated_at": "2026-06-18T13:01:08.418Z",
+  "generated_at": "2026-06-18T13:31:07.921Z",
   "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
   "tiles": {
     "heartbeat": {
       "label": "MEASURED",
-      "updated_at": "2026-06-14T09:24Z",
+      "updated_at": "2026-06-18T13:10Z",
       "color": "YELLOW",
       "fail": 0,
-      "warn": 7,
-      "ok": 26,
+      "warn": 8,
+      "ok": 25,
       "checks": [
         {
           "name": "session-boot ran",
@@ -29,7 +29,7 @@
         },
         {
           "name": "completion checks current",
-          "status": "ok"
+          "status": "warn"
         },
         {
           "name": "receipts landing",
@@ -53,7 +53,7 @@
         },
         {
           "name": "intelligence score refreshed",
-          "status": "warn"
+          "status": "ok"
         },
         {
           "name": "token usage tracked",
@@ -137,7 +137,7 @@
         },
         {
           "name": "ecp read-model fresh",
-          "status": "ok"
+          "status": "warn"
         },
         {
           "name": "ecp leases healthy",
@@ -148,7 +148,7 @@
     },
     "receipts": {
       "label": "MEASURED",
-      "updated_at": "2026-06-18T13:01:08.503Z",
+      "updated_at": "2026-06-18T13:31:08.057Z",
       "count": 1,
       "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
       "bundle_path": "/proof/receipts-bundle.json",
@@ -174,7 +174,7 @@
     },
     "intelligence": {
       "label": "MEASURED",
-      "updated_at": "2026-06-18T13:01Z",
+      "updated_at": "2026-06-18T13:31Z",
       "counters": {
         "context_nodes": {
           "value": 512,
@@ -319,7 +319,7 @@
       "label": "MEASURED",
       "updated_at": "2026-06-18",
       "sessions": 12,
-      "requests": 10383,
+      "requests": 10467,
       "weighted_cache_hit_pct": 96.7,
       "method": "provider-reported usage fields; cache hit = cache_read ÷ (input + cache_read + cache_create) summed over all sessions",
       "verify": "published artifact — recomputable from the method shown; no dollar figure is published anywhere"
