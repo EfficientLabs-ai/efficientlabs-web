@@ -165,6 +165,10 @@ const SURFACES = [
   "components/landing/HowItWorks.tsx",
   "components/landing/ReadinessLadder.tsx",
   "components/landing/FinalCTA.tsx",
+  // "The Desk That Proves Itself" homepage (2026-06-18): the LiveDesk hero (docks the OS + the live
+  // receipt-verify) and the HonestyLedger close both carry marketing copy and are policed here.
+  "components/landing/LiveDesk.tsx",
+  "components/landing/HonestyLedger.tsx",
   // Readiness-index card grid + node-console preview (2026-06-14) — both carry
   // marketing copy (12-dimension ARI framing, console-preview product copy) and
   // are policed like any landing surface. ReadinessCards renders honest maturity
