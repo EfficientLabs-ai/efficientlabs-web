@@ -20,29 +20,30 @@ type Tier = {
   features: string[];
 };
 
-// LIVE pricing. Monthly default; annual = 2 months free (≈17% off). Stripe live
-// payment links (founder-approved 2026-06-07). Wallet + Contribution Credits track
-// on every tier; rewards/payouts NOT live (counsel-gated). Free = install, no card.
+// LIVE pricing (numbers + Stripe links frozen, founder-approved 2026-06-07). Value is anchored on
+// GOVERNED WORKFLOWS + RECEIPTS + CONTINUITY — the things you actually buy — not on mesh compute
+// (0 external devices today), which is shown as a labeled roadmap line only. Wallet + Contribution
+// Credits track on every tier; rewards/payouts NOT live (counsel-gated). Free = install, no card.
 const TIERS: Tier[] = [
   {
     name: "Free Forever",
     layer: "Troposphere",
-    tagline: "Ground level. Run it on your own hardware, sovereign and DIY.",
+    tagline: "Ground level. Own and prove your AI's work, on your own hardware.",
     fixedPrice: "$0",
     fixedCadence: "forever",
-    cta: { label: "Install now", href: "/install" },
+    cta: { label: "Start free", href: "/start" },
     features: [
-      "Up to 2 nodes (e.g. your laptop + phone)",
-      "The Atmosphere runtime + StratosAgent",
-      "Bring your own model — local + frontier keys, unlimited",
-      "Content-addressed · post-quantum sealed",
-      "Join the mesh · community skills + support",
+      "StratosAgent + the Atmosphere runtime — free forever",
+      "Own every workflow, decision & deliverable, on your hardware",
+      "Signed, hash-chained receipts — verify offline with the public key",
+      "Bring your own model — local + your own frontier keys",
+      "Up to 2 nodes · community skills & support",
     ],
   },
   {
     name: "Exos Pro",
     layer: "Stratosphere",
-    tagline: "Above the clouds — where StratosAgent flies.",
+    tagline: "For the operator who bills clients on what their AI produces.",
     monthly: 20,
     annual: 200,
     links: {
@@ -52,18 +53,18 @@ const TIERS: Tier[] = [
     cta: { label: "Start Exos Pro" },
     featured: true,
     features: [
-      "Up to 5 meshed nodes — pool compute & RAM",
-      "P2P mesh clustering across your devices",
-      "Publish signed skills to the registry",
-      "Turnkey connectors + hosted skill sync",
-      "Priority bootstrap & relay for hole-punching",
+      "Everything in Free, plus —",
+      "Stronger continuity — your work persists across sessions & tools",
+      "Runtime Score — see what your stack can and can't prove",
+      "Publish & sync signed skills · turnkey connectors",
       "Email support",
+      "P2P mesh clustering across your devices — rolling out",
     ],
   },
   {
     name: "Apex",
     layer: "Mesosphere",
-    tagline: "Power tier — the biggest models, the full skill library.",
+    tagline: "Power tier — automate governed work and prove it to clients.",
     monthly: 100,
     annual: 1000,
     links: {
@@ -72,11 +73,11 @@ const TIERS: Tier[] = [
     },
     cta: { label: "Start Apex" },
     features: [
-      "Higher node limits — build a real personal mesh",
-      "Priority scheduling for the largest local models",
+      "Everything in Exos Pro, plus —",
+      "Advanced receipts — export & share verifiable proof with clients",
+      "Governed-workflow automation + terminal workflows",
       "The full federated skill library + publishing",
-      "Local RAG + curated, optimized model weights",
-      "Priority support",
+      "Deeper Autonomous Readiness Index · priority support",
     ],
   },
   {
@@ -88,15 +89,15 @@ const TIERS: Tier[] = [
     cta: { label: "Talk to us", href: "mailto:hello@efficientlabs.ai?subject=Apex%20Max" },
     features: [
       "Everything in Apex",
-      "Maximum node limits for a personal mesh",
-      "First-priority scheduling for the largest local models",
+      "Highest limits & first-priority scheduling",
+      "Advanced governance & deeper runtime intelligence",
       "Early access to new capabilities as they land",
     ],
   },
   {
     name: "Teams",
     layer: "Thermosphere",
-    tagline: "One mesh across the whole team's hardware.",
+    tagline: "Show clients exactly what the AI did — and bill for it.",
     monthly: 30,
     annual: 300,
     perSeat: true,
@@ -106,23 +107,23 @@ const TIERS: Tier[] = [
     },
     cta: { label: "Start Teams" },
     features: [
-      "Everything in Apex Max",
-      "Multi-user mesh orchestration (min. 5 seats)",
-      "Shared skills, connectors & RAG across devices",
-      "Role-based access control + audit logs",
+      "Everything in Apex (min. 5 seats), plus —",
+      "Shared workspaces + a team receipt chain",
+      "Per-member attribution + approval queues",
+      "Role-based access control + audit-ready evidence",
       "SSO / SCIM · business & policy controls",
     ],
   },
   {
     name: "Enterprise",
     layer: "Exosphere",
-    tagline: "The edge of space — compliance, air-gap, total control.",
+    tagline: "The edge of space — governance, air-gap, total control.",
     fixedPrice: "Custom",
     cta: { label: "Contact sales", href: "mailto:hello@efficientlabs.ai?subject=Enterprise%20early%20access" },
     features: [
       "Everything in Teams",
-      "On-prem & air-gapped private mesh",
-      "HIPAA / SOC 2 / data-residency support",
+      "Private deployment · on-prem & air-gapped",
+      "Compliance-ready evidence (HIPAA / SOC 2 readiness) · data residency",
       "Private capability registry + commercial license",
       "SLAs · dedicated engineering · red-team review",
     ],
@@ -144,10 +145,10 @@ export default function Pricing() {
 
       <div className="relative mx-auto max-w-[84rem] px-6">
         <div className="mx-auto max-w-2xl text-center">
-          <ActHeader index="—" kicker="Pricing" title={<>Own it. <span className="aurora-text">No meter</span>, ever.</>}>
-            Flat pricing for software you run on your own hardware. We never bill per token, per
-            request, or per gigabyte of egress — because nothing leaves your machine unless you send it.
-            Sovereignty is always free; you only ever pay for convenience and borrowed mesh compute.
+          <ActHeader index="—" kicker="Pricing" title={<>Own it. Prove it. <span className="aurora-text">No meter</span>, ever.</>}>
+            Flat pricing for software you run on your own hardware. You&apos;re never billed per token,
+            per request, or per gigabyte of egress. You pay for governed workflows, verifiable receipts,
+            and continuity — sovereignty itself is always free.
           </ActHeader>
         </div>
 
