@@ -19,21 +19,21 @@ export default function FinalCTA() {
       <div className="container-x relative">
         <GlassCard className="mx-auto max-w-3xl px-6 py-14 text-center sm:px-12 sm:py-16">
           <SectionEntrance variant="statement">
-            <p data-motion="body" className="kicker">Find out where you stand</p>
+            <p data-motion="body" className="kicker">Own your AI work</p>
             <SplitHeading as="h2" className="t-section mt-6">
-              Find out what your AI{" "}
-              <span className="aurora-text">can&apos;t prove yet</span>.
+              Your work, finally{" "}
+              <span className="aurora-text">yours to keep</span>.
             </SplitHeading>
             <p data-motion="body" className="t-body-lg mx-auto mt-6 max-w-xl text-[color:var(--color-ink-dim)]">
-              Five minutes, no install required. See the gaps between what your stack does and
-              what it can prove — then close them on infrastructure you own.
+              Start free and keep every workflow your AI runs — owned on infrastructure you
+              control, provable with a receipt anyone can verify, and yours even if you walk away.
             </p>
             <div data-motion="cta" className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
-              <a href="/score" className="btn-signal w-full justify-center sm:w-auto">
-                Run your free readiness assessment<span aria-hidden>→</span>
+              <a href="/start" className="btn-signal w-full justify-center sm:w-auto">
+                Start free<span aria-hidden>→</span>
               </a>
-              <a href="/start" className="btn-outline w-full justify-center sm:w-auto">
-                Install free forever
+              <a href="/status" className="btn-outline w-full justify-center sm:w-auto">
+                Verify a receipt yourself
               </a>
             </div>
           </SectionEntrance>

@@ -11,12 +11,9 @@ import TypewriterHeading, { type TwSeg } from "@/components/motion/TypewriterHea
    ========================================================================== */
 
 const TITLE: TwSeg[] = [
-  { text: "Own", accent: true },
-  { text: " the environment" },
+  { text: "Own and prove", accent: true },
   { break: true },
-  { text: "your AI " },
-  { text: "acts from", accent: true },
-  { text: "." },
+  { text: "everything your AI does." },
 ];
 
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
@@ -86,18 +83,19 @@ export default function HeroVideo() {
         {/* copy overlay */}
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center"
              style={{ opacity: copyOpacity, transform: `translateY(${copyY}px)`, pointerEvents: copyOpacity > 0.4 ? "auto" : "none" }}>
-          <p className="kicker">Governed intelligence infrastructure</p>
+          <p className="kicker">AI you actually own</p>
           <TypewriterHeading as="h1" segments={TITLE} className="t-display mt-5 max-w-4xl" />
           <p className="t-body-lg mt-7 mx-auto max-w-2xl text-[color:var(--color-ink-dim)]">
-            The ownership layer for autonomous intelligence — run, govern and prove AI work
-            on infrastructure you own, with receipts, continuity and human authority built in.
+            Your prompts, workflows, and deliverables shouldn&apos;t vanish into someone
+            else&apos;s chat window. Keep every step your AI takes — on infrastructure you
+            own — and prove it with a receipt anyone can verify.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-            <a href="/score" className="btn-signal">Run the Autonomous Readiness Index<span aria-hidden>→</span></a>
-            <a href="/start" className="btn-outline">Start for free</a>
+            <a href="/start" className="btn-signal">Start free<span aria-hidden>→</span></a>
+            <a href="/status" className="btn-outline">See it prove itself</a>
           </div>
           <p className="mt-6 text-[13px] text-[color:var(--color-ink-faint)]">
-            Not another AI wrapper. The ownership layer for verifiable autonomous work.
+            Free forever. Your work stays yours — even if you cancel.
           </p>
         </div>
 
