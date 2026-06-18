@@ -203,6 +203,9 @@ const SURFACES = [
   // signup carries the sovereign-path escape line.
   "app/start/page.tsx",
   "components/onboarding/StartJourney.tsx",
+  // Standalone receipt verifier page (2026-06-18) — the artifact Maya forwards to a client; carries
+  // the hero lede copy (DropBundleVerify itself is already policed).
+  "app/verify/page.tsx",
   "lib/onboarding.ts",
   "app/signup/page.tsx",
   // DropBundleVerify carries CLAIM copy ("never leaves this page", step-5 promise)
