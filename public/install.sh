@@ -12,7 +12,7 @@
 set -eu
 
 PKG="@efficientlabs/stratos"
-VERSION="${STRATOS_VERSION:-1.2.0}"          # pinned; override deliberately via STRATOS_VERSION
+VERSION="${STRATOS_VERSION:-1.3.0}"          # pinned; override deliberately via STRATOS_VERSION
 EXPECTED_SHA256="${STRATOS_SHA256:-}"        # optional: verify the published tarball checksum
 
 say() { printf '%s\n' "$*"; }

@@ -14,9 +14,9 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "sw
 const jbMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jb-mono", display: "swap" });
 const michroma = Michroma({ subsets: ["latin"], weight: ["400"], variable: "--font-wordmark", display: "swap" });
 
-const TITLE = "Efficient Labs — Sovereign AI infrastructure";
+const TITLE = "Efficient Labs — The operating system for AI you own";
 const DESCRIPTION =
-  "StratosAgent runs on your hardware. The Atmosphere meshes it with the world — content-addressed, capability-secured, post-quantum. No central server can seize, censor, or surveil it.";
+  "Own and prove everything your AI does. A verifiable System-2 layer you own, wrapping any LLM — local-first, your compute and data, with receipts anyone can verify.";
 const OG_IMAGE = "/img/og-efficient-labs.jpg";
 
 export const metadata: Metadata = {
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: TITLE,
-    description: "The sovereign internet for AI agents. Content-addressed, capability-secured, post-quantum.",
+    description: "Own and prove everything your AI does — a verifiable System-2 layer you own, wrapping any LLM, with receipts anyone can verify.",
     siteName: "Efficient Labs",
     type: "website",
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Efficient Labs — Intelligence · Continuity · Infrastructure · Ownership · Optimization" }],
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: TITLE,
-    description: "The sovereign internet for AI agents. Content-addressed, capability-secured, post-quantum.",
+    description: "Own and prove everything your AI does — a verifiable System-2 layer you own, wrapping any LLM, with receipts anyone can verify.",
     images: [OG_IMAGE],
   },
 };
