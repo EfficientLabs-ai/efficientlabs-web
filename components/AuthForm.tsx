@@ -58,7 +58,7 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
     setBusy(true);
     await supabase.auth.signInWithOAuth({
       provider,
-      options: { redirectTo: `${window.location.origin}/dashboard` },
+      options: { redirectTo: `${window.location.origin}/app` },
     });
   };
 
@@ -68,7 +68,7 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
     if (isSignup) track("signup_submit", { method: "email" });
     setBusy(true); setMsg(null); setOk(false);
     const fn = isSignup
-      ? supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/dashboard` } })
+      ? supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/app` } })
       : supabase.auth.signInWithPassword({ email, password });
     const { error } = await fn;
     setBusy(false);
@@ -76,7 +76,7 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
     setOk(true);
     setMsg(isSignup ? "Check your inbox to confirm your account." : "Signed in — taking you to your control plane…");
     // A successful sign-in lands the user in the app; signup waits for email confirmation.
-    if (!isSignup) setTimeout(() => { window.location.href = "/dashboard"; }, 600);
+    if (!isSignup) setTimeout(() => { window.location.href = "/app"; }, 600);
   };
 
   return (
