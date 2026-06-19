@@ -1,14 +1,53 @@
 import type { MetadataRoute } from "next";
+import { ARTICLES } from "@/data/docs";
 
 const BASE = "https://efficientlabs.ai";
 
-// Only the public marketing surface. Private/early-access routes
-// (/ops, /dashboard, /login, /signup) are intentionally excluded.
+// Every PUBLIC, indexable route. Mirrors app/robots.ts: the private/early-access
+// surface (/ops, /api, /dashboard, /app, /login, /signup) and transactional pages
+// (/welcome — noindex) are intentionally excluded. Docs slugs come from
+// data/docs.ts (the single source of truth) so the sitemap can't drift.
+//
+// changeFrequency/priority are advisory hints. The homepage is the anchor (1.0);
+// the conversion + status surfaces rank above the legal/static pages.
+type Entry = { path: string; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]; priority: number };
+
+const STATIC_ROUTES: Entry[] = [
+  { path: "/", changeFrequency: "weekly", priority: 1 },
+  { path: "/pricing", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/start", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/install", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/atmosphere", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/architecture", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/stratos", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/enterprise", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/security", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/score", changeFrequency: "weekly", priority: 0.7 },
+  { path: "/verify", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/docs", changeFrequency: "weekly", priority: 0.7 },
+  { path: "/status", changeFrequency: "daily", priority: 0.7 },
+  { path: "/updates", changeFrequency: "daily", priority: 0.6 },
+  { path: "/privacy", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/terms", changeFrequency: "yearly", priority: 0.3 },
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
-  return [
-    { url: `${BASE}/`, lastModified, changeFrequency: "weekly", priority: 1 },
-    { url: `${BASE}/pricing`, lastModified, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${BASE}/updates`, lastModified, changeFrequency: "daily", priority: 0.6 },
-  ];
+
+  const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((r) => ({
+    url: `${BASE}${r.path}`,
+    lastModified,
+    changeFrequency: r.changeFrequency,
+    priority: r.priority,
+  }));
+
+  // Every published docs article (data/docs.ts is the source of truth).
+  const docEntries: MetadataRoute.Sitemap = ARTICLES.map((a) => ({
+    url: `${BASE}/docs/${a.slug}`,
+    lastModified: a.updated ? new Date(a.updated) : lastModified,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [...staticEntries, ...docEntries];
 }
