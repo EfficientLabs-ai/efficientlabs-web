@@ -13,6 +13,11 @@ const ROWS = [
     d: "Context cache-hit, first-request cost, and every signed receipt — verifiable at /status.",
   },
   {
+    tag: "MEASURED",
+    t: "The System-2 layer, side by side",
+    d: "A 12-step task run two ways: every governance and continuity check ran with zero model tokens and 66.7% fewer model calls — self-review, self-healing replay, and exact-state recovery all verified.",
+  },
+  {
     tag: "PREVIEW",
     t: "The orchestration surface",
     d: "The OS you can try signed-out — honest empty states, never a fabricated run.",

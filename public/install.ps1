@@ -11,7 +11,7 @@
 $ErrorActionPreference = 'Stop'
 
 $Pkg     = '@efficientlabs/stratos'
-$Version = if ($env:STRATOS_VERSION) { $env:STRATOS_VERSION } else { '1.1.0' }   # pinned
+$Version = if ($env:STRATOS_VERSION) { $env:STRATOS_VERSION } else { '1.2.0' }   # pinned
 
 function Say($m) { Write-Host $m }
 function Fail($m) { Write-Error "ERROR: $m"; exit 1 }
