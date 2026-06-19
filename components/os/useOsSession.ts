@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase, authReady } from "@/lib/supabase";
+import type { PlanSlug } from "@/lib/plans";
 
 /**
  * Single source of auth truth for the Atmosphere OS shell + every module.
@@ -13,10 +14,12 @@ export type OsSession = {
   signedIn: boolean;
   ready: boolean;
   authReady: boolean;
+  plan: PlanSlug;
 };
 
 export function useOsSession(): OsSession {
   const [email, setEmail] = useState<string | null>(null);
+  const [plan, setPlan] = useState<PlanSlug>("free");
   // When Supabase isn't configured the client is null and there is nothing to
   // resolve — we're "ready" (signed-out preview) from the first render, which
   // also avoids a synchronous setState inside the effect.
@@ -24,13 +27,24 @@ export function useOsSession(): OsSession {
 
   useEffect(() => {
     if (!supabase) return;
-    supabase.auth.getUser().then(({ data }) => {
-      setEmail(data.user?.email ?? null);
+    supabase.auth.getUser().then(async ({ data }) => {
+      const userEmail = data.user?.email ?? null;
+      setEmail(userEmail);
+      // Read the buyer's plan (RLS lets a user read only their own row). Absent
+      // row or unconfigured billing → free. Never throws into the shell.
+      if (userEmail && supabase) {
+        const { data: sub } = await supabase
+          .from("subscriptions")
+          .select("plan")
+          .eq("email", userEmail.toLowerCase())
+          .maybeSingle();
+        if (sub?.plan) setPlan(sub.plan as PlanSlug);
+      }
       setReady(true);
     });
   }, []);
 
-  return { email, signedIn: Boolean(email), ready, authReady };
+  return { email, signedIn: Boolean(email), ready, authReady, plan };
 }
 
 /**

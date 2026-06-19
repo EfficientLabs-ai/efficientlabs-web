@@ -10,24 +10,37 @@ import { LabelChip, UpdatedAt } from "@/components/proof/bits";
 import CountUp from "@/components/motion/CountUp";
 import SectionEntrance from "@/components/motion/SectionEntrance";
 
-export default function ProofStrip() {
+export default function ProofStrip({ embedded = false }: { embedded?: boolean }) {
   const { heartbeat, receipts, routing, activation } = PUBLIC_STATUS.tiles;
   const verdictColor = heartbeat.color ? VERDICT[heartbeat.color] : "#5b6675";
 
-  return (
-    <section id="proof" className="section section-t scroll-mt-20">
-      <SectionEntrance variant="proof" className="container-x">
+  // When `embedded`, the caller supplies the <section> + heading frame (the new
+  // landing proof block wraps it under a ProofLede); we render only the tiles
+  // strip so we don't nest sections or duplicate id="proof".
+  const body = (
+    <SectionEntrance variant="proof" className="container-x">
         <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="kicker">Proof</p>
-            <h2 className="t-section mt-3">
-              Operational proof <span className="aurora-text">before</span> public proof.
-            </h2>
-          </div>
-          <p data-motion="body" className="max-w-md text-[13px] leading-relaxed text-[color:var(--color-ink-faint)]">
-            We run our own company on this system, and publish its telemetry. Numbers below are measured
-            from the operating layer itself — where something is not measured, it says so.
-          </p>
+          {embedded ? (
+            // Embedded: the landing ProofLede supplies the headline above us, so
+            // we lead with only the descriptive line (no duplicate heading).
+            <p data-motion="body" className="max-w-2xl text-[13px] leading-relaxed text-[color:var(--color-ink-faint)]">
+              We run our own company on this system, and publish its telemetry. Numbers below are measured
+              from the operating layer itself — where something is not measured, it says so.
+            </p>
+          ) : (
+            <>
+              <div>
+                <p className="kicker">Proof</p>
+                <h2 className="t-section mt-3">
+                  Operational proof <span className="aurora-text">before</span> public proof.
+                </h2>
+              </div>
+              <p data-motion="body" className="max-w-md text-[13px] leading-relaxed text-[color:var(--color-ink-faint)]">
+                We run our own company on this system, and publish its telemetry. Numbers below are measured
+                from the operating layer itself — where something is not measured, it says so.
+              </p>
+            </>
+          )}
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -138,6 +151,12 @@ export default function ProofStrip() {
           </Link>
         </div>
       </SectionEntrance>
+  );
+
+  if (embedded) return body;
+  return (
+    <section id="proof" className="section section-t scroll-mt-20">
+      {body}
     </section>
   );
 }

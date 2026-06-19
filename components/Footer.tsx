@@ -6,8 +6,14 @@ import OrbitalMark from "@/components/OrbitalMark";
 
 const COLUMNS = [
   { title: "Platform", links: [["The Atmosphere", "/atmosphere"], ["StratosAgent", "/stratos"], ["Architecture", "/architecture"], ["Runtime Score", "/score"], ["Honest status", "/status"], ["Updates", "/updates"]] },
-  { title: "Company", links: [["Pricing", "/pricing"], ["Docs", "/docs"]] },
+  { title: "Company", links: [["Enterprise", "/enterprise"], ["Pricing", "/pricing"], ["Get started", "/start"], ["Docs", "/docs"]] },
 ] as const;
+
+const LEGAL: [string, string][] = [
+  ["Privacy", "/privacy"],
+  ["Terms", "/terms"],
+  ["Security", "/security"],
+];
 
 const CONTACT: { icon: typeof Mail; text: string; href?: string }[] = [
   { icon: Mail, text: "hello@efficientlabs.ai", href: "mailto:hello@efficientlabs.ai" },
@@ -71,6 +77,15 @@ export default function Footer() {
               ))}
             </ul>
           </div>
+        </div>
+
+        <hr className="border-t border-[color:var(--color-line)]" />
+
+        {/* legal row */}
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 py-5">
+          {LEGAL.map(([label, href]) => (
+            <a key={label} href={href} className="text-[12px] text-[color:var(--color-ink-faint)] transition-colors hover:text-[color:var(--color-signal)]">{label}</a>
+          ))}
         </div>
 
         <hr className="border-t border-[color:var(--color-line)]" />

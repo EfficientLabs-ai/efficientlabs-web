@@ -18,7 +18,11 @@ export default async function OpsLogin({ searchParams }: { searchParams: Promise
         <Wordmark size={15} tracking="0.16em" />
         <h1 className="display mt-6 text-[1.6rem] text-[color:var(--color-ink)]">Founder access</h1>
         <p className="mt-2 text-[13px] text-[color:var(--color-ink-dim)]">This area is private.</p>
-        {e && <p className="mono mt-3 text-[12px] text-[#e0566a]">Incorrect password.</p>}
+        {e === "rate" ? (
+          <p className="mono mt-3 text-[12px] text-[#e0566a]">Too many attempts — wait a minute.</p>
+        ) : e ? (
+          <p className="mono mt-3 text-[12px] text-[#e0566a]">Incorrect password.</p>
+        ) : null}
         <input type="password" name="password" required autoFocus placeholder="Password"
           className="mt-5 w-full rounded-xl border border-[color:var(--color-line)] bg-[color:var(--color-void-2)]/60 px-4 py-3 text-[14px] text-[color:var(--color-ink)] outline-none placeholder:text-[color:var(--color-ink-faint)]" />
         <button type="submit" className="btn-signal mt-4 w-full justify-center">Enter<span aria-hidden>→</span></button>

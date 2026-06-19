@@ -3,6 +3,8 @@ import { Inter, JetBrains_Mono, Michroma, Space_Grotesk } from "next/font/google
 import "./globals.css";
 import { ThemeRoot } from "@/components/useSiteTheme";
 import MotionProvider from "@/components/MotionProvider";
+import BackToTop from "@/components/BackToTop";
+import StructuredData from "@/components/StructuredData";
 
 // Brand kit type system (EFFICIENT_LABS_BRAND_KIT.md): Space Grotesk (headings) +
 // Inter (body) + JetBrains Mono (terminal/code/data) — all self-hosted via
@@ -82,10 +84,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               "(function(){try{var t=localStorage.getItem('efl-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();",
           }}
         />
+        {/* Machine-readable facts for search + answer engines (Google, ChatGPT,
+            Claude, Perplexity, Gemini). Twin of /public/llms.txt. */}
+        <StructuredData />
       </head>
       <body>
         <MotionProvider />
         <ThemeRoot>{children}</ThemeRoot>
+        <BackToTop />
       </body>
     </html>
   );

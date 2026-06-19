@@ -154,6 +154,28 @@ const SURFACES = [
   // honest labels (MEASURED / not measured / lifecycle states) verbatim and
   // would self-trip, exactly like the other truth renderers noted below.
   "components/ProofStrip.tsx",
+  // Cinematic glass landing sections (2026-06-14) — each carries marketing copy
+  // (stakes/answer/proof-lede/how-it-works/readiness/final-CTA) and is policed
+  // like any landing surface. The glass kit (components/glass/*) is presentational
+  // (no claims) so it is not scanned.
+  "components/landing/Stakes.tsx",
+  "components/landing/Answer.tsx",
+  "components/landing/ProofLede.tsx",
+  "components/landing/ReceiptProof.tsx",
+  "components/landing/HowItWorks.tsx",
+  "components/landing/ReadinessLadder.tsx",
+  "components/landing/FinalCTA.tsx",
+  // "The Desk That Proves Itself" homepage (2026-06-18): the LiveDesk hero (docks the OS + the live
+  // receipt-verify) and the HonestyLedger close both carry marketing copy and are policed here.
+  "components/landing/LiveDesk.tsx",
+  "components/landing/HonestyLedger.tsx",
+  // Readiness-index card grid + node-console preview (2026-06-14) — both carry
+  // marketing copy (12-dimension ARI framing, console-preview product copy) and
+  // are policed like any landing surface. ReadinessCards renders honest maturity
+  // labels (MEASURED/WIRED/DOCUMENTED) verbatim; NodeConsole frames itself as a
+  // PREVIEW and fabricates no live metrics — the copy half is policed here.
+  "components/landing/ReadinessCards.tsx",
+  "components/landing/NodeConsole.tsx",
   "components/Solutions.tsx",
   "components/Differentiators.tsx",
   "components/Install.tsx",
@@ -170,6 +192,7 @@ const SURFACES = [
   "app/atmosphere/page.tsx",
   "app/stratos/page.tsx",
   "app/architecture/page.tsx",
+  "app/enterprise/page.tsx",
   "app/install/page.tsx",
   // Runtime Score lead-magnet page (2026-06-13). The board component
   // (components/score/*) is a truth renderer like components/proof/* and is
@@ -180,6 +203,9 @@ const SURFACES = [
   // signup carries the sovereign-path escape line.
   "app/start/page.tsx",
   "components/onboarding/StartJourney.tsx",
+  // Standalone receipt verifier page (2026-06-18) — the artifact Maya forwards to a client; carries
+  // the hero lede copy (DropBundleVerify itself is already policed).
+  "app/verify/page.tsx",
   "lib/onboarding.ts",
   "app/signup/page.tsx",
   // DropBundleVerify carries CLAIM copy ("never leaves this page", step-5 promise)

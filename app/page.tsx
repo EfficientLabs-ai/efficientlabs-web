@@ -1,23 +1,15 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import MeshHero3D from "@/components/MeshHero3D";
+import LiveDesk from "@/components/landing/LiveDesk";
+import Stakes from "@/components/landing/Stakes";
 import AtmosphereReveal from "@/components/acts/AtmosphereReveal";
-import StratosAgent from "@/components/StratosAgent";
-import SovereignPath from "@/components/SovereignPath";
-import Solutions from "@/components/Solutions";
-import Differentiators from "@/components/Differentiators";
-import Architecture from "@/components/Architecture";
-import Install from "@/components/Install";
-import ContentAddress from "@/components/acts/ContentAddress";
-import HolePunch from "@/components/acts/HolePunch";
-import Capability from "@/components/acts/Capability";
-import SkillSeal from "@/components/acts/SkillSeal";
-import StatusMatrix from "@/components/acts/StatusMatrix";
 import ProofStrip from "@/components/ProofStrip";
-import SectionCTA from "@/components/SectionCTA";
 import Preloader from "@/components/motion/Preloader";
-import SplitHeading from "@/components/motion/SplitHeading";
-import SectionEntrance from "@/components/motion/SectionEntrance";
+import ProofLede from "@/components/landing/ProofLede";
+import ReceiptProof from "@/components/landing/ReceiptProof";
+import HowItWorks from "@/components/landing/HowItWorks";
+import HonestyLedger from "@/components/landing/HonestyLedger";
+import FinalCTA from "@/components/landing/FinalCTA";
 import type { Metadata } from "next";
 
 // Pre-paint gate for the preloader: mark the visit "pending" ONLY when this
@@ -30,7 +22,6 @@ const INTRO_GATE =
   "document.documentElement.setAttribute('data-intro','pending');}catch(e){}})();";
 
 // Only override the canonical; inherit the root openGraph (image/title/desc) intact.
-// In App Router a child `openGraph` REPLACES the parent's rather than deep-merging.
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
@@ -42,110 +33,35 @@ export default function Home() {
       <Preloader />
       <Nav />
 
-      {/* ── CINEMATIC HERO — scroll dives the camera into a node ──
-          .cinematic forces the dark dramatic palette locally so the WebGL hero
-          stays theatrical even when the site is in light mode (pure CSS scope). */}
-      <section className="cinematic">
-        <MeshHero3D />
-      </section>
+      {/* ── HOOK + CAPTURE · The Desk That Proves Itself — the real OS docked under one
+          headline, with the live self-verifying receipt (Break it = the signature move). ── */}
+      <LiveDesk />
 
-      {/* ── THE ATMOSPHERE — extractive cloud dissolves into the sky ── */}
+      {/* ── INFORM (1) · the operator's stake: your best work lives in a window you don't own ── */}
+      <Stakes />
+
+      {/* ── INFORM (2) · The Clearing — extraction dissolves into the sovereign sky (ownership) ── */}
       <section id="atmosphere" className="cinematic">
         <AtmosphereReveal />
       </section>
 
-      {/* ── PROOF — measured operating-layer telemetry, links /status ── */}
-      <ProofStrip />
-
-      {/* ── WHY IT'S DIFFERENT — mesh / seal / senses ─────────── */}
-      <Differentiators />
-
-      {/* ── THESIS STRIP ──────────────────────────────────────── */}
-      <Architecture />
-
-      {/* ── STRATOSAGENT — the agent, above the cloud ─────────── */}
-      <StratosAgent />
-
-      {/* ── SOVEREIGN PATH — SHOWS the local-first router in action ── */}
-      <section id="routing" className="section section-t scroll-mt-20">
-        <div className="container-x">
-          <SovereignPath />
+      {/* ── PROOF · verifiability over vibes: the receipt that verifies itself + live telemetry ── */}
+      <section id="proof" className="section section-t scroll-mt-20">
+        <ProofLede />
+        <ReceiptProof />
+        <div className="mt-16">
+          <ProofStrip embedded />
         </div>
       </section>
 
-      {/* ── SOLUTIONS & INTEGRATIONS — scale + value ──────────── */}
-      <Solutions />
+      {/* ── SELL · two doors — get your first receipt in the browser (web-first), CLI is Advanced ── */}
+      <HowItWorks />
 
-      {/* ── THE SCROLL ACTS — each closes with one door forward ── */}
-      <div className="mx-auto max-w-7xl px-6">
-        <Act>
-          <ContentAddress />
-          <SectionCTA label="Read how content addressing works" href="/architecture" />
-        </Act>
-        <Act cinematic>
-          <HolePunch />
-          <SectionCTA label="Explore The Atmosphere" href="/atmosphere" />
-        </Act>
-        <Act>
-          <Capability />
-          <SectionCTA label="See the capability model in the docs" href="/docs" />
-        </Act>
-        <Act>
-          <SkillSeal />
-          <SectionCTA label="Browse the docs" href="/docs" />
-        </Act>
-        <Act id="status">
-          <StatusMatrix />
-          <SectionCTA label="Open the live status page" href="/status" />
-        </Act>
-      </div>
+      {/* ── CTA · the honest close: the ledger of what's measured/preview/committed, then the door ── */}
+      <HonestyLedger />
+      <FinalCTA />
 
-      {/* ── INSTALL — run it on your own metal ────────────────── */}
-      <Install />
-
-      {/* ── CLOSING CTA ───────────────────────────────────────── */}
-      <section className="section section-t relative overflow-hidden">
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/2 top-1/2 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.16] blur-[120px]"
-               style={{ background: "radial-gradient(circle, var(--color-signal), transparent 60%)" }} />
-        </div>
-        <SectionEntrance variant="statement" className="relative mx-auto max-w-3xl px-6 text-center">
-          <p data-motion="body" className="kicker">Build on infrastructure you own</p>
-          <SplitHeading as="h2" className="t-section mt-6">
-            Sovereignty isn&apos;t a feature.
-            <br />
-            It&apos;s the <span className="aurora-text">foundation</span>.
-          </SplitHeading>
-          <div data-motion="cta" className="mt-10 flex flex-wrap justify-center gap-4">
-            <a href="#install" className="btn-signal">Install now<span aria-hidden>→</span></a>
-            <a href="#status" className="btn-outline">Read the architecture</a>
-          </div>
-        </SectionEntrance>
-      </section>
-
-      {/* ── FOOTER ────────────────────────────────────────────── */}
       <Footer />
     </main>
-  );
-}
-
-function Act({
-  children,
-  id,
-  cinematic,
-}: {
-  children: React.ReactNode;
-  id?: string;
-  cinematic?: boolean;
-}) {
-  return (
-    <section
-      id={id}
-      className={
-        "section section-t scroll-mt-20" + (cinematic ? " cinematic" : "")
-      }
-    >
-      {children}
-    </section>
   );
 }

@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import type { PlanSlug } from "@/lib/plans";
 import {
   LayoutDashboard,
   Cpu,
@@ -13,8 +14,10 @@ import {
   Settings,
 } from "lucide-react";
 
-/** The 11 OS modules, in sidebar order. Shared by sidebar + drawer. */
-export type OsModule = { label: string; href: string; icon: LucideIcon };
+/** The 11 OS modules, in sidebar order. Shared by sidebar + drawer.
+ *  `requiredPlan` (optional) gates the whole module behind a plan — the shell
+ *  renders an upgrade wall and the sidebar shows a lock for users below it. */
+export type OsModule = { label: string; href: string; icon: LucideIcon; requiredPlan?: PlanSlug };
 
 export const OS_MODULES: OsModule[] = [
   { label: "Home", href: "/app", icon: LayoutDashboard },
@@ -22,7 +25,7 @@ export const OS_MODULES: OsModule[] = [
   { label: "Workflows", href: "/app/workflows", icon: Workflow },
   { label: "Projects", href: "/app/projects", icon: FolderKanban },
   { label: "Skills", href: "/app/skills", icon: Sparkles },
-  { label: "Integrations", href: "/app/integrations", icon: Plug },
+  { label: "Integrations", href: "/app/integrations", icon: Plug, requiredPlan: "exos_pro" },
   { label: "Memory", href: "/app/memory", icon: Brain },
   { label: "Atmosphere", href: "/app/atmosphere", icon: Boxes },
   { label: "Wallet", href: "/app/wallet", icon: Wallet },
@@ -62,4 +65,15 @@ export function isActiveModule(pathname: string | null, href: string): boolean {
   if (!pathname) return false;
   if (href === "/app") return pathname === "/app";
   return pathname === href || pathname.startsWith(href + "/");
+}
+
+/** The module owning the current path (most specific match wins). */
+export function moduleForPath(pathname: string | null): OsModule | undefined {
+  const matches = OS_MODULES.filter((m) => isActiveModule(pathname, m.href));
+  return matches.sort((a, b) => b.href.length - a.href.length)[0];
+}
+
+/** The plan a route requires, if any (module-level gate). */
+export function requiredPlanForPath(pathname: string | null): PlanSlug | undefined {
+  return moduleForPath(pathname)?.requiredPlan;
 }

@@ -1,0 +1,33 @@
+# Efficient Labs
+
+> Sovereign AI infrastructure. StratosAgent runs on your own hardware; The Atmosphere meshes those nodes peer-to-peer across the world — content-addressed, capability-secured, post-quantum. Build, run, remember, and scale AI without surrendering ownership. No cloud. No landlord. No meter.
+
+Efficient Labs builds infrastructure for running AI agents that you own and govern. The thesis: intelligence should run on hardware you control, and connect to the wider world through a sovereign mesh rather than a central cloud that can meter, surveil, or seize it.
+
+The company runs itself on this system and publishes the operating layer's own telemetry — operational proof before public proof. Where a number is not measured, the site says so.
+
+## Core products
+
+- [StratosAgent](https://efficientlabs.ai/stratos): The agent runtime that runs on your own machine. Local-first, owner-governed.
+- [The Atmosphere](https://efficientlabs.ai/atmosphere): The sovereign mesh that links nodes peer-to-peer — content-addressed, capability-secured, post-quantum. The sovereign internet for AI agents.
+- [Architecture](https://efficientlabs.ai/architecture): How the trust substrate fits together — capability gate, attribution ledger, identity broker, owner identity and device-pairing ceremony.
+
+## Key pages
+
+- [Home](https://efficientlabs.ai/): Your Intelligence. Your Infrastructure. Your Rules.
+- [Install](https://efficientlabs.ai/install): Get a node running on your own hardware.
+- [Docs](https://efficientlabs.ai/docs): Technical documentation.
+- [Status](https://efficientlabs.ai/status): Live operating-layer telemetry, with in-browser receipt verification.
+- [Pricing](https://efficientlabs.ai/pricing): Plans and the Atmos Credits model.
+- [Updates](https://efficientlabs.ai/updates): Changelog and announcements.
+
+## Principles
+
+- Ownership: your intelligence and your data stay on infrastructure you control.
+- Continuity: state and memory persist across sessions, by design.
+- Sovereignty: no central server is required to run, route, or remember.
+- Honesty: public claims are measured from the operating layer; unmeasured items are labeled as such.
+
+## Contact
+
+- Site: https://efficientlabs.ai

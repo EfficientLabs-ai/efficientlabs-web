@@ -10,8 +10,8 @@
   --color-void-2: #111722;        /* surface */
   --color-elevated: #1a2333;      /* elevated surface */
   --color-ink: #e6e9f1;           /* primary text */
-  --color-ink-dim: #8a93a6;       /* secondary text */
-  --color-ink-faint: #64748b;     /* tertiary text */
+  --color-ink-dim: #c6cedd;       /* secondary text — lifted toward white so subtext reads cleanly on dark */
+  --color-ink-faint: #99a3b6;     /* tertiary text */
   --color-signal: #0a84ff;        /* Intelligence Blue — CTAs, links, active states */
   --color-signal-deep: #0868cc;   /* derived deep fill — white-text AA on light */
   --color-quantum: #3d6cff;       /* Deep Electric Blue (kit v2) — hover, motion, AI activity; graphics/large text */
@@ -61,7 +61,7 @@
   /* ── CORNER SYSTEM — brand kit: 12px standard · 20px premium · 9999px pills ── */
   --radius-xs: 6px;    /* chips, code inline (sub-component scale) */
   --radius-sm: 10px;   /* badges, small controls, inputs */
-  --radius: 12px;      /* STANDARD — default card/data surface */
+  --radius: 14px;      /* STANDARD — default card/data surface (softened for glass) */
   --radius-lg: 20px;   /* PREMIUM — feature cards / media frames */
   --radius-pill: 9999px; /* pills: status dots + CTAs */
   --border-hairline: 1px solid rgba(255,255,255,0.08);
@@ -153,7 +153,10 @@
 [data-theme="light"] .data-card.is-interactive:hover,
 [data-theme="light"] .lm-card.is-interactive:hover {
   border-color: #c8d4e2;
-  box-shadow: var(--shadow-hud-lift);
+  box-shadow:
+    0 1px 2px rgba(16,23,38,0.06),
+    0 28px 64px -22px rgba(16,23,38,0.22),
+    0 14px 30px -18px rgba(10,132,255,0.30);
 }
 /* outline buttons: solid white fill + visible border on light */
 [data-theme="light"] .btn-outline {
@@ -185,10 +188,10 @@
    ========================================================================== */
 .cinematic,
 [data-theme="light"] .cinematic {
-  --void: #0b0f1a; --ink: #e6e9f1; --ink-dim: #8a93a6; --ink-faint: #64748b;
+  --void: #0b0f1a; --ink: #e6e9f1; --ink-dim: #c6cedd; --ink-faint: #99a3b6;
   --signal: #0a84ff; --quantum: #3d6cff;
   --color-void: #0b0f1a; --color-void-2: #111722; --color-elevated: #1a2333;
-  --color-ink: #e6e9f1; --color-ink-dim: #8a93a6; --color-ink-faint: #64748b;
+  --color-ink: #e6e9f1; --color-ink-dim: #c6cedd; --color-ink-faint: #99a3b6;
   --color-edge: #232b38; --color-line: #1a212d;
   --color-quantum: #3d6cff;
   --color-quantum-text: #5b82ff;
@@ -300,6 +303,37 @@ body {
   color: var(--ink);
   font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
   overflow-x: hidden;
+}
+
+/* global mesh field — a fixed, very soft aurora behind ALL content so every
+   frosted surface (nav, cards) has colour to refract. z-index:-1 paints it
+   above the body void but below the in-flow content; opaque .cinematic
+   sections cover it, so they stay pure. Compositor-safe slow drift (transform);
+   static under reduced motion. */
+body::before {
+  content: "";
+  position: fixed; inset: -12%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(38rem 38rem at 12% 6%, rgba(10,132,255,0.10), transparent 60%),
+    radial-gradient(34rem 34rem at 88% 20%, rgba(34,211,238,0.07), transparent 60%),
+    radial-gradient(36rem 36rem at 72% 96%, rgba(139,92,246,0.09), transparent 62%),
+    radial-gradient(30rem 30rem at 26% 82%, rgba(10,132,255,0.06), transparent 62%);
+  will-change: transform;
+  animation: mesh-drift 42s ease-in-out infinite alternate;
+}
+[data-theme="light"] body::before {
+  background:
+    radial-gradient(38rem 38rem at 12% 6%, rgba(10,132,255,0.10), transparent 60%),
+    radial-gradient(34rem 34rem at 88% 20%, rgba(34,211,238,0.10), transparent 60%),
+    radial-gradient(36rem 36rem at 72% 96%, rgba(139,92,246,0.10), transparent 62%),
+    radial-gradient(30rem 30rem at 26% 82%, rgba(10,132,255,0.07), transparent 62%);
+}
+@keyframes mesh-drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-2.5%, 1.8%, 0) scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
 }
 
 /* grain overlay — the whole page sits under a faint film, never flat */
@@ -503,21 +537,274 @@ body::after {
 /* frosted nav material — a slightly stronger lip + heavier blur for the fixed
    top chrome, sharing the same theme-aware tokens so it flips with the site. */
 .glass-nav {
-  background: var(--glass-fill);
-  backdrop-filter: blur(calc(var(--glass-blur) - 2px)) saturate(var(--glass-sat));
-  -webkit-backdrop-filter: blur(calc(var(--glass-blur) - 2px)) saturate(var(--glass-sat));
+  /* near-solid so a bright section (the WebGL mesh) can't bleed through and wash out the
+     wordmark/links — translucent glass over a luminous section killed contrast. */
+  background: color-mix(in srgb, var(--color-void) 88%, transparent);
+  backdrop-filter: blur(calc(var(--glass-blur) + 4px)) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) + 4px)) saturate(var(--glass-sat));
   border-bottom: var(--glass-border);
   box-shadow: var(--glass-shadow);
 }
+
+/* iOS-style floating glass pill — translucent smoked glass over the dark hero,
+   frosted-white in light mode (driven by --color-void, so it flips with theme).
+   Light wordmark/links stay legible because the fill is a void tint, not white. */
+.nav-pill {
+  background: color-mix(in srgb, var(--color-void) 72%, transparent);
+  backdrop-filter: blur(calc(var(--glass-blur) + 8px)) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) + 8px)) saturate(var(--glass-sat));
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 9999px;
+  transition: background-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+}
+.nav-pill.is-scrolled {
+  background: color-mix(in srgb, var(--color-void) 86%, transparent);
+  box-shadow: var(--shadow-hud-lift);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .nav-pill { background: color-mix(in srgb, var(--color-void) 94%, transparent); }
+}
+/* floating glass sheet for the mobile menu — matches the pill material */
+.nav-sheet {
+  background: color-mix(in srgb, var(--color-void) 90%, transparent);
+  backdrop-filter: blur(calc(var(--glass-blur) + 6px)) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) + 6px)) saturate(var(--glass-sat));
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 1.25rem;
+}
+
+/* typewriter caret — blinks while the hero title types; gone once complete.
+   Never present under reduced motion (the title renders static there). */
+.tw-caret {
+  display: inline-block;
+  margin-left: 0.04em;
+  color: var(--color-signal);
+  font-weight: 300;
+  transform: translateY(-0.02em);
+  animation: tw-blink 1.05s steps(1) infinite;
+}
+@keyframes tw-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+
+/* brand mark (real glassy render) — a gentle compositor-safe "breath" so it has
+   life without a continuous spin. Transform-only (motion-guard safe). */
+.orbital-mark-img { display: inline-block; }
+.orbital-mark-img.is-pulsing { animation: orbital-breath 8s ease-in-out infinite; }
+@keyframes orbital-breath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+@media (prefers-reduced-motion: reduce) { .orbital-mark-img.is-pulsing { animation: none; } }
+
+/* ── The Answer's accountability pipeline — pure-CSS flow: an intent travels the
+   chain and each node lights as it passes. Compositor-safe (transform/opacity
+   only). 7.5s loop; nodes spaced 1.5s via --acc-d. ── */
+.acc-pipe { --acc-period: 7.5s; }
+.acc-track {
+  position: absolute; left: 10%; right: 10%; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, #0a84ff, #8b5cf6 38%, #22d3ee 70%, #3ddc97);
+  opacity: 0.32;
+}
+.acc-particle {
+  position: absolute; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 9999px;
+  background: #eaf3ff; box-shadow: 0 0 14px 3px rgba(10, 132, 255, 0.85);
+  animation: acc-flow var(--acc-period) linear infinite;
+}
+@keyframes acc-flow {
+  0% { left: 10%; opacity: 0; }
+  5% { opacity: 1; }
+  80% { left: 90%; opacity: 1; }
+  90% { opacity: 0; }
+  100% { left: 90%; opacity: 0; }
+}
+.acc-glow {
+  position: absolute; inset: -45%; border-radius: 9999px;
+  background: radial-gradient(circle, var(--acc-c), transparent 64%);
+  opacity: 0; animation: acc-glow var(--acc-period) ease-in-out infinite; animation-delay: var(--acc-d);
+}
+@keyframes acc-glow {
+  0% { opacity: 0; transform: scale(0.7); }
+  4% { opacity: 0.85; transform: scale(1.18); }
+  12% { opacity: 0; transform: scale(0.7); }
+  100% { opacity: 0; transform: scale(0.7); }
+}
+.acc-pop { animation: acc-pop var(--acc-period) ease-in-out infinite; animation-delay: var(--acc-d); }
+@keyframes acc-pop { 0% { transform: scale(1); } 4% { transform: scale(1.12); } 12% { transform: scale(1); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .acc-particle { display: none; }
+  .acc-glow { opacity: 0.45; animation: none; }
+  .acc-pop { animation: none; }
+}
+
+/* ── PROOF — the verifiable receipt. A scan line sweeps the fields; each line
+   "ticks" verified as it passes; the VERIFIED seal pops when the sweep lands.
+   Compositor-safe (transform/opacity only). One 6s loop. ── */
+.rcpt { --rcpt-period: 6s; --rcpt-travel: 232px; }
+.rcpt-fields { position: relative; }
+.rcpt-scan {
+  position: absolute; left: -2%; right: -2%; top: 0; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #22d3ee 20%, #3ddc97 80%, transparent);
+  box-shadow: 0 0 16px 2px rgba(61, 220, 151, 0.6);
+  opacity: 0; will-change: transform, opacity;
+  animation: rcpt-scan var(--rcpt-period) ease-in-out infinite;
+}
+@keyframes rcpt-scan {
+  0% { transform: translateY(0); opacity: 0; }
+  6% { opacity: 1; }
+  60% { transform: translateY(var(--rcpt-travel)); opacity: 1; }
+  68% { transform: translateY(var(--rcpt-travel)); opacity: 0; }
+  100% { transform: translateY(var(--rcpt-travel)); opacity: 0; }
+}
+.rcpt-tick { opacity: 0; will-change: transform, opacity; animation: rcpt-tick var(--rcpt-period) ease-out infinite; animation-delay: var(--rcpt-d); }
+@keyframes rcpt-tick {
+  0%, 8% { opacity: 0; transform: scale(0.6); }
+  16% { opacity: 1; transform: scale(1.15); }
+  24%, 92% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.6); }
+}
+.rcpt-seal { opacity: 0; will-change: transform, opacity; animation: rcpt-seal var(--rcpt-period) cubic-bezier(0.34, 1.56, 0.64, 1) infinite; }
+@keyframes rcpt-seal {
+  0%, 64% { opacity: 0; transform: scale(0.4) rotate(-8deg); }
+  74% { opacity: 1; transform: scale(1.12) rotate(0deg); }
+  82%, 94% { opacity: 1; transform: scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: scale(0.4) rotate(-8deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rcpt-scan { display: none; }
+  .rcpt-tick { opacity: 1; animation: none; }
+  .rcpt-seal { opacity: 1; transform: none; animation: none; }
+}
+
+/* ── HONEST READINESS LADDER — a vertical rail with rungs; a spark climbs the
+   rail and each node pulses as the eye descends the honesty spectrum. Rail is a
+   static gradient; spark + node glow are transform/opacity (compositor-safe). ── */
+.ladder { position: relative; }
+.ladder-rail {
+  position: absolute; left: 13px; top: 8px; bottom: 8px; width: 2px; border-radius: 2px;
+  background: linear-gradient(180deg, #3ddc97, #22d3ee 48%, #f5a623);
+  opacity: 0.34;
+}
+.ladder-spark {
+  position: absolute; left: 9px; top: 0; width: 10px; height: 10px; border-radius: 9999px;
+  background: #eaf3ff; box-shadow: 0 0 14px 3px rgba(34, 211, 238, 0.8);
+  will-change: transform, opacity; animation: ladder-spark 5.5s ease-in-out infinite;
+}
+@keyframes ladder-spark {
+  0% { transform: translateY(0); opacity: 0; }
+  8% { opacity: 1; }
+  82% { transform: translateY(var(--ladder-h, 360px)); opacity: 1; }
+  92%, 100% { transform: translateY(var(--ladder-h, 360px)); opacity: 0; }
+}
+.ladder-node { position: relative; will-change: transform; }
+.ladder-node::after {
+  content: ""; position: absolute; inset: -7px; border-radius: 9999px;
+  background: radial-gradient(circle, var(--rung-c), transparent 64%);
+  opacity: 0; will-change: opacity; animation: ladder-glow 5.5s ease-in-out infinite; animation-delay: var(--rung-d);
+}
+@keyframes ladder-glow {
+  0%, 100% { opacity: 0; }
+  10% { opacity: 0.7; }
+  26% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ladder-spark { display: none; }
+  .ladder-node::after { opacity: 0.4; animation: none; }
+}
+
+/* ── HOW IT WORKS — a journey track behind the four steps (lg only); a spark
+   travels the path left→right. Connector line shows in the gaps between cards. ── */
+.jpath { position: relative; }
+.jpath-line {
+  position: absolute; top: 43px; left: 12.5%; right: 12.5%; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, #3ddc97, #0a84ff 52%, #22d3ee); opacity: 0.3;
+}
+.jpath-spark {
+  position: absolute; top: 39px; width: 10px; height: 10px; margin-left: -5px; border-radius: 9999px;
+  background: #eaf3ff; box-shadow: 0 0 14px 3px rgba(10, 132, 255, 0.8);
+  animation: jpath-flow 6s linear infinite;
+}
+@keyframes jpath-flow {
+  0% { left: 12.5%; opacity: 0; }
+  6% { opacity: 1; }
+  88% { left: 87.5%; opacity: 1; }
+  96%, 100% { left: 87.5%; opacity: 0; }
+}
+@media (max-width: 1023px) { .jpath-line, .jpath-spark { display: none; } }
+@media (prefers-reduced-motion: reduce) { .jpath-spark { display: none; } }
+
+/* ── READINESS INDEX gauge — the measured arc draws in once on entry. ── */
+.ari-arc { stroke-dashoffset: 0; animation: ari-draw 1.5s cubic-bezier(0.2,0.8,0.2,1) both; }
+@keyframes ari-draw { from { stroke-dashoffset: var(--arc); } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .ari-arc { animation: none; } }
+
+/* ── /architecture — the 8-layer stack builds bottom-up: a spark climbs the
+   rail, each layer-node glowing as it passes. Compositor-safe. ── */
+.lstack { position: relative; }
+.lstack-rail {
+  position: absolute; left: 21px; top: 10px; bottom: 10px; width: 2px; border-radius: 2px;
+  background: linear-gradient(180deg, #f5a623, #22d3ee 46%, #3ddc97 78%, #0a84ff); opacity: 0.3;
+}
+.lstack-spark {
+  position: absolute; left: 17px; bottom: 10px; width: 10px; height: 10px; border-radius: 9999px;
+  background: #eaf3ff; box-shadow: 0 0 14px 3px rgba(61, 220, 151, 0.8);
+  will-change: transform, opacity; animation: lstack-climb 6.5s ease-in-out infinite;
+}
+@keyframes lstack-climb {
+  0% { transform: translateY(0); opacity: 0; }
+  8% { opacity: 1; }
+  84% { transform: translateY(calc(-1 * var(--lstack-h, 430px))); opacity: 1; }
+  94%, 100% { transform: translateY(calc(-1 * var(--lstack-h, 430px))); opacity: 0; }
+}
+.lstack-node { position: relative; }
+.lstack-node::after {
+  content: ""; position: absolute; inset: -6px; border-radius: inherit;
+  background: radial-gradient(circle, var(--ln-c), transparent 65%);
+  opacity: 0; will-change: opacity; animation: lstack-glow 6.5s ease-in-out infinite; animation-delay: var(--ln-d);
+}
+@keyframes lstack-glow { 0%, 100% { opacity: 0; } 9% { opacity: 0.8; } 24% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .lstack-spark { display: none; } .lstack-node::after { opacity: 0.4; animation: none; } }
+
+/* ── /stratos — local-first router: the default path (prompt→router→local)
+   sweeps with a live glow; the frontier-cloud branch is a static opt-in. ── */
+.rflow-sweep { position: relative; overflow: hidden; }
+.rflow-sweep::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(61, 220, 151, 0.9), transparent);
+  background-size: 45% 100%; background-repeat: no-repeat; will-change: background-position;
+  animation: rflow-sweep 2.4s linear infinite;
+}
+@keyframes rflow-sweep { 0% { background-position: -45% 0; } 100% { background-position: 145% 0; } }
+.rflow-ping { will-change: transform, opacity; animation: rflow-ping 2.4s ease-out infinite; }
+@keyframes rflow-ping { 0%, 60% { opacity: 0; transform: scale(0.5); } 72% { opacity: 1; transform: scale(1.1); } 100% { opacity: 0.5; transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .rflow-sweep::after { animation: none; opacity: 0.5; } .rflow-ping { animation: none; opacity: 0.7; } }
+
+/* ── /atmosphere — the P2P mesh: peers pulse, links breathe, discovery packets
+   travel peer-to-peer (never through a centre). SVG transform/opacity only. ── */
+.mesh-node { transform-box: fill-box; transform-origin: center; will-change: transform, opacity; animation: mesh-pulse 3.2s ease-in-out infinite; animation-delay: var(--m-d, 0s); }
+@keyframes mesh-pulse { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.16); } }
+.mesh-link { will-change: opacity; animation: mesh-link 3.6s ease-in-out infinite; animation-delay: var(--m-d, 0s); }
+@keyframes mesh-link { 0%, 100% { opacity: 0.14; } 50% { opacity: 0.46; } }
+.mesh-pkt { will-change: transform, opacity; animation: mesh-travel var(--pkt-dur, 4s) ease-in-out infinite; animation-delay: var(--pkt-d, 0s); }
+@keyframes mesh-travel {
+  0% { transform: translate(var(--x1), var(--y1)); opacity: 0; }
+  10% { opacity: 1; }
+  88% { transform: translate(var(--x2), var(--y2)); opacity: 1; }
+  100% { transform: translate(var(--x2), var(--y2)); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .mesh-node, .mesh-link { animation: none; opacity: 0.5; } .mesh-pkt { display: none; } }
 
 /* flat brutalist data surface — STATIC by default: no hover-lift. Opt into
    interactivity with `.is-interactive` on cards that are actually clickable.
    (fill/border/shadow inherited from the shared .glass material above.) */
 .data-card {
   position: relative; border-radius: var(--radius);
-  transition: transform 0.2s cubic-bezier(0.2,0.8,0.2,1), border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.data-card.is-interactive:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.16); box-shadow: var(--shadow-hud-lift); }
+.data-card.is-interactive:hover {
+  transform: translateY(-5px); border-color: rgba(255,255,255,0.22);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.07),
+    0 28px 70px -22px rgba(0,0,0,0.75),
+    0 14px 34px -18px rgba(10,132,255,0.5);
+}
 .data-card.is-interactive:active { transform: translateY(0); transition-duration: 0.08s; }
 
 /* liquid-metal card: glass fill + a chrome sheen that sweeps the border on hover.
@@ -526,7 +813,7 @@ body::after {
   position: relative; isolation: isolate; overflow: hidden;
   border-radius: var(--radius-lg);
   /* fill/blur/border/shadow inherited from the shared .glass material above */
-  transition: transform 0.2s cubic-bezier(0.2,0.8,0.2,1), border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 /* rotating conic chrome ring, masked to a 1px border */
 .lm-card::before {
@@ -550,8 +837,11 @@ body::after {
 .lm-card:hover::before { opacity: 1; }
 .lm-card:hover::after  { opacity: 1; }
 .lm-card.is-interactive:hover {
-  transform: translateY(-2px); border-color: rgba(255,255,255,0.04);
-  box-shadow: var(--shadow-hud-lift);
+  transform: translateY(-5px); border-color: rgba(255,255,255,0.06);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.08),
+    0 30px 76px -22px rgba(0,0,0,0.78),
+    0 16px 38px -18px rgba(10,132,255,0.55);
 }
 .lm-card.is-interactive:active { transform: translateY(0); transition-duration: 0.08s; }
 

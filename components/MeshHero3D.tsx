@@ -2,8 +2,18 @@
 import { useRef, useEffect, useState, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import SplitHeading from "@/components/motion/SplitHeading";
+import TypewriterHeading, { type TwSeg } from "@/components/motion/TypewriterHeading";
 import { HERO_READY_EVENT } from "@/lib/motion";
+
+// The hero title, typed out — "Own" and "acts from" carry the aurora accent.
+const HERO_TITLE: TwSeg[] = [
+  { text: "Own", accent: true },
+  { text: " the environment" },
+  { break: true },
+  { text: "your AI " },
+  { text: "acts from", accent: true },
+  { text: "." },
+];
 
 const SIGNAL = new THREE.Color("#0a84ff");
 const QUANTUM = new THREE.Color("#3d6cff");
@@ -44,10 +54,12 @@ function Field({ progress }: { progress: Prog }) {
   const sov = useRef<THREE.Mesh>(null!);
   const halo = useRef<THREE.Mesh>(null!);
   const shells = useRef<THREE.Group>(null!);
+  const starGroup = useRef<THREE.Group>(null!);
+  const starsMat = useRef<THREE.PointsMaterial>(null!);
   const { camera } = useThree();
 
   // ── a globe of connected nodes (fibonacci sphere surface + faint inner shell) ──
-  const { points, colors, lines } = useMemo(() => {
+  const { points, colors, lines, stars } = useMemo(() => {
     const R = 4.5;
     const N = 720;
     const raw: THREE.Vector3[] = [];
@@ -83,7 +95,17 @@ function Field({ progress }: { progress: Prog }) {
         }
       }
     }
-    return { points: pos, colors: col, lines: new Float32Array(seg) };
+    // a far depth field of faint stars — parallax behind the globe (adds real 3D depth)
+    const SN = 520;
+    const star = new Float32Array(SN * 3);
+    for (let i = 0; i < SN; i++) {
+      const rr = 16 + seededRandom(i * 3.13) * 20;
+      const yy = 1 - (i / (SN - 1)) * 2;
+      const radd = Math.sqrt(Math.max(0, 1 - yy * yy));
+      const thh = i * golden * 1.7 + seededRandom(i * 0.7) * 6.28;
+      star.set([Math.cos(thh) * radd * rr, yy * rr, Math.sin(thh) * radd * rr], i * 3);
+    }
+    return { points: pos, colors: col, lines: new Float32Array(seg), stars: star };
   }, []);
 
   const lookAt = useMemo(() => new THREE.Vector3(), []);
@@ -99,24 +121,38 @@ function Field({ progress }: { progress: Prog }) {
     globe.current.rotation.y = t * 0.045 * (1 - dive * 0.92) + p * 0.4;
     globe.current.rotation.x = Math.sin(t * 0.1) * 0.05 * (1 - dive);
 
-    // camera flies from far → up to just OUTSIDE the front node (never inside the
-    // globe, so the node reads as a clean cross-section rather than a line jumble)
-    camPos.set(0, 0.45 * dive, 12).lerp(new THREE.Vector3(0, 0.45, 8.0), dive);
+    // CINEMATIC FRAMING (Cosmos): start farther back for vast negative space, and look
+    // ABOVE origin so the luminous core sits LOWER-CENTER (room for the headline above it).
+    // As the dive commits, the look pulls down to the node and we approach it.
+    camPos.set(0, 0.45 * dive, 17.8).lerp(new THREE.Vector3(0, 0.45, 8.0), dive);
     camera.position.copy(camPos);
-    lookAt.set(0, 0, 0).lerp(NODE, smooth(0.3, 0.82, p));
+    // rest-state orbital sway — gives the scene life in time (the "4D" feel);
+    // fades out as the dive commits so it never fights the scroll.
+    const sway = 1 - dive;
+    camera.position.x += Math.sin(t * 0.16) * 0.55 * sway;
+    camera.position.y += Math.cos(t * 0.13) * 0.3 * sway;
+    lookAt.set(0, 3.95, 0).lerp(NODE, smooth(0.3, 0.82, p));
     camera.lookAt(lookAt);
 
-    // the sovereign node — bright from the start, opens as we arrive
-    const pulse = 1 + Math.sin(t * 1.7) * 0.08;
-    sov.current.scale.setScalar(pulse * (0.32 + dive * 0.3));
+    // the sovereign node — luminous from the start (Cosmos: one bright object in the void),
+    // opens as we arrive. Slightly larger core + brighter halo for that "powerful" read.
+    const pulse = 1 + Math.sin(t * 1.7) * 0.07;
+    sov.current.scale.setScalar(pulse * (0.42 + dive * 0.3));
     (sov.current.material as THREE.MeshBasicMaterial).opacity = 1 - open * 0.92;
-    halo.current.scale.setScalar(pulse * (0.9 + dive * 0.9));
-    (halo.current.material as THREE.MeshBasicMaterial).opacity = (0.22 + dive * 0.12) * (1 - open * 0.45);
+    halo.current.scale.setScalar(pulse * (1.15 + dive * 0.9));
+    (halo.current.material as THREE.MeshBasicMaterial).opacity = (0.3 + dive * 0.12) * (1 - open * 0.45);
 
-    // globe fades out completely as the node fills the frame
+    // globe fades out completely as the node fills the frame. Dimmed at rest so it reads as an
+    // ambient field behind the headline (Cosmos calm), not a dense net competing with the type.
     const fade = 1 - smooth(0.58, 0.86, p);
-    ptsMat.current.opacity = fade;
-    lineMat.current.opacity = 0.42 * fade;
+    ptsMat.current.opacity = fade * 0.34;
+    lineMat.current.opacity = 0.11 * fade;
+
+    // far star depth-field — parallax slower than the globe, gentle twinkle,
+    // recedes as the node opens so it never competes with the layer legend.
+    starGroup.current.rotation.y = t * 0.012 + p * 0.12;
+    starGroup.current.rotation.x = Math.sin(t * 0.05) * 0.03;
+    starsMat.current.opacity = (0.5 + Math.sin(t * 0.8) * 0.12) * (0.35 + fade * 0.65);
 
     // nested shells L0→L5 reveal in sequence; counter-rotation = "alive"
     shells.current.scale.setScalar(1 + open * 0.08);
@@ -133,6 +169,17 @@ function Field({ progress }: { progress: Prog }) {
 
   return (
     <group>
+      {/* far depth-field of faint stars — parallax behind everything */}
+      <group ref={starGroup}>
+        <points>
+          <bufferGeometry>
+            <bufferAttribute attach="attributes-position" args={[stars, 3]} />
+          </bufferGeometry>
+          <pointsMaterial ref={starsMat} size={0.055} color="#9fb8ff" transparent
+            opacity={0.5} sizeAttenuation depthWrite={false} blending={THREE.AdditiveBlending} />
+        </points>
+      </group>
+
       {/* the globe of connected nodes */}
       <group ref={globe}>
         <points>
@@ -260,18 +307,19 @@ export default function MeshHero3D() {
                style={{ background: "linear-gradient(to top, var(--color-void), transparent)" }} />
         </div>
         <div className="relative mx-auto w-full max-w-7xl px-5 py-24">
-          <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display-sm hyphens-none">
-            Your Intelligence.<br />Your Infrastructure.<br />
-            <span className="aurora-text">Your Rules.</span>
-          </SplitHeading>
+          <p className="kicker">Governed intelligence infrastructure</p>
+          <TypewriterHeading as="h1" segments={HERO_TITLE} className="t-display-sm mt-5 hyphens-none" />
           <p className="t-body-lg mt-6 max-w-xl text-[color:var(--color-ink-dim)]">
-            Build, run, remember, and scale AI without surrendering ownership.
-            No cloud. No landlord. No meter.
+            Efficient Labs gives builders and organizations the infrastructure to run
+            autonomous AI with ownership, governance, receipts, continuity, and human authority.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-            <a href="#install" className="btn-signal w-full justify-center sm:w-auto">Install now<span aria-hidden>→</span></a>
-            <a href="#atmosphere" className="btn-outline w-full justify-center sm:w-auto">Enter the Atmosphere</a>
+            <a href="/score" className="btn-signal w-full justify-center sm:w-auto">Run the Autonomous Readiness Index<span aria-hidden>→</span></a>
+            <a href="/start" className="btn-outline w-full justify-center sm:w-auto">Start for free</a>
           </div>
+          <p className="mt-5 max-w-md text-[13px] text-[color:var(--color-ink-faint)]">
+            Not another AI wrapper. The ownership layer for verifiable autonomous work.
+          </p>
         </div>
       </section>
     );
@@ -298,58 +346,41 @@ export default function MeshHero3D() {
           <Field progress={progress} />
         </Canvas>
 
-        {/* seat the type */}
+        {/* seat the type — clear void up top for the headline, the core glows up from lower-center */}
         <div aria-hidden className="pointer-events-none absolute inset-0"
-             style={{ background: "radial-gradient(120% 90% at 30% 50%, transparent 30%, rgba(6,7,10,0.5) 74%, var(--color-void) 100%)" }} />
+             style={{ background: "radial-gradient(115% 75% at 50% 64%, transparent 26%, rgba(6,7,10,0.45) 64%, var(--color-void) 100%)" }} />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[50%]"
+             style={{ background: "linear-gradient(to bottom, var(--color-void) 8%, rgba(6,7,10,0.86) 42%, transparent)" }} />
 
-        {/* hero copy — fades as the dive begins */}
-        <div className="absolute inset-0 flex items-center" style={{ opacity: heroFade, transition: "opacity 0.1s linear", pointerEvents: heroFade > 0.5 ? "auto" : "none" }}>
-          <div className="mx-auto w-full max-w-7xl px-6">
-            <div className="max-w-3xl">
-              <SplitHeading as="h1" tier="hero" playOn="intro" className="t-display">
-                Your Intelligence.<br />Your Infrastructure.<br />
-                <span className="aurora-text">Your Rules.</span>
-              </SplitHeading>
-              <p className="t-body-lg mt-7 max-w-xl text-[color:var(--color-ink-dim)]">
-                Build, run, remember, and scale AI without surrendering ownership —{" "}
-                <span className="text-[color:var(--color-ink)]">meshed peer-to-peer</span>,{" "}
-                <span className="text-[color:var(--color-ink)]">post-quantum-sealed</span>, on{" "}
-                <span className="text-[color:var(--color-ink)]">your own metal</span>.
-                No cloud. No landlord. No meter.
-              </p>
-              <div className="mt-9 flex flex-wrap items-center gap-4">
-                <a href="#install" className="btn-signal">Install now<span aria-hidden>→</span></a>
-                <a href="#atmosphere" className="btn-outline">Enter the Atmosphere</a>
-              </div>
+        {/* hero copy — CENTERED (Modal grammar), seated in the upper third, clears the fixed nav */}
+        <div className="absolute inset-0 flex flex-col items-center" style={{ opacity: heroFade, transition: "opacity 0.1s linear", pointerEvents: heroFade > 0.5 ? "auto" : "none" }}>
+          <div className="mx-auto w-full max-w-4xl px-6 pt-[17vh] text-center">
+            <p className="kicker">Governed intelligence infrastructure</p>
+            <TypewriterHeading as="h1" segments={HERO_TITLE} className="t-display mt-5" />
+            <p className="t-body-lg mt-7 mx-auto max-w-2xl text-[color:var(--color-ink-dim)]">
+              Efficient Labs gives builders and organizations the infrastructure to run
+              autonomous AI with{" "}
+              <span className="text-[color:var(--color-ink)]">ownership, governance, receipts,
+              continuity, and human authority</span>.
+            </p>
+            <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
+              <a href="/score" className="btn-signal">Run the Autonomous Readiness Index<span aria-hidden>→</span></a>
+              <a href="/start" className="btn-outline">Start for free</a>
             </div>
+            <p className="mt-6 mx-auto max-w-xl text-[13px] text-[color:var(--color-ink-faint)]">
+              Not another AI wrapper. The ownership layer for verifiable autonomous work.
+            </p>
           </div>
         </div>
 
-        {/* layer legend — fades in as the node opens */}
+        {/* node-opened payoff — the real layers live in the Architecture section below */}
         <div className="absolute inset-0 flex items-center" style={{ opacity: layersFade, pointerEvents: layersFade > 0.5 ? "auto" : "none" }}>
-          <div className="mx-auto w-full max-w-7xl px-6">
-            <div className="max-w-md">
-              <p className="kicker">Inside one sovereign node</p>
-              <h2 className="t-section mt-5">
-                Six layers, <span className="aurora-text">end to end</span>.
-              </h2>
-              <ul className="mt-7 space-y-3">
-                {LAYER_LABELS.map(([id, name, desc], i) => {
-                  const c = SIGNAL.clone().lerp(QUANTUM, i / 5).getStyle();
-                  return (
-                    <li key={id} className="flex items-start gap-3"
-                        style={{ opacity: smooth(0.7 + i * 0.02, 0.88 + i * 0.015, p) }}>
-                      <span className="mono mt-0.5 text-[12px]" style={{ color: c }}>{id}</span>
-                      <span className="mt-0.5 h-px w-6 shrink-0" style={{ background: c, opacity: 0.5, marginTop: 9 }} />
-                      <span>
-                        <span className="block text-[14px] text-[color:var(--color-ink)]">{name}</span>
-                        <span className="block text-[12px] text-[color:var(--color-ink-faint)]">{desc}</span>
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+          <div className="mx-auto w-full max-w-3xl px-6 text-center">
+            <p className="kicker">Inside one sovereign node</p>
+            <h2 className="t-section mt-5">
+              An environment <span className="aurora-text">you own</span> — end to end.
+            </h2>
+            <p className="mono mt-6 text-[12px] tracking-[0.24em] text-[color:var(--color-ink-faint)]">SEVEN LAYERS&nbsp;&nbsp;↓</p>
           </div>
         </div>
 

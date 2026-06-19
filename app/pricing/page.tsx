@@ -6,7 +6,7 @@ import Pricing from "@/components/Pricing";
 export const metadata: Metadata = {
   title: "Pricing — Efficient Labs",
   description:
-    "Flat pricing for sovereign, local-first AI infrastructure across five tiers — Free, Pro, Builder, Team, and Enterprise. No metering, no egress fees, no lock-in. Sovereignty is always free.",
+    "Flat pricing for sovereign, local-first AI infrastructure — Free Forever, Exos Pro, Apex, Apex Max, Teams, and Enterprise. Pay for governed workflows, verifiable receipts, and continuity. No metering, no egress fees, no lock-in. Sovereignty is always free.",
   alternates: { canonical: "/pricing" },
 };
 

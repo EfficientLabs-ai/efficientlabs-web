@@ -76,9 +76,9 @@ export default function SubPageHero({
 
         {facts && facts.length > 0 && (
           <Reveal delay={0.22}>
-            <dl className="mt-10 grid max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-[var(--radius)] border border-[color:var(--color-line)] sm:grid-cols-4">
+            <dl className="mt-10 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
               {facts.map((f) => (
-                <div key={f.k} className="bg-[color:var(--color-void-2)]/40 px-4 py-4">
+                <div key={f.k} className="glass rounded-[var(--radius)] px-4 py-4">
                   <dt className="mono text-[10px] uppercase tracking-wider text-[color:var(--color-ink-faint)]">{f.k}</dt>
                   <dd className="mt-1.5 text-[13px] font-medium text-[color:var(--color-ink)]">{f.v}</dd>
                 </div>

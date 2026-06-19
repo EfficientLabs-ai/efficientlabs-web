@@ -7,6 +7,7 @@ import PageShell from "@/components/PageShell";
 import SubPageHero from "@/components/pages/SubPageHero";
 import DeepSection from "@/components/pages/DeepSection";
 import DeepCard from "@/components/pages/DeepCard";
+import RouterFlow from "@/components/pages/RouterFlow";
 import StatusLegend from "@/components/pages/StatusLegend";
 import StepFlow from "@/components/pages/StepFlow";
 import SubPageCTA from "@/components/pages/SubPageCTA";
@@ -98,7 +99,9 @@ export default function StratosPage() {
           </>
         }
       >
-        <div className="grid gap-8 lg:grid-cols-[0.95fr_1fr] lg:items-start">
+        {/* signature: local-first routing — default local, cloud opt-in */}
+        <RouterFlow />
+        <div className="mt-12 grid gap-8 lg:grid-cols-[0.95fr_1fr] lg:items-start">
           <StepFlow
             steps={[
               { title: "Request arrives", body: "A prompt comes in from any of the five channels and is attributed to its sender." },

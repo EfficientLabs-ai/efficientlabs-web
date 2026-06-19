@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
-import { setLenis } from "@/lib/lenis-store";
+import { setLenis, getLenis } from "@/lib/lenis-store";
 import { registerMotion } from "@/lib/motion";
 
 // Lenis + GSAP are MARKETING-surface affordances. The OS (/app), ops,
@@ -39,6 +39,17 @@ export default function MotionProvider() {
   // Live preference: flipping reduced-motion ON tears the system down (below);
   // flipping it back OFF re-runs the effect and re-initializes.
   const reduced = useSyncExternalStore(subscribeReduced, reducedSnapshot, () => true);
+
+  // Every navigation must land at the TOP of the new page — Lenis keeps its own
+  // scroll position across client transitions, so without this a new page opens
+  // wherever the previous one was left. Skip when navigating to an in-page
+  // anchor (#section), which Lenis/the browser should resolve instead.
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash) return;
+    const lenis = getLenis();
+    if (lenis) lenis.scrollTo(0, { immediate: true });
+    else window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+  }, [pathname]);
 
   useEffect(() => {
     if (excluded || reduced) return;

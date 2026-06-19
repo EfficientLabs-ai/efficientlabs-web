@@ -1,9 +1,12 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Wordmark from "@/components/Wordmark";
 import { OS_NAV_GROUPS, isActiveModule } from "./modules";
+import { useOs } from "./useOsSession";
+import { planMeets } from "@/lib/plans";
 
 /**
  * OsSidebar — the persistent left rail (desktop ≥ lg), also reused inside the
@@ -22,6 +25,7 @@ export default function OsSidebar({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
+  const { plan } = useOs();
 
   return (
     <div className="flex h-full flex-col px-3 py-5">
@@ -63,6 +67,9 @@ export default function OsSidebar({
                     className={active ? "text-[color:var(--color-signal)]" : ""}
                   />
                   {m.label}
+                  {m.requiredPlan && signedIn && !planMeets(plan, m.requiredPlan) && (
+                    <Lock size={12} className="ml-auto shrink-0 opacity-50" aria-label="Upgrade required" />
+                  )}
                 </Link>
               );
             })}
