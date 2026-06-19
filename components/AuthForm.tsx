@@ -4,6 +4,7 @@ import Link from "next/link";
 import { siGoogle, siApple, siGithub } from "simple-icons";
 import { supabase, authReady } from "@/lib/supabase";
 import Wordmark from "@/components/Wordmark";
+import { track } from "@/lib/analytics";
 
 type Provider = "google" | "github" | "azure" | "apple";
 
@@ -64,6 +65,7 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!supabase) return;
+    if (isSignup) track("signup_submit", { method: "email" });
     setBusy(true); setMsg(null); setOk(false);
     const fn = isSignup
       ? supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/dashboard` } })

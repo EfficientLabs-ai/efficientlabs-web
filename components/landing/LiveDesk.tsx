@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { PUBLIC_STATUS } from "@/lib/public-status";
 import ReceiptVerifyCard from "@/components/proof/ReceiptVerifyCard";
+import { track } from "@/lib/analytics";
 
 export default function LiveDesk() {
   const reduced = useReducedMotion();
@@ -75,10 +76,18 @@ export default function LiveDesk() {
             any client with a receipt you verify yourself. Try it on the right: no account, no install.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4">
-            <a href="/start" className="btn-signal">
+            <a
+              href="/start"
+              onClick={() => track("cta_click", { location: "hero", cta: "Start free", href: "/start" })}
+              className="btn-signal"
+            >
               Start free<span aria-hidden>→</span>
             </a>
-            <a href="#proof" className="btn-outline">
+            <a
+              href="#proof"
+              onClick={() => track("cta_click", { location: "hero", cta: "See it prove itself", href: "#proof" })}
+              className="btn-outline"
+            >
               See it prove itself
             </a>
           </div>
