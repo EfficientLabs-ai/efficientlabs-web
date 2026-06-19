@@ -47,5 +47,8 @@ export function motionOK(): boolean {
 
 /** Fired by the homepage preloader when it hands off into the hero intro. */
 export const INTRO_PLAY_EVENT = "efl:intro-play";
-/** Fired by MeshHero3D once its first frame (or static fallback) is ready. */
+/** Fired once the hero's first frame is ready, to hand off from the preloader.
+ *  Currently no hero dispatches it (the LiveDesk hero is DOM/video, not a WebGL
+ *  scene), so the Preloader's hard-cap timeout drives the handoff; the hook stays
+ *  for a future hero that wants to gate the reveal on its first paint. */
 export const HERO_READY_EVENT = "efl:hero-ready";
