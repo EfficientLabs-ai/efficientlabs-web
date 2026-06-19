@@ -83,15 +83,15 @@ const TIERS: Tier[] = [
   {
     name: "Apex Max",
     layer: "Ionosphere",
-    tagline: "The ceiling — Apex pushed to its maximum.",
-    fixedPrice: "—",
-    fixedCadence: "pricing TBD",
-    cta: { label: "Talk to us", href: "mailto:hello@efficientlabs.ai?subject=Apex%20Max" },
+    tagline: "Apex, pushed to its ceiling — plus first access to the Terminal/IDE/OS.",
+    fixedPrice: "$149",
+    fixedCadence: "/mo",
+    cta: { label: "Get early access", href: "mailto:hello@efficientlabs.ai?subject=Apex%20Max%20early%20access" },
     features: [
-      "Everything in Apex",
+      "Everything in Apex, plus —",
+      "Early access to the glassmorphism Terminal/IDE/OS — as it lands",
       "Highest limits & first-priority scheduling",
       "Advanced governance & deeper runtime intelligence",
-      "Early access to new capabilities as they land",
     ],
   },
   {
