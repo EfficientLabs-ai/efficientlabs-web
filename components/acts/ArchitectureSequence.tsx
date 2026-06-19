@@ -79,10 +79,11 @@ export default function ArchitectureSequence() {
 
   // Upgrade to the immersive canvas only when JS + motion are available.
   useEffect(() => {
-    setImmersive(
-      typeof window !== "undefined" &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-    );
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => setImmersive(!mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
   }, []);
 
   // Scroll progress across the pinned section (Lenis-friendly, same idiom as the
@@ -172,7 +173,6 @@ export default function ArchitectureSequence() {
       ctx.stroke();
     };
 
-    const BLUE = "#0a84ff";
     const SKY = "#7cc4ff";
     const RED = "#ff5a5a";
 
@@ -453,7 +453,7 @@ export default function ArchitectureSequence() {
       ctx.globalCompositeOperation = "lighter";
 
       const fp = clamp01(pr) * N;
-      let idx = Math.min(N - 1, Math.floor(fp));
+      const idx = Math.min(N - 1, Math.floor(fp));
       const frac = fp - idx;
       const fade = idx < N - 1 ? smooth(0.82, 1.0, frac) : 0;
       const col = TONE[LAYERS[idx].tone].hex;

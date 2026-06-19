@@ -37,7 +37,6 @@ const noopSink: AnalyticsSink = { track() {} };
 
 const consoleSink: AnalyticsSink = {
   track(event, props) {
-    // eslint-disable-next-line no-console
     console.debug("[analytics]", event, props ?? {});
   },
 };

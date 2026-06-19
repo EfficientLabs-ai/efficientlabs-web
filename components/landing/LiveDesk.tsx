@@ -14,7 +14,11 @@ export default function LiveDesk() {
   const reduced = useReducedMotion();
   const [motionOk, setMotionOk] = useState(false);
   useEffect(() => {
-    setMotionOk(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => setMotionOk(!mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
   }, []);
   const receipts = PUBLIC_STATUS.tiles.receipts;
 

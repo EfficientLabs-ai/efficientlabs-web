@@ -47,8 +47,13 @@ function GapChart() {
   // entrance progress (drives the DOM question column + the canvas draw-in)
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) { setProg(1); return; }
     let raf = 0, start = 0, armed = false;
+    if (reduce) {
+      // Reduced motion = the final static state. Defer the setState out of the
+      // effect body (no synchronous cascading render).
+      raf = requestAnimationFrame(() => setProg(1));
+      return () => cancelAnimationFrame(raf);
+    }
     const tick = (t: number) => {
       if (!start) start = t;
       const p = Math.min(1, (t - start) / 1700);

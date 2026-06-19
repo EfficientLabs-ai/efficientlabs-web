@@ -55,10 +55,11 @@ export default function CinematicScrub({
   const [on, setOn] = useState(false);
 
   useEffect(() => {
-    setOn(
-      typeof window !== "undefined" &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-    );
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => setOn(!mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
   }, []);
 
   // Lazy-load the frame sequence once the section approaches the viewport.
