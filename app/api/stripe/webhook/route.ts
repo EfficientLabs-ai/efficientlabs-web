@@ -71,7 +71,19 @@ export async function POST(req: Request) {
           const items = await stripe.checkout.sessions.listLineItems(s.id, { limit: 1 });
           plan = planForPriceId(items.data[0]?.price?.id);
         }
-        if (plan) await setPlan(email, plan, customerId, "active");
+        if (plan && email) {
+          await setPlan(email, plan, customerId, "active");
+        } else {
+          // A completed checkout we cannot provision must be LOUD, never silent —
+          // the customer was charged. Surfaces in logs for reconciliation/alerting
+          // (the top "silent plan=null" launch risk).
+          console.error("[stripe] checkout.session.completed NOT provisioned", {
+            sessionId: s.id,
+            customerId,
+            hasEmail: !!email,
+            plan: plan ?? "null (price id not in STRIPE_PRICE_* map)",
+          });
+        }
         break;
       }
 
