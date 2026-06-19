@@ -1,6 +1,6 @@
 {
   "format": "efl.runtime-score.v1",
-  "generated_at": "2026-06-19T15:01:06.588Z",
+  "generated_at": "2026-06-19T15:31:05.305Z",
   "render_rules": "MEASURED cards render values with verdicts; null cards render 'not measured' with the reason, greyed, in place — the grid shape never changes. Staleness is shown, never hidden.",
   "hero": {
     "measured": 6,
@@ -35,7 +35,7 @@
     },
     "continuity": {
       "label": "MEASURED",
-      "updated_at": "2026-06-19T15:01:06.397Z",
+      "updated_at": "2026-06-19T15:31:05.162Z",
       "verdict": "GREEN",
       "inputs": {
         "signed_receipts": 1,
@@ -46,11 +46,11 @@
     },
     "session": {
       "label": "MEASURED",
-      "updated_at": "2026-06-19T15:01:06.588Z",
+      "updated_at": "2026-06-19T15:31:05.305Z",
       "verdict": "GREEN",
       "inputs": {
         "level": "HEALTHY",
-        "context_per_request": 75109,
+        "context_per_request": 84006,
         "fixed_context_slimming": null
       },
       "method": "verdict GREEN when the session-economics checker reports HEALTHY, YELLOW otherwise; context-per-request is the checker's recent average; fixed-context slimming is ESTIMATED pending replication and is therefore null here",
@@ -73,7 +73,7 @@
     },
     "ownership": {
       "label": "MEASURED",
-      "updated_at": "2026-06-19T15:01:06.397Z",
+      "updated_at": "2026-06-19T15:31:05.162Z",
       "verdict": "GREEN",
       "inputs": {
         "signed_receipts": 1,
