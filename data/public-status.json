@@ -1,6 +1,6 @@
 {
   "format": "efl.public-status.v1",
-  "generated_at": "2026-06-19T16:31:04.823Z",
+  "generated_at": "2026-06-19T17:01:04.450Z",
   "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
   "tiles": {
     "heartbeat": {
@@ -148,7 +148,7 @@
     },
     "receipts": {
       "label": "MEASURED",
-      "updated_at": "2026-06-19T16:31:04.904Z",
+      "updated_at": "2026-06-19T17:01:04.558Z",
       "count": 1,
       "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
       "bundle_path": "/proof/receipts-bundle.json",
@@ -174,7 +174,7 @@
     },
     "intelligence": {
       "label": "MEASURED",
-      "updated_at": "2026-06-19T16:31Z",
+      "updated_at": "2026-06-19T17:01Z",
       "counters": {
         "context_nodes": {
           "value": 512,
@@ -319,7 +319,7 @@
       "label": "MEASURED",
       "updated_at": "2026-06-19",
       "sessions": 12,
-      "requests": 12151,
+      "requests": 12160,
       "weighted_cache_hit_pct": 97,
       "method": "provider-reported usage fields; cache hit = cache_read ÷ (input + cache_read + cache_create) summed over all sessions",
       "verify": "published artifact — recomputable from the method shown; no dollar figure is published anywhere"
