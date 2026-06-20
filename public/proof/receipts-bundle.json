@@ -1,6 +1,6 @@
 {
   "format": "stratos.capability-receipts.v1",
-  "exported_at": 1781946065132,
+  "exported_at": 1781958664599,
   "node_id": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
   "public_key": {
     "x25519Der": "MCowBQYDK2VuAyEAqTznazYQXs+VK+o4ZVw3hegviXovVyqsWhViYJrrW38=",
