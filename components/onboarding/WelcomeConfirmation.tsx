@@ -68,7 +68,7 @@ export default function WelcomeConfirmation() {
           <p className="t-body-lg mt-6 max-w-2xl text-[color:var(--color-ink-dim)]">
             {planLabel ? (
               <>
-                Your <span className="text-[color:var(--color-ink)]">{planLabel}</span> plan is on its way to
+                Your <span className="text-[color:var(--color-ink)]">{planLabel}</span>{" "}plan is on its way to
                 your account. Activation is keyed to the email you checked out with — confirm that inbox if you
                 haven&apos;t yet, then bring your first node online below.
               </>
