@@ -1,6 +1,6 @@
 {
   "format": "efl.runtime-score.v1",
-  "generated_at": "2026-06-20T06:01:04.970Z",
+  "generated_at": "2026-06-20T08:31:07.513Z",
   "render_rules": "MEASURED cards render values with verdicts; null cards render 'not measured' with the reason, greyed, in place — the grid shape never changes. Staleness is shown, never hidden.",
   "hero": {
     "measured": 5,
@@ -35,7 +35,7 @@
     },
     "continuity": {
       "label": "MEASURED",
-      "updated_at": "2026-06-20T06:01:04.848Z",
+      "updated_at": "2026-06-20T08:31:07.375Z",
       "verdict": "GREEN",
       "inputs": {
         "signed_receipts": 1,
@@ -57,7 +57,7 @@
         "rung1_pct": 48,
         "routed_total": 50,
         "flagship_on_deterministic": 0,
-        "weighted_cache_hit_pct": 96.9,
+        "weighted_cache_hit_pct": 96.8,
         "dollars": null
       },
       "method": "verdict GREEN when zero deterministic units reached a flagship model, YELLOW otherwise; billing instrumentation is gated so no dollar figure exists anywhere in this artifact",
@@ -65,7 +65,7 @@
     },
     "ownership": {
       "label": "MEASURED",
-      "updated_at": "2026-06-20T06:01:04.848Z",
+      "updated_at": "2026-06-20T08:31:07.375Z",
       "verdict": "GREEN",
       "inputs": {
         "signed_receipts": 1,
