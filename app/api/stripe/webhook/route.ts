@@ -128,13 +128,48 @@ export async function POST(req: Request) {
         const sub = event.data.object as Stripe.Subscription;
         const email = await emailForCustomer(sub.customer as string);
         const active = sub.status === "active" || sub.status === "trialing";
-        const plan = active ? planForPriceId(sub.items.data[0]?.price.id) ?? "free" : "free";
-        const written = await setPlan(email, plan, sub.customer as string, sub.status);
+
+        if (active) {
+          // FAIL-CLOSED, same invariant as checkout.session.completed: an active /
+          // trialing subscription whose price id is NOT in the env map (pricing
+          // migration, promo price, config drift) — or whose email we can't read —
+          // must NOT be silently downgraded to "free". That would lose a paying
+          // customer's plan on a 200. Return 422 so Stripe retries and the gap is
+          // visible for reconciliation/alerting.
+          const plan = planForPriceId(sub.items.data[0]?.price.id);
+          if (!plan || !email) {
+            console.error("[stripe] customer.subscription.updated NOT provisioned (active sub unmapped)", {
+              customerId: sub.customer,
+              hasEmail: !!email,
+              status: sub.status,
+              plan: plan ?? "null (price id not in STRIPE_PRICE_* map)",
+            });
+            return NextResponse.json(
+              { error: "subscription not provisionable" },
+              { status: 422 },
+            );
+          }
+          const written = await setPlan(email, plan, sub.customer as string, sub.status);
+          if (!written) {
+            console.error("[stripe] customer.subscription.updated NOT persisted", {
+              customerId: sub.customer,
+              hasEmail: !!email,
+              plan,
+              status: sub.status,
+            });
+            return NextResponse.json({ error: "fulfillment write failed" }, { status: 500 });
+          }
+          break;
+        }
+
+        // Genuinely inactive (canceled / past_due / unpaid / incomplete_expired …):
+        // downgrading to free is correct. A missing email still fails closed via
+        // setPlan() → false → 500 (Stripe retries).
+        const written = await setPlan(email, "free", sub.customer as string, sub.status);
         if (!written) {
-          console.error("[stripe] customer.subscription.updated NOT persisted", {
+          console.error("[stripe] customer.subscription.updated NOT persisted (downgrade)", {
             customerId: sub.customer,
             hasEmail: !!email,
-            plan,
             status: sub.status,
           });
           return NextResponse.json({ error: "fulfillment write failed" }, { status: 500 });
