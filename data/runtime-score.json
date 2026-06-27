@@ -1,6 +1,6 @@
 {
   "format": "efl.runtime-score.v1",
-  "generated_at": "2026-06-27T05:31:03.632Z",
+  "generated_at": "2026-06-27T06:01:03.770Z",
   "render_rules": "MEASURED cards render values with verdicts; null cards render 'not measured' with the reason, greyed, in place — the grid shape never changes. Staleness is shown, never hidden.",
   "hero": {
     "measured": 5,
@@ -35,7 +35,7 @@
     },
     "continuity": {
       "label": "MEASURED",
-      "updated_at": "2026-06-27T05:31:03.491Z",
+      "updated_at": "2026-06-27T06:01:03.657Z",
       "verdict": "GREEN",
       "inputs": {
         "signed_receipts": 1,
@@ -65,7 +65,7 @@
     },
     "ownership": {
       "label": "MEASURED",
-      "updated_at": "2026-06-27T05:31:03.491Z",
+      "updated_at": "2026-06-27T06:01:03.657Z",
       "verdict": "GREEN",
       "inputs": {
         "signed_receipts": 1,
