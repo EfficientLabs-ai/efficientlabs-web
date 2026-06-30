@@ -1,6 +1,12 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
-import { planForPriceId, runtimeReadiness, server } from "./server.mjs";
+import {
+  currentPeriodEndForItem,
+  planForPriceId,
+  runtimeReadiness,
+  server,
+  subscriptionBillingItem,
+} from "./server.mjs";
 
 const HOST = "127.0.0.1";
 const priceVars = {
@@ -22,6 +28,19 @@ assert.equal(planForPriceId("price_exos_pro_monthly"), "exos_pro");
 assert.equal(planForPriceId("price_apex_annual"), "apex");
 assert.equal(planForPriceId("price_teams_monthly"), "teams");
 assert.equal(planForPriceId("price_unknown"), null);
+
+const subscription = {
+  items: {
+    data: [
+      { price: { id: "price_unmapped_addon" }, current_period_end: 1893456000 },
+      { price: { id: "price_apex_monthly" }, current_period_end: 1896134400 },
+    ],
+  },
+};
+const billingItem = subscriptionBillingItem(subscription);
+assert.equal(billingItem.price.id, "price_apex_monthly");
+assert.equal(currentPeriodEndForItem(billingItem).toISOString(), "2030-02-01T00:00:00.000Z");
+assert.equal(currentPeriodEndForItem({}), null);
 
 const readiness = runtimeReadiness();
 assert.equal(readiness.stripeConfigured, true);

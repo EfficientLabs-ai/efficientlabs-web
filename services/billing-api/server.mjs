@@ -206,8 +206,13 @@ async function handlePlan(req, res) {
   });
 }
 
-function currentPeriodEnd(subscription) {
-  const value = subscription?.current_period_end;
+export function subscriptionBillingItem(subscription, env = process.env) {
+  const items = Array.isArray(subscription?.items?.data) ? subscription.items.data : [];
+  return items.find((item) => planForPriceId(item?.price?.id, env)) || items[0] || null;
+}
+
+export function currentPeriodEndForItem(item) {
+  const value = item?.current_period_end;
   return typeof value === "number" ? new Date(value * 1000) : null;
 }
 
@@ -249,8 +254,9 @@ async function handleStripeWebhook(req, res) {
         if (session.subscription) {
           subscriptionId = typeof session.subscription === "string" ? session.subscription : session.subscription.id;
           const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-          plan = planForPriceId(subscription.items.data[0]?.price.id);
-          periodEnd = currentPeriodEnd(subscription);
+          const item = subscriptionBillingItem(subscription);
+          plan = planForPriceId(item?.price?.id);
+          periodEnd = currentPeriodEndForItem(item);
         } else {
           const items = await stripe.checkout.sessions.listLineItems(session.id, { limit: 1 });
           plan = planForPriceId(items.data[0]?.price?.id);
@@ -283,7 +289,8 @@ async function handleStripeWebhook(req, res) {
         const customerId = typeof subscription.customer === "string" ? subscription.customer : subscription.customer?.id;
         const email = await emailForCustomer(customerId);
         const active = subscription.status === "active" || subscription.status === "trialing";
-        const plan = active ? planForPriceId(subscription.items.data[0]?.price.id) : "free";
+        const item = subscriptionBillingItem(subscription);
+        const plan = active ? planForPriceId(item?.price?.id) : "free";
 
         if (!plan || !email) {
           console.error("[billing-api] subscription update not provisionable", {
@@ -301,7 +308,7 @@ async function handleStripeWebhook(req, res) {
           status: subscription.status,
           stripeCustomerId: customerId,
           stripeSubscriptionId: subscription.id,
-          currentPeriodEnd: currentPeriodEnd(subscription),
+          currentPeriodEnd: currentPeriodEndForItem(item),
         });
         if (!written) return json(res, 500, { error: "fulfillment write failed" });
         break;
@@ -317,7 +324,7 @@ async function handleStripeWebhook(req, res) {
           status: "canceled",
           stripeCustomerId: customerId,
           stripeSubscriptionId: subscription.id,
-          currentPeriodEnd: currentPeriodEnd(subscription),
+          currentPeriodEnd: currentPeriodEndForItem(subscriptionBillingItem(subscription)),
         });
         if (!written) {
           console.error("[billing-api] subscription deletion not persisted", {

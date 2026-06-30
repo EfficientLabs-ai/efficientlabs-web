@@ -45,6 +45,7 @@ filled `.env.local`, `.env.production`, vault export, or PM2 env file.
 | Var | What |
 |---|---|
 | `BILLING_API_BASE_URL` | HTTPS origin for the VPS billing API, e.g. `https://api.efficientlabs.ai/` |
+| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | temporary browser auth client while owner-controlled auth replaces Supabase |
 
 Vercel must not receive `DATABASE_URL` for the self-hosted billing ledger.
 After changing Vercel env vars, redeploy the affected environment so runtime
@@ -99,6 +100,7 @@ Run the loopback service:
 
 ```bash
 cd /home/neo/efficientlabs-web
+npm --prefix services/billing-api ci
 npm run billing-api:start
 ```
 
