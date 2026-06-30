@@ -210,12 +210,21 @@ async function markAuthLogin(email) {
 }
 
 function authResponse(email) {
+  requireOwnerAuthConfigured();
   const expiresIn = authTokenTtlSeconds();
   const token = signOwnerAuthToken({
     email,
     sub: `account:${email}`,
   });
   return { signedIn: true, email, token, expiresIn };
+}
+
+function requireOwnerAuthConfigured() {
+  const readiness = authVerifierReadiness();
+  if (readiness.provider === "efficientlabs") return;
+  const err = new Error("owner auth verifier not configured");
+  err.statusCode = 503;
+  throw err;
 }
 
 async function upsertSubscription(input) {
@@ -306,6 +315,7 @@ export function currentPeriodEndForItem(item) {
 }
 
 async function handleAuthSignup(req, res) {
+  requireOwnerAuthConfigured();
   if (process.env.AUTH_SIGNUPS_ENABLED === "false") {
     return json(res, 403, { error: "signups disabled" });
   }
@@ -322,6 +332,7 @@ async function handleAuthSignup(req, res) {
 }
 
 async function handleAuthLogin(req, res) {
+  requireOwnerAuthConfigured();
   const body = await readJson(req);
   const { email, password } = readAuthInput(body);
   authRateLimit(req, email);
@@ -498,12 +509,12 @@ async function handleHealth(_req, res) {
 async function route(req, res) {
   const url = new URL(req.url || "/", `http://${req.headers.host || "127.0.0.1"}`);
   try {
-    if (req.method === "GET" && url.pathname === "/health") return handleHealth(req, res);
-    if (req.method === "POST" && url.pathname === "/auth/signup") return handleAuthSignup(req, res);
-    if (req.method === "POST" && url.pathname === "/auth/login") return handleAuthLogin(req, res);
-    if (req.method === "GET" && url.pathname === "/auth/session") return handleAuthSession(req, res);
-    if (req.method === "GET" && url.pathname === "/billing/account/plan") return handlePlan(req, res);
-    if (req.method === "POST" && url.pathname === "/billing/stripe/webhook") return handleStripeWebhook(req, res);
+    if (req.method === "GET" && url.pathname === "/health") return await handleHealth(req, res);
+    if (req.method === "POST" && url.pathname === "/auth/signup") return await handleAuthSignup(req, res);
+    if (req.method === "POST" && url.pathname === "/auth/login") return await handleAuthLogin(req, res);
+    if (req.method === "GET" && url.pathname === "/auth/session") return await handleAuthSession(req, res);
+    if (req.method === "GET" && url.pathname === "/billing/account/plan") return await handlePlan(req, res);
+    if (req.method === "POST" && url.pathname === "/billing/stripe/webhook") return await handleStripeWebhook(req, res);
     return json(res, 404, { error: "not found" });
   } catch (err) {
     const status = Number(err?.statusCode || 500);

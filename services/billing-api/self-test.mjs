@@ -88,6 +88,31 @@ try {
   assert.equal(anonPlan.status, 200);
   assert.deepEqual(await anonPlan.json(), { signedIn: false, plan: "free" });
 
+  const configuredSecret = process.env.AUTH_TOKEN_SECRET;
+  delete process.env.AUTH_TOKEN_SECRET;
+  const blockedSignup = await fetch(`http://${HOST}:${port}/auth/signup`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      email: "blocked@efficientlabs.ai",
+      password: "correct horse battery staple",
+    }),
+  });
+  assert.equal(blockedSignup.status, 503);
+  assert.deepEqual(await blockedSignup.json(), { error: "billing API error" });
+
+  const blockedLogin = await fetch(`http://${HOST}:${port}/auth/login`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      email: "blocked@efficientlabs.ai",
+      password: "correct horse battery staple",
+    }),
+  });
+  assert.equal(blockedLogin.status, 503);
+  assert.deepEqual(await blockedLogin.json(), { error: "billing API error" });
+  process.env.AUTH_TOKEN_SECRET = configuredSecret;
+
   const session = await fetch(`http://${HOST}:${port}/auth/session`, {
     headers: { authorization: `Bearer ${ownerToken}` },
   });
