@@ -13,9 +13,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "/score" },
 };
 
-// ISR 5m — same cadence as /status; the score renders the published artifact
-// and falls back to the committed baseline (its generation date is shown).
-export const revalidate = 300;
+// Same truth-surface rule as /status: render the latest published artifact and
+// fail closed to the committed baseline if the live feed is unavailable.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function ScorePage() {
   const score = await getLiveRuntimeScore();
@@ -42,7 +43,7 @@ export default async function ScorePage() {
           { k: "Data", v: "Measured only" },
           { k: "Source", v: "Our own node" },
           { k: "Verify", v: "Every card" },
-          { k: "Refresh", v: "5 min ISR" },
+          { k: "Refresh", v: "Live artifact" },
         ]}
       />
 
