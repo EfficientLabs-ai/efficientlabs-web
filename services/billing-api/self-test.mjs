@@ -5,6 +5,10 @@ import {
   signOwnerAuthToken,
 } from "./auth-verifier.mjs";
 import {
+  hashPassword,
+  verifyPassword,
+} from "./password-auth.mjs";
+import {
   currentPeriodEndForItem,
   planForPriceId,
   runtimeReadiness,
@@ -63,6 +67,9 @@ await assert.rejects(
   () => emailForBearerAuthorization(`Bearer ${ownerToken}tampered`),
   /signature/,
 );
+const passwordHash = await hashPassword("correct horse battery staple");
+assert.equal(await verifyPassword("correct horse battery staple", passwordHash), true);
+assert.equal(await verifyPassword("wrong horse battery staple", passwordHash), false);
 
 delete process.env.STRIPE_PRICE_TEAMS_ANNUAL;
 assert.equal(runtimeReadiness().stripeConfigured, false);
@@ -80,6 +87,15 @@ try {
   const anonPlan = await fetch(`http://${HOST}:${port}/billing/account/plan`);
   assert.equal(anonPlan.status, 200);
   assert.deepEqual(await anonPlan.json(), { signedIn: false, plan: "free" });
+
+  const session = await fetch(`http://${HOST}:${port}/auth/session`, {
+    headers: { authorization: `Bearer ${ownerToken}` },
+  });
+  assert.equal(session.status, 200);
+  assert.deepEqual(await session.json(), {
+    signedIn: true,
+    email: "founder@efficientlabs.ai",
+  });
 
   const missing = await fetch(`http://${HOST}:${port}/nope`);
   assert.equal(missing.status, 404);

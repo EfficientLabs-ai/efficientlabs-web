@@ -1,13 +1,8 @@
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { billingUrl, OWNER_AUTH_COOKIE } from "@/lib/billing-api";
 
 export const dynamic = "force-dynamic";
-
-const billingApiBase = process.env.BILLING_API_BASE_URL;
-
-function billingUrl(path: string): string | null {
-  if (!billingApiBase) return null;
-  return new URL(path, billingApiBase.endsWith("/") ? billingApiBase : `${billingApiBase}/`).toString();
-}
 
 export async function GET(req: Request) {
   const target = billingUrl("billing/account/plan");
@@ -17,7 +12,12 @@ export async function GET(req: Request) {
 
   const headers = new Headers({ accept: "application/json" });
   const authorization = req.headers.get("authorization");
-  if (authorization) headers.set("authorization", authorization);
+  const sessionToken = (await cookies()).get(OWNER_AUTH_COOKIE)?.value;
+  if (authorization) {
+    headers.set("authorization", authorization);
+  } else if (sessionToken) {
+    headers.set("authorization", `Bearer ${sessionToken}`);
+  }
 
   try {
     const res = await fetch(target, {

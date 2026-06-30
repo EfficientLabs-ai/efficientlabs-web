@@ -47,6 +47,13 @@ if (!skipDb) {
     } else {
       databaseStatus = "ok";
     }
+    if (requireOwnerAuth) {
+      const authTable = await pool.query("select to_regclass('public.auth_accounts') as table_name");
+      if (!authTable.rows[0]?.table_name) {
+        failures.push("public.auth_accounts table is missing");
+        databaseStatus = "missing-auth-table";
+      }
+    }
   } catch (err) {
     databaseStatus = "error";
     failures.push(`database check failed: ${err instanceof Error ? err.message : String(err)}`);

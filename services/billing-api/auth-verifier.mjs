@@ -40,10 +40,7 @@ function verifierMode(env = process.env) {
 }
 
 function supabaseConfigured(env = process.env) {
-  return Boolean(
-    (env.SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL)
-      && (env.SUPABASE_ANON_KEY || env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
-  );
+  return Boolean(env.SUPABASE_URL && env.SUPABASE_ANON_KEY);
 }
 
 export function authVerifierReadiness(env = process.env) {
@@ -156,8 +153,8 @@ function verifyOwnerAuthToken(token, env = process.env) {
 }
 
 async function verifySupabaseBearer(authorization, env = process.env, fetchFn = fetch) {
-  const supabaseUrl = env.SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = env.SUPABASE_ANON_KEY || env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseUrl = env.SUPABASE_URL;
+  const supabaseAnonKey = env.SUPABASE_ANON_KEY;
   if (!supabaseUrl || !supabaseAnonKey) {
     throw authError("supabase auth verifier not configured", 503);
   }

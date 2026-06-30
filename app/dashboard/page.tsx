@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Cpu, Boxes, TerminalSquare, KeyRound, MessageSquare, CreditCard, ArrowRight } from "lucide-react";
-import { supabase, authReady } from "@/lib/supabase";
+import { signOut } from "@/lib/auth-client";
 import Wordmark from "@/components/Wordmark";
 
 const CARDS = [
@@ -16,16 +16,24 @@ const CARDS = [
 
 export default function Dashboard() {
   const [email, setEmail] = useState<string | null>(null);
-  const [ready, setReady] = useState(() => !supabase);
+  const [authReady, setAuthReady] = useState(true);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (!supabase) return;
     let cancelled = false;
-    supabase.auth.getUser().then(({ data }) => {
-      if (cancelled) return;
-      setEmail(data.user?.email ?? null);
-      setReady(true);
-    });
+    fetch("/api/auth/session", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((data: { authReady?: boolean; email?: string | null; signedIn?: boolean }) => {
+        if (cancelled) return;
+        setAuthReady(data.authReady !== false);
+        setEmail(data.signedIn ? data.email ?? null : null);
+      })
+      .catch(() => {
+        if (!cancelled) setAuthReady(false);
+      })
+      .finally(() => {
+        if (!cancelled) setReady(true);
+      });
     return () => {
       cancelled = true;
     };
@@ -42,7 +50,7 @@ export default function Dashboard() {
           <div className="flex items-center gap-4">
             <span className="mono text-[12px] text-[color:var(--color-ink-faint)]">{signedIn ? email : "control plane"}</span>
             {signedIn
-              ? <button onClick={() => supabase?.auth.signOut().then(() => location.reload())} className="btn-outline !px-4 !py-2 text-[12px]">Sign out</button>
+              ? <button onClick={() => void signOut()} className="btn-outline !px-4 !py-2 text-[12px]">Sign out</button>
               : <Link href="/login" className="btn-signal !px-4 !py-2 text-[12px]">Sign in<span aria-hidden>→</span></Link>}
           </div>
         </div>
