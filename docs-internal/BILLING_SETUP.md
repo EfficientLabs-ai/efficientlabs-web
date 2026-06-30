@@ -17,10 +17,12 @@ Postgres instance:
 
 ```bash
 psql "$DATABASE_URL" -f database/migrations/0001_billing_subscriptions.sql
+psql "$DATABASE_URL" -f database/migrations/0002_owner_auth_accounts.sql
 ```
 
-The VPS billing API is the only trusted reader/writer. Do not expose this table
-directly to browsers, and do not expose Postgres publicly for Vercel.
+The VPS billing API is the only trusted reader/writer for billing and owner auth
+tables. Do not expose these tables directly to browsers, and do not expose
+Postgres publicly for Vercel.
 
 ## 2. Add the Stripe webhook
 In the Stripe Dashboard → Developers → Webhooks, add an endpoint:
@@ -63,7 +65,15 @@ Secrets — never commit these:
 | `PGHOST` / `PGDATABASE` / `PGUSER` | local peer-auth fallback, usually `/var/run/postgresql`, `efficientlabs`, `neo` |
 | `POSTGRES_POOL_MAX` | optional pool cap; default `5` |
 | `POSTGRES_SSL` | optional; set `require` only when the DB endpoint needs TLS |
-| `SUPABASE_URL` / `SUPABASE_ANON_KEY` | temporary auth verifier while Supabase auth remains in place |
+| `AUTH_VERIFIER_MODE` | `efficientlabs` for launch; `supabase` only as an explicit legacy fallback |
+| `AUTH_TOKEN_SECRET` | owner-controlled HMAC signing secret for account-plan bearer tokens; generate with `openssl rand -base64 32` |
+| `AUTH_TOKEN_ISSUER` | expected owner-token issuer, usually `https://efficientlabs.ai` |
+| `AUTH_TOKEN_AUDIENCE` | expected owner-token audience, usually `efficientlabs-web` |
+| `AUTH_TOKEN_TTL_SECONDS` | owner-token lifetime; default `3600` |
+| `AUTH_SIGNUPS_ENABLED` | set `false` to pause public account creation without disabling login |
+| `AUTH_SIGNUP_CODE` | optional founder-controlled signup code for invite-only launch waves |
+| `AUTH_RATE_WINDOW_MS` / `AUTH_RATE_MAX` | in-process signup/login throttle; defaults to 20 attempts per 15 minutes |
+| `SUPABASE_URL` / `SUPABASE_ANON_KEY` | legacy fallback only while Supabase auth is being retired |
 | `STRIPE_PRICE_EXOS_PRO_MONTHLY` / `_ANNUAL` | Price IDs behind the Exos Pro Payment Links |
 | `STRIPE_PRICE_APEX_MONTHLY` / `_ANNUAL` | Price IDs behind the Apex Payment Links |
 | `STRIPE_PRICE_TEAMS_MONTHLY` / `_ANNUAL` | Price IDs behind the Teams Payment Links |
@@ -86,6 +96,7 @@ vercel env ls preview
 
 # VPS, without printing secret values
 npm run billing-api:preflight
+npm run billing-api:preflight -- --require-owner-auth
 curl -fsS http://127.0.0.1:4101/health
 curl -fsS https://api.efficientlabs.ai/health
 ```
@@ -93,8 +104,11 @@ curl -fsS https://api.efficientlabs.ai/health
 The health response must move from
 `stripe=unconfigured priceMap=incomplete authVerifier=unconfigured` to
 `stripe=configured priceMap=configured authVerifier=configured` before accepting
-live paid traffic. The preflight is the stronger gate because it also verifies
-the Postgres table and secret shapes without logging secret values.
+live paid traffic. For launch, the health response should also show
+`authVerifierProvider=efficientlabs`, and the stronger gate is
+`npm run billing-api:preflight -- --require-owner-auth` because it verifies the
+Postgres table, live Stripe secret shape, complete Price ID map, and the
+owner-controlled auth verifier without logging secret values.
 
 Run the loopback service:
 
@@ -104,12 +118,13 @@ npm --prefix services/billing-api ci
 npm run billing-api:start
 ```
 
-Before accepting live payments, run the preflight on the VPS. It verifies the
-Postgres table, live Stripe secret shape, webhook secret shape, complete Price
-ID map, and temporary auth verifier without printing secret values:
+Before accepting live payments, run the production preflight on the VPS. It
+verifies the Postgres table, live Stripe secret shape, webhook secret shape,
+complete Price ID map, and owner-controlled auth verifier without printing
+secret values:
 
 ```bash
-npm run billing-api:preflight
+npm run billing-api:preflight -- --require-owner-auth
 ```
 
 For isolated Stripe test-mode drills only:
@@ -121,6 +136,9 @@ npm run billing-api:preflight -- --allow-test-stripe
 Publish only the exact billing paths through Caddy/Cloudflare:
 
 - `GET /health`
+- `POST /auth/signup`
+- `POST /auth/login`
+- `GET /auth/session`
 - `GET /billing/account/plan`
 - `POST /billing/stripe/webhook`
 
@@ -134,8 +152,19 @@ order by updated_at desc
 limit 5;
 ```
 
-Then confirm `/billing/account/plan` on the VPS API and `/api/account/plan` on
-the public app reflect the row for a signed-in account.
+Then confirm owner auth and plan reads end-to-end:
+
+```bash
+# public app, same-origin cookie flow
+curl -i https://efficientlabs.ai/api/auth/session
+
+# VPS API, bearer-token flow used by the app server after login
+curl -fsS -H "authorization: Bearer <owner-token>" https://api.efficientlabs.ai/auth/session
+curl -fsS -H "authorization: Bearer <owner-token>" https://api.efficientlabs.ai/billing/account/plan
+```
+
+`/api/account/plan` on the public app should reflect the row for a signed-in
+account without exposing the bearer token to browser JavaScript.
 
 ## Notes
 - Plan is matched by **email**. If a customer pays with a different email than
@@ -143,6 +172,6 @@ the public app reflect the row for a signed-in account.
   by `stripe_customer_id`.
 - Per-feature gating in `/app` currently surfaces the plan (Settings) and the
   upgrade CTA; deeper feature locks can read `useOs().plan`.
-- Auth is still a separate launch gate. This migration removes Supabase from
-  billing storage; replacing Supabase auth with an owner-controlled session
-  system is the next data-plane step.
+- Account auth now uses owner-controlled Postgres and same-origin HttpOnly
+  cookies. Supabase remains only as a deliberately selected server-side legacy
+  verifier mode during cutover.

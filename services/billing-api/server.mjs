@@ -4,10 +4,22 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Pool } from "pg";
 import Stripe from "stripe";
+import {
+  authVerifierReadiness,
+  emailForBearerAuthorization,
+  signOwnerAuthToken,
+} from "./auth-verifier.mjs";
+import {
+  hashPassword,
+  passwordPolicyError,
+  verifyPassword,
+} from "./password-auth.mjs";
 
 const HOST = process.env.BILLING_API_HOST || "127.0.0.1";
 const PORT = Number(process.env.BILLING_API_PORT || 4101);
 const MAX_BODY_BYTES = Number(process.env.BILLING_API_MAX_BODY_BYTES || 2 * 1024 * 1024);
+const AUTH_RATE_WINDOW_MS = Number(process.env.AUTH_RATE_WINDOW_MS || 15 * 60 * 1000);
+const AUTH_RATE_MAX = Number(process.env.AUTH_RATE_MAX || 20);
 
 export const STRIPE_API_VERSION = "2026-02-25.clover";
 export const PRICE_ENV_VARS = [
@@ -23,6 +35,7 @@ const PLAN_VALUES = new Set(["free", "exos_pro", "apex", "teams"]);
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const stripe = stripeKey ? new Stripe(stripeKey, { apiVersion: STRIPE_API_VERSION }) : null;
+const authAttempts = new Map();
 
 export function postgresPoolConfig(env = process.env) {
   if (env.DATABASE_URL) {
@@ -62,6 +75,11 @@ function normalizeEmail(email) {
   return value && value.includes("@") ? value : null;
 }
 
+function authTokenTtlSeconds(env = process.env) {
+  const ttl = Number(env.AUTH_TOKEN_TTL_SECONDS || 3600);
+  return Number.isFinite(ttl) && ttl > 0 ? ttl : 3600;
+}
+
 export function planForPriceId(priceId, env = process.env) {
   if (!priceId) return null;
   const entries = PRICE_ENV_VARS.map(([name, plan]) => [env[name], plan]);
@@ -72,10 +90,7 @@ export function runtimeReadiness(env = process.env) {
   const missingPrices = PRICE_ENV_VARS
     .map(([name]) => name)
     .filter((name) => !env[name]);
-  const hasAuthVerifier = Boolean(
-    (env.SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL)
-      && (env.SUPABASE_ANON_KEY || env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
-  );
+  const authVerifier = authVerifierReadiness(env);
 
   return {
     stripeSecret: Boolean(env.STRIPE_SECRET_KEY),
@@ -84,9 +99,7 @@ export function runtimeReadiness(env = process.env) {
       configured: missingPrices.length === 0,
       missing: missingPrices,
     },
-    authVerifier: {
-      configured: hasAuthVerifier,
-    },
+    authVerifier,
     stripeConfigured: Boolean(env.STRIPE_SECRET_KEY && env.STRIPE_WEBHOOK_SECRET && missingPrices.length === 0),
   };
 }
@@ -104,6 +117,114 @@ async function readBody(req) {
     chunks.push(chunk);
   }
   return Buffer.concat(chunks);
+}
+
+async function readJson(req) {
+  const body = await readBody(req);
+  if (!body.length) return {};
+  try {
+    return JSON.parse(body.toString("utf8"));
+  } catch {
+    const err = new Error("invalid JSON body");
+    err.statusCode = 400;
+    throw err;
+  }
+}
+
+function clientIp(req) {
+  const forwarded = String(req.headers["x-forwarded-for"] || "").split(",")[0]?.trim();
+  return forwarded || req.socket.remoteAddress || "unknown";
+}
+
+function authRateLimit(req, email) {
+  const now = Date.now();
+  const key = `${clientIp(req)}:${email || "unknown"}`;
+  const entry = authAttempts.get(key);
+  if (!entry || entry.resetAt <= now) {
+    authAttempts.set(key, { count: 1, resetAt: now + AUTH_RATE_WINDOW_MS });
+    return;
+  }
+  entry.count += 1;
+  if (entry.count > AUTH_RATE_MAX) {
+    const err = new Error("too many auth attempts");
+    err.statusCode = 429;
+    throw err;
+  }
+}
+
+function readAuthInput(body) {
+  const email = normalizeEmail(body.email);
+  const password = typeof body.password === "string" ? body.password : "";
+  if (!email) {
+    const err = new Error("valid email is required");
+    err.statusCode = 400;
+    throw err;
+  }
+  const policyError = passwordPolicyError(password);
+  if (policyError) {
+    const err = new Error(policyError);
+    err.statusCode = 400;
+    throw err;
+  }
+  return { email, password };
+}
+
+async function createAuthAccount(email, password) {
+  const passwordHash = await hashPassword(password);
+  try {
+    await pool.query(
+      `
+        insert into auth_accounts (email, password_hash)
+        values ($1, $2)
+      `,
+      [email, passwordHash],
+    );
+  } catch (err) {
+    if (err?.code === "23505") {
+      const conflict = new Error("account already exists");
+      conflict.statusCode = 409;
+      throw conflict;
+    }
+    throw err;
+  }
+}
+
+async function getAuthAccount(email) {
+  const result = await pool.query(
+    `
+      select email, password_hash, disabled_at
+      from auth_accounts
+      where email = $1
+      limit 1
+    `,
+    [email],
+  );
+  return result.rows[0] || null;
+}
+
+async function markAuthLogin(email) {
+  await pool.query(
+    "update auth_accounts set last_login_at = now(), updated_at = now() where email = $1",
+    [email],
+  );
+}
+
+function authResponse(email) {
+  requireOwnerAuthConfigured();
+  const expiresIn = authTokenTtlSeconds();
+  const token = signOwnerAuthToken({
+    email,
+    sub: `account:${email}`,
+  });
+  return { signedIn: true, email, token, expiresIn };
+}
+
+function requireOwnerAuthConfigured() {
+  const readiness = authVerifierReadiness();
+  if (readiness.provider === "efficientlabs") return;
+  const err = new Error("owner auth verifier not configured");
+  err.statusCode = 503;
+  throw err;
 }
 
 async function upsertSubscription(input) {
@@ -165,30 +286,7 @@ async function getSubscriptionByEmail(email) {
 }
 
 async function emailForBearer(req) {
-  const auth = req.headers.authorization || "";
-  if (!auth.toLowerCase().startsWith("bearer ")) return null;
-
-  const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) {
-    const err = new Error("auth verifier not configured");
-    err.statusCode = 503;
-    throw err;
-  }
-
-  const response = await fetch(`${supabaseUrl}/auth/v1/user`, {
-    headers: {
-      apikey: supabaseAnonKey,
-      authorization: auth,
-    },
-  });
-  if (!response.ok) {
-    const err = new Error("invalid bearer token");
-    err.statusCode = 401;
-    throw err;
-  }
-  const user = await response.json();
-  return normalizeEmail(typeof user.email === "string" ? user.email : user.user?.email);
+  return emailForBearerAuthorization(req.headers.authorization || "");
 }
 
 async function handlePlan(req, res) {
@@ -214,6 +312,45 @@ export function subscriptionBillingItem(subscription, env = process.env) {
 export function currentPeriodEndForItem(item) {
   const value = item?.current_period_end;
   return typeof value === "number" ? new Date(value * 1000) : null;
+}
+
+async function handleAuthSignup(req, res) {
+  requireOwnerAuthConfigured();
+  if (process.env.AUTH_SIGNUPS_ENABLED === "false") {
+    return json(res, 403, { error: "signups disabled" });
+  }
+
+  const body = await readJson(req);
+  if (process.env.AUTH_SIGNUP_CODE && body.signupCode !== process.env.AUTH_SIGNUP_CODE) {
+    return json(res, 403, { error: "signup not available" });
+  }
+
+  const { email, password } = readAuthInput(body);
+  authRateLimit(req, email);
+  await createAuthAccount(email, password);
+  return json(res, 201, authResponse(email));
+}
+
+async function handleAuthLogin(req, res) {
+  requireOwnerAuthConfigured();
+  const body = await readJson(req);
+  const { email, password } = readAuthInput(body);
+  authRateLimit(req, email);
+
+  const account = await getAuthAccount(email);
+  const ok = account && !account.disabled_at && await verifyPassword(password, account.password_hash);
+  if (!ok) {
+    return json(res, 401, { error: "invalid credentials" });
+  }
+
+  await markAuthLogin(email);
+  return json(res, 200, authResponse(email));
+}
+
+async function handleAuthSession(req, res) {
+  const email = await emailForBearer(req);
+  if (!email) return json(res, 200, { signedIn: false });
+  return json(res, 200, { signedIn: true, email });
 }
 
 async function emailForCustomer(customerId) {
@@ -358,6 +495,7 @@ async function handleHealth(_req, res) {
       stripe: readiness.stripeConfigured ? "configured" : "unconfigured",
       priceMap: readiness.priceMap.configured ? "configured" : "incomplete",
       authVerifier: readiness.authVerifier.configured ? "configured" : "unconfigured",
+      authVerifierProvider: readiness.authVerifier.provider || null,
     });
   } catch {
     return json(res, 503, {
@@ -371,9 +509,12 @@ async function handleHealth(_req, res) {
 async function route(req, res) {
   const url = new URL(req.url || "/", `http://${req.headers.host || "127.0.0.1"}`);
   try {
-    if (req.method === "GET" && url.pathname === "/health") return handleHealth(req, res);
-    if (req.method === "GET" && url.pathname === "/billing/account/plan") return handlePlan(req, res);
-    if (req.method === "POST" && url.pathname === "/billing/stripe/webhook") return handleStripeWebhook(req, res);
+    if (req.method === "GET" && url.pathname === "/health") return await handleHealth(req, res);
+    if (req.method === "POST" && url.pathname === "/auth/signup") return await handleAuthSignup(req, res);
+    if (req.method === "POST" && url.pathname === "/auth/login") return await handleAuthLogin(req, res);
+    if (req.method === "GET" && url.pathname === "/auth/session") return await handleAuthSession(req, res);
+    if (req.method === "GET" && url.pathname === "/billing/account/plan") return await handlePlan(req, res);
+    if (req.method === "POST" && url.pathname === "/billing/stripe/webhook") return await handleStripeWebhook(req, res);
     return json(res, 404, { error: "not found" });
   } catch (err) {
     const status = Number(err?.statusCode || 500);

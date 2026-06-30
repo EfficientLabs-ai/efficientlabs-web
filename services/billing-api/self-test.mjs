@@ -1,6 +1,14 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
 import {
+  emailForBearerAuthorization,
+  signOwnerAuthToken,
+} from "./auth-verifier.mjs";
+import {
+  hashPassword,
+  verifyPassword,
+} from "./password-auth.mjs";
+import {
   currentPeriodEndForItem,
   planForPriceId,
   runtimeReadiness,
@@ -21,8 +29,10 @@ const priceVars = {
 for (const [name, value] of Object.entries(priceVars)) process.env[name] = value;
 process.env.STRIPE_SECRET_KEY ||= "sk_test_selftest";
 process.env.STRIPE_WEBHOOK_SECRET ||= "whsec_selftest";
-process.env.SUPABASE_URL ||= "https://example.supabase.co";
-process.env.SUPABASE_ANON_KEY ||= "anon";
+process.env.AUTH_VERIFIER_MODE = "efficientlabs";
+process.env.AUTH_TOKEN_SECRET = "owner-auth-self-test-secret-32-bytes-minimum";
+process.env.AUTH_TOKEN_ISSUER = "https://efficientlabs.ai";
+process.env.AUTH_TOKEN_AUDIENCE = "efficientlabs-web";
 
 assert.equal(planForPriceId("price_exos_pro_monthly"), "exos_pro");
 assert.equal(planForPriceId("price_apex_annual"), "apex");
@@ -46,6 +56,20 @@ const readiness = runtimeReadiness();
 assert.equal(readiness.stripeConfigured, true);
 assert.equal(readiness.priceMap.configured, true);
 assert.equal(readiness.authVerifier.configured, true);
+assert.equal(readiness.authVerifier.provider, "efficientlabs");
+
+const ownerToken = signOwnerAuthToken({ email: "Founder@EfficientLabs.ai", sub: "owner-self-test" });
+assert.equal(
+  await emailForBearerAuthorization(`Bearer ${ownerToken}`),
+  "founder@efficientlabs.ai",
+);
+await assert.rejects(
+  () => emailForBearerAuthorization(`Bearer ${ownerToken}tampered`),
+  /signature/,
+);
+const passwordHash = await hashPassword("correct horse battery staple");
+assert.equal(await verifyPassword("correct horse battery staple", passwordHash), true);
+assert.equal(await verifyPassword("wrong horse battery staple", passwordHash), false);
 
 delete process.env.STRIPE_PRICE_TEAMS_ANNUAL;
 assert.equal(runtimeReadiness().stripeConfigured, false);
@@ -63,6 +87,40 @@ try {
   const anonPlan = await fetch(`http://${HOST}:${port}/billing/account/plan`);
   assert.equal(anonPlan.status, 200);
   assert.deepEqual(await anonPlan.json(), { signedIn: false, plan: "free" });
+
+  const configuredSecret = process.env.AUTH_TOKEN_SECRET;
+  delete process.env.AUTH_TOKEN_SECRET;
+  const blockedSignup = await fetch(`http://${HOST}:${port}/auth/signup`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      email: "blocked@efficientlabs.ai",
+      password: "correct horse battery staple",
+    }),
+  });
+  assert.equal(blockedSignup.status, 503);
+  assert.deepEqual(await blockedSignup.json(), { error: "billing API error" });
+
+  const blockedLogin = await fetch(`http://${HOST}:${port}/auth/login`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      email: "blocked@efficientlabs.ai",
+      password: "correct horse battery staple",
+    }),
+  });
+  assert.equal(blockedLogin.status, 503);
+  assert.deepEqual(await blockedLogin.json(), { error: "billing API error" });
+  process.env.AUTH_TOKEN_SECRET = configuredSecret;
+
+  const session = await fetch(`http://${HOST}:${port}/auth/session`, {
+    headers: { authorization: `Bearer ${ownerToken}` },
+  });
+  assert.equal(session.status, 200);
+  assert.deepEqual(await session.json(), {
+    signedIn: true,
+    email: "founder@efficientlabs.ai",
+  });
 
   const missing = await fetch(`http://${HOST}:${port}/nope`);
   assert.equal(missing.status, 404);

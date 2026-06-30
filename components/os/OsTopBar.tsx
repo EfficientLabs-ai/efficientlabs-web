@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Menu } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { signOut } from "@/lib/auth-client";
 import Wordmark from "@/components/Wordmark";
 import ThemeToggle from "./ThemeToggle";
 
@@ -65,7 +65,7 @@ export default function OsTopBar({
                 {email}
               </span>
               <button
-                onClick={() => supabase?.auth.signOut().then(() => location.reload())}
+                onClick={() => void signOut()}
                 className="btn-outline !px-4 !py-2 text-[12px]"
               >
                 Sign out

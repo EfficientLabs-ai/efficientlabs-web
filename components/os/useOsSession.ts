@@ -1,6 +1,5 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import { supabase, authReady } from "@/lib/supabase";
 import type { PlanSlug } from "@/lib/plans";
 
 /**
@@ -20,37 +19,39 @@ export type OsSession = {
 export function useOsSession(): OsSession {
   const [email, setEmail] = useState<string | null>(null);
   const [plan, setPlan] = useState<PlanSlug>("free");
-  // When Supabase isn't configured the client is null and there is nothing to
-  // resolve — we're "ready" (signed-out preview) from the first render, which
-  // also avoids a synchronous setState inside the effect.
-  const [ready, setReady] = useState(!supabase);
+  const [authReady, setAuthReady] = useState(true);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const client = supabase;
-    if (!client) return;
-    client.auth.getUser().then(async ({ data }) => {
-      const userEmail = data.user?.email ?? null;
-      setEmail(userEmail);
-      // Read plan state from the app server, which verifies the auth token and
-      // queries owner-controlled Postgres. Billing data is never read directly
-      // from the browser.
-      if (userEmail) {
-        const { data: sessionData } = await client.auth.getSession();
-        const token = sessionData.session?.access_token;
-        if (token) {
-          try {
-            const res = await fetch("/api/account/plan", {
-              headers: { authorization: `Bearer ${token}` },
-            });
-            const account = (await res.json()) as { plan?: PlanSlug };
-            if (account.plan) setPlan(account.plan);
-          } catch {
-            setPlan("free");
-          }
+    let cancelled = false;
+    async function resolveSession() {
+      try {
+        const sessionRes = await fetch("/api/auth/session", { cache: "no-store" });
+        const session = await sessionRes.json() as {
+          authReady?: boolean;
+          email?: string | null;
+          signedIn?: boolean;
+        };
+        if (cancelled) return;
+        setAuthReady(session.authReady !== false);
+        const userEmail = session.signedIn ? session.email ?? null : null;
+        setEmail(userEmail);
+
+        if (userEmail) {
+          const planRes = await fetch("/api/account/plan", { cache: "no-store" });
+          const account = await planRes.json() as { plan?: PlanSlug };
+          if (!cancelled && account.plan) setPlan(account.plan);
         }
+      } catch {
+        if (!cancelled) setAuthReady(false);
+      } finally {
+        if (!cancelled) setReady(true);
       }
-      setReady(true);
-    });
+    }
+    void resolveSession();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return { email, signedIn: Boolean(email), ready, authReady, plan };
