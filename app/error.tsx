@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import Link from "next/link";
 
 /**
  * Route-segment error boundary. Catches unhandled client errors in the page tree
@@ -34,9 +35,9 @@ export default function Error({
           <button type="button" onClick={() => reset()} className="btn-signal justify-center text-[13px]">
             Try again
           </button>
-          <a href="/" className="btn-outline justify-center text-[13px]">
+          <Link href="/" className="btn-outline justify-center text-[13px]">
             Home
-          </a>
+          </Link>
         </div>
         {error?.digest && (
           <p className="mono mt-4 text-[10px] text-[color:var(--color-ink-faint)]">ref: {error.digest}</p>

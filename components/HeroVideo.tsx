@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import TypewriterHeading, { type TwSeg } from "@/components/motion/TypewriterHeading";
+import { useMotionAllowed } from "@/lib/use-motion-allowed";
 
 /* ============================================================================
    HERO — a real, seamless-looping cinematic brand film (full-screen autoplay,
@@ -21,11 +22,7 @@ const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 export default function HeroVideo() {
   const wrap = useRef<HTMLDivElement>(null);
   const [p, setP] = useState(0);
-  const [motionOk, setMotionOk] = useState(true);
-
-  useEffect(() => {
-    setMotionOk(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  }, []);
+  const motionOk = useMotionAllowed();
 
   useEffect(() => {
     let raf = 0;

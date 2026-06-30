@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useEffect, useState, useMemo } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import TypewriterHeading, { type TwSeg } from "@/components/motion/TypewriterHeading";
 import { HERO_READY_EVENT } from "@/lib/motion";
@@ -44,6 +44,7 @@ const LAYER_LABELS: [string, string, string][] = [
 
 // the node we dive into — sits at the front surface of the globe
 const NODE = new THREE.Vector3(0, 0.45, 4.55);
+const DIVE_CAMERA = new THREE.Vector3(0, 0.45, 8.0);
 
 type Prog = { current: number };
 
@@ -56,7 +57,6 @@ function Field({ progress }: { progress: Prog }) {
   const shells = useRef<THREE.Group>(null!);
   const starGroup = useRef<THREE.Group>(null!);
   const starsMat = useRef<THREE.PointsMaterial>(null!);
-  const { camera } = useThree();
 
   // ── a globe of connected nodes (fibonacci sphere surface + faint inner shell) ──
   const { points, colors, lines, stars } = useMemo(() => {
@@ -124,15 +124,17 @@ function Field({ progress }: { progress: Prog }) {
     // CINEMATIC FRAMING (Cosmos): start farther back for vast negative space, and look
     // ABOVE origin so the luminous core sits LOWER-CENTER (room for the headline above it).
     // As the dive commits, the look pulls down to the node and we approach it.
-    camPos.set(0, 0.45 * dive, 17.8).lerp(new THREE.Vector3(0, 0.45, 8.0), dive);
-    camera.position.copy(camPos);
+    camPos.set(0, 0.45 * dive, 17.8).lerp(DIVE_CAMERA, dive);
     // rest-state orbital sway — gives the scene life in time (the "4D" feel);
     // fades out as the dive commits so it never fights the scroll.
     const sway = 1 - dive;
-    camera.position.x += Math.sin(t * 0.16) * 0.55 * sway;
-    camera.position.y += Math.cos(t * 0.13) * 0.3 * sway;
+    state.camera.position.set(
+      camPos.x + Math.sin(t * 0.16) * 0.55 * sway,
+      camPos.y + Math.cos(t * 0.13) * 0.3 * sway,
+      camPos.z,
+    );
     lookAt.set(0, 3.95, 0).lerp(NODE, smooth(0.3, 0.82, p));
-    camera.lookAt(lookAt);
+    state.camera.lookAt(lookAt);
 
     // the sovereign node — luminous from the start (Cosmos: one bright object in the void),
     // opens as we arrive. Slightly larger core + brighter halo for that "powerful" read.
