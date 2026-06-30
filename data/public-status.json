@@ -1,6 +1,6 @@
 {
   "format": "efl.public-status.v1",
-  "generated_at": "2026-06-30T17:10:37.241Z",
+  "generated_at": "2026-06-30T18:15:42.256Z",
   "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
   "tiles": {
     "heartbeat": {
@@ -164,7 +164,7 @@
     },
     "receipts": {
       "label": "MEASURED",
-      "updated_at": "2026-06-30T17:10:37.334Z",
+      "updated_at": "2026-06-30T18:15:42.338Z",
       "count": 1,
       "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
       "bundle_path": "/proof/receipts-bundle.json",
@@ -190,7 +190,7 @@
     },
     "intelligence": {
       "label": "MEASURED",
-      "updated_at": "2026-06-30T17:10Z",
+      "updated_at": "2026-06-30T18:15Z",
       "counters": {
         "context_nodes": {
           "value": 512,
@@ -416,13 +416,13 @@
     },
     "readiness": {
       "label": "MEASURED",
-      "updated_at": "2026-06-12T01:00Z",
-      "overall_pct": 79.8,
+      "updated_at": "2026-06-30T18:15:28Z",
+      "overall_pct": 78.4,
       "pillars": {
         "launch_gates": {
-          "pct": 66.7,
-          "done": 8,
-          "total": 12
+          "pct": 62.5,
+          "done": 10,
+          "total": 16
         },
         "operating_components": {
           "pct": 100,
@@ -474,6 +474,26 @@
           "id": "status-publisher-automated",
           "label": "Status telemetry publishes on an automated schedule",
           "done": true
+        },
+        {
+          "id": "billing-ledger",
+          "label": "Owner-controlled billing ledger live behind private Postgres",
+          "done": true
+        },
+        {
+          "id": "billing-api-boundary",
+          "label": "Billing API boundary live behind public HTTPS and private loopback",
+          "done": true
+        },
+        {
+          "id": "stripe-live-provisioning",
+          "label": "Stripe live billing provisioning complete",
+          "done": false
+        },
+        {
+          "id": "owner-auth-verifier",
+          "label": "Owner-controlled account auth replaces temporary verifier",
+          "done": false
         },
         {
           "id": "public-proof-publish",
