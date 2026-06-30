@@ -9,6 +9,7 @@ import {
 const args = new Set(process.argv.slice(2));
 const allowTestStripe = args.has("--allow-test-stripe");
 const skipDb = args.has("--skip-db");
+const requireOwnerAuth = args.has("--require-owner-auth");
 const failures = [];
 
 function requirePrefix(name, prefix, { allowTestPrefix = null } = {}) {
@@ -28,7 +29,10 @@ for (const [name] of PRICE_ENV_VARS) requirePrefix(name, "price_");
 
 const readiness = runtimeReadiness();
 if (!readiness.authVerifier.configured) {
-  failures.push("auth verifier is missing SUPABASE_URL/SUPABASE_ANON_KEY or NEXT_PUBLIC_SUPABASE_* fallbacks");
+  failures.push(`auth verifier is missing ${readiness.authVerifier.missing.join(", ")}`);
+}
+if (requireOwnerAuth && readiness.authVerifier.provider !== "efficientlabs") {
+  failures.push("owner auth verifier is required; set AUTH_VERIFIER_MODE=efficientlabs and AUTH_TOKEN_SECRET");
 }
 
 let databaseStatus = "skipped";
@@ -61,4 +65,4 @@ console.log("billing-api preflight OK");
 console.log(`- database: ${databaseStatus}`);
 console.log("- stripe: configured");
 console.log("- price map: configured");
-console.log("- auth verifier: configured");
+console.log(`- auth verifier: configured (${readiness.authVerifier.provider})`);

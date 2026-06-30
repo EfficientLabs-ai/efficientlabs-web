@@ -63,7 +63,12 @@ Secrets — never commit these:
 | `PGHOST` / `PGDATABASE` / `PGUSER` | local peer-auth fallback, usually `/var/run/postgresql`, `efficientlabs`, `neo` |
 | `POSTGRES_POOL_MAX` | optional pool cap; default `5` |
 | `POSTGRES_SSL` | optional; set `require` only when the DB endpoint needs TLS |
-| `SUPABASE_URL` / `SUPABASE_ANON_KEY` | temporary auth verifier while Supabase auth remains in place |
+| `AUTH_VERIFIER_MODE` | `efficientlabs` for launch; `supabase` only as an explicit legacy fallback |
+| `AUTH_TOKEN_SECRET` | owner-controlled HMAC signing secret for account-plan bearer tokens; generate with `openssl rand -base64 32` |
+| `AUTH_TOKEN_ISSUER` | expected owner-token issuer, usually `https://efficientlabs.ai` |
+| `AUTH_TOKEN_AUDIENCE` | expected owner-token audience, usually `efficientlabs-web` |
+| `AUTH_TOKEN_TTL_SECONDS` | owner-token lifetime; default `3600` |
+| `SUPABASE_URL` / `SUPABASE_ANON_KEY` | legacy fallback only while Supabase auth is being retired |
 | `STRIPE_PRICE_EXOS_PRO_MONTHLY` / `_ANNUAL` | Price IDs behind the Exos Pro Payment Links |
 | `STRIPE_PRICE_APEX_MONTHLY` / `_ANNUAL` | Price IDs behind the Apex Payment Links |
 | `STRIPE_PRICE_TEAMS_MONTHLY` / `_ANNUAL` | Price IDs behind the Teams Payment Links |
@@ -86,6 +91,7 @@ vercel env ls preview
 
 # VPS, without printing secret values
 npm run billing-api:preflight
+npm run billing-api:preflight -- --require-owner-auth
 curl -fsS http://127.0.0.1:4101/health
 curl -fsS https://api.efficientlabs.ai/health
 ```
@@ -93,8 +99,11 @@ curl -fsS https://api.efficientlabs.ai/health
 The health response must move from
 `stripe=unconfigured priceMap=incomplete authVerifier=unconfigured` to
 `stripe=configured priceMap=configured authVerifier=configured` before accepting
-live paid traffic. The preflight is the stronger gate because it also verifies
-the Postgres table and secret shapes without logging secret values.
+live paid traffic. For launch, the health response should also show
+`authVerifierProvider=efficientlabs`, and the stronger gate is
+`npm run billing-api:preflight -- --require-owner-auth` because it verifies the
+Postgres table, live Stripe secret shape, complete Price ID map, and the
+owner-controlled auth verifier without logging secret values.
 
 Run the loopback service:
 
@@ -104,12 +113,13 @@ npm --prefix services/billing-api ci
 npm run billing-api:start
 ```
 
-Before accepting live payments, run the preflight on the VPS. It verifies the
-Postgres table, live Stripe secret shape, webhook secret shape, complete Price
-ID map, and temporary auth verifier without printing secret values:
+Before accepting live payments, run the production preflight on the VPS. It
+verifies the Postgres table, live Stripe secret shape, webhook secret shape,
+complete Price ID map, and owner-controlled auth verifier without printing
+secret values:
 
 ```bash
-npm run billing-api:preflight
+npm run billing-api:preflight -- --require-owner-auth
 ```
 
 For isolated Stripe test-mode drills only:
@@ -143,6 +153,7 @@ the public app reflect the row for a signed-in account.
   by `stripe_customer_id`.
 - Per-feature gating in `/app` currently surfaces the plan (Settings) and the
   upgrade CTA; deeper feature locks can read `useOs().plan`.
-- Auth is still a separate launch gate. This migration removes Supabase from
-  billing storage; replacing Supabase auth with an owner-controlled session
-  system is the next data-plane step.
+- Auth is still a separate launch gate until the public app issues
+  Efficient Labs owner tokens end-to-end. This branch removes the billing API's
+  hard dependency on Supabase verification by adding an owner-token verifier;
+  replacing the browser sign-in/session flow is the next data-plane step.

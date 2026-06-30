@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
 import {
+  emailForBearerAuthorization,
+  signOwnerAuthToken,
+} from "./auth-verifier.mjs";
+import {
   currentPeriodEndForItem,
   planForPriceId,
   runtimeReadiness,
@@ -21,8 +25,10 @@ const priceVars = {
 for (const [name, value] of Object.entries(priceVars)) process.env[name] = value;
 process.env.STRIPE_SECRET_KEY ||= "sk_test_selftest";
 process.env.STRIPE_WEBHOOK_SECRET ||= "whsec_selftest";
-process.env.SUPABASE_URL ||= "https://example.supabase.co";
-process.env.SUPABASE_ANON_KEY ||= "anon";
+process.env.AUTH_VERIFIER_MODE = "efficientlabs";
+process.env.AUTH_TOKEN_SECRET = "owner-auth-self-test-secret-32-bytes-minimum";
+process.env.AUTH_TOKEN_ISSUER = "https://efficientlabs.ai";
+process.env.AUTH_TOKEN_AUDIENCE = "efficientlabs-web";
 
 assert.equal(planForPriceId("price_exos_pro_monthly"), "exos_pro");
 assert.equal(planForPriceId("price_apex_annual"), "apex");
@@ -46,6 +52,17 @@ const readiness = runtimeReadiness();
 assert.equal(readiness.stripeConfigured, true);
 assert.equal(readiness.priceMap.configured, true);
 assert.equal(readiness.authVerifier.configured, true);
+assert.equal(readiness.authVerifier.provider, "efficientlabs");
+
+const ownerToken = signOwnerAuthToken({ email: "Founder@EfficientLabs.ai", sub: "owner-self-test" });
+assert.equal(
+  await emailForBearerAuthorization(`Bearer ${ownerToken}`),
+  "founder@efficientlabs.ai",
+);
+await assert.rejects(
+  () => emailForBearerAuthorization(`Bearer ${ownerToken}tampered`),
+  /signature/,
+);
 
 delete process.env.STRIPE_PRICE_TEAMS_ANNUAL;
 assert.equal(runtimeReadiness().stripeConfigured, false);

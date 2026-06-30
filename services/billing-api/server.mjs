@@ -4,6 +4,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Pool } from "pg";
 import Stripe from "stripe";
+import {
+  authVerifierReadiness,
+  emailForBearerAuthorization,
+} from "./auth-verifier.mjs";
 
 const HOST = process.env.BILLING_API_HOST || "127.0.0.1";
 const PORT = Number(process.env.BILLING_API_PORT || 4101);
@@ -72,10 +76,7 @@ export function runtimeReadiness(env = process.env) {
   const missingPrices = PRICE_ENV_VARS
     .map(([name]) => name)
     .filter((name) => !env[name]);
-  const hasAuthVerifier = Boolean(
-    (env.SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL)
-      && (env.SUPABASE_ANON_KEY || env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
-  );
+  const authVerifier = authVerifierReadiness(env);
 
   return {
     stripeSecret: Boolean(env.STRIPE_SECRET_KEY),
@@ -84,9 +85,7 @@ export function runtimeReadiness(env = process.env) {
       configured: missingPrices.length === 0,
       missing: missingPrices,
     },
-    authVerifier: {
-      configured: hasAuthVerifier,
-    },
+    authVerifier,
     stripeConfigured: Boolean(env.STRIPE_SECRET_KEY && env.STRIPE_WEBHOOK_SECRET && missingPrices.length === 0),
   };
 }
@@ -165,30 +164,7 @@ async function getSubscriptionByEmail(email) {
 }
 
 async function emailForBearer(req) {
-  const auth = req.headers.authorization || "";
-  if (!auth.toLowerCase().startsWith("bearer ")) return null;
-
-  const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) {
-    const err = new Error("auth verifier not configured");
-    err.statusCode = 503;
-    throw err;
-  }
-
-  const response = await fetch(`${supabaseUrl}/auth/v1/user`, {
-    headers: {
-      apikey: supabaseAnonKey,
-      authorization: auth,
-    },
-  });
-  if (!response.ok) {
-    const err = new Error("invalid bearer token");
-    err.statusCode = 401;
-    throw err;
-  }
-  const user = await response.json();
-  return normalizeEmail(typeof user.email === "string" ? user.email : user.user?.email);
+  return emailForBearerAuthorization(req.headers.authorization || "");
 }
 
 async function handlePlan(req, res) {
@@ -358,6 +334,7 @@ async function handleHealth(_req, res) {
       stripe: readiness.stripeConfigured ? "configured" : "unconfigured",
       priceMap: readiness.priceMap.configured ? "configured" : "incomplete",
       authVerifier: readiness.authVerifier.configured ? "configured" : "unconfigured",
+      authVerifierProvider: readiness.authVerifier.provider || null,
     });
   } catch {
     return json(res, 503, {
