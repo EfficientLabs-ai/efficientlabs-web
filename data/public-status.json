@@ -1,14 +1,14 @@
 {
   "format": "efl.public-status.v1",
-  "generated_at": "2026-06-30T16:51:34.088Z",
+  "generated_at": "2026-06-30T17:10:37.241Z",
   "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
   "tiles": {
     "heartbeat": {
       "label": "MEASURED",
-      "updated_at": "2026-06-30T16:51Z",
+      "updated_at": "2026-06-30T17:10Z",
       "color": "YELLOW",
       "fail": 0,
-      "warn": 7,
+      "warn": 9,
       "ok": 28,
       "checks": [
         {
@@ -96,6 +96,14 @@
           "status": "ok"
         },
         {
+          "name": "billing stripe readiness",
+          "status": "warn"
+        },
+        {
+          "name": "billing auth verifier",
+          "status": "warn"
+        },
+        {
           "name": "model economy active",
           "status": "warn"
         },
@@ -156,7 +164,7 @@
     },
     "receipts": {
       "label": "MEASURED",
-      "updated_at": "2026-06-30T16:51:34.171Z",
+      "updated_at": "2026-06-30T17:10:37.334Z",
       "count": 1,
       "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
       "bundle_path": "/proof/receipts-bundle.json",
@@ -182,7 +190,7 @@
     },
     "intelligence": {
       "label": "MEASURED",
-      "updated_at": "2026-06-30T16:51Z",
+      "updated_at": "2026-06-30T17:10Z",
       "counters": {
         "context_nodes": {
           "value": 512,
