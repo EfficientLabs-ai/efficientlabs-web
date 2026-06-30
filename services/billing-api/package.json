@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node start.mjs",
+    "preflight": "node preflight.mjs",
     "self-test": "node self-test.mjs"
   },
   "dependencies": {

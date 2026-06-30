@@ -77,6 +77,20 @@ cd /home/neo/efficientlabs-web
 npm run billing-api:start
 ```
 
+Before accepting live payments, run the preflight on the VPS. It verifies the
+Postgres table, live Stripe secret shape, webhook secret shape, complete Price
+ID map, and temporary auth verifier without printing secret values:
+
+```bash
+npm run billing-api:preflight
+```
+
+For isolated Stripe test-mode drills only:
+
+```bash
+npm run billing-api:preflight -- --allow-test-stripe
+```
+
 Publish only the exact billing paths through Caddy/Cloudflare:
 
 - `GET /health`

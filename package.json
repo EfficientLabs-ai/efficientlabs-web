@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "billing-api:start": "npm --prefix services/billing-api start",
+    "billing-api:preflight": "npm --prefix services/billing-api run preflight --",
     "billing-api:self-test": "npm --prefix services/billing-api run self-test",
     "lint": "eslint",
     "honesty": "node scripts/honesty-guard.mjs",
