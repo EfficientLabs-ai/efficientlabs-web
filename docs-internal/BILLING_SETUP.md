@@ -1,15 +1,26 @@
 # Billing & account provisioning — go-live checklist
 
 Checkout already works via Stripe **Payment Links** (on `/pricing`). This adds
-**provisioning**: when someone pays, a webhook records their plan on their
-Supabase account, and the OS (`/app`) reflects it. Until the env below is set,
-the webhook is a no-op (it acknowledges and does nothing) and everyone reads as
-`free` — nothing breaks.
+**provisioning**: when someone pays, a webhook records their plan in the
+owner-controlled Postgres ledger behind `DATABASE_URL`.
+
+The public Next webhook route is a stable URL only. Fulfillment runs on the VPS
+`billing-api` service so Postgres stays private and loopback-only. The webhook is
+fail-closed. If Stripe, the webhook secret, the billing API, or Postgres is not
+configured, it returns a non-2xx response so Stripe retries and the failure is
+visible. A paid customer must never be silently acknowledged without a persisted
+plan row.
 
 ## 1. Run the migration
-Apply `supabase/migrations/0001_subscriptions.sql` in your Supabase project
-(SQL editor or `supabase db push`). It creates `public.subscriptions` with RLS
-so a user can read only their own row; the webhook writes via the service role.
+Apply `database/migrations/0001_billing_subscriptions.sql` on the self-hosted
+Postgres instance:
+
+```bash
+psql "$DATABASE_URL" -f database/migrations/0001_billing_subscriptions.sql
+```
+
+The VPS billing API is the only trusted reader/writer. Do not expose this table
+directly to browsers, and do not expose Postgres publicly for Vercel.
 
 ## 2. Add the Stripe webhook
 In the Stripe Dashboard → Developers → Webhooks, add an endpoint:
@@ -23,14 +34,29 @@ Copy the signing secret into `STRIPE_WEBHOOK_SECRET`.
 > tiers). Setting each Payment Link's "after payment" redirect to a confirmation
 > URL is optional but recommended.
 
-## 3. Set environment variables (Vercel → Project → Settings → Env)
+## 3. Set environment variables
+
+### Vercel
+
+| Var | What |
+|---|---|
+| `BILLING_API_BASE_URL` | HTTPS origin for the VPS billing API, e.g. `https://api.efficientlabs.ai/` |
+
+Vercel must not receive `DATABASE_URL` for the self-hosted billing ledger.
+
+### VPS billing API
+
 Secrets — never commit these:
 
 | Var | What |
 |---|---|
 | `STRIPE_SECRET_KEY` | Stripe secret key (`sk_live_…`) |
 | `STRIPE_WEBHOOK_SECRET` | from step 2 (`whsec_…`) |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service-role key |
+| `DATABASE_URL` | optional owner-controlled Postgres connection string; omit when using local peer auth |
+| `PGHOST` / `PGDATABASE` / `PGUSER` | local peer-auth fallback, usually `/var/run/postgresql`, `efficientlabs`, `neo` |
+| `POSTGRES_POOL_MAX` | optional pool cap; default `5` |
+| `POSTGRES_SSL` | optional; set `require` only when the DB endpoint needs TLS |
+| `SUPABASE_URL` / `SUPABASE_ANON_KEY` | temporary auth verifier while Supabase auth remains in place |
 | `STRIPE_PRICE_EXOS_PRO_MONTHLY` / `_ANNUAL` | Price IDs behind the Exos Pro Payment Links |
 | `STRIPE_PRICE_APEX_MONTHLY` / `_ANNUAL` | Price IDs behind the Apex Payment Links |
 | `STRIPE_PRICE_TEAMS_MONTHLY` / `_ANNUAL` | Price IDs behind the Teams Payment Links |
@@ -39,20 +65,43 @@ Public (likely already set):
 
 | Var | What |
 |---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase project + anon key (enables sign-in) |
 | `NEXT_PUBLIC_CALCOM_LINK` | e.g. `efficientlabs/enterprise` — powers the `/enterprise` scheduler |
 
 The price IDs are the ones already backing your Payment Links (Stripe → Products
 → each price → copy ID). They're how the webhook maps a purchase to a plan.
 
+Run the loopback service:
+
+```bash
+cd /home/neo/efficientlabs-web
+npm run billing-api:start
+```
+
+Publish only the exact billing paths through Caddy/Cloudflare:
+
+- `GET /health`
+- `GET /billing/account/plan`
+- `POST /billing/stripe/webhook`
+
 ## 4. Verify
-Use Stripe test mode or a live test purchase with the **same email** as a
-Supabase account, then check `public.subscriptions` for the row and confirm
-`/app` → Settings shows the new plan.
+Use Stripe test mode or a live test purchase, then check Postgres:
+
+```sql
+select email, plan, status, stripe_customer_id, stripe_subscription_id, updated_at
+from subscriptions
+order by updated_at desc
+limit 5;
+```
+
+Then confirm `/billing/account/plan` on the VPS API and `/api/account/plan` on
+the public app reflect the row for a signed-in account.
 
 ## Notes
-- Plan is matched by **email** (checkout email == account email). If a customer
-  pays with a different email than their login, reconcile by updating the row's
-  `email`, or extend the webhook to map by `stripe_customer_id`.
+- Plan is matched by **email**. If a customer pays with a different email than
+  their login, reconcile by updating the row's `email`, or extend the app to map
+  by `stripe_customer_id`.
 - Per-feature gating in `/app` currently surfaces the plan (Settings) and the
   upgrade CTA; deeper feature locks can read `useOs().plan`.
+- Auth is still a separate launch gate. This migration removes Supabase from
+  billing storage; replacing Supabase auth with an owner-controlled session
+  system is the next data-plane step.

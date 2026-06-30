@@ -26,19 +26,28 @@ export function useOsSession(): OsSession {
   const [ready, setReady] = useState(!supabase);
 
   useEffect(() => {
-    if (!supabase) return;
-    supabase.auth.getUser().then(async ({ data }) => {
+    const client = supabase;
+    if (!client) return;
+    client.auth.getUser().then(async ({ data }) => {
       const userEmail = data.user?.email ?? null;
       setEmail(userEmail);
-      // Read the buyer's plan (RLS lets a user read only their own row). Absent
-      // row or unconfigured billing → free. Never throws into the shell.
-      if (userEmail && supabase) {
-        const { data: sub } = await supabase
-          .from("subscriptions")
-          .select("plan")
-          .eq("email", userEmail.toLowerCase())
-          .maybeSingle();
-        if (sub?.plan) setPlan(sub.plan as PlanSlug);
+      // Read plan state from the app server, which verifies the auth token and
+      // queries owner-controlled Postgres. Billing data is never read directly
+      // from the browser.
+      if (userEmail) {
+        const { data: sessionData } = await client.auth.getSession();
+        const token = sessionData.session?.access_token;
+        if (token) {
+          try {
+            const res = await fetch("/api/account/plan", {
+              headers: { authorization: `Bearer ${token}` },
+            });
+            const account = (await res.json()) as { plan?: PlanSlug };
+            if (account.plan) setPlan(account.plan);
+          } catch {
+            setPlan("free");
+          }
+        }
       }
       setReady(true);
     });

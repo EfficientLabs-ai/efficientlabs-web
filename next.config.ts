@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  turbopack: {
+    root: process.cwd(),
+  },
   async redirects() {
     return [
       // Consolidate the signed-in home: /app (the OS) is canonical; the older

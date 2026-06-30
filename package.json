@@ -8,6 +8,8 @@
     "prebuild": "node scripts/build-activity-feed.mjs && node scripts/honesty-guard.mjs && node scripts/motion-guard.mjs",
     "build": "next build",
     "start": "next start",
+    "billing-api:start": "npm --prefix services/billing-api start",
+    "billing-api:self-test": "npm --prefix services/billing-api run self-test",
     "lint": "eslint",
     "honesty": "node scripts/honesty-guard.mjs",
     "honesty:self-test": "node scripts/honesty-guard.mjs --self-test"
@@ -45,5 +47,9 @@
     "eslint-config-next": "16.2.7",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "8.5.16",
+    "ws": "8.21.0"
   }
 }
