@@ -36,6 +36,10 @@ Copy the signing secret into `STRIPE_WEBHOOK_SECRET`.
 
 ## 3. Set environment variables
 
+Use `.env.example` as the no-secret inventory. Keep actual values in Vercel
+environment variables or the VPS process manager/env file only. Never commit a
+filled `.env.local`, `.env.production`, vault export, or PM2 env file.
+
 ### Vercel
 
 | Var | What |
@@ -43,6 +47,8 @@ Copy the signing secret into `STRIPE_WEBHOOK_SECRET`.
 | `BILLING_API_BASE_URL` | HTTPS origin for the VPS billing API, e.g. `https://api.efficientlabs.ai/` |
 
 Vercel must not receive `DATABASE_URL` for the self-hosted billing ledger.
+After changing Vercel env vars, redeploy the affected environment so runtime
+functions see the new value.
 
 ### VPS billing API
 
@@ -69,6 +75,25 @@ Public (likely already set):
 
 The price IDs are the ones already backing your Payment Links (Stripe → Products
 → each price → copy ID). They're how the webhook maps a purchase to a plan.
+
+Live go/no-go checks:
+
+```bash
+# Vercel, production + preview
+vercel env ls production
+vercel env ls preview
+
+# VPS, without printing secret values
+npm run billing-api:preflight
+curl -fsS http://127.0.0.1:4101/health
+curl -fsS https://api.efficientlabs.ai/health
+```
+
+The health response must move from
+`stripe=unconfigured priceMap=incomplete authVerifier=unconfigured` to
+`stripe=configured priceMap=configured authVerifier=configured` before accepting
+live paid traffic. The preflight is the stronger gate because it also verifies
+the Postgres table and secret shapes without logging secret values.
 
 Run the loopback service:
 
