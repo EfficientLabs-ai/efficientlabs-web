@@ -96,7 +96,7 @@ export function isValidRuntimeScore(x: unknown): x is RuntimeScore {
 export const RUNTIME_SCORE = data as RuntimeScore;
 
 // Same live-feed pattern as public-status: the VPS cron pushes to the
-// status-artifacts branch; ISR fetches it so the score tracks the layer
+// status-artifacts branch; request-time fetches track the layer
 // between deploys. KNOWN LIMIT (recorded 2026-06-13): the repo is private, so
 // the raw URL 404s until the founder opens a public artifacts mirror or feed —
 // until then this deliberately serves the committed baseline, whose
@@ -107,7 +107,7 @@ const LIVE_SCORE_URL =
 
 export async function getLiveRuntimeScore(): Promise<RuntimeScore> {
   try {
-    const res = await fetch(LIVE_SCORE_URL, { next: { revalidate: 300 } });
+    const res = await fetch(LIVE_SCORE_URL, { cache: "no-store" });
     if (!res.ok) return RUNTIME_SCORE;
     const live: unknown = await res.json();
     // full-contract validation — a drifted payload must not render dishonestly
