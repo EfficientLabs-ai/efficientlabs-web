@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useMotionAllowed } from "@/lib/use-motion-allowed";
 
 /* ============================================================================
    CINEMATIC SCRUB — the generic scroll-is-the-playhead engine.
@@ -52,14 +53,7 @@ export default function CinematicScrub({
   const progress = useRef(0);
   const frames = useRef<(HTMLImageElement | null)[]>([]);
   const [p, setP] = useState(0);
-  const [on, setOn] = useState(false);
-
-  useEffect(() => {
-    setOn(
-      typeof window !== "undefined" &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-    );
-  }, []);
+  const on = useMotionAllowed();
 
   // Lazy-load the frame sequence once the section approaches the viewport.
   useEffect(() => {

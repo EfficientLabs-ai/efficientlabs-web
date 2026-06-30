@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import SplitHeading from "@/components/motion/SplitHeading";
 import { Reveal } from "@/components/Reveal";
+import { useMotionAllowed } from "@/lib/use-motion-allowed";
 
 /* ============================================================================
    THE STAKES — "The Autonomous Accountability Bottleneck" (canon §2).
@@ -43,11 +44,12 @@ function GapChart() {
   const wrap = useRef<HTMLDivElement>(null);
   const cv = useRef<HTMLCanvasElement>(null);
   const [prog, setProg] = useState(0);
+  const motionAllowed = useMotionAllowed();
+  const displayProg = motionAllowed ? prog : 1;
 
   // entrance progress (drives the DOM question column + the canvas draw-in)
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) { setProg(1); return; }
+    if (!motionAllowed) return;
     let raf = 0, start = 0, armed = false;
     const tick = (t: number) => {
       if (!start) start = t;
@@ -60,17 +62,17 @@ function GapChart() {
     }, { threshold: 0.3 });
     if (wrap.current) io.observe(wrap.current);
     return () => { io.disconnect(); cancelAnimationFrame(raf); };
-  }, []);
+  }, [motionAllowed]);
 
   // keep the latest progress for the always-on canvas loop
   const progRef = useRef(0);
-  useEffect(() => { progRef.current = prog; }, [prog]);
+  useEffect(() => { progRef.current = displayProg; }, [displayProg]);
 
   // continuous canvas loop — draw-in tracks progress, then ambient particles/pulse
   useEffect(() => {
     const canvas = cv.current; if (!canvas) return;
     const ctx = canvas.getContext("2d"); if (!ctx) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = !motionAllowed;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let raf = 0, w = 0, h = 0, frame = 0, visible = true;
 
@@ -171,7 +173,7 @@ function GapChart() {
     resize(); draw();
     window.addEventListener("resize", resize);
     return () => { cancelAnimationFrame(raf); io.disconnect(); window.removeEventListener("resize", resize); };
-  }, []);
+  }, [motionAllowed]);
 
   return (
     <div ref={wrap} className="relative mt-12 w-full">
@@ -179,18 +181,18 @@ function GapChart() {
         <canvas ref={cv} className="absolute inset-0 h-full w-full" />
 
         {/* axis + curve labels */}
-        <span className="mono absolute right-2 top-2 text-[10px] tracking-[0.18em] text-[color:var(--color-signal)]" style={{ opacity: prog }}>CAPABILITY ↑</span>
-        <span className="mono absolute bottom-7 right-2 text-[10px] tracking-[0.18em] text-[color:var(--color-ink-faint)]" style={{ opacity: prog }}>ACCOUNTABILITY</span>
-        <span className="mono absolute bottom-1.5 left-1/2 -translate-x-1/2 text-[10px] tracking-[0.2em] text-[color:var(--color-ink-faint)]" style={{ opacity: prog * 0.8 }}>TIME →</span>
+        <span className="mono absolute right-2 top-2 text-[10px] tracking-[0.18em] text-[color:var(--color-signal)]" style={{ opacity: displayProg }}>CAPABILITY ↑</span>
+        <span className="mono absolute bottom-7 right-2 text-[10px] tracking-[0.18em] text-[color:var(--color-ink-faint)]" style={{ opacity: displayProg }}>ACCOUNTABILITY</span>
+        <span className="mono absolute bottom-1.5 left-1/2 -translate-x-1/2 text-[10px] tracking-[0.2em] text-[color:var(--color-ink-faint)]" style={{ opacity: displayProg * 0.8 }}>TIME →</span>
         {/* the gap, named */}
-        <span className="mono absolute right-[6%] top-[44%] text-[10px] tracking-[0.16em] text-[color:#ff8a8a]" style={{ opacity: prog * 0.9 }}>THE&nbsp;GAP</span>
+        <span className="mono absolute right-[6%] top-[44%] text-[10px] tracking-[0.16em] text-[color:#ff8a8a]" style={{ opacity: displayProg * 0.9 }}>THE&nbsp;GAP</span>
 
         {/* the can't-answer questions — organized column in the open upper-left */}
         <div className="absolute left-[5%] top-[11%] flex flex-col gap-2.5 sm:gap-3.5">
-          <span className="mono text-[10px] tracking-[0.18em] text-[color:var(--color-ink-faint)]" style={{ opacity: prog }}>CAN YOU PROVE —</span>
+          <span className="mono text-[10px] tracking-[0.18em] text-[color:var(--color-ink-faint)]" style={{ opacity: displayProg }}>CAN YOU PROVE —</span>
           {IN_CHART.map((q, i) => {
             const at = 0.4 + i * 0.11;
-            const o = Math.max(0, Math.min(1, (prog - at) / 0.12));
+            const o = Math.max(0, Math.min(1, (displayProg - at) / 0.12));
             return (
               <span key={q} className="flex items-center gap-2 text-[12px] sm:text-[13.5px] text-[color:var(--color-ink-dim)]"
                 style={{ opacity: o, transform: `translateX(${(1 - o) * -8}px)` }}>
@@ -202,7 +204,7 @@ function GapChart() {
       </div>
 
       {/* the framing line */}
-      <p className="mt-7 text-center text-[1.05rem] text-[color:var(--color-ink)] sm:text-[1.25rem]" style={{ opacity: prog }}>
+      <p className="mt-7 text-center text-[1.05rem] text-[color:var(--color-ink)] sm:text-[1.25rem]" style={{ opacity: displayProg }}>
         The gap is not what AI can do. <span className="aurora-text">It&apos;s what you can account for.</span>
       </p>
     </div>
