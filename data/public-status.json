@@ -1,6 +1,6 @@
 {
   "format": "efl.public-status.v1",
-  "generated_at": "2026-06-30T18:15:42.256Z",
+  "generated_at": "2026-06-30T22:11:47.253Z",
   "render_rules": "MEASURED values render as numbers; ESTIMATED only with its label; null renders as 'not measured'. Staleness is shown, never hidden.",
   "tiles": {
     "heartbeat": {
@@ -164,7 +164,7 @@
     },
     "receipts": {
       "label": "MEASURED",
-      "updated_at": "2026-06-30T18:15:42.338Z",
+      "updated_at": "2026-06-30T22:11:47.338Z",
       "count": 1,
       "node_did": "did:atmos:b6720287c41338f851ab37e0e6b90adc73f05e45",
       "bundle_path": "/proof/receipts-bundle.json",
@@ -190,7 +190,7 @@
     },
     "intelligence": {
       "label": "MEASURED",
-      "updated_at": "2026-06-30T18:15Z",
+      "updated_at": "2026-06-30T22:11Z",
       "counters": {
         "context_nodes": {
           "value": 512,
@@ -416,12 +416,12 @@
     },
     "readiness": {
       "label": "MEASURED",
-      "updated_at": "2026-06-30T18:15:28Z",
-      "overall_pct": 78.4,
+      "updated_at": "2026-06-30T22:11:44Z",
+      "overall_pct": 80.5,
       "pillars": {
         "launch_gates": {
-          "pct": 62.5,
-          "done": 10,
+          "pct": 68.8,
+          "done": 11,
           "total": 16
         },
         "operating_components": {
@@ -493,7 +493,7 @@
         {
           "id": "owner-auth-verifier",
           "label": "Owner-controlled account auth replaces temporary verifier",
-          "done": false
+          "done": true
         },
         {
           "id": "public-proof-publish",
