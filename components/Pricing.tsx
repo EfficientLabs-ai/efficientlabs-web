@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Check, Minus, Wallet } from "lucide-react";
 import { Reveal, ActHeader } from "@/components/Reveal";
+import { track } from "@/lib/analytics";
 
 type Billing = "monthly" | "annual";
 
@@ -240,6 +241,13 @@ export default function Pricing() {
                   <a
                     href={href}
                     {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    onClick={() =>
+                      track(paid ? "payment_link_click" : "cta_click", {
+                        tier: t.name,
+                        billing: paid ? billing : null,
+                        cta: t.cta.label,
+                      })
+                    }
                     className={`mt-4 ${t.featured ? "btn-signal" : "btn-outline"} justify-center text-center text-[13px]`}
                   >
                     {t.cta.label}{t.featured && <span aria-hidden> →</span>}

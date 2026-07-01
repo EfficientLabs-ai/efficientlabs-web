@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, Michroma, Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeRoot } from "@/components/useSiteTheme";
 import MotionProvider from "@/components/MotionProvider";
@@ -7,12 +7,34 @@ import BackToTop from "@/components/BackToTop";
 import StructuredData from "@/components/StructuredData";
 
 // Brand kit type system (EFFICIENT_LABS_BRAND_KIT.md): Space Grotesk (headings) +
-// Inter (body) + JetBrains Mono (terminal/code/data) — all self-hosted via
-// next/font. Michroma stays as the wide-tracked geometric wordmark face.
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk", display: "swap" });
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const jbMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jb-mono", display: "swap" });
-const michroma = Michroma({ subsets: ["latin"], weight: ["400"], variable: "--font-wordmark", display: "swap" });
+// Inter (body) + JetBrains Mono (terminal/code/data). Michroma is the wide-tracked
+// geometric wordmark face. ALL self-hosted via next/font/local from app/fonts/
+// (latin-subset woff2) so the BUILD IS HERMETIC — no Google Fonts fetch at compile
+// time. Inter / Space Grotesk / JetBrains Mono are variable fonts (weight ranges).
+const spaceGrotesk = localFont({
+  src: "./fonts/SpaceGrotesk-latin-var.woff2",
+  weight: "300 700",
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
+const inter = localFont({
+  src: "./fonts/Inter-latin-var.woff2",
+  weight: "100 900",
+  variable: "--font-inter",
+  display: "swap",
+});
+const jbMono = localFont({
+  src: "./fonts/JetBrainsMono-latin-var.woff2",
+  weight: "100 800",
+  variable: "--font-jb-mono",
+  display: "swap",
+});
+const michroma = localFont({
+  src: "./fonts/Michroma-latin-400.woff2",
+  weight: "400",
+  variable: "--font-wordmark",
+  display: "swap",
+});
 
 const TITLE = "Efficient Labs — The operating system for AI you own";
 const DESCRIPTION =
