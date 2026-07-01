@@ -9,7 +9,6 @@ import type { NextConfig } from "next";
 // actually talks to):
 //   - 'self'                      first-party app, self-hosted fonts (app/fonts), media
 //   - Vercel                      vercel.live + *.vercel-insights.com (preview toolbar / web-vitals)
-//   - Supabase                    *.supabase.co over https + wss (auth + realtime)
 //   - Stripe                      js.stripe.com (script), buy.stripe.com (checkout links/frame)
 //   - Cal.com                     cal.com + *.cal.com (the inline scheduler iframe)
 //   - GitHub                      api.github.com + raw.githubusercontent.com (live activity fetch)
@@ -27,7 +26,7 @@ const csp = [
   "font-src 'self' data:",
   "img-src 'self' data: blob: https:",
   "media-src 'self' data: blob:",
-  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.github.com https://raw.githubusercontent.com https://*.vercel-insights.com https://cal.com",
+  "connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://*.vercel-insights.com https://cal.com",
   "frame-src 'self' https://cal.com https://*.cal.com https://buy.stripe.com https://js.stripe.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
@@ -53,6 +52,9 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   devIndicators: false,
   poweredByHeader: false,
+  turbopack: {
+    root: process.cwd(),
+  },
   async headers() {
     return [
       {

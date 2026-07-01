@@ -10,7 +10,7 @@ import {
   Server,
 } from "lucide-react";
 import { CapStatus } from "@/components/docs/StatusBadge";
-import { supabase } from "@/lib/supabase";
+import { signOut } from "@/lib/auth-client";
 import { useOs } from "@/components/os/useOsSession";
 import { PLAN_LABEL } from "@/lib/plans";
 import { useOsPrefs } from "@/components/os/useOsPrefs";
@@ -87,7 +87,7 @@ export default function SettingsPage() {
             <p className="mono text-[11px] text-[color:var(--color-ink-faint)]">{PLAN_LABEL[plan]}</p>
             {signedIn ? (
               <button
-                onClick={() => supabase?.auth.signOut().then(() => location.reload())}
+                onClick={() => void signOut()}
                 className="btn-outline !px-4 !py-2 text-[12px]"
               >
                 Sign out

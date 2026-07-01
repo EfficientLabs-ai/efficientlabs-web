@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useMotionAllowed } from "@/lib/use-motion-allowed";
 
 /* ============================================================================
    CINEMATIC TRANSITION — a short scroll-scrubbed clip that BRIDGES two sections
@@ -35,15 +36,7 @@ export default function CinematicTransition({
   const progress = useRef(0);
   const frames = useRef<(HTMLImageElement | null)[]>([]);
   const [p, setP] = useState(0);
-  const [on, setOn] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const apply = () => setOn(!mq.matches);
-    apply();
-    mq.addEventListener("change", apply);
-    return () => mq.removeEventListener("change", apply);
-  }, []);
+  const on = useMotionAllowed();
 
   useEffect(() => {
     if (!on) return;

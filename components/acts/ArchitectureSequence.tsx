@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useMotionAllowed } from "@/lib/use-motion-allowed";
 
 /* ============================================================================
    THE ARCHITECTURE — a pinned, scroll-driven sequence through the seven layers
@@ -75,16 +76,7 @@ export default function ArchitectureSequence() {
   const cv = useRef<HTMLCanvasElement>(null);
   const progress = useRef(0);
   const [p, setP] = useState(0);
-  const [immersive, setImmersive] = useState(false);
-
-  // Upgrade to the immersive canvas only when JS + motion are available.
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const apply = () => setImmersive(!mq.matches);
-    apply();
-    mq.addEventListener("change", apply);
-    return () => mq.removeEventListener("change", apply);
-  }, []);
+  const immersive = useMotionAllowed();
 
   // Scroll progress across the pinned section (Lenis-friendly, same idiom as the
   // rest of the site — no ScrollTrigger needed).

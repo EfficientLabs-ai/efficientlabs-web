@@ -6,7 +6,7 @@ import { createHmac, timingSafeEqual } from "node:crypto";
  *   - OPS_SECRET   — an independent, high-entropy HMAC key (NOT the password)
  * If either is missing the gate fails closed (no access). The cookie holds an
  * opaque HMAC-signed token (never the password); all secret comparisons are
- * constant-time AND length-blind. Interim until Supabase founder-role auth.
+ * constant-time AND length-blind. Interim until owner-auth founder roles.
  */
 const PASSWORD = process.env.OPS_PASSWORD || "";
 const SECRET = process.env.OPS_SECRET || ""; // REQUIRED + independent of the password

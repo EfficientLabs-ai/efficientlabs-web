@@ -4,22 +4,15 @@
 // chained, post-quantum-signed receipt and can "Break it" to watch the verdict flip. No dashboard
 // chrome — the full Atmosphere OS lives at /app; the hero shows the one thing that sells, the proof.
 // Brand film loops dim behind. Transform/opacity only; reduced-motion = settled; SSR ships every word.
-import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { PUBLIC_STATUS } from "@/lib/public-status";
+import { useMotionAllowed } from "@/lib/use-motion-allowed";
 import ReceiptVerifyCard from "@/components/proof/ReceiptVerifyCard";
 import { track } from "@/lib/analytics";
 
 export default function LiveDesk() {
   const reduced = useReducedMotion();
-  const [motionOk, setMotionOk] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const apply = () => setMotionOk(!mq.matches);
-    apply();
-    mq.addEventListener("change", apply);
-    return () => mq.removeEventListener("change", apply);
-  }, []);
+  const motionOk = useMotionAllowed();
   const receipts = PUBLIC_STATUS.tiles.receipts;
 
   const fade = reduced

@@ -1,0 +1,15 @@
+{
+  "name": "@efficientlabs/billing-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node start.mjs",
+    "preflight": "node preflight.mjs",
+    "self-test": "node self-test.mjs"
+  },
+  "dependencies": {
+    "pg": "^8.22.0",
+    "stripe": "^22.2.1"
+  }
+}
