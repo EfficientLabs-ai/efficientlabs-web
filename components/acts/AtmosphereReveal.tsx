@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
+import { useMotionAllowed } from "@/lib/use-motion-allowed";
 
 const smooth = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
@@ -14,6 +15,7 @@ export default function AtmosphereReveal() {
   const cv = useRef<HTMLCanvasElement>(null);
   const progress = useRef(0);
   const [p, setP] = useState(0);
+  const motionAllowed = useMotionAllowed();
 
   // scroll progress over the pinned section
   useEffect(() => {
@@ -36,7 +38,7 @@ export default function AtmosphereReveal() {
   useEffect(() => {
     const canvas = cv.current; if (!canvas) return;
     const ctx = canvas.getContext("2d"); if (!ctx) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = !motionAllowed;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let w = 0, h = 0, raf = 0, frame = 0, visible = true;
 
@@ -264,7 +266,7 @@ export default function AtmosphereReveal() {
       window.removeEventListener("resize", onResize);
       window.removeEventListener("scroll", onScrollRepaint);
     };
-  }, []);
+  }, [motionAllowed]);
 
   const cloudCopy = 1 - smooth(0.28, 0.5, p);
   const skyCopy = smooth(0.66, 0.9, p);

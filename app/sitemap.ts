@@ -32,11 +32,11 @@ const STATIC_ROUTES: Entry[] = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
-
+  // No fabricated lastModified: stamping every entry with `new Date()` marks the
+  // whole site "just changed" on every generation, which weakens the crawler
+  // signal. Only docs with a real checked-in `updated` date carry a timestamp.
   const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((r) => ({
     url: `${BASE}${r.path}`,
-    lastModified,
     changeFrequency: r.changeFrequency,
     priority: r.priority,
   }));
@@ -44,8 +44,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Every published docs article (data/docs.ts is the source of truth).
   const docEntries: MetadataRoute.Sitemap = ARTICLES.map((a) => ({
     url: `${BASE}/docs/${a.slug}`,
-    lastModified: a.updated ? new Date(a.updated) : lastModified,
-    changeFrequency: "monthly",
+    ...(a.updated ? { lastModified: new Date(a.updated) } : {}),
+    changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
 
