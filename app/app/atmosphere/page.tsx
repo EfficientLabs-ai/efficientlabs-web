@@ -45,7 +45,7 @@ export default function AtmospherePage() {
         statusLevel="wired"
         description="A peer-to-peer mesh over a Hyperswarm DHT with hole-punching — no open ports, nothing exposed to the public internet. Per-platform node bundles are built and connected; broad multi-device runs are still early, so no live node figures are shown until a real device is paired."
         actions={
-          <Link href="/#install" className="btn-outline !px-4 !py-2 text-[12px]">
+          <Link href="/install" className="btn-outline !px-4 !py-2 text-[12px]">
             <ArrowDownToLine size={14} /> Install a node
           </Link>
         }
@@ -64,7 +64,7 @@ export default function AtmospherePage() {
           locked={locked}
           footer={
             !locked ? (
-              <Link href="/#install" className="btn-outline !px-4 !py-2 text-[12px]">
+              <Link href="/install" className="btn-outline !px-4 !py-2 text-[12px]">
                 Pair this device →
               </Link>
             ) : undefined
@@ -130,7 +130,7 @@ export default function AtmospherePage() {
           title="No nodes paired"
           description="Bring a device online to join your private mesh. Device counts, compute, jobs, uptime, and reliability appear here only once a real node is paired — the mesh visual is illustrative until then."
           action={
-            <Link href="/#install" className="btn-outline !px-4 !py-2 text-[12px]">
+            <Link href="/install" className="btn-outline !px-4 !py-2 text-[12px]">
               Install a node →
             </Link>
           }

@@ -155,6 +155,73 @@ export const ARTICLES: Article[] = [
     ],
   },
 
+  // ── ARCHITECTURE ──────────────────────────────────────────────────────────
+  {
+    slug: "architecture-overview",
+    title: "Efficient Labs Architecture Overview",
+    group: "Architecture",
+    description:
+      "How the Autonomous Work Control Plane is built — STRATOS + Hermes, the LOGOS/SEIF/ECP/DOP loop, hash-chained receipts, the VPS execution plane, and the post-quantum roadmap.",
+    keywords: [
+      "architecture", "awcp", "control plane", "logos", "seif", "ecp", "dop",
+      "aperture", "hermes", "stratos", "receipts", "post-quantum", "pricing", "icm", "mwp",
+    ],
+    updated: "2026-07-04",
+    blocks: [
+      { kind: "p", text: "Efficient Labs is the company — a masterbrand for governed, verified autonomous work. The platform, and the category we build, is the Autonomous Work Control Plane (AWCP): infrastructure that lets an AI worker actually do work under governance, with authorization, rollback, and a receipt for every action. It is not a chatbot wrapped around a model." },
+
+      { kind: "h2", id: "company-platform", text: "The company and the platform" },
+      { kind: "p", text: "Efficient Labs (the company) builds the AWCP (the platform). The distinction matters: a chatbot answers a prompt; a control plane governs work — routing intent to resources, authorizing actions deny-by-default, tracking execution state, and evaluating outcomes so the system improves. Everything below describes that control plane and, honestly, how far along each part is." },
+
+      { kind: "h2", id: "stratos-hermes", text: "STRATOS Agent and Hermes" },
+      { kind: "p", text: "The customer-facing worker is the STRATOS Agent — a governed AI runtime you point at real work. STRATOS is powered by Hermes, an MIT-licensed execution-runtime lineage that provides the underlying agent loop. Two Hermes instances never touch: the operator's Personal Hermes (a private instance) is isolated from the productized STRATOS-Hermes. No personal secrets, memory, or credentials cross that boundary." },
+      { kind: "callout", variant: "note", title: "Why the isolation is structural", text: "The productized STRATOS-Hermes is a clean-room descendant of the runtime lineage, not a fork of the operator's private setup. That is what lets us sell the worker without ever shipping the operator's keys, memory, or credentials inside it." },
+
+      { kind: "h2", id: "control-loop", text: "The governed control loop" },
+      { kind: "p", text: "Four subsystems form a closed loop around every unit of work:" },
+      { kind: "ul", items: [
+        "LOGOS plans and routes — it turns an intent into a concrete plan: which model, which tools, which memory to draw on, and what budget to spend.",
+        "SEIF governs and authorizes — deny-by-default, explicit approvals, rollback, and a receipt for every governed action.",
+        "ECP tracks execution state and continuity — what ran, where it stopped, and how to resume without losing the thread.",
+        "DOP evaluates outcomes and feeds the lessons back in, so the system gets better at the work over time.",
+      ] },
+      { kind: "p", text: "Aperture is the model-and-tool gateway that traffic is meant to flow through. It is on the roadmap as a candidate — a planned gateway, not a deployed service — so we describe it as future, not present." },
+
+      { kind: "h2", id: "context-memory", text: "Context and memory" },
+      { kind: "p", text: "Context is filesystem-native. ICM/MWP is the context, workspace, and stage architecture: work is laid out as files an agent can read, stage, and hand off, rather than trapped in a chat transcript. Memory is Tripartite — a working tier for the task at hand, an episodic tier for what has happened, and a graph/semantic/procedural tier for durable knowledge and learned procedure." },
+
+      { kind: "h2", id: "receipts", text: "Receipts and the proof doctrine" },
+      { kind: "p", text: "Every governed action produces a hash-chained receipt, so a run is tamper-evident: change one link and the chain breaks at a known index. Honesty note — the SEIF kernel receipts are hash-chained, NOT cryptographically signed; we do not call them \"signed.\" A separate StratosAgent capability-receipt rail additionally carries a hybrid Ed25519 + ML-DSA-65 signature. That signing belongs to that rail specifically, not to every receipt in the system." },
+      { kind: "status", caps: ["Post-quantum receipts & seals", "Content-addressed pipeline"] },
+
+      { kind: "h2", id: "vps-plane", text: "The VPS execution plane" },
+      { kind: "p", text: "On managed deployments the VPS is the execution plane, not the permanent brain — durable state lives in the governed record, not on the box. Because the box has only a small RAM tmpfs, agent temp and cache directories are routed off it onto disk, and a preflight guard detects disk pressure before it can masquerade as a test failure. A full disk should read as a full disk, never as a red test." },
+
+      { kind: "h2", id: "pqc", text: "Post-quantum security posture" },
+      { kind: "p", text: "The security roadmap is grounded in the NIST post-quantum standards: ML-KEM for key establishment (FIPS 203), ML-DSA for signatures (FIPS 204), and SLH-DSA as a backup signature scheme (FIPS 205). Two honesty guardrails hold here." },
+      { kind: "ul", items: [
+        "We do not claim quantum computing powers the product — it does not; this is classical software built to resist quantum attack.",
+        "We do not claim post-quantum protection on the wire. The hybrid signature seal is real; a post-quantum transport (\"PQC on the wire,\" a \"PQC mesh\") is on the roadmap, not deployed.",
+      ] },
+
+      { kind: "h2", id: "pricing", text: "The pricing wedge" },
+      { kind: "p", text: "Positioning is premium, not commodity. Six core SKUs span the range from an individual bringing their own keys to a fully isolated deployment:" },
+      { kind: "ul", items: [
+        "Developer / BYOK — bring your own keys.",
+        "Solo Operator.",
+        "Pro Builder.",
+        "Business.",
+        "Managed Dedicated / Private VPS.",
+        "Enterprise / BYOC / On-Prem.",
+      ] },
+      { kind: "p", text: "Services — a sovereignty audit, done-for-you setup, an architecture-and-security review, enterprise implementation, and training — are priced and sold separately from the SKUs." },
+
+      { kind: "h2", id: "dogfood", text: "Dogfood before we sell" },
+      { kind: "p", text: "We prove a capability on ourselves before we sell it. Efficient Labs runs its own work through this control plane and produces the receipts first; the public capability matrix records how far along each part actually is. That honesty is enforced in CI — a guard fails the build if any copy overstates a capability's real status." },
+      { kind: "callout", variant: "tip", title: "See the honest status", text: "Every capability in these docs inherits its level from the public matrix at /#status — Live, Wired, Config needed, Standalone, or Mock. If a part is not Live there, we do not call it Live here." },
+    ],
+  },
+
   // ── INSTALL STRATOSAGENT ────────────────────────────────────────────────
   {
     slug: "requirements",
@@ -452,6 +519,7 @@ export const ARTICLES: Article[] = [
 // ============================================================================
 export const NAV: NavGroup[] = [
   { label: "Get started", slugs: ["welcome", "quickstart", "concepts"] },
+  { label: "Architecture", slugs: ["architecture-overview"] },
   { label: "Install StratosAgent", slugs: ["requirements", "install", "configure", "verify"] },
   { label: "The Atmosphere", slugs: ["mesh-overview", "gossip-skill-sync", "economic-settlement"] },
   { label: "Integrations", slugs: ["channel-adapters", "inference-routing", "speech-vision", "acp"] },

@@ -41,7 +41,7 @@ export default function AgentsPage() {
         statusLevel="live"
         description="Your agent runs as a daemon on hardware you own. This page is a remote control surface — the conversation itself lives on your machine, not on our servers. Identity, channels, and routing are live; speech/vision and agent-to-agent are scaffolds today."
         actions={
-          <Link href="/#install" className="btn-outline !px-4 !py-2 text-[12px]">
+          <Link href="/install" className="btn-outline !px-4 !py-2 text-[12px]">
             <Cpu size={14} /> Install the daemon
           </Link>
         }
@@ -109,7 +109,7 @@ export default function AgentsPage() {
               }
               action={
                 signedIn ? (
-                  <Link href="/#install" className="btn-outline !px-4 !py-2 text-[12px]">
+                  <Link href="/install" className="btn-outline !px-4 !py-2 text-[12px]">
                     <Cpu size={14} /> Install the daemon
                   </Link>
                 ) : (

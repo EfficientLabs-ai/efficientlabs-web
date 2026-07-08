@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Wordmark from "@/components/Wordmark";
+import { track } from "@/lib/analytics";
 
 export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const [email, setEmail] = useState("");
@@ -22,6 +23,7 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!authReady) return;
+    if (isSignup) track("signup_submit", { method: "email" });
     setBusy(true); setMsg(null); setOk(false);
     const res = await fetch(`/api/auth/${isSignup ? "signup" : "login"}`, {
       method: "POST",
@@ -33,7 +35,7 @@ export default function AuthForm({ mode }: { mode: "login" | "signup" }) {
     if (!res.ok) { setOk(false); setMsg(body.error || "Unable to sign in."); return; }
     setOk(true);
     setMsg(isSignup ? "Account created — taking you to your control plane…" : "Signed in — taking you to your control plane…");
-    setTimeout(() => { window.location.href = "/dashboard"; }, 600);
+    setTimeout(() => { window.location.href = "/app"; }, 600);
   };
 
   return (

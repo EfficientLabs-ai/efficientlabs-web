@@ -89,7 +89,7 @@ export default function AppHome() {
               >
                 <SlidersHorizontal size={14} /> Customize
               </Link>
-              <Link href="/#install" className="btn-outline !px-4 !py-2 text-[12px]">
+              <Link href="/install" className="btn-outline !px-4 !py-2 text-[12px]">
                 <Download size={14} /> Install a node
               </Link>
             </div>

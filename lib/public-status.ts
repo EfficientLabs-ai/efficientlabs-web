@@ -82,7 +82,7 @@ export type PublicStatus = {
 export const PUBLIC_STATUS = data as PublicStatus;
 
 // The VPS cron pushes fresh artifacts to the `status-artifacts` branch (STATUS_PUBLISHER_CRON.md).
-// getLiveStatus() fetches that at request time (ISR) so /status reflects the operating layer as it
+// getLiveStatus() fetches without Vercel's Data Cache so /status reflects the operating layer as it
 // is RIGHT NOW, not as it was at the last deploy — without committing to main or redeploying.
 // Fail-safe: any fetch/parse problem, or a payload that isn't our format, falls back to the
 // committed baseline — never a blank page, never a fabricated number.
@@ -92,7 +92,7 @@ const LIVE_STATUS_URL =
 
 export async function getLiveStatus(): Promise<PublicStatus> {
   try {
-    const res = await fetch(LIVE_STATUS_URL, { next: { revalidate: 300 } });
+    const res = await fetch(LIVE_STATUS_URL, { cache: "no-store" });
     if (!res.ok) return PUBLIC_STATUS;
     const live = (await res.json()) as PublicStatus;
     if (live?.format === PUBLIC_STATUS.format && live?.tiles && typeof live.generated_at === "string") {

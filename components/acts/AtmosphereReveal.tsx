@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
+import { useMotionAllowed } from "@/lib/use-motion-allowed";
 
 const smooth = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
@@ -14,6 +15,7 @@ export default function AtmosphereReveal() {
   const cv = useRef<HTMLCanvasElement>(null);
   const progress = useRef(0);
   const [p, setP] = useState(0);
+  const motionAllowed = useMotionAllowed();
 
   // scroll progress over the pinned section
   useEffect(() => {
@@ -36,8 +38,9 @@ export default function AtmosphereReveal() {
   useEffect(() => {
     const canvas = cv.current; if (!canvas) return;
     const ctx = canvas.getContext("2d"); if (!ctx) return;
+    const reduce = !motionAllowed;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let w = 0, h = 0, raf = 0, frame = 0;
+    let w = 0, h = 0, raf = 0, frame = 0, visible = true;
 
     let stars: { x: number; y: number; r: number; tw: number }[] = [];
     let racks: { x: number; y: number; w: number; h: number; dx: number; dy: number; seed: number }[] = [];
@@ -78,6 +81,9 @@ export default function AtmosphereReveal() {
     }
 
     function draw() {
+      // Pause off-screen — keep the loop alive (cheap) so it resumes instantly
+      // on re-entry, but do no canvas work while the section isn't visible.
+      if (!visible) { raf = requestAnimationFrame(draw); return; }
       const pr = progress.current, t = frame / 60;
       ctx!.clearRect(0, 0, w, h);
 
@@ -228,12 +234,39 @@ export default function AtmosphereReveal() {
       }
 
       frame++;
+      // Reduced motion: paint a single calm frame, no ambient RAF loop. The
+      // scroll-driven copy crossfade (opacity only, below) still works; the
+      // canvas just doesn't animate.
+      if (reduce) return;
       raf = requestAnimationFrame(draw);
     }
+
+    // Pause the loop when the (tall, pinned) section is off-screen.
+    const io = new IntersectionObserver(
+      (es) => {
+        const wasVisible = visible;
+        visible = !!es[0]?.isIntersecting;
+        // Re-arm a static repaint if reduced motion brought us back on-screen.
+        if (reduce && visible && !wasVisible) draw();
+      },
+      { threshold: 0 },
+    );
+    io.observe(canvas);
+
     resize(); draw();
-    window.addEventListener("resize", resize);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
-  }, []);
+    // Reduced motion has no RAF loop, so repaint on scroll/resize (geometry +
+    // progress change) — opacity-only copy fades still animate via `p` below.
+    const onResize = () => { resize(); if (reduce) draw(); };
+    const onScrollRepaint = () => { if (reduce && visible) draw(); };
+    window.addEventListener("resize", onResize);
+    if (reduce) window.addEventListener("scroll", onScrollRepaint, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      io.disconnect();
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("scroll", onScrollRepaint);
+    };
+  }, [motionAllowed]);
 
   const cloudCopy = 1 - smooth(0.28, 0.5, p);
   const skyCopy = smooth(0.66, 0.9, p);

@@ -22,18 +22,17 @@ export const metadata: Metadata = {
   alternates: { canonical: "/status" },
 };
 
-// ISR — re-render at most every 5 min so the page tracks new commits with zero
-// manual work, while staying well inside GitHub's rate limits. The operating-
-// layer tiles render from the committed public-status artifact (event-driven,
-// staleness shown per tile).
-export const revalidate = 300;
+// Launch status is a truth surface: the VPS publisher already controls artifact
+// cadence, so do not let ISR keep a stale readiness snapshot during launch work.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function StatusPage() {
   // Pulled live from the GitHub API (ISR-cached), merged with the committed
   // history baseline. Falls back to the baseline if GitHub is unreachable.
   const activity = await getActivity();
-  // Live operating-layer tiles — fetched at request time from the cron-published feed (ISR 5m),
-  // falling back to the committed baseline if unreachable. Staleness is rendered per tile.
+  // Live operating-layer tiles, pulled from the cron-published feed and falling
+  // back to the committed baseline if unreachable. Staleness renders per tile.
   const tiles = (await getLiveStatus()).tiles;
 
   return (
